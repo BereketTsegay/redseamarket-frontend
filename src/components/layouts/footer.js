@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 class Footer extends React.Component{
     render() {
         return (
-               
+              
             <footer id="footer" className="site-footer">
+               <div className="testDon"></div>
                <div className="top-footer">
                   <div className="container">
                      <div className="row">
