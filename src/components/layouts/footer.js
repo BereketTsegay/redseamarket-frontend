@@ -4,7 +4,6 @@ class Footer extends React.Component{
         return (
               
             <footer id="footer" className="site-footer">
-               <div className="testDon"></div>
                <div className="top-footer">
                   <div className="container">
                      <div className="row">
