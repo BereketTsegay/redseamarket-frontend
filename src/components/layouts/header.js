@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import CitySelect from '../common/citySelect';
-
+import Menu from '../layouts/menu';
 import Logo from '../../../src/web-assets/img/brand.svg';
 // import HeaderLeft from './headercomponents/headerLeft';
 class Header extends React.Component{
     render() {
         return (
+           <div>
             <header id="header" className="site-header">
             <div className="main-header">
                      <div className="container d-flex align-items-center flex-wrap">
@@ -32,6 +33,8 @@ class Header extends React.Component{
                      </div>
                   </div>
             </header>
+             <Menu />
+             </div>
         )
     }
 }
