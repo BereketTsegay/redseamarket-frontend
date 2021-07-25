@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import PopularCategoryListing from '../common/popular-category-listing';
-import CategoryListingImage from '../common/category-listing-image';
-import CategoryListingImage2 from '../common/category-listing-image2';
-import CategoryListingImage3 from '../common/category-listing-image3';
-import CategoryListingImage4 from '../common/category-listing-image4';
+
 class HomeFilter extends React.Component{
     render() {
         return (
@@ -336,11 +332,7 @@ class HomeFilter extends React.Component{
 
 
         </section>
-        <PopularCategoryListing/>
-        <CategoryListingImage />
-        <CategoryListingImage2 />
-        <CategoryListingImage3 />
-        <CategoryListingImage4 />
+        
         </div>
 
 )
