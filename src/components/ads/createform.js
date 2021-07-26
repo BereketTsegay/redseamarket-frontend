@@ -7,6 +7,9 @@ import TextField from '../formcontrols/text';
 import FileField from '../formcontrols/file';
 import TextArea from '../formcontrols/textarea';
 import SelectField from '../formcontrols/select';
+import Checkbox from '../formcontrols/checkbox';
+import Number from '../formcontrols/number';
+
 class CreateForm extends React.Component{
     render() {
       
@@ -38,13 +41,27 @@ class CreateForm extends React.Component{
                         <div className="create-ad-form">
                           
                            <TextField  placeholder="Title"/>
+                           <TextField  placeholder="Canonical Name"/>
                            <FileField/>
-                           <TextField placeholder="Phone number"/>
+                           {/* <TextField placeholder="Phone number"/> */}
                            <TextField placeholder="Price"/>
-                           <TextArea />
-                           <SelectField />
-                          
-                           <div className="form-group">
+                           <TextArea placeholder="Describe your Sport Bike" />
+                           <SelectField placeholder="Country"/>
+                           <SelectField placeholder="State"/>
+                           <SelectField placeholder="City"/>
+                           <Checkbox label="Price Negotiable" />
+                           <Checkbox label="Featured" />
+                           <Checkbox label="Status" checked="true" />
+                           <hr />
+                           <h3>Seller Information</h3>
+                           <hr />
+
+                           <TextField placeholder="Name" />
+                           <TextField placeholder="Email" />
+                           <Number placeholder="Phone" />
+                           <TextArea placeholder="Address" />
+                           <Checkbox label="Phone Hide" />
+                           {/* <div className="form-group">
                               <input type="text" className="form-control" placeholder="Kilometers" />
                            </div>
                            <div className="form-group">
@@ -119,7 +136,11 @@ class CreateForm extends React.Component{
                            </div>
                            <div className="form-group">
                               <input type="text" className="form-control" placeholder="Locate your motorcycle" />
-                           </div>
+                           </div> */}
+
+                           <hr />
+                           <TextField placeholder="Locate your motorcycle" />
+
                            <div className="create-ad-location mb-4 mb-md-5">
                               <h4 className="title mb-2">Is the pin in the right location?</h4>
                               <p>Click and drag the pin to the exact spot. Users are more likely to respond to ads that are correctly shown on the map</p>

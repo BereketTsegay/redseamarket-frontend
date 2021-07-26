@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
 class SelectField extends React.Component{
+    constructor(props){
+        super(props);
+    }
     render() {
       
         return (
             <div className="form-group">
                 <select className="form-control">
-                    <option selected>Usage</option>
+                    <option selected>{this.props.placeholder}</option>
                     <option>Option 1</option>
                     <option>Option 2</option>
                     <option>Option 3</option>
