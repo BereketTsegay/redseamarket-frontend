@@ -5,6 +5,8 @@ import Footer from '../layouts/footer';
 import AppDownload from '../home/app-download';
 import TextField from '../formcontrols/text';
 import FileField from '../formcontrols/file';
+import TextArea from '../formcontrols/textarea';
+import SelectField from '../formcontrols/select';
 class CreateForm extends React.Component{
     render() {
       
@@ -39,20 +41,9 @@ class CreateForm extends React.Component{
                            <FileField/>
                            <TextField placeholder="Phone number"/>
                            <TextField placeholder="Price"/>
-                           
-                           <div className="form-group">
-                              <textarea className="form-control" rows="3" placeholder="Describe your Sport Bike"></textarea>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Usage</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
+                           <TextArea />
+                           <SelectField />
+                          
                            <div className="form-group">
                               <input type="text" className="form-control" placeholder="Kilometers" />
                            </div>
