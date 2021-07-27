@@ -53,7 +53,7 @@ class CreateForm extends React.Component{
                            <Checkbox label="Featured" />
                            <Checkbox label="Status" checked="true" />
                            <hr />
-                           <h3>Seller Information</h3>
+                           <h4>Seller Information</h4>
                            <hr />
 
                            <TextField placeholder="Name" />
