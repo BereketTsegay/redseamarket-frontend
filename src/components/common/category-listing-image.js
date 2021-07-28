@@ -46,7 +46,7 @@ class CategoryListingImage extends React.Component{
                               {
                               (subcatArray['custom_value'].length >0)?
                               (subcatArray['custom_value'] && subcatArray['custom_value'].map((subcatArray2,indexi2) =>
-                               (subcatArray2.value!="") ? (subcatArray2.name!="")?subcatArray2.value+' '+subcatArray2.name+' • ':'':''
+                               (subcatArray2.value!="" && indexi2 < 2) ? (subcatArray2.name!="")?subcatArray2.value+' '+subcatArray2.name+' • ':'':''
                               ))
                               :
                              
