@@ -15,14 +15,14 @@ class Home extends React.Component{
                 <HomeFilter/> 
                 <PopularCategoryListing/>
                 {(dataArray && dataArray.map((dataArray,indexi) =>
-                console.log(dataArray.name)
-                
+                // console.log(dataArray.name)
+                <CategoryListingImage dataArray={dataArray} />
                 ))   
             }
-            <CategoryListingImage />
-                <CategoryListingImage2 />
+               
+                {/* <CategoryListingImage2 />
                 <CategoryListingImage3 />
-                <CategoryListingImage4 />
+                <CategoryListingImage4 /> */}
                 
             </div>
             )

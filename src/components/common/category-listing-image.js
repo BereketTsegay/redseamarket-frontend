@@ -6,15 +6,22 @@ import residential4 from '../../../src/web-assets/img/media-residential-4.jpg';
 import residential5 from '../../../src/web-assets/img/media-residential-5.jpg';
 class CategoryListingImage extends React.Component{
     render() {
+      let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
+      let subcategoryArray = (this.props.dataArray.ads != undefined)?this.props.dataArray.ads:[];
+      console.log(subcategoryArray,"Don bosco peter");
         return (
             <section className="section-home-categories">
             <div className="container">
                <div className="row">
                   <div className="col-12">
-                     <h2 className="section-title text-center">Popular in Residential for Rent</h2>
+                     <h2 className="section-title text-center">Popular in {(dataArray.name !="")?dataArray.name:""}</h2>
                   </div>
                </div>
                <div className="row row-product-panel">
+
+               {(subcategoryArray && subcategoryArray.map((subcatArray,indexi) =>
+               
+
                   <div className="col-product-panel">
                      <div className="product-panel">
                         <a href="#">
@@ -22,14 +29,20 @@ class CategoryListingImage extends React.Component{
                               <img src={residential1} alt="media" />
                            </div>
                            <div className="panel-content">
-                              <h3 className="panel-price">AED 119,000</h3>
+
+                           
+                              <h3 className="panel-price">AED {subcatArray && (subcatArray['price'])?subcatArray['price']:''}</h3>
                               <h4 className="panel-title">1 Bed • 2 Baths</h4>
                               <p className="panel-description">No. 9, Dubai Marina</p>
                            </div>
                         </a>
                      </div>
                   </div>
-                  <div className="col-product-panel">
+
+                  ))   
+                  }
+
+                  {/* <div className="col-product-panel">
                      <div className="product-panel">
                         <a href="#">
                            <div className="panel-media">
@@ -42,8 +55,8 @@ class CategoryListingImage extends React.Component{
                            </div>
                         </a>
                      </div>
-                  </div>
-                  <div className="col-product-panel">
+                  </div> */}
+                  {/* <div className="col-product-panel">
                      <div className="product-panel">
                         <a href="#">
                            <div className="panel-media">
@@ -56,8 +69,8 @@ class CategoryListingImage extends React.Component{
                            </div>
                         </a>
                      </div>
-                  </div>
-                  <div className="col-product-panel">
+                  </div> */}
+                  {/* <div className="col-product-panel">
                      <div className="product-panel">
                         <a href="#">
                            <div className="panel-media">
@@ -70,8 +83,8 @@ class CategoryListingImage extends React.Component{
                            </div>
                         </a>
                      </div>
-                  </div>
-                  <div className="col-product-panel">
+                  </div> */}
+                  {/* <div className="col-product-panel">
                      <div className="product-panel">
                         <a href="#">
                            <div className="panel-media">
@@ -84,7 +97,7 @@ class CategoryListingImage extends React.Component{
                            </div>
                         </a>
                      </div>
-                  </div>
+                  </div> */}
                </div>
             </div>
          </section>
