@@ -20,7 +20,7 @@ class CategoryListingImage extends React.Component{
                <div className="row row-product-panel">
 
                {(subcategoryArray && subcategoryArray.map((subcatArray,indexi) =>
-               
+             
 
                   <div className="col-product-panel">
                      <div className="product-panel">
