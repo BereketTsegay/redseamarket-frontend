@@ -1,0 +1,328 @@
+{
+    "status": "success",
+    "data": {
+        "loged_user_status": false,
+        "category_default": [
+            {
+                "id": 1,
+                "name": "Automobile",
+                "canonical_name": "Automobile",
+                "description": "Automobile description",
+                "image": "storage/category/60fe72c38d0e4.jpg",
+                "created_at": "2021-07-26T08:30:59.000000Z",
+                "updated_at": "2021-07-26T08:30:59.000000Z",
+                "subcategory": [
+                    {
+                        "id": 1,
+                        "name": "Car",
+                        "canonical_name": "Car",
+                        "image": "storage/subcategory/60fe73832a2f7.jpg",
+                        "description": "Car description",
+                        "created_at": "2021-07-26T08:34:11.000000Z",
+                        "updated_at": "2021-07-26T08:34:11.000000Z"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Used Cars",
+                        "canonical_name": "Used Cars",
+                        "image": "storage/subcategory/60fe7417ba01b.jpg",
+                        "description": "Used car description",
+                        "created_at": "2021-07-26T08:36:39.000000Z",
+                        "updated_at": "2021-07-26T08:36:39.000000Z"
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Property",
+                "canonical_name": "Property",
+                "description": "Property description",
+                "image": "storage/category/60fe7355a308a.jpg",
+                "created_at": "2021-07-26T08:33:25.000000Z",
+                "updated_at": "2021-07-26T08:33:25.000000Z",
+                "subcategory": [
+                    {
+                        "id": 3,
+                        "name": "Residential for Rent",
+                        "canonical_name": "residential-for-Rent",
+                        "image": "storage/subcategory/610026d4ea71b.jpg",
+                        "description": "ytest description",
+                        "created_at": "2021-07-27T15:31:32.000000Z",
+                        "updated_at": "2021-07-27T15:31:32.000000Z"
+                    }
+                ]
+            }
+        ],
+        "categories": [
+            {
+                "id": 1,
+                "name": "Automobile",
+                "canonical_name": "Automobile",
+                "description": "Automobile description",
+                "image": "storage/category/60fe72c38d0e4.jpg",
+                "created_at": "2021-07-26T08:30:59.000000Z",
+                "updated_at": "2021-07-26T08:30:59.000000Z",
+                "subcategory": [
+                    {
+                        "id": 1,
+                        "name": "Car",
+                        "canonical_name": "Car",
+                        "image": "storage/subcategory/60fe73832a2f7.jpg",
+                        "description": "Car description",
+                        "created_at": "2021-07-26T08:34:11.000000Z",
+                        "updated_at": "2021-07-26T08:34:11.000000Z"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Used Cars",
+                        "canonical_name": "Used Cars",
+                        "image": "storage/subcategory/60fe7417ba01b.jpg",
+                        "description": "Used car description",
+                        "created_at": "2021-07-26T08:36:39.000000Z",
+                        "updated_at": "2021-07-26T08:36:39.000000Z"
+                    }
+                ],
+                "ads": [
+                    {
+                        "id": 1,
+                        "title": "New eon cars for sale",
+                        "canonical_name": "New cars",
+                        "description": "New car description",
+                        "price": 35000,
+                        "negotiable_flag": 1,
+                        "featured_flag": 1,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-26T08:44:19.000000Z",
+                        "updated_at": "2021-07-26T08:44:19.000000Z",
+                        "distance": 0,
+                        "country": "United Arab Emirates",
+                        "state": "Abu Zabi",
+                        "city": "Ajman",
+                        "image": [
+                            {
+                                "id": 1,
+                                "image": "storage/ads/60fe75e3cecc3.jpg",
+                                "created_at": "2021-07-26T08:44:19.000000Z",
+                                "updated_at": "2021-07-26T08:44:19.000000Z"
+                            }
+                        ],
+                        "custom_value": []
+                    },
+                    {
+                        "id": 2,
+                        "title": "Used car for sale",
+                        "canonical_name": "Used cars",
+                        "description": "used car description",
+                        "price": 15000,
+                        "negotiable_flag": 1,
+                        "featured_flag": 0,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-26T08:45:38.000000Z",
+                        "updated_at": "2021-07-26T08:45:38.000000Z",
+                        "distance": 0,
+                        "country": "United Arab Emirates",
+                        "state": "Abu Zabi",
+                        "city": "Ajman",
+                        "image": [
+                            {
+                                "id": 2,
+                                "image": "storage/ads/60fe76326257a.jpg",
+                                "created_at": "2021-07-26T08:45:38.000000Z",
+                                "updated_at": "2021-07-26T08:45:38.000000Z"
+                            }
+                        ],
+                        "custom_value": []
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Property",
+                "canonical_name": "Property",
+                "description": "Property description",
+                "image": "storage/category/60fe7355a308a.jpg",
+                "created_at": "2021-07-26T08:33:25.000000Z",
+                "updated_at": "2021-07-26T08:33:25.000000Z",
+                "subcategory": [
+                    {
+                        "id": 3,
+                        "name": "Residential for Rent",
+                        "canonical_name": "residential-for-Rent",
+                        "image": "storage/subcategory/610026d4ea71b.jpg",
+                        "description": "ytest description",
+                        "created_at": "2021-07-27T15:31:32.000000Z",
+                        "updated_at": "2021-07-27T15:31:32.000000Z"
+                    }
+                ],
+                "ads": [
+                    {
+                        "id": 3,
+                        "title": "New property",
+                        "canonical_name": "new-property",
+                        "description": "test description",
+                        "price": 450000,
+                        "negotiable_flag": 1,
+                        "featured_flag": 1,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-27T15:33:32.000000Z",
+                        "updated_at": "2021-07-27T15:33:32.000000Z",
+                        "distance": 0,
+                        "country": "India",
+                        "state": "Kerala",
+                        "city": "Aluva",
+                        "image": [
+                            {
+                                "id": 3,
+                                "image": "storage/ads/6100274c504b7.jpg",
+                                "created_at": "2021-07-27T15:33:32.000000Z",
+                                "updated_at": "2021-07-27T15:33:32.000000Z"
+                            }
+                        ],
+                        "custom_value": [
+                            {
+                                "id": 1,
+                                "value": "2",
+                                "created_at": "2021-07-27T15:33:32.000000Z",
+                                "updated_at": "2021-07-27T15:33:32.000000Z",
+                                "position": "top",
+                                "name": "Size"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 4,
+                        "title": "Test title",
+                        "canonical_name": "test-title",
+                        "description": "test description",
+                        "price": 450000,
+                        "negotiable_flag": 1,
+                        "featured_flag": 1,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-28T07:42:43.000000Z",
+                        "updated_at": "2021-07-28T07:42:43.000000Z",
+                        "distance": 0,
+                        "country": "United Arab Emirates",
+                        "state": "Dubai",
+                        "city": "Karamadai",
+                        "image": [
+                            {
+                                "id": 4,
+                                "image": "storage/ads/61010a7307fa0.jpg",
+                                "created_at": "2021-07-28T07:42:43.000000Z",
+                                "updated_at": "2021-07-28T07:42:43.000000Z"
+                            }
+                        ],
+                        "custom_value": [
+                            {
+                                "id": 2,
+                                "value": "5",
+                                "created_at": "2021-07-28T07:42:43.000000Z",
+                                "updated_at": "2021-07-28T07:42:43.000000Z",
+                                "position": "top",
+                                "name": "Size"
+                            },
+                            {
+                                "id": 3,
+                                "value": "4",
+                                "created_at": "2021-07-28T07:42:43.000000Z",
+                                "updated_at": "2021-07-28T07:42:43.000000Z",
+                                "position": "none",
+                                "name": "Rooms"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 5,
+                        "title": "TEST PROPERTY",
+                        "canonical_name": "test-property",
+                        "description": "test description",
+                        "price": 450000,
+                        "negotiable_flag": 1,
+                        "featured_flag": 1,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-28T07:49:58.000000Z",
+                        "updated_at": "2021-07-28T07:49:58.000000Z",
+                        "distance": 0,
+                        "country": "United Arab Emirates",
+                        "state": "Dubai",
+                        "city": "Karamadai",
+                        "image": [
+                            {
+                                "id": 5,
+                                "image": "storage/ads/61010c2607009.jpg",
+                                "created_at": "2021-07-28T07:49:58.000000Z",
+                                "updated_at": "2021-07-28T07:49:58.000000Z"
+                            }
+                        ],
+                        "custom_value": [
+                            {
+                                "id": 4,
+                                "value": "5",
+                                "created_at": "2021-07-28T07:49:58.000000Z",
+                                "updated_at": "2021-07-28T07:49:58.000000Z",
+                                "position": "top",
+                                "name": "Size"
+                            },
+                            {
+                                "id": 5,
+                                "value": "4",
+                                "created_at": "2021-07-28T07:49:58.000000Z",
+                                "updated_at": "2021-07-28T07:49:58.000000Z",
+                                "position": "none",
+                                "name": "Rooms"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 6,
+                        "title": "testing",
+                        "canonical_name": "testing",
+                        "description": "afddsfa",
+                        "price": 12345,
+                        "negotiable_flag": 1,
+                        "featured_flag": 1,
+                        "latitude": "0.0000000",
+                        "longitude": "0.0000000",
+                        "created_at": "2021-07-28T10:02:41.000000Z",
+                        "updated_at": "2021-07-28T10:02:41.000000Z",
+                        "distance": 0,
+                        "country": "Algeria",
+                        "state": "al-Aghwat",
+                        "city": "al-Aghwat",
+                        "image": [
+                            {
+                                "id": 6,
+                                "image": "storage/ads/61012b41599e8.jpg",
+                                "created_at": "2021-07-28T10:02:41.000000Z",
+                                "updated_at": "2021-07-28T10:02:41.000000Z"
+                            }
+                        ],
+                        "custom_value": [
+                            {
+                                "id": 6,
+                                "value": "12",
+                                "created_at": "2021-07-28T10:02:41.000000Z",
+                                "updated_at": "2021-07-28T10:02:41.000000Z",
+                                "position": "top",
+                                "name": "Size"
+                            },
+                            {
+                                "id": 7,
+                                "value": "2",
+                                "created_at": "2021-07-28T10:02:41.000000Z",
+                                "updated_at": "2021-07-28T10:02:41.000000Z",
+                                "position": "none",
+                                "name": "Rooms"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

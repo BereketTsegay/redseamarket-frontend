@@ -5,6 +5,7 @@ import Home from '../home/home';
 import Footer from '../layouts/footer';
 import AppDownload from '../home/app-download';
 import axios from 'axios';
+import dataArray from '../common/test.json';
 class Index extends React.Component{
     constructor(props) {
         super(props);
@@ -24,11 +25,11 @@ class Index extends React.Component{
           if(result.data.status=="success" && result.status){
                this.setState({loginStatus:result.data.data.loged_user_status}); 
                this.setState({dataArray:result.data.data.categories});
+     
           }
          
             
         })
-      
       }
     render() {
         
