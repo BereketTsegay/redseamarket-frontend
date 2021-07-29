@@ -9,15 +9,70 @@ import TextArea from '../formcontrols/textarea';
 import SelectField from '../formcontrols/select';
 import Checkbox from '../formcontrols/checkbox';
 import Number from '../formcontrols/number';
+import Date from '../formcontrols/date';
+import DependencySelect from '../formcontrols/dependencySelect';
+import axios from 'axios';
+import {BASE_URL} from '../../projectString';
 
 class CreateForm extends React.Component{
+
+   constructor(props) {
+      super(props)
+      this.state = {
+         category: 2,
+         subcategory:1,
+         categoryField: [],
+         master:'',
+         master_id:'',
+         option: [],
+      }
+   }
+
+   componentWillMount(){
+      axios({
+         method: 'POST',
+         url: `${BASE_URL}/customer/ads/custom_field_and_dependency`,
+         data:{
+            category:this.state.category,
+            subcategory:this.state.subcategory,
+         }
+      }).then(response => {
+         
+         if(response.data.status == 'success'){
+            
+            this.setState({
+               categoryField:response.data.data.category_field,
+            });
+            
+         }
+      });
+   }
+
+   getMster = (masters) => {
+      
+      this.setState({
+         master:masters,
+      });
+
+      // axios({
+      //    method: 'POST',
+      //    url: `${BASE_URL}/customer/get/master/dependency`,
+      //    data:{
+      //       master: this.state.master,
+      //    }
+      // }).then(response => {
+         
+      // });
+   }
+
+
     render() {
       
-        return (
+         return (
             <div className="site-frame">
                 <Header />
             
-                <div id="page" class="site-page">
+                <div id="page" className="site-page">
                 <section className="section-create-ad-1">
                <div className="container">
                   <div className="row">
@@ -42,16 +97,65 @@ class CreateForm extends React.Component{
                           
                            <TextField  placeholder="Title"/>
                            <TextField  placeholder="Canonical Name"/>
-                           <FileField/>
+                           <FileField placeholder="Add Pictures" />
                            {/* <TextField placeholder="Phone number"/> */}
                            <TextField placeholder="Price"/>
                            <TextArea placeholder="Describe your Sport Bike" />
-                           <SelectField placeholder="Country"/>
-                           <SelectField placeholder="State"/>
-                           <SelectField placeholder="City"/>
+                           <SelectField placeholder="Country" option={this.state.option} />
+                           <SelectField placeholder="State" option={this.state.option} />
+                           <SelectField placeholder="City" option={this.state.option} />
                            <Checkbox label="Price Negotiable" />
                            <Checkbox label="Featured" />
-                           <Checkbox label="Status" checked="true" />
+
+                           {this.state.categoryField.map((categoryField, index) => {
+                              if(categoryField.field.type === 'text'){
+                                 return(
+                                    <TextField key={index} placeholder={categoryField.field.name}/>
+                                 );
+                              }
+                              else if(categoryField.field.type === 'textarea'){
+                                 return(
+                                    <TextArea key={index} placeholder={categoryField.field.name}/>
+                                 );
+                              }
+                              else if(categoryField.field.type === 'checkbox'){
+                                 return(
+                                    <Checkbox key={index} label={categoryField.field.name} />
+                                 );
+                              }
+                              else if(categoryField.field.type === 'checkbox_multiple'){}
+                              else if(categoryField.field.type === 'select'){
+                                 return(
+                                    <SelectField key={index} placeholder={categoryField.field.name} option={this.state.option} />
+                                 )
+                              }
+                              else if(categoryField.field.type === 'radio'){}
+                              else if(categoryField.field.type === 'file'){
+                                 return(
+                                    <FileField key={index} placeholder={categoryField.field.name} />
+                                 );
+                              }
+                              else if(categoryField.field.type === 'url'){
+                                 return(
+                                    <TextField key={index} placeholder={categoryField.field.name}/>
+                                 );
+                              }
+                              else if(categoryField.field.type === 'number'){
+                                 return(
+                                    <Number key={index} placeholder={categoryField.field.name}/>
+                                 );
+                              }
+                              else if(categoryField.field.type === 'date'){
+                                 return(
+                                    <Date key={index} placeholder={categoryField.field.name}/>
+                                 );
+                              }
+                              else if(categoryField.field.type === 'dependency'){
+                                 return (
+                                    <DependencySelect key={index} dependency={categoryField.field.dependency} />
+                                 );
+                              }
+                           })}
                            <hr />
                            <h4>Seller Information</h4>
                            <hr />
@@ -61,82 +165,6 @@ class CreateForm extends React.Component{
                            <Number placeholder="Phone" />
                            <TextArea placeholder="Address" />
                            <Checkbox label="Phone Hide" />
-                           {/* <div className="form-group">
-                              <input type="text" className="form-control" placeholder="Kilometers" />
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Year</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Seller type</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Final Drive System</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Wheels</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Manufacturer</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Engine Size</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <select className="form-control">
-                                 <option selected>Warranty</option>
-                                 <option>Option 1</option>
-                                 <option>Option 2</option>
-                                 <option>Option 3</option>
-                                 <option>Option 4</option>
-                                 <option>Option 5</option>
-                              </select>
-                           </div>
-                           <div className="form-group">
-                              <input type="text" className="form-control" placeholder="Locate your motorcycle" />
-                           </div> */}
 
                            <hr />
                            <TextField placeholder="Locate your motorcycle" />
