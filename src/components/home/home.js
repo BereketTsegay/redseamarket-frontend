@@ -8,14 +8,21 @@ import CategoryListingImage4 from '../common/category-listing-image4';
 
 class Home extends React.Component{
     render() {
+        let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
+        // console.log(dataArray,'dataArray')
         return (
             <div id="page" className="site-page">
                 <HomeFilter/> 
                 <PopularCategoryListing/>
-                <CategoryListingImage />
-                <CategoryListingImage2 />
+                {(dataArray && dataArray.map((dataArray,indexi) =>
+                // console.log(dataArray.name)
+                <CategoryListingImage dataArray={dataArray} />
+                ))   
+            }
+               
+                {/* <CategoryListingImage2 />
                 <CategoryListingImage3 />
-                <CategoryListingImage4 />
+                <CategoryListingImage4 /> */}
                 
             </div>
             )
