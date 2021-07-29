@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import residential1 from '../../../src/web-assets/img/media-residential-1.jpg';
-import residential2 from '../../../src/web-assets/img/media-residential-2.jpg';
-import residential3 from '../../../src/web-assets/img/media-residential-3.jpg';
-import residential4 from '../../../src/web-assets/img/media-residential-4.jpg';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 class CategoryListingImage extends React.Component{
     render() {
