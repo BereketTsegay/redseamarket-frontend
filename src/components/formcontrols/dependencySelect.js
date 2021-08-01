@@ -36,6 +36,7 @@ export default class dependencySelect extends Component {
                         this.setState({
                             option:response.data.mster_data,
                         });
+
                     }
                 })
                 .catch((error) => {
@@ -45,8 +46,9 @@ export default class dependencySelect extends Component {
             });
         }
         if(superMaster === 'Model'){
+            
             this.setState({
-                master: 'Varient',
+                master: 'Variant',
             },() => {
                 axios({
                     method: 'POST',
@@ -58,15 +60,18 @@ export default class dependencySelect extends Component {
                 }).then(response => {
                     
                     if(response.data.status == 'success'){
+                        
                         this.setState({
                             option:response.data.mster_data,
                         });
+                        
                     }
                 })
                 .catch((error) => {
                     
                 });
             });
+            
         }
     }
 
@@ -80,14 +85,14 @@ export default class dependencySelect extends Component {
                 
                 if(dependency.master == 'Make'){
                     return (
-                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={dependency.option} />
-                    )
+                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={dependency.option} type="Make" />
+                    );
                 }
                 else{
                     return (
                         
-                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={option} />
-                    )
+                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={option} type={this.state.master} />
+                    );
                 }
             })
             

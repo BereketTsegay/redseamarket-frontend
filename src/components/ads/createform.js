@@ -10,6 +10,7 @@ import SelectField from '../formcontrols/select';
 import Checkbox from '../formcontrols/checkbox';
 import Number from '../formcontrols/number';
 import Date from '../formcontrols/date';
+import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 import axios from 'axios';
 import {BASE_URL} from '../../projectString';
@@ -19,12 +20,15 @@ class CreateForm extends React.Component{
    constructor(props) {
       super(props)
       this.state = {
-         category: 2,
+         category: 1,
          subcategory:1,
          categoryField: [],
          master:'',
          master_id:'',
          option: [],
+         country: [],
+         state: [],
+         city:[],
       }
    }
 
@@ -46,27 +50,69 @@ class CreateForm extends React.Component{
             
          }
       });
-   }
 
-   getMster = (masters) => {
-      
-      this.setState({
-         master:masters,
+      axios({
+         method: 'POST',
+         url: `${BASE_URL}/customer/get/country`,
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            this.setState({
+               country: response.data.country,
+            });
+         }
+
       });
 
-      // axios({
-      //    method: 'POST',
-      //    url: `${BASE_URL}/customer/get/master/dependency`,
-      //    data:{
-      //       master: this.state.master,
-      //    }
-      // }).then(response => {
-         
-      // });
    }
 
 
+   countryChange = (id) => {
+      
+      axios({
+         method: 'POST',
+         url: `${BASE_URL}/customer/get/state`,
+         data:{
+            country:id,
+         }
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            this.setState({
+               state: response.data.state,
+            });
+         }
+
+      }).catch((error) => {
+        
+      });
+   }
+
+   statesChange = (id) => {
+      
+      axios({
+         method: 'POST',
+         url: `${BASE_URL}/customer/get/city`,
+         data:{
+            state:id,
+         }
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            this.setState({
+               city: response.data.city,
+            });
+         }
+
+      }).catch((error) => {
+        
+      });
+   }
+   
+
     render() {
+      
+      let {category, subcategory, categoryField, master, master_id, option, country, state, city} = this.state;
       
          return (
             <div className="site-frame">
@@ -101,13 +147,13 @@ class CreateForm extends React.Component{
                            {/* <TextField placeholder="Phone number"/> */}
                            <TextField placeholder="Price"/>
                            <TextArea placeholder="Describe your Sport Bike" />
-                           <SelectField placeholder="Country" option={this.state.option} />
-                           <SelectField placeholder="State" option={this.state.option} />
-                           <SelectField placeholder="City" option={this.state.option} />
+                           <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
+                           <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" />
+                           <SelectField placeholder="City" option={city} type="common" />
                            <Checkbox label="Price Negotiable" />
                            <Checkbox label="Featured" />
 
-                           {this.state.categoryField.map((categoryField, index) => {
+                           {categoryField.map((categoryField, index) => {
                               if(categoryField.field.type === 'text'){
                                  return(
                                     <TextField key={index} placeholder={categoryField.field.name}/>
@@ -123,13 +169,16 @@ class CreateForm extends React.Component{
                                     <Checkbox key={index} label={categoryField.field.name} />
                                  );
                               }
-                              else if(categoryField.field.type === 'checkbox_multiple'){}
                               else if(categoryField.field.type === 'select'){
                                  return(
-                                    <SelectField key={index} placeholder={categoryField.field.name} option={this.state.option} />
-                                 )
+                                    <SelectField key={index} placeholder={categoryField.field.name} option={categoryField.field.field_option} type="customField" />
+                                 );
                               }
-                              else if(categoryField.field.type === 'radio'){}
+                              else if(categoryField.field.type === 'radio'){
+                                 return (
+                                    <Radio key={index} label={categoryField.field.name} option={categoryField.field.field_option} />
+                                 );
+                              }
                               else if(categoryField.field.type === 'file'){
                                  return(
                                     <FileField key={index} placeholder={categoryField.field.name} />
