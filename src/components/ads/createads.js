@@ -5,7 +5,7 @@ import AppDownload from '../home/app-download';
 import CreateAdsCategory from './createadscategory';
 import SubCategorySelect from './subcategoryselect'
 import CreateForm from './createform';
-
+import axios from 'axios';
 class CreateAds extends React.Component{
     constructor(props) {
         super(props);
@@ -16,13 +16,31 @@ class CreateAds extends React.Component{
         
     }     
 
-    handleCallback = (categoryId,pageValue) =>{
-        // console.log(childData,"call back value");
-        // console.log(pageValue,"Page value");
-        // // this.setState({data: childData})
+    // componentWillMount() {
+    //     axios.post('http://jama-al-backend.freshpureuae.com/api/customer/get/category',
+    //     {
+    //        latitude:0,
+    //        longitude:0,
+    //     }).then(result => {
+    //         console.log(result,"values")
+    //     //   if(result.data.status=="success" && result.status){
+    //         //    this.setState({loginStatus:result.data.data.loged_user_status}); 
+    //         //    this.setState({dataArray:result.data.data.categories});
+     
+    //     //   }
+         
+            
+    //     })
+    //   }
 
+
+
+
+    handleCallback = (categoryId,pageValue) =>{
         switch (pageValue) {
             case 'category':
+
+            console.log(categoryId,"categoryId");        
             this.setState({ categoryId:categoryId});   
             this.setState({ pageSelectVal:1});
             break;
