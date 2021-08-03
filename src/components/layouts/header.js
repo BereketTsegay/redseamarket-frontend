@@ -15,9 +15,8 @@ class Header extends React.Component{
       super(props);
 
    }
-      
-    render() {
    
+    render() {
       
       // console.log(this.state.loginStatus,'logo status');
         return (
@@ -54,7 +53,7 @@ class Header extends React.Component{
                      </div>
                   </div>
             </header>
-             <Menu />
+             <Menu category={this.props.category}/>
 
              
              </div>

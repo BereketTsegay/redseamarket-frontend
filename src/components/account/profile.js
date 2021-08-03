@@ -67,250 +67,250 @@ export default class profile extends Component {
         let {myAds, myFavourite, user, loginStatus, name} = this.state;
 
         return (
-            <div id="page" class="site-page">
+            <div id="page" className="site-page">
 
                 <Header loginStatus={loginStatus} user={user.name}/>
                 <Breadcrumb section="My Profile" />
 
             {/* <!-- =====[SECTION MY PROFIL]===== --> */}
-            <section class="section-my-profile pt-4 pb-5">
-                <div class="container">
+            <section className="section-my-profile pt-4 pb-5">
+                <div className="container">
 
                     <NavLinks linkState="myprofile" />
 
-                    <div class="my-profile-title-panel">
-                        <div class="row">
-                            <div class="col-lg-8 text-center"><h5 class="title py-1 mb-0">{user.name} <small class="d-block d-sm-inline"> (not {user.name} ? <a onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
-                            <div class="col-lg-4 text-center"><a href="#" class="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Account Settings</a></div>
+                    <div className="my-profile-title-panel">
+                        <div className="row">
+                            <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
+                            <div className="col-lg-4 text-center"><a href="#" className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Account Settings</a></div>
                         </div>
-                        <div class="row mt-4 mt-lg-5">
-                            <div class="col-12 d-flex justify-content-center">
-                            <div class="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
-                                <small class="font-weight-bold text-muted d-inline-block w-100">My Ads</small>
-                                <h4 class="m-0 pt-2 pb-1">{myAds}</h4>
-                                <small class="font-weight-bold text-muted d-inline-block w-100">ads viewed 0 times</small>
+                        <div className="row mt-4 mt-lg-5">
+                            <div className="col-12 d-flex justify-content-center">
+                            <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
+                                <small className="font-weight-bold text-muted d-inline-block w-100">My Ads</small>
+                                <h4 className="m-0 pt-2 pb-1">{myAds}</h4>
+                                <small className="font-weight-bold text-muted d-inline-block w-100">ads viewed 0 times</small>
                             </div>
-                            <div class="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
-                                <small class="font-weight-bold text-muted d-inline-block w-100">My Favorites</small>
-                                <h4 class="m-0 pt-2 pb-1">{myFavourite}</h4>
-                                <small class="font-weight-bold text-muted d-inline-block w-100">ads saved</small>
+                            <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
+                                <small className="font-weight-bold text-muted d-inline-block w-100">My Favorites</small>
+                                <h4 className="m-0 pt-2 pb-1">{myFavourite}</h4>
+                                <small className="font-weight-bold text-muted d-inline-block w-100">ads saved</small>
                             </div>
                             </div>
                         </div>
                     </div>
-                    <div class="my-profile-form">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-7 col-md-8 mx-auto">
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Name :</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" value={name} placeholder="Name" />
+                    <div className="my-profile-form">
+                        <div className="row">
+                            <div className="col-xl-6 col-lg-7 col-md-8 mx-auto">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Name :</label>
+                                <div className="col-lg-8">
+                                    <input type="text" className="form-control" value={name} placeholder="Name" />
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Gender :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Gender :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Gender</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Nationality :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Nationality :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Nationality</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Date of Birth :</label>
-                                <div class="col-lg-8">
-                                    <input type="date" class="form-control" />
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Date of Birth :</label>
+                                <div className="col-lg-8">
+                                    <input type="date" className="form-control" />
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Career Level :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Career Level :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Current Location :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Current Location :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Location</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Current Position :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Current Position :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Position</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Current Company :</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" />
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Current Company :</label>
+                                <div className="col-lg-8">
+                                    <input type="text" className="form-control" />
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Salary Expectations :</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Salary Expectations :</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Salary Expectations</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Commitment:</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Commitment:</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Notice Period:</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Notice Period:</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Visa Status:</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Visa Status:</label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>Select Status</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-center">
-                                <label class="col-lg-4 col-form-label">Highest Education: </label>
-                                <div class="col-lg-8">
-                                    <select class="form-control">
+                            <div className="row form-group align-items-center">
+                                <label className="col-lg-4 col-form-label">Highest Education: </label>
+                                <div className="col-lg-8">
+                                    <select className="form-control">
                                         <option selected>My highest academic achievement is</option>
                                         <option>Option 1</option>
                                         <option>Option 2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-start">
-                                <label class="col-lg-4 col-form-label">Your CV</label>
-                                <div class="col-lg-8">
-                                    <div class="form-group">
+                            <div className="row form-group align-items-start">
+                                <label className="col-lg-4 col-form-label">Your CV</label>
+                                <div className="col-lg-8">
+                                    <div className="form-group">
                                         <p>Your latest CV was uploaded some time ago.Your possible future employer would like to know all about the hard work you’ve done up until today. To stay current, please update and upload your latest CV. Good luck!</p>
                                     </div>
-                                    <div class="form-group custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile" />
-                                        <label class="custom-file-label" for="customFile">No file chosen</label>
+                                    <div className="form-group custom-file">
+                                        <input type="file" className="custom-file-input" id="customFile" />
+                                        <label className="custom-file-label" for="customFile">No file chosen</label>
                                     </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" rows="3" placeholder="Your CV Summary"></textarea>
+                                    <div className="form-group">
+                                        <textarea className="form-control" rows="3" placeholder="Your CV Summary"></textarea>
                                     </div>
-                                    <div class="fg-table-frame">
-                                        <div class="row fg-table">
-                                        <div class="col-5">
+                                    <div className="fg-table-frame">
+                                        <div className="row fg-table">
+                                        <div className="col-5">
                                             <label for="">I’ve got</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
-                                        <div class="col-7">
+                                        <div className="col-7">
                                             <label for="">experience in</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
                                         </div>
-                                        <div class="row fg-table">
-                                        <div class="col-5">
+                                        <div className="row fg-table">
+                                        <div className="col-5">
                                             <label for="">I’ve got</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
-                                        <div class="col-7">
+                                        <div className="col-7">
                                             <label for="">experience in</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
                                         </div>
-                                        <div class="row fg-table">
-                                        <div class="col-5">
+                                        <div className="row fg-table">
+                                        <div className="col-5">
                                             <label for="">I’ve got</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
-                                        <div class="col-7">
+                                        <div className="col-7">
                                             <label for="">experience in</label>
-                                            <select class="form-control">
+                                            <select className="form-control">
                                                 <option selected>—-</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
                                         </div>
-                                        <div class="row">
-                                        <div class="col-12 text-right">
-                                            <button class="btn btn-link">+ Add Industry</button>
+                                        <div className="row">
+                                        <div className="col-12 text-right">
+                                            <button className="btn btn-link">+ Add Industry</button>
                                         </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-start">
-                                <label class="col-lg-4 col-form-label">Please send me: </label>
-                                <div class="col-lg-8">
-                                    <div class="custom-control custom-checkbox mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                        <label class="custom-control-label font-weight-normal" for="customCheck1">The weekly dubizzle newsletter of the most popular steals across the dubizzle site. </label>
+                            <div className="row form-group align-items-start">
+                                <label className="col-lg-4 col-form-label">Please send me: </label>
+                                <div className="col-lg-8">
+                                    <div className="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                                        <label className="custom-control-label font-weight-normal" for="customCheck1">The weekly dubizzle newsletter of the most popular steals across the dubizzle site. </label>
                                     </div>
-                                    <div class="custom-control custom-checkbox mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                        <label class="custom-control-label font-weight-normal" for="customCheck2">Amazing offers and bargains from our advertising partners.</label>
+                                    <div className="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" className="custom-control-input" id="customCheck2" />
+                                        <label className="custom-control-label font-weight-normal" for="customCheck2">Amazing offers and bargains from our advertising partners.</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group align-items-start">
-                                <div class="col-lg-8 ml-auto">
-                                    <button class="btn btn-primary w-100">Update</button>
+                            <div className="row form-group align-items-start">
+                                <div className="col-lg-8 ml-auto">
+                                    <button className="btn btn-primary w-100">Update</button>
                                 </div>
                             </div>
                             </div>

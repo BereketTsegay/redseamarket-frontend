@@ -38,7 +38,7 @@ class Index extends React.Component{
         
         return (
             <div className="site-frame">
-                <Header user={user} loginStatus={loginStatus} />
+                <Header user={user} loginStatus={loginStatus} category={this.state.dataArray}/>
                 <Home dataArray={this.state.dataArray}/>
 
                 <AppDownload/>
