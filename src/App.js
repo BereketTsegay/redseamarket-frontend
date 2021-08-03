@@ -14,6 +14,8 @@ import Favourite from "./components/account/favourite";
 import MyAds from "./components/account/myAds";
 import AdsDetails from "./components/ads/adsDetails";
 import Profile from "./components/account/profile";
+import CategoryMotors from "./components/automobile/categoryMotors";
+import CategoryProperty from "./components/property/categoryProperty";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/myads" component={MyAds} />
           <Route path="/myprofile" component={Profile} />
           <Route path="/adsdetails/:id" component={AdsDetails} />
+          <Route path="/categoryMotors" component={CategoryMotors} />
+          <Route path="/categoryProperty" component={CategoryProperty} />
         </Switch>
       </Router>
   );
