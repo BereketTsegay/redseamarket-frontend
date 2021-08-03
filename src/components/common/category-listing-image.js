@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 class CategoryListingImage extends React.Component{
     render() {
@@ -22,7 +23,7 @@ class CategoryListingImage extends React.Component{
 
                   <div className="col-product-panel">
                      <div className="product-panel">
-                        <a href="#">
+                        <Link to={`/adsdetails/${subcatArray.id}`}>
                            <div className="panel-media">
                            {
                            (subcatArray['image'].length >0)?
@@ -51,7 +52,7 @@ class CategoryListingImage extends React.Component{
                               </h4>
                               <p className="panel-description">{subcatArray['description'].substring(0, 150)}</p>
                            </div>
-                        </a>
+                        </Link>
                      </div>
                   </div>
                   

@@ -1,15 +1,60 @@
+import axios from 'axios';
 import React, { Component } from 'react';
+import { BASE_URL } from '../../projectString';
 
 class HomeFilter extends React.Component{
+
+   constructor(props){
+      super(props);
+
+      this.state = {
+         searchKey: '',
+      }
+   }
+
+   handleChange = (e) => {
+
+      this.setState({
+         searchKey: e.target.value,
+         city: null,
+         category: null,
+         result: [],
+      });
+      
+   }
+
+   handlSubmit = (e) => {
+
+      e.preventDefault();
+
+      axios({
+         url: `${BASE_URL}/customer/search/ads`,
+         method: 'POST',
+         data:{
+            search_key: this.state.searchKey,
+            category: this.state.category,
+            city: this.state.city,
+         }
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            
+         }
+
+      }).catch((error) => {
+
+      });
+
+   }
+
     render() {
+
+      let {searchKey, city, category} = this.state;
+
         return (
            <div> 
         <section className="section-home-hero">
            
-
-
-
-
 
            <div className="container">
                   <div className="row">
@@ -47,12 +92,12 @@ class HomeFilter extends React.Component{
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
+                                          <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" />
                                        </div>
                                     </div>
                                     <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                       <button className="btn btn-primary has-icon w-100" onClick={(e) => this.handlSubmit(e)}>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                           Search
                                        </button>
                                     </div>
@@ -151,7 +196,7 @@ class HomeFilter extends React.Component{
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
+                                          <input type="text"  className="form-control" placeholder="Search for anything…" />
                                        </div>
                                     </div>
                                     <div className="col-md-3">
