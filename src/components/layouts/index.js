@@ -11,6 +11,7 @@ class Index extends React.Component{
         super(props);
         this.state = {
            loginStatus: false,
+           user: '',
            dataArray:[],
   
         };
@@ -23,7 +24,8 @@ class Index extends React.Component{
            longitude:0,
         }).then(result => {
           if(result.data.status=="success" && result.status){
-               this.setState({loginStatus:result.data.data.loged_user_status}); 
+               this.setState({loginStatus:result.data.data.loged_user_status});
+               this.setState({user:result.data.data.user_name});
                this.setState({dataArray:result.data.data.categories});
      
           }
@@ -32,10 +34,11 @@ class Index extends React.Component{
         })
       }
     render() {
+        let {loginStatus, user} = this.state;
         
         return (
             <div className="site-frame">
-                <Header />
+                <Header user={user} loginStatus={loginStatus} />
                 <Home dataArray={this.state.dataArray}/>
 
                 <AppDownload/>

@@ -13,6 +13,7 @@ import Login from "./components/login/login";
 import Favourite from "./components/account/favourite";
 import MyAds from "./components/account/myAds";
 import AdsDetails from "./components/ads/adsDetails";
+import Profile from "./components/account/profile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/myfavourite" component={Favourite} />
           <Route path="/myads" component={MyAds} />
+          <Route path="/myprofile" component={Profile} />
           <Route path="/adsdetails/:id" component={AdsDetails} />
         </Switch>
       </Router>

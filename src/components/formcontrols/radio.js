@@ -18,12 +18,13 @@ export default class radio extends Component {
 
         return (
             <div className="form-group">
-                <p>{label}</p>
+                <label>{label}</label>
                 {option.map(function(a){
                     return (
-                        <div>
-                            <label>{a.value}</label>
-                            <input type="radio" name={label} value={a.value} className="form-control" />
+                       
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" name={label} value={a.value} class="custom-control-input" id={a.value}/>
+                            <label class="custom-control-label font-weight-normal" for={a.value}>{a.value} </label>
                         </div>
                     )
                 })}

@@ -6,10 +6,12 @@ export default class checkbox extends Component {
     }
     render() {
         return (
-            <div className="form-group">
-                <label>{this.props.label}</label>
-                <input type="checkbox" checked={this.props.checked} className="form-control" />
+
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" className="custom-control-input" checked={this.props.checked} id="customCheck1" />
+                <label class="custom-control-label font-weight-normal" for="customCheck1">{this.props.label} </label>
             </div>
+            
         )
     }
 }
