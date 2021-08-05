@@ -92,13 +92,13 @@ export default class adEnquire extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="col-12">
                                 <div className="report-ad-panel text-center mt-4 mt-md-5">
                                 Is there an issue? <br /><a href="#">Report this Ad Now</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </section>
         )

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { BASE_URL } from '../../projectString'
+import { BASE_URL, userToken } from '../../projectString'
 import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
@@ -22,14 +22,16 @@ export default class favourite extends Component {
             previousPage: '',
             nexPage: '',
             last: '',
+            token: userToken,
         }
     }
 
     componentWillMount(){
-
+        
         axios({
             url: `${BASE_URL}/customer/view/favourite`,
             method: 'POST',
+            headers: { Authorization: "Bearer " + this.state.token },
             
         }).then(response => {
             

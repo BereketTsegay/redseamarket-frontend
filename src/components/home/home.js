@@ -9,11 +9,12 @@ import CategoryListingImage4 from '../common/category-listing-image4';
 class Home extends React.Component{
     render() {
         let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
+        let categoryDefault = (this.props.categoryDefault != undefined) ? this.props.categoryDefault : [];
         // console.log(dataArray,'dataArray')
         return (
             <div id="page" className="site-page">
                 <HomeFilter/> 
-                <PopularCategoryListing/>
+                <PopularCategoryListing categoryDefault={categoryDefault} />
                 {(dataArray && dataArray.map((dataArray,indexi) =>
                 // console.log(dataArray.name)
                 <CategoryListingImage dataArray={dataArray} />

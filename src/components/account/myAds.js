@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { BASE_URL } from '../../projectString'
+import { BASE_URL, userToken } from '../../projectString'
 import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
@@ -21,6 +21,7 @@ export default class myAds extends Component {
             previousPage: '',
             nexPage: '',
             last: '',
+            token: userToken,
         }
     }
 
@@ -54,6 +55,7 @@ export default class myAds extends Component {
         axios({
             url: url,
             method: 'POST',
+            headers: { Authorization: "Bearer " + this.state.token },
             
         }).then(response => {
             

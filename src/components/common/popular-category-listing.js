@@ -4,8 +4,17 @@ import Flat from '../../../src/web-assets/img/icon-flat.svg';
 import House from '../../../src/web-assets/img/icon-house.svg'
 import Machine from '../../../src/web-assets/img/icon-washing-machine.svg';
 import Mobile from '../../../src/web-assets/img/icon-tab-mobile.svg';
+import SubcategoryListing from './subcategoryListing';
+
 class PopularCategoryListing extends React.Component{
+
+    constructor(props){
+        super(props);
+
+    }
     render() {
+        let categoryDefault = this.props.categoryDefault;
+        
         return (
                 <section className="section-home-categories-list">
                 <div className="container">
@@ -15,6 +24,11 @@ class PopularCategoryListing extends React.Component{
                         </div>
                     </div>
                     <div className="row">
+                        {categoryDefault && categoryDefault.map((categoryDefault, index) => {
+
+                            return <SubcategoryListing key={index} name={categoryDefault.name} subcategory={categoryDefault.subcategory} />
+                        })}
+                        
                         <div className="col-category col-md-4 col-sm-6">
                             <h4 className="category-title"><img src={Motors} alt="icon" />Motors</h4>
                             <ul className="category-list">

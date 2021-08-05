@@ -8,8 +8,8 @@ export default class checkbox extends Component {
         return (
 
             <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" className="custom-control-input" checked={this.props.checked} id="customCheck1" />
-                <label class="custom-control-label font-weight-normal" for="customCheck1">{this.props.label} </label>
+                <input type="checkbox" className="custom-control-input" checked={this.props.checked} id={this.props.label} />
+                <label class="custom-control-label font-weight-normal" for={this.props.label} >{this.props.label} </label>
             </div>
             
         )

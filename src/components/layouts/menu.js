@@ -8,14 +8,16 @@ class Menu extends React.Component{
       super(props);
    }
     render() {
-      //  console.log(this.props.category);
+       
         return (
             <nav className="main-menubar">
                <div className="container">
                   <div className="menubar">
                      <ul className="menu">
-
-                        {/* {this.props.category.map((category, index) => {
+                     <li className="menu-item menu-item-has-children">
+                           <Link to="/">Home</Link>
+                        </li>
+                        {this.props.category.map((category, index) => {
                            return (
                               <li key={index} className="menu-item menu-item-has-children">
                                  <Link to="#">{category.name}</Link>
@@ -30,9 +32,9 @@ class Menu extends React.Component{
                                  </ul>
                               </li>
                            );
-                        })} */}
+                        })}
 
-                        <li className="menu-item menu-item-has-children">
+                        {/* <li className="menu-item menu-item-has-children">
                            <a href="#">Motors</a>
                            <ul className="sub-menu">
                               <li className="menu-item menu-item-has-children">
@@ -111,7 +113,7 @@ class Menu extends React.Component{
                         </li>
                         <li className="menu-item menu-item-has-children">
                            <a href="#">Mobiles & Tablets</a>
-                        </li>
+                        </li> */}
                         <li className="menu-item menu-item-has-children">
                            <a href="#">About Us</a>
                         </li>

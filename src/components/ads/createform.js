@@ -14,13 +14,15 @@ import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 import axios from 'axios';
 import {BASE_URL} from '../../projectString';
+import MotorCreate from './motorCreate.js';
+import PropertyCreate from './propertyCreate.js';
 
 class CreateForm extends React.Component{
 
    constructor(props) {
       super(props)
       this.state = {
-         category: 1,
+         category: 2,
          subcategory:1,
          categoryField: [],
          master:'',
@@ -152,6 +154,8 @@ class CreateForm extends React.Component{
                            <SelectField placeholder="City" option={city} type="common" />
                            <Checkbox label="Price Negotiable" />
                            <Checkbox label="Featured" />
+
+                           { category == 1 ?  <MotorCreate /> : category == 2 ? <PropertyCreate /> : category == 3 ? <PropertyCreate /> : '' }
 
                            {categoryField.map((categoryField, index) => {
                               if(categoryField.field.type === 'text'){

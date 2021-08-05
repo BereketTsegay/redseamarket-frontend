@@ -6,6 +6,8 @@ import Footer from '../layouts/footer';
 import AppDownload from '../home/app-download';
 import axios from 'axios';
 import dataArray from '../common/test.json';
+import { BASE_URL, userToken } from '../../projectString.js';
+
 class Index extends React.Component{
     constructor(props) {
         super(props);
@@ -13,33 +15,77 @@ class Index extends React.Component{
            loginStatus: false,
            user: '',
            dataArray:[],
+           token: userToken,
+           categoryDefault: '',
   
         };
   
     }   
     componentWillMount() {
-        axios.post('http://jama-al-backend.freshpureuae.com/api/customer/dashboard',
-        {
-           latitude:0,
-           longitude:0,
-        }).then(result => {
-          if(result.data.status=="success" && result.status){
-               this.setState({loginStatus:result.data.data.loged_user_status});
-               this.setState({user:result.data.data.user_name});
-               this.setState({dataArray:result.data.data.categories});
-     
-          }
-         
+        
+        if(this.state.token == null){
+            axios({
+                url : `${BASE_URL}/customer/dashboard`,
+                method: 'POST',
+                headers: { Authorization: "Bearer " + this.state.token },
+                data:{
+                    latitude:0,
+                    longitude:0,
+                }
+
+            }).then(result => {
+            if(result.data.status=="success" && result.status){
+                
+                this.setState({loginStatus:result.data.data.loged_user_status});
+                this.setState({user:result.data.data.user_name});
+                this.setState({dataArray:result.data.data.categories});
+                this.setState({categoryDefault:result.data.data.category_default});
+
+                localStorage.setItem('user', this.state.user);
+                localStorage.setItem('loginStatus', this.state.loginStatus);
+                localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
+        
+            }
             
-        })
+                
+            });
+        }
+        else{
+
+            axios({
+                url : `${BASE_URL}/customer/loged/dashboard`,
+                method: 'POST',
+                headers: { Authorization: "Bearer " + this.state.token },
+                data:{
+                    latitude:0,
+                    longitude:0,
+                }
+
+            }).then(result => {
+            if(result.data.status=="success" && result.status){
+                
+                this.setState({loginStatus:result.data.data.loged_user_status});
+                this.setState({user:result.data.data.user_name});
+                this.setState({dataArray:result.data.data.categories});
+                this.setState({categoryDefault:result.data.data.category_default});
+                
+                localStorage.setItem('user', this.state.user);
+                localStorage.setItem('loginStatus', this.state.loginStatus);
+                localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
+        
+            }
+            
+                
+            });
+        }
       }
     render() {
-        let {loginStatus, user} = this.state;
+        
         
         return (
             <div className="site-frame">
-                <Header user={user} loginStatus={loginStatus} category={this.state.dataArray}/>
-                <Home dataArray={this.state.dataArray}/>
+                <Header />
+                <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} />
 
                 <AppDownload/>
                 <Footer/>

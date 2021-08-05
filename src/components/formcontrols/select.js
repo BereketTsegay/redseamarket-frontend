@@ -18,7 +18,7 @@ class SelectField extends React.Component{
     render() {
         
         let {placeholder, option, master, master_id, type} = this.state;
-
+        console.log(option);
         this.masterChange = (event, master) => {
             
             this.props.onOptionChange(event.target.value, master)
