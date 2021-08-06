@@ -1,18 +1,29 @@
 import React, { Component } from 'react'
+import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
+import { IMAGE_URL } from '../../projectString';
 
 export default class popularResidentialForRend extends Component {
+
+    constructor(props){
+        super(props);
+
+    }
+    
     render() {
+
+        let ads = this.props.ads;
+        
         return (
             <div className="col-product-panel">
                 <div className="product-panel">
                     <a href="#">
                         <div className="panel-media">
-                            <img src="assets/img/media-residential-1.jpg" alt="media" />
+                            <img src={ads.image[0] ? IMAGE_URL+'/'+ads.image[0].image : defaultImage } alt="media" />
                         </div>
                         <div className="panel-content">
-                            <h3 className="panel-price">AED 119,000</h3>
-                            <h4 className="panel-title">1 Bed • 2 Baths</h4>
-                            <p className="panel-description">No. 9, Dubai Marina</p>
+                            <h3 className="panel-price">AED {ads.price}</h3>
+                            <h4 className="panel-title">{ads.room} Room • {ads.size} SqFt</h4>
+                            <p className="panel-description">{ads.state_name}, {ads.city_name}</p>
                         </div>
                     </a>
                 </div>

@@ -34,20 +34,25 @@ class Index extends React.Component{
                 }
 
             }).then(result => {
-            if(result.data.status=="success" && result.status){
-                
-                this.setState({loginStatus:result.data.data.loged_user_status});
-                this.setState({user:result.data.data.user_name});
-                this.setState({dataArray:result.data.data.categories});
-                this.setState({categoryDefault:result.data.data.category_default});
+                if(result.data.status=="success" && result.status){
+                    
+                    this.setState({loginStatus:result.data.data.loged_user_status});
+                    this.setState({user:result.data.data.user_name});
+                    this.setState({dataArray:result.data.data.categories});
+                    this.setState({categoryDefault:result.data.data.category_default});
 
-                localStorage.setItem('user', this.state.user);
-                localStorage.setItem('loginStatus', this.state.loginStatus);
-                localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
-        
-            }
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('loginStatus');
+                    localStorage.removeItem('dataArray');
+                    
+                    localStorage.setItem('user', this.state.user);
+                    localStorage.setItem('loginStatus', this.state.loginStatus);
+                    localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
             
-                
+                }
+            
+            }).catch((error) => {
+
             });
         }
         else{
@@ -62,25 +67,29 @@ class Index extends React.Component{
                 }
 
             }).then(result => {
-            if(result.data.status=="success" && result.status){
-                
-                this.setState({loginStatus:result.data.data.loged_user_status});
-                this.setState({user:result.data.data.user_name});
-                this.setState({dataArray:result.data.data.categories});
-                this.setState({categoryDefault:result.data.data.category_default});
-                
-                localStorage.setItem('user', this.state.user);
-                localStorage.setItem('loginStatus', this.state.loginStatus);
-                localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
-        
-            }
+                if(result.data.status=="success" && result.status){
+                    
+                    this.setState({loginStatus:result.data.data.loged_user_status});
+                    this.setState({user:result.data.data.user_name});
+                    this.setState({dataArray:result.data.data.categories});
+                    this.setState({categoryDefault:result.data.data.category_default});
+                    
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('loginStatus');
+                    localStorage.removeItem('dataArray');
+
+                    localStorage.setItem('user', this.state.user);
+                    localStorage.setItem('loginStatus', this.state.loginStatus);
+                    localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
             
-                
+                }
+              
+            }).catch((error) => {
+
             });
         }
       }
     render() {
-        
         
         return (
             <div className="site-frame">

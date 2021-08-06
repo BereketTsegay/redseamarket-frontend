@@ -1,36 +1,50 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 export default class subcategoryList extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
     render() {
+
+        let subcategory = this.props.subcategory;
+        let length = subcategory.ads.length;
+
+        var i, j, temp, chunk = length/3, newSub = [];
+
+        for(i = 0, j = length; i < j; i += chunk){
+            
+            temp = subcategory.ads.slice(i, i + chunk)
+            newSub.push(temp);
+        }
+
         return (
             <div className="row row-place-list">
                 <div className="col-12">
-                    <h4 className="title">Apartments for rent</h4>
+                    <h4 className="title">{subcategory.name}</h4>
                 </div>
                 <div className="col-12">
                     <div className="row">
-                    <div className="col-lg-4 col-md-6">
-                        <ul className="place-lists">
-                            <li><a href="#">Apartments for rent in Dubai Marina </a></li>
-                            <li><a href="#">Apartments for rent in Downtown Dubai </a></li>
-                            <li><a href="#">Apartments for rent in The Palm Jumeirah </a></li>
-                            <li><a href="#">Apartments for rent in Business Bay</a></li>
-                        </ul>
-                    </div>
-                    <div className="col-lg-4 col-md-6">
-                        <ul className="place-lists">
-                            <li><a href="#">Apartments for rent in Dubai Silicon Oasis </a></li>
-                            <li><a href="#">Apartments for rent in Jebel Ali </a></li>
-                            <li><a href="#">Apartments for rent in JLT Jumeirah Lake Towers </a></li>
-                            <li><a href="#">Apartments for rent in International City</a></li>
-                        </ul>
-                    </div>
-                    <div className="col-lg-4 col-md-6">
-                        <ul className="place-lists">
-                            <li><a href="#">Apartments for rent in Dubai Hills Estate </a></li>
-                            <li><a href="#">Apartments for rent in JBR Jumeirah Beach Residence</a></li>
-                        </ul>
-                    </div>
+
+                        {newSub && newSub.map((subcategory, index) => {
+                            
+                            return (
+                                <div className="col-lg-4 col-md-6" key={index}>
+                                    <ul className="place-lists">
+
+                                        {subcategory && subcategory.map((ads, index) => {
+                                            return( 
+                                                <li><Link to={`/adsdetails/${ads.id}`}>{ads.title} </Link></li>
+                                            )
+                                        })}
+                                        
+                                    </ul>
+                                </div>
+                            )
+                        })}
+                    
                     </div>
                 </div>
             </div>

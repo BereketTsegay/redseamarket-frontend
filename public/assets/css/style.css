@@ -274,7 +274,7 @@ button:focus,
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	z-index: 1;
+	z-index: 10;
 	position: relative;
 }
 
@@ -616,6 +616,8 @@ button:focus,
 	align-items: center;
 	border-radius: 10px;
 	width: 210px;
+	/* color: #FFF; todo chANGE */
+
 }
 .switch label {
 	padding: 8px 16px;

@@ -51,6 +51,8 @@ class HomeFilter extends React.Component{
 
       let {searchKey, city, category} = this.state;
 
+      let categoryList = this.props.category;
+
         return (
            <div> 
         <section className="section-home-hero">
@@ -68,23 +70,20 @@ class HomeFilter extends React.Component{
                            <li className="nav-item" role="presentation">
                               <a className="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
                            </li>
-                           <li className="nav-item" role="presentation">
-                              <a className="nav-link" id="motors-tab" data-toggle="tab" href="#motors" role="tab" aria-controls="motors" aria-selected="false">Motors</a>
-                           </li>
-                           <li className="nav-item" role="presentation">
-                              <a className="nav-link" id="classifieds-tab" data-toggle="tab" href="#classifieds" role="tab" aria-controls="classifieds" aria-selected="false">Classifieds</a>
-                           </li>
 
-                           <li className="nav-item" role="presentation">
-                              <a className="nav-link" id="rent-tab" data-toggle="tab" href="#rent" role="tab" aria-controls="rent" aria-selected="false">Property for Rent</a>
-                           </li>
-
-                           <li className="nav-item" role="presentation">
-                              <a className="nav-link" id="sale-tab" data-toggle="tab" href="#sale" role="tab" aria-controls="sale" aria-selected="false">Property for Sale</a>
-                           </li>
-                           <li className="nav-item" role="presentation">
-                              <a className="nav-link" id="mandt-tab" data-toggle="tab" href="#mandt" role="tab" aria-controls="mandt" aria-selected="false">Mobiles & Tablets</a>
-                           </li>
+                           {categoryList && categoryList.map((categoryList, index) => {
+                              if(index < 5){
+                                 return (
+                                    <li className="nav-item" role="presentation" key={index}>
+                                       <a className="nav-link" id="motors-tab" data-toggle="tab" href={`#cat${index}`} role="tab" aria-controls={`cat${index}`} aria-selected="false">{categoryList.name}</a>
+                                    </li>
+                                 )
+                              }
+                              else{
+                                 return '';
+                              }
+                           })}
+                           
                         </ul>
                         <div className="tab-content" id="heroNavContent">
                            <div className="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
@@ -104,266 +103,68 @@ class HomeFilter extends React.Component{
                                  </div>
                               </div>
                            </div>
-                           <div className="tab-pane fade" id="motors" role="tabpanel" aria-labelledby="motors-tab">
-                              <div className="hero-search hero-search-home">
-                                 <div className="row row-options">
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Cities</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
+                           {categoryList && categoryList.map((categoryList, index) => {
+                              if(index < 5){
+                                 return (
+                                    <div className="tab-pane fade" id={`cat${index}`} role="tabpanel" aria-labelledby="motors-tab">
+                                       <div className="hero-search hero-search-home">
+                                          <div className="row row-options">
+                                             <div className="col-md-4">
+                                                <div className="form-group">
+                                                   <select className="form-control">
+                                                      <option>All Cities</option>
+                                                      <option>2</option>
+                                                      <option>3</option>
+                                                      <option>4</option>
+                                                      <option>5</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             <div className="col-md-4">
+                                                <div className="form-group">
+                                                   <select className="form-control">
+                                                      <option>All</option>
+                                                      <option>2</option>
+                                                      <option>3</option>
+                                                      <option>4</option>
+                                                      <option>5</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             <div className="col-md-4">
+                                                <div className="form-group">
+                                                   <select className="form-control">
+                                                      <option>All Categories</option>
+                                                      <option>2</option>
+                                                      <option>3</option>
+                                                      <option>4</option>
+                                                      <option>5</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div className="row">
+                                             <div className="col-md-9">
+                                                <div className="form-group">
+                                                   <input type="text" className="form-control" placeholder="Search for anything…" />
+                                                </div>
+                                             </div>
+                                             <div className="col-md-3">
+                                                <button className="btn btn-primary has-icon w-100">
+                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                   Search
+                                                </button>
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Categories</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="row">
-                                    <div className="col-md-9">
-                                       <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
-                                       </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                          Search
-                                       </button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tab-pane fade" id="classifieds" role="tabpanel" aria-labelledby="classifieds-tab">
-                              <div className="hero-search hero-search-home">
-                                 <div className="row row-options">
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Cities</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Categories</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="row">
-                                    <div className="col-md-9">
-                                       <div className="form-group">
-                                          <input type="text"  className="form-control" placeholder="Search for anything…" />
-                                       </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                          Search
-                                       </button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tab-pane fade" id="rent" role="tabpanel" aria-labelledby="rent-tab">
-                              <div className="hero-search hero-search-home">
-                                 <div className="row row-options">
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Cities</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Categories</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="row">
-                                    <div className="col-md-9">
-                                       <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
-                                       </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                          Search
-                                       </button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
-                              <div className="hero-search hero-search-home">
-                                 <div className="row row-options">
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Cities</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Categories</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="row">
-                                    <div className="col-md-9">
-                                       <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
-                                       </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                          Search
-                                       </button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="tab-pane fade" id="mandt" role="tabpanel" aria-labelledby="mandt-tab">
-                              <div className="hero-search hero-search-home">
-                                 <div className="row row-options">
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Cities</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                       <div className="form-group">
-                                          <select className="form-control">
-                                             <option>All Categories</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="row">
-                                    <div className="col-md-9">
-                                       <div className="form-group">
-                                          <input type="text" className="form-control" placeholder="Search for anything…" />
-                                       </div>
-                                    </div>
-                                    <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                          Search
-                                       </button>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
+                                 )
+                              }
+                              else{
+                                 return '';
+                              }
+                           })}
+                           
                         </div>
                      </div>
                   </div>

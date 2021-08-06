@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 export default class breadcrumb extends Component {
 
@@ -14,7 +15,7 @@ export default class breadcrumb extends Component {
                         <div className="row">
                             <div className="col-12">
                                 <ol className="breadcrumb breadcrumb-alt bg-white m-0 p-0">
-                                <li className="breadcrumb-item"><a href="#">Home</a></li>
+                                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
                                 <li className="breadcrumb-item active" aria-current="page">{this.props.section}</li>
                                 </ol>
                             </div>

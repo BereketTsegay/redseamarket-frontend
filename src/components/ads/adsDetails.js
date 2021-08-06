@@ -6,6 +6,7 @@ import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
 import AdEnquire from './adEnquire'
+import MotorProperty from './motorProperty';
 
 export default class adsDetails extends Component {
 
@@ -103,7 +104,10 @@ export default class adsDetails extends Component {
                                                 <p className="product-desc">{ads.description.substring(0, 250)}</p>
                                                 <div className="product-price font-weight-bold text-brand">AED {ads.price}</div>
                                                 <ul className="product-meta">
-                                                    {ads.custom_value.map((customValue, index) => {
+                                                    {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value.registration_year} fuel={ads.motore_value.fuel_type} />
+                                                    : ads.category_id == 2 ? 'rend' 
+                                                    : ads.category_id == 3 ? 'sale' 
+                                                    : ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position === 'top'){
                                                             return <li key={index}>{customValue.value} : {customValue.name} </li>
                                                         }
@@ -147,7 +151,7 @@ export default class adsDetails extends Component {
                                                 <a className="nav-link" id="pdttab2-tab" data-toggle="pill" href="#pdttab2" role="tab" aria-controls="pdttab2" aria-selected="false">Amenities</a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link" id="pdttab3-tab" data-toggle="pill" href="#pdttab3" role="tab" aria-controls="pdttab3" aria-selected="false">Property Info</a>
+                                                <a className="nav-link" id="pdttab3-tab" data-toggle="pill" href="#pdttab3" role="tab" aria-controls="pdttab3" aria-selected="false">{ads.category_id == 1 ? 'Motor Info' : ads.category_id == 2 ? 'Property Info' : ads.category_id == 3 ? 'Property Info' : 'Info' }</a>
                                             </li>
                                             <li className="nav-item" role="presentation">
                                                 <a className="nav-link" id="pdttab4-tab" data-toggle="pill" href="#pdttab4" role="tab" aria-controls="pdttab4" aria-selected="false">Location</a>
@@ -175,23 +179,79 @@ export default class adsDetails extends Component {
                                                 <div className="pdt-tab-list">
                                                     <div className="row">
                                                         <div className="col-lg-8">
-                                                        {/* <div className="row mb-3 mb-md-4">
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong>Furnished</strong></div>
                                                             <div className="col-1 text-center">:</div>
-                                                            <div className="col-7">No</div>
-                                                        </div> */}
-                                                        <div className="row mb-3 mb-md-4">
+                                                            <div className="col-7">{ads.property_rend.furnished}</div>
+                                                        </div> : ''}
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong>Furnished</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_sale.furnished}</div>
+                                                        </div> : ''}
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong> Apartment For</strong></div>
                                                             <div className="col-1 text-center">:</div>
                                                             <div className="col-7">Rent</div>
-                                                        </div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Apartment For</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">Sale</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 1 ?
+                                                        <>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Make</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.make}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Model</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.model}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Registration Year</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.motore_value.registration_year}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Fuel</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.motore_value.fuel_type}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Transmission</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.motore_value.transmission}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Condition</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.motore_value.condition}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Milage</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.motore_value.milage}</div>
+                                                            </div>
+                                                        </>
+                                                        
+                                                        : '' }
+
                                                         <div className="row mb-3 mb-md-4">
-                                                            <div className="col-4"><strong>Posted On </strong></div>
+                                                            <div className="col-4"><strong>Ad Posted On </strong></div>
                                                             <div className="col-1 text-center">:</div>
                                                             <div className="col-7">{ads.created_on} </div>
                                                         </div>
                                                         <div className="row mb-3 mb-md-4">
-                                                            <div className="col-4"><strong>Property Reference </strong></div>
+                                                            <div className="col-4"><strong>{ads.category_id == 1 ? 'Motor Reference' : ads.category_id == 2 ? 'Property Reference' : ads.category_id == 3 ? 'Property Reference' : 'Reference' } </strong></div>
                                                             <div className="col-1 text-center">:</div>
                                                             <div className="col-7">JAB-{ads.id} </div>
                                                         </div>

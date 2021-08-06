@@ -1,18 +1,28 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
+import { IMAGE_URL } from '../../projectString';
 
 export default class popularCategory extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
     render() {
+
+        let {id, category_id, name, image} = this.props;
+        
         return (
             <div className="item">
                 <div className="cc-panel text-center overflow-hidden">
-                    <a href="#" className="d-block w-100">
+                    <Link href="#" className="d-block w-100">
                         <div className="panel-media">
-                        <img src="assets/img/cc-media-1.jpg" alt="media" />
+                        <img src={IMAGE_URL+'/'+image} alt="media" />
                         </div>
                         <div className="overlay w-100">
-                        <h5 className="mb-0 text-white">Commercial for Sale</h5>
+                        <h5 className="mb-0 text-white">{name}</h5>
                         </div>
-                    </a>
+                    </Link>
                 </div>
             </div>
         )

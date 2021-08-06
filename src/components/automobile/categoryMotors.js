@@ -1,4 +1,6 @@
+import axios from 'axios'
 import React, { Component } from 'react'
+import { BASE_URL } from '../../projectString'
 import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
@@ -8,8 +10,42 @@ import MotorsSubcategoryAndAds from './motorsSubcategoryAndAds'
 import Testimonial from './testimonial'
 
 export default class categoryMotors extends Component {
-    render() {
-        return (
+
+   constructor(){
+      super();
+
+      this.state = {
+         subcategory: [],
+         ads: [],
+         testimonial: [],
+      }
+   }
+
+   componentWillMount(){
+      axios({
+         url: `${BASE_URL}/customer/get/motors`,
+         method: 'POST',
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            
+            this.setState({
+               subcategory: response.data.data.motors.subcategory,
+               ads: response.data.data.ads,
+               testimonial: response.data.data.testimonial,
+            });
+         }
+
+      }).catch((error) => {
+
+      })
+   }
+
+   render() {
+
+      let {subcategory, ads, testimonial} = this.state;
+      
+         return (
             <div id="page" className="site-page">
                <Header />
                {/* <!-- =====[SECTION HOME HERO] **===== --> */}
@@ -47,13 +83,10 @@ export default class categoryMotors extends Component {
                   <div className="container">
                      <div className="row">
 
-                        <MotorsSubcategoryAndAds count="16,024" subcategory="USED CARS FOR SALE" />
-                        <MotorsSubcategoryAndAds count="166" subcategory="MOTORCYCLES" />
-                        <MotorsSubcategoryAndAds count="420" subcategory="AUTO ACCESSORIES & PARTS" />
-                        <MotorsSubcategoryAndAds count="164" subcategory="HEAVY VEHICLES" />
-                        <MotorsSubcategoryAndAds count="47" subcategory="BOATS" />
-                        <MotorsSubcategoryAndAds count="1,549" subcategory="NUMBER PLATES" />
-                           
+                        {subcategory && subcategory.map((subcategory, index) => {
+                           return <MotorsSubcategoryAndAds key={index} count={subcategory.ads_count} subcategory={subcategory.name} />
+                        })}
+                        
                      </div>
                   </div>
                </section>
@@ -88,11 +121,10 @@ export default class categoryMotors extends Component {
                         </div>
                      </div>
                      <div className="row row-product-panel">
-                        <FeaturedAds />
-                        <FeaturedAds />
-                        <FeaturedAds />
-                        <FeaturedAds />
-                        <FeaturedAds />
+
+                        {ads && ads.map((ads, index) => {
+                           return <FeaturedAds key={index} ads={ads} />
+                        })}
                         
                      </div>
                   </div>
@@ -107,10 +139,10 @@ export default class categoryMotors extends Component {
                         </div>
                      </div>
                      <div className="row">
-                        <Testimonial />
-                        <Testimonial />
-                        <Testimonial />
-                        <Testimonial />
+                        
+                        {testimonial && testimonial.map((testimonial, index) => {
+                           return <Testimonial key={index} testimonial={testimonial} />;
+                        })}
                         
                      </div>
                   </div>

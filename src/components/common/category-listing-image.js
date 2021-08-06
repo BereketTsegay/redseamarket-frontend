@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
+import { IMAGE_URL } from '../../projectString';
 class CategoryListingImage extends React.Component{
     render() {
       let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
@@ -28,7 +29,7 @@ class CategoryListingImage extends React.Component{
                            {
                            (subcatArray['image'].length >0)?
                               (subcatArray['image'] && subcatArray['image'].map((img,image) =>
-                               (img.image!="") ? <img src={'http://jama-al-backend.freshpureuae.com/'+img.image} alt="media" />:<img src={defaultImage} alt="media" />
+                               (img.image!="") ? <img src={IMAGE_URL+'/'+img.image} alt="media" />:<img src={defaultImage} alt="media" />
                                
                               ))
                              : <img src={defaultImage} alt="media" Style={"width:100%","height: 174px"} />

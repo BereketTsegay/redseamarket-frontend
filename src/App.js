@@ -32,7 +32,7 @@ function App() {
           <Route path="/myprofile" component={Profile} />
           <Route path="/adsdetails/:id" component={AdsDetails} />
           <Route path="/categoryMotors" component={CategoryMotors} />
-          <Route path="/categoryProperty" component={CategoryProperty} />
+          <Route path="/categoryProperty/:id" component={CategoryProperty} />
         </Switch>
       </Router>
   );

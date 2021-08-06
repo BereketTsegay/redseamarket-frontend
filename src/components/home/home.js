@@ -13,11 +13,14 @@ class Home extends React.Component{
         // console.log(dataArray,'dataArray')
         return (
             <div id="page" className="site-page">
-                <HomeFilter/> 
+                <HomeFilter category={categoryDefault} /> 
                 <PopularCategoryListing categoryDefault={categoryDefault} />
                 {(dataArray && dataArray.map((dataArray,indexi) =>
                 // console.log(dataArray.name)
-                <CategoryListingImage dataArray={dataArray} />
+
+                    
+                <CategoryListingImage key={indexi} dataArray={dataArray} />
+                
                 ))   
             }
                

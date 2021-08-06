@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Motors from '../../../src/web-assets/img/icon-car.svg';
+import { IMAGE_URL } from '../../projectString';
 
 export default class subcategoryListing extends Component {
     constructor(props){
@@ -12,13 +13,22 @@ export default class subcategoryListing extends Component {
 
         let name = this.props.name != undefined ? this.props.name : '';
         let subcategory = this.props.subcategory ? this.props.subcategory : [];
-
+        let image = this.props.image ? this.props.image : '';
         return (
             <div className="col-category col-md-4 col-sm-6">
-                <h4 className="category-title"><img src={Motors} alt="icon" />{name}</h4>
+                <h4 className="category-title">
+                    <img src={IMAGE_URL+'/'+image} style={{width:'25px'}} alt="icon" />
+                    {name}</h4>
                 <ul className="category-list">
                     {subcategory && subcategory.map((subcategory, index) => {
-                        return <li key={index}><Link to="#">{subcategory.name} </Link></li>
+
+                        if(index < 4){
+                            return <li key={index}><Link to="#">{subcategory.name} </Link></li>
+                        }
+                        else{
+                            return '';
+                        }
+                        
                     })}
                 </ul>
                 <Link to="#" className="btn btn-link">

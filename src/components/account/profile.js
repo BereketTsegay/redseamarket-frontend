@@ -17,6 +17,11 @@ export default class profile extends Component {
             user: '',
             loginStatus: true,
             country: [],
+            name: '',
+            email: '',
+            phone: '',
+            nationality: '',
+
         }
     }
 
@@ -33,6 +38,13 @@ export default class profile extends Component {
                     myAds:response.data.data.myads,
                     myFavourite:response.data.data.myfavourite,
                     user:response.data.data.user,
+                }, () => {
+                    this.setState({
+                        name: this.state.user.name,
+                        email: this.state.user.email,
+                        phone: this.state.user.phone,
+                        nationality: this.state.user.nationality_id,
+                    });
                 });
             }
 
@@ -60,6 +72,8 @@ export default class profile extends Component {
 
         e.preventDefault();
         
+        localStorage.removeItem('userToken');
+        
         axios({
             url: `${BASE_URL}/customer/logout`,
             method: 'POST',
@@ -77,10 +91,36 @@ export default class profile extends Component {
 
     }
 
+    valueChange = (e) => {
+        
+        this.setState({
+            [e.target.name]:e.target.value,
+        });
+    }
+
+    handleSubmit = () => {
+
+        axios({
+            url: `${BASE_URL}/customer/update/profile`,
+            method: 'POST',
+            headers:{ Authorization: "Bearer " + this.state.token },
+            data: {
+                name: this.state.name,
+                email: this.state.email,
+                phone: this.state.phone,
+                nationality: this.state.nationality,
+            },
+        }).then(response => {
+
+        }).catch((error) => {
+
+        });
+    }
+
     render() {
 
-        let {token, myAds, myFavourite, user, loginStatus, country} = this.state;
-       
+        let {token, myAds, myFavourite, user, loginStatus, country, name, email, phone, nationality} = this.state;
+        
         return (
             <div id="page" className="site-page">
 
@@ -96,7 +136,7 @@ export default class profile extends Component {
                     <div className="my-profile-title-panel">
                         <div className="row">
                             <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
-                            <div className="col-lg-4 text-center"><a href="#" className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Account Settings</a></div>
+                            <div className="col-lg-4 text-center"><a href="#" className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Change Password</a></div>
                         </div>
                         <div className="row mt-4 mt-lg-5">
                             <div className="col-12 d-flex justify-content-center">
@@ -119,28 +159,28 @@ export default class profile extends Component {
                             <div className="row form-group align-items-center">
                                 <label className="col-lg-4 col-form-label">Name :</label>
                                 <div className="col-lg-8">
-                                    <input type="text" className="form-control" value={user.name} placeholder="Name" />
+                                    <input type="text" name="name" onChange={(e) => this.valueChange(e)} className="form-control" value={name} placeholder="Name" />
                                 </div>
                             </div>
                             <div className="row form-group align-items-center">
                                 <label className="col-lg-4 col-form-label">Email :</label>
                                 <div className="col-lg-8">
-                                    <input type="email" className="form-control" value={user.email} placeholder="Email" />
+                                    <input type="email" name="email" onChange={(e) => this.valueChange(e)} className="form-control" value={email} placeholder="Email" />
                                 </div>
                             </div>
                             <div className="row form-group align-items-center">
                                 <label className="col-lg-4 col-form-label">Phone :</label>
                                 <div className="col-lg-8">
-                                    <input type="email" className="form-control" value={user.phone} placeholder="phone" />
+                                    <input type="number" name="phone" onChange={(e) => this.valueChange(e)} className="form-control" value={phone} placeholder="phone" />
                                 </div>
                             </div>
                             <div className="row form-group align-items-center">
                                 <label className="col-lg-4 col-form-label">Nationality :</label>
                                 <div className="col-lg-8">
-                                    <select className="form-control">
+                                    <select className="form-control" onChange={(e) => this.valueChange(e)} name="nationality">
                                         
                                         {country && country.map((country, index) => {
-                                            if(country.id === user.nationality_id){
+                                            if(country.id === nationality){
                                                 return <option selected key={index} value={country.id}>{country.name}</option>
                                             }
                                             else{
@@ -158,7 +198,7 @@ export default class profile extends Component {
                             </div>
                             <div className="row form-group align-items-start">
                                 <div className="col-lg-8 ml-auto">
-                                    <button className="btn btn-primary w-100">Update</button>
+                                    <button type="button" onClick={this.handleSubmit} className="btn btn-primary w-100">Update</button>
                                 </div>
                             </div>
                             </div>

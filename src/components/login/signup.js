@@ -39,6 +39,8 @@ export default class signup extends Component {
         }).then(response => {
 
             if(response.data.status == 'success'){
+                localStorage.removeItem('userToken');
+                
                 localStorage.setItem('userToken', response.data.token);
 
                 this.props.history.push('/');
