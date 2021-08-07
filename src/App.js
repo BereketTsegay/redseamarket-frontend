@@ -24,7 +24,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Index} />
           <Route path="/create-ads" component={ CreateAds } />
-          <Route path="/create-form" component={ CreateForm } />
+          <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/myfavourite" component={Favourite} />

@@ -18,7 +18,7 @@ class SelectField extends React.Component{
     render() {
         
         let {placeholder, option, master, master_id, type} = this.state;
-        console.log(option);
+        
         this.masterChange = (event, master) => {
             
             this.props.onOptionChange(event.target.value, master)
@@ -53,7 +53,7 @@ class SelectField extends React.Component{
         }
 
         else if(this.props.type === 'Model'){
-            console.log(this.props.type);
+            
             return (
                 <div className="form-group">
                     <select onChange={(e) => this.masterChange(e, placeholder)} className="form-control">
@@ -71,7 +71,7 @@ class SelectField extends React.Component{
         }
 
         else if(this.props.type === 'Variant'){
-            console.log(this.props.type);
+            
             return (
                 <div className="form-group">
                     <select className="form-control">

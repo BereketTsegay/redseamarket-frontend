@@ -16,14 +16,16 @@ import axios from 'axios';
 import {BASE_URL} from '../../projectString';
 import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
+import LocationPicker from './locationPicker.js';
 
 class CreateForm extends React.Component{
 
    constructor(props) {
       super(props)
+
       this.state = {
-         category: 2,
-         subcategory:1,
+         category: '',
+         subcategory:'',
          categoryField: [],
          master:'',
          master_id:'',
@@ -31,26 +33,38 @@ class CreateForm extends React.Component{
          country: [],
          state: [],
          city:[],
+         categoryName: '',
+         subcategoryName: '',
       }
    }
 
    componentWillMount(){
-      axios({
-         method: 'POST',
-         url: `${BASE_URL}/customer/ads/custom_field_and_dependency`,
-         data:{
-            category:this.state.category,
-            subcategory:this.state.subcategory,
-         }
-      }).then(response => {
-         
-         if(response.data.status == 'success'){
+
+      this.setState({
+
+         category: this.props.match.params.category_id,
+         subcategory: this.props.match.params.subcategory_id,
+         categoryName: this.props.match.params.category,
+         subcategoryName: this.props.match.params.subcategory
+         ,
+      }, () => {
+         axios({
+            method: 'POST',
+            url: `${BASE_URL}/customer/ads/custom_field_and_dependency`,
+            data:{
+               category:this.state.category,
+               subcategory:this.state.subcategory,
+            }
+         }).then(response => {
             
-            this.setState({
-               categoryField:response.data.data.category_field,
-            });
-            
-         }
+            if(response.data.status == 'success'){
+               
+               this.setState({
+                  categoryField:response.data.data.category_field,
+               });
+               
+            }
+         });
       });
 
       axios({
@@ -114,7 +128,7 @@ class CreateForm extends React.Component{
 
     render() {
       
-      let {category, subcategory, categoryField, master, master_id, option, country, state, city} = this.state;
+      let {category, subcategory, categoryField, master, master_id, option, country, state, city, categoryName, subcategoryName} = this.state;
       
          return (
             <div className="site-frame">
@@ -134,8 +148,8 @@ class CreateForm extends React.Component{
                   <div className="row">
                      <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                         <ol className="breadcrumb p-0 bg-white justify-content-center">
-                           <li className="breadcrumb-item"><a href="#">Sport Bike</a></li>
-                           <li className="breadcrumb-item"><a href="#">Hyper sports</a></li>
+                           <li className="breadcrumb-item"><a href="javascript:void(0);">{categoryName}</a></li>
+                           <li className="breadcrumb-item"><a href="javascript:void(0);">{subcategoryName}</a></li>
                         </ol>
                      </div>
                   </div>
@@ -146,9 +160,8 @@ class CreateForm extends React.Component{
                            <TextField  placeholder="Title"/>
                            <TextField  placeholder="Canonical Name"/>
                            <FileField placeholder="Add Pictures" />
-                           {/* <TextField placeholder="Phone number"/> */}
                            <TextField placeholder="Price"/>
-                           <TextArea placeholder="Describe your Sport Bike" />
+                           <TextArea placeholder={`Describe your ${subcategoryName}`} />
                            <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
                            <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" />
                            <SelectField placeholder="City" option={city} type="common" />
@@ -220,15 +233,8 @@ class CreateForm extends React.Component{
                            <Checkbox label="Phone Hide" />
 
                            <hr />
-                           <TextField placeholder="Locate your motorcycle" />
+                           <LocationPicker subcategoryName={subcategoryName} />
 
-                           <div className="create-ad-location mb-4 mb-md-5">
-                              <h4 className="title mb-2">Is the pin in the right location?</h4>
-                              <p>Click and drag the pin to the exact spot. Users are more likely to respond to ads that are correctly shown on the map</p>
-                              <div className="map-frame overflow-hidden">
-                                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d68715.3019452309!2d55.304360684611346!3d25.155860292817362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1626524584118!5m2!1sen!2sin"></iframe>
-                              </div>
-                           </div>
                            <div className="form-group">
                               <button className="btn btn-primary btn-block">Next</button>
                            </div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
+import { BASE_URL } from '../../projectString';
+import { Link } from 'react-router-dom';
 class SubCategorySelect extends React.Component{
     constructor(props) {
         super(props);
@@ -12,25 +14,30 @@ class SubCategorySelect extends React.Component{
     }   
 
     componentWillMount() {
-        axios.post('http://jama-al-backend.freshpureuae.com/api/customer/get/category',
+        axios.post(`${BASE_URL}/customer/get/subcategory`,
         {
-           latitude:0,
-           longitude:0,
+         //   latitude:0,
+         //   longitude:0,
+         category: this.props.categoryId,
         }).then(result => {
           if(result.data.status=="success" && result.status){
             //    this.setState({loginStatus:result.data.data.loged_user_status}); 
             // console.log(result.data.categories,"list of all categories");
-               this.setState({categories:result.data.categories});
+               this.setState({categories:result.data.subcategories});
      
           }
          
             
-        })
+        }).catch((error) => {});
       }
 
     render() {
-        let categoryArray = (this.state.categories != undefined)?this.state.categories:[];
-        return (
+
+         let categoryArray = (this.state.categories != undefined)?this.state.categories:[];
+         let categoryId = this.props.categoryId;
+         let categoryName = this.props.categoryName;
+
+         return (
             <section className="section-category-link">
             <div className="container">
                <div className="row">
@@ -43,12 +50,20 @@ class SubCategorySelect extends React.Component{
                <div className="row">
                   <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                      <div className="category-ad-links">
-                     {(categoryArray && categoryArray.map((categoryArr,indexi) => 
-                        <a href="javascript:void(0)" className="d-block mb-3 position-relative rounded-lg">
-                           {(categoryArr['name']!='')?<i className="fa fa-angle-right" aria-hidden="true">{categoryArr['name']}</i>:''}
-                        </a>
-                       ))   
-                    }
+                     {(categoryArray && categoryArray.map((categoryArr,indexi) => {
+
+                           if(categoryArr.name != ''){
+                              return(
+                                 <Link to={`/create-form/${categoryId}/${categoryArr.id}/${categoryName}/${categoryArr.name}`} className="d-block mb-3 position-relative rounded-lg">
+                                    {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                 </Link>
+                              );
+                           }
+                           else{
+                              return '';
+                           }
+                        }
+                     ))}
                      </div>
                   </div>
                </div>
