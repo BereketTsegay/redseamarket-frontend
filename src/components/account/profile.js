@@ -4,6 +4,8 @@ import { BASE_URL, userToken } from '../../projectString';
 import Header from '../layouts/header'
 import Breadcrumb from './breadcrumb'
 import NavLinks from './NavLinks'
+import SweetAlert from 'sweetalert2-react';
+import Swal from 'sweetalert2'
 
 export default class profile extends Component {
 
@@ -21,7 +23,7 @@ export default class profile extends Component {
             email: '',
             phone: '',
             nationality: '',
-
+            
         }
     }
 
@@ -111,6 +113,17 @@ export default class profile extends Component {
                 nationality: this.state.nationality,
             },
         }).then(response => {
+
+            if(response.data.status === 'success'){
+
+                Swal.fire({
+                    title: 'success!',
+                    text: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+            }
 
         }).catch((error) => {
 
@@ -207,7 +220,6 @@ export default class profile extends Component {
                 </div>
             </section>
 
-            
          </div>
         )
     }

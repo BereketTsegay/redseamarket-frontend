@@ -11,6 +11,10 @@ export default class radio extends Component {
         
     }
 
+    eventChange = (e) => {
+
+        this.props.radioChange(e.target.name, e.target.value);
+    }
     
     render() {
 
@@ -19,11 +23,11 @@ export default class radio extends Component {
         return (
             <div className="form-group">
                 <label>{label}</label>
-                {option.map(function(a){
+                {option.map((a, index) => {
                     return (
                        
-                        <div class="custom-control custom-radio mb-3">
-                            <input type="radio" name={label} value={a.value} class="custom-control-input" id={a.value}/>
+                        <div class="custom-control custom-radio mb-3" key={index}>
+                            <input type="radio" onChange={(e) => this.eventChange(e)} name={label} value={a.value} class="custom-control-input" id={a.value}/>
                             <label class="custom-control-label font-weight-normal" for={a.value}>{a.value} </label>
                         </div>
                     )

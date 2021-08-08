@@ -35,6 +35,38 @@ class CreateForm extends React.Component{
          city:[],
          categoryName: '',
          subcategoryName: '',
+         title: '',
+         canonicalName: '',
+         price: '',
+         userName: '',
+         email: '',
+         description: '',
+         number: '',
+         address: '',
+         country_id: '',
+         state_id: '',
+         city_id: '',
+         negotiable: false,
+         featured: false,
+         phoneHide: false,
+
+         make_id: '',
+         model_id: '',
+         registration_year: '',
+         fuel: '',
+         transmission: '',
+         condition: '',
+         mileage: '',
+         aircondition: '',
+         gps: '',
+         security: '',
+         tire: '',
+         
+         size: '',
+         room: '',
+         furnished: '',
+         building: '',
+         parking: '',
       }
    }
 
@@ -95,6 +127,7 @@ class CreateForm extends React.Component{
 
          if(response.data.status == 'success'){
             this.setState({
+               country_id: id,
                state: response.data.state,
             });
          }
@@ -116,6 +149,7 @@ class CreateForm extends React.Component{
 
          if(response.data.status == 'success'){
             this.setState({
+               state_id: id,
                city: response.data.city,
             });
          }
@@ -124,11 +158,78 @@ class CreateForm extends React.Component{
         
       });
    }
-   
+
+   cityChange = (id) => {
+
+      this.setState({
+         city_id: id,
+      });
+   }
+
+
+   handleChange = (name, value) => {
+
+      if(name == 'title'){
+
+         let canonical = value.toLowerCase().replace(/ +/g, '-').replace(/[^-\w]/g, '');
+
+         
+         this.setState({
+            [name]: value,
+            canonicalName: canonical,
+         });
+      }
+      else{
+
+         this.setState({
+            [name]: value,
+         });
+
+      }
+      console.log(name, value);
+   }
+
+   checkboxChange = (name, value) => {
+      
+      this.setState({
+         [name]: value,
+      });
+   }
+
+   motorChanges = (motor) => {
+      
+         this.setState({
+            make_id: motor.make_id,
+            model_id: motor.model_id,
+            registration_year: motor.registration_year,
+            fuel: motor.fuel,
+            transmission: motor.transmission,
+            condition: motor.condition,
+            mileage: motor.mileage,
+            aircondition: motor.aircondition,
+            gps: motor.gps,
+            security: motor.security,
+            tire: motor.tire,
+         });
+   }
+
+   propertyChange = (property) => {
+
+      this.setState({
+         size: property.size,
+         room: property.room,
+         furnished: property.furnished,
+         building: property.buildingType,
+         parking: property.parking,
+      });
+   }
 
     render() {
       
-      let {category, subcategory, categoryField, master, master_id, option, country, state, city, categoryName, subcategoryName} = this.state;
+      
+      let {category, subcategory, categoryField, master, master_id, option, country, state,
+         city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
+         description, number, address} = this.state;
       
          return (
             <div className="site-frame">
@@ -157,28 +258,28 @@ class CreateForm extends React.Component{
                      <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                         <div className="create-ad-form">
                           
-                           <TextField  placeholder="Title"/>
-                           <TextField  placeholder="Canonical Name"/>
+                           <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} />
+                           <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                            <FileField placeholder="Add Pictures" />
-                           <TextField placeholder="Price"/>
-                           <TextArea placeholder={`Describe your ${subcategoryName}`} />
+                           <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false}/>
+                           <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} />
                            <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
                            <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" />
-                           <SelectField placeholder="City" option={city} type="common" />
-                           <Checkbox label="Price Negotiable" />
-                           <Checkbox label="Featured" />
+                           <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
+                           <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
+                           <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
 
-                           { category == 1 ?  <MotorCreate /> : category == 2 ? <PropertyCreate /> : category == 3 ? <PropertyCreate /> : '' }
+                           { category == 1 ?  <MotorCreate motorEvents={this.motorChanges} /> : category == 2 ? <PropertyCreate propertyEvent={this.propertyChange} /> : category == 3 ? <PropertyCreate propertyEvent={this.propertyChange} /> : '' }
 
                            {categoryField.map((categoryField, index) => {
                               if(categoryField.field.type === 'text'){
                                  return(
-                                    <TextField key={index} placeholder={categoryField.field.name}/>
+                                    <TextField handleChange={this.handleChange} name="text" value="text" key={index} placeholder={categoryField.field.name} readonly={false} />
                                  );
                               }
                               else if(categoryField.field.type === 'textarea'){
                                  return(
-                                    <TextArea key={index} placeholder={categoryField.field.name}/>
+                                    <TextArea handleChange={this.handleChange} name={categoryField.field.name} value="textarea" key={index} placeholder={categoryField.field.name}/>
                                  );
                               }
                               else if(categoryField.field.type === 'checkbox'){
@@ -203,7 +304,7 @@ class CreateForm extends React.Component{
                               }
                               else if(categoryField.field.type === 'url'){
                                  return(
-                                    <TextField key={index} placeholder={categoryField.field.name}/>
+                                    <TextField handleChange={this.handleChange} name="url" value="url" key={index} placeholder={categoryField.field.name} readonly={false} />
                                  );
                               }
                               else if(categoryField.field.type === 'number'){
@@ -226,11 +327,11 @@ class CreateForm extends React.Component{
                            <h4>Seller Information</h4>
                            <hr />
 
-                           <TextField placeholder="Name" />
-                           <TextField placeholder="Email" />
-                           <Number placeholder="Phone" />
-                           <TextArea placeholder="Address" />
-                           <Checkbox label="Phone Hide" />
+                           <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                           <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
+                           <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                           <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
+                           <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
                            <hr />
                            <LocationPicker subcategoryName={subcategoryName} />

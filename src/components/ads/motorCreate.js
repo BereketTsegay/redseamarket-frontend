@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { Component } from 'react'
+import { BASE_URL, userToken } from '../../projectString';
 import Checkbox from '../formcontrols/checkbox';
 import Number from '../formcontrols/number';
 import Radio from '../formcontrols/radio';
@@ -45,27 +47,207 @@ export default class motorCreate extends Component {
                     'value': 'Used',
                 },
             ],
+            make_id: '',
+            model_id: '',
+            registration_year: '',
+            mileage: '',
+            fuel: '',
+            transmission: '',
+            condition: '',
+            aircondition: false,
+            gps: false,
+            security: false,
+            tire: false,
+            token: userToken,
+
         }
     }
+
+    componentWillMount = () => {
+
+        axios({
+            url: `${BASE_URL}/customer/get/make`,
+            method: 'POST',
+            headers:{ Authorization: "Bearer " + this.state.token },
+
+        }).then(response => {
+
+            if(response.data.status == 'success'){
+                this.setState({
+                    makeOption: response.data.make,
+                });
+            }
+
+        }).catch((error) => {
+
+        });
+    }
+
+    makeChange = (id) => {
+
+        axios({
+            url: `${BASE_URL}/customer/get/model`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+                make_id: id,
+            }
+        }).then(response => {
+
+            if(response.data.status == 'success'){
+                this.setState({
+                    make_id: id,
+                    modelOption: response.data.model,
+                });
+            }
+
+        }).catch((error) => {
+
+        });
+    }
+
+    modelChange = (id) => {
+
+        this.setState({
+            model_id: id,
+        }, () => {
+            
+            let motoreValue = {
+                'make_id'           : this.state.make_id,
+                'model_id'          : this.state.model_id,
+                'registration_year' : this.state.registration_year,
+                'fuel'              : this.state.fuel,
+                'transmission'      : this.state.transmission,
+                'condition'         : this.state.condition,
+                'mileage'           : this.state.mileage,
+                'aircondition'      : this.state.aircondition,
+                'gps'               : this.state.gps,
+                'security'          : this.state.security,
+                'tire'              : this.state.tire,
+            };
+    
+            this.props.motorEvents(motoreValue)
+        });
+    }
+
+    checkboxChange = (name, value) => {
+
+        this.setState({
+            [name]: value,
+         }, () => {
+            
+            let motoreValue = {
+                'make_id'           : this.state.make_id,
+                'model_id'          : this.state.model_id,
+                'registration_year' : this.state.registration_year,
+                'fuel'              : this.state.fuel,
+                'transmission'      : this.state.transmission,
+                'condition'         : this.state.condition,
+                'mileage'           : this.state.mileage,
+                'aircondition'      : this.state.aircondition,
+                'gps'               : this.state.gps,
+                'security'          : this.state.security,
+                'tire'              : this.state.tire,
+            };
+    
+            this.props.motorEvents(motoreValue)
+        });
+    }
+
+    handleChange = (name, value) => {
+
+        this.setState({
+            [name]: value,
+        }, () => {
+            
+            let motoreValue = {
+                'make_id'           : this.state.make_id,
+                'model_id'          : this.state.model_id,
+                'registration_year' : this.state.registration_year,
+                'fuel'              : this.state.fuel,
+                'transmission'      : this.state.transmission,
+                'condition'         : this.state.condition,
+                'mileage'           : this.state.mileage,
+                'aircondition'      : this.state.aircondition,
+                'gps'               : this.state.gps,
+                'security'          : this.state.security,
+                'tire'              : this.state.tire,
+            };
+    
+            this.props.motorEvents(motoreValue)
+        });
+    }
+
+    fuelChange = (value) => {
+
+        this.setState({
+            fuel: value,
+        }, () => {
+            
+            let motoreValue = {
+                'make_id'           : this.state.make_id,
+                'model_id'          : this.state.model_id,
+                'registration_year' : this.state.registration_year,
+                'fuel'              : this.state.fuel,
+                'transmission'      : this.state.transmission,
+                'condition'         : this.state.condition,
+                'mileage'           : this.state.mileage,
+                'aircondition'      : this.state.aircondition,
+                'gps'               : this.state.gps,
+                'security'          : this.state.security,
+                'tire'              : this.state.tire,
+            };
+    
+            this.props.motorEvents(motoreValue)
+        });
+    }
+
+    radioChange = (name, value) => {
+
+        this.setState({
+            [name]:value,
+        }, () => {
+
+            let motoreValue = {
+                'make_id'           : this.state.make_id,
+                'model_id'          : this.state.model_id,
+                'registration_year' : this.state.registration_year,
+                'fuel'              : this.state.fuel,
+                'transmission'      : this.state.transmission,
+                'condition'         : this.state.condition,
+                'mileage'           : this.state.mileage,
+                'aircondition'      : this.state.aircondition,
+                'gps'               : this.state.gps,
+                'security'          : this.state.security,
+                'tire'              : this.state.tire,
+            };
+    
+            this.props.motorEvents(motoreValue)
+        });
+    }
+
     render() {
 
-        let {makeOption, modelOption, fuelOption, transmissionOption, conditionOption} = this.state;
+        let {makeOption, modelOption, fuelOption, transmissionOption, conditionOption, make_id, model_id, 
+            registration_year, mileage, transmission, condition} = this.state;
+            
+            
 
         return (
             
             <div>
-                <SelectField placeholder="Make" option={makeOption} type="common" />
-                <SelectField placeholder="Model" option={modelOption} type="common"  />
-                <Number placeholder="Registerd Year" />
-                <SelectField placeholder="Fuel Type" option={fuelOption} type="common"  />
-                <Radio label="Transmission" option={transmissionOption} />
-                <Radio label="Condition" option={conditionOption} />
-                <Number placeholder="Mileage" />
+                <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" />
+                <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common"  />
+                <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} />
+                <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common"  />
+                <Radio label="transmission"  radioChange={this.radioChange} option={transmissionOption} />
+                <Radio label="condition" radioChange={this.radioChange} option={conditionOption} />
+                <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} />
                 <label>Features</label>
-                <Checkbox label="Air Conditioner" />
-                <Checkbox label="GPS" />
-                <Checkbox label="Security System" />
-                <Checkbox label="Spare Tire" />
+                <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
+                <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />
+                <Checkbox checkboxChange={this.checkboxChange} name="security" label="Security System" />
+                <Checkbox checkboxChange={this.checkboxChange} name="tire" label="Spare Tire" />
             </div>
         )
     }

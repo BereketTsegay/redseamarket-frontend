@@ -9,7 +9,7 @@ export default class propertyCreate extends Component {
     constructor(props){
         super(props)
         this.state = {
-            furnished: [
+            furnishedOption: [
                 {
                     'value': 'Yes',
                 },{
@@ -38,19 +38,100 @@ export default class propertyCreate extends Component {
                     'name': 'Plot of land',
                 },
             ],
+            size: '',
+            room: '',
+            furnished: '',
+            buildingType: '',
+            parking: '',
         }
     }
+
+    handleChange = (name, value) => {
+        this.setState({
+            [name]: value,
+        }, () => {
+
+            let propertyValue = {
+                'size': this.state.size,
+                'room': this.state.room,
+                'furnished': this.state.furnished,
+                'buildingType': this.state.buildingType,
+                'parking': this.state.parking,
+            }
+
+            this.props.propertyEvent(propertyValue);
+
+         });
+    }
+
+    radioChange = (name, value) => {
+
+        this.setState({
+            [name]:value,
+        }, () => {
+
+            let propertyValue = {
+                'size': this.state.size,
+                'room': this.state.room,
+                'furnished': this.state.furnished,
+                'buildingType': this.state.buildingType,
+                'parking': this.state.parking,
+            }
+
+            this.props.propertyEvent(propertyValue);
+
+         });
+    }
+
+    typeChange = (value) => {
+
+        this.setState({
+            buildingType: value,
+        }, () => {
+
+            let propertyValue = {
+                'size': this.state.size,
+                'room': this.state.room,
+                'furnished': this.state.furnished,
+                'buildingType': this.state.buildingType,
+                'parking': this.state.parking,
+            }
+
+            this.props.propertyEvent(propertyValue);
+
+         });
+    }
+
+    checkboxChange = (name, value) => {
+
+        this.setState({
+            [name]: value,
+         }, () => {
+
+            let propertyValue = {
+                'size': this.state.size,
+                'room': this.state.room,
+                'furnished': this.state.furnished,
+                'buildingType': this.state.buildingType,
+                'parking': this.state.parking,
+            }
+
+            this.props.propertyEvent(propertyValue);
+
+         });
+    }
+
     render() {
 
-        let {furnished, building} = this.state;
+        let {furnishedOption, building, size, room} = this.state;
 
         return (
             <div>
-                <Number placeholder="Size" />
-                <Number placeholder="Room" />
-                <Radio label="Furnished" option={furnished} />
-                <SelectField placeholder="Building Type" option={building} type="common"  />
-                <Checkbox label="Parking" />
+                <Number placeholder="Size" handleChange={this.handleChange} name="size" value={size} />
+                <Number placeholder="Room" handleChange={this.handleChange} name="room" value={room} />
+                <Radio label="furnished" radioChange={this.radioChange} option={furnishedOption} />
+                <SelectField placeholder="Building Type" optionChange={this.typeChange} option={building} type="common"  />
+                <Checkbox checkboxChange={this.checkboxChange} name="parking" label="Parking" />
             </div>
         )
     }
