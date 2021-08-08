@@ -249,8 +249,8 @@ class CreateForm extends React.Component{
                   <div className="row">
                      <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                         <ol className="breadcrumb p-0 bg-white justify-content-center">
-                           <li className="breadcrumb-item"><a href="javascript:void(0);">{categoryName}</a></li>
-                           <li className="breadcrumb-item"><a href="javascript:void(0);">{subcategoryName}</a></li>
+                           <li className="breadcrumb-item"><a>{categoryName}</a></li>
+                           <li className="breadcrumb-item"><a>{subcategoryName}</a></li>
                         </ol>
                      </div>
                   </div>

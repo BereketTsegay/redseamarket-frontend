@@ -18,24 +18,27 @@ import CategoryMotors from "./components/automobile/categoryMotors";
 import CategoryProperty from "./components/property/categoryProperty";
 
 function App() {
-  return (
-      <Router> 
+
+
+    return (
       
-        <Switch>
-          <Route exact path="/" component={Index} />
-          <Route path="/create-ads" component={ CreateAds } />
-          <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/myfavourite" component={Favourite} />
-          <Route path="/myads" component={MyAds} />
-          <Route path="/myprofile" component={Profile} />
-          <Route path="/adsdetails/:id" component={AdsDetails} />
-          <Route path="/categoryMotors" component={CategoryMotors} />
-          <Route path="/categoryProperty/:id" component={CategoryProperty} />
-        </Switch>
-      </Router>
-  );
+        <Router> 
+          <Switch>
+            <Route exact path="/" component={Index} />
+            <Route path="/create-ads" component={ CreateAds } />
+            <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/myfavourite" component={Favourite} />
+            <Route path="/myads" component={MyAds} />
+            <Route path="/myprofile" component={Profile} />
+            <Route path="/adsdetails/:id" component={AdsDetails} />
+            <Route path="/categoryMotors" component={CategoryMotors} />
+            <Route path="/categoryProperty/:id" component={CategoryProperty} />
+          </Switch>
+        </Router>
+    );
+  
 }
 
 export default App;
