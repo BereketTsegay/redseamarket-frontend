@@ -17,6 +17,7 @@ import {BASE_URL} from '../../projectString';
 import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
+import CustomField from './customField.js';
 
 class CreateForm extends React.Component{
 
@@ -67,6 +68,8 @@ class CreateForm extends React.Component{
          furnished: '',
          building: '',
          parking: '',
+
+         formPage: 1,
       }
    }
 
@@ -224,6 +227,12 @@ class CreateForm extends React.Component{
       });
    }
 
+   pageUpdate = () => {
+      this.setState({
+         formPage: this.state.formPage + 1,
+      });
+   }
+
     render() {
       
       
@@ -257,88 +266,146 @@ class CreateForm extends React.Component{
                   <div className="row">
                      <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                         <div className="create-ad-form">
-                          
-                           <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} />
-                           <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
-                           <FileField placeholder="Add Pictures" />
-                           <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false}/>
-                           <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} />
-                           <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
-                           <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" />
-                           <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
-                           <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
-                           <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
+                          {this.state.formPage == 1 ?
+                           <>
+                              <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} />
+                              <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
+                              <FileField placeholder="Add Pictures" />
+                              <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false}/>
+                              <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} />
+                              <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
+                              <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" />
+                              <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
+                              <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
+                              <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
+                              
+                              <div className="form-group">
+                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              </div>
+                           </>
+                           : 
+                           this.state.formPage == 2 && category == 1 ?  
+                           <>
+                              <MotorCreate motorEvents={this.motorChanges} /> 
+                              <div className="form-group">
+                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              </div>
+                           </>
+                           : this.state.formPage == 2 && category == 2 ? 
+                           <>
+                              <PropertyCreate propertyEvent={this.propertyChange} />
+                              <div className="form-group">
+                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              </div>
+                           </>
+                           : this.state.formPage == 2 && category == 3 ? 
+                           <>
+                              <PropertyCreate propertyEvent={this.propertyChange} />
+                              <div className="form-group">
+                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              </div>
+                           </>
+                           : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) &&  categoryField.length != 0 ? 
+                              <>
+                                 <CustomField categoryField={categoryField} />
+                                 <div className="form-group">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
+                              </>
+                           : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
+                              <>
+                                 <CustomField categoryField={categoryField} />
+                                 <div className="form-group">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
+                              </>
+                           : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) && categoryField.length == 0 ? 
+                           <>
+                              <h4>Seller Information</h4>
+                              <hr />
 
-                           { category == 1 ?  <MotorCreate motorEvents={this.motorChanges} /> : category == 2 ? <PropertyCreate propertyEvent={this.propertyChange} /> : category == 3 ? <PropertyCreate propertyEvent={this.propertyChange} /> : '' }
+                              <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
+                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
+                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
-                           {categoryField.map((categoryField, index) => {
-                              if(categoryField.field.type === 'text'){
-                                 return(
-                                    <TextField handleChange={this.handleChange} name="text" value="text" key={index} placeholder={categoryField.field.name} readonly={false} />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'textarea'){
-                                 return(
-                                    <TextArea handleChange={this.handleChange} name={categoryField.field.name} value="textarea" key={index} placeholder={categoryField.field.name}/>
-                                 );
-                              }
-                              else if(categoryField.field.type === 'checkbox'){
-                                 return(
-                                    <Checkbox key={index} label={categoryField.field.name} />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'select'){
-                                 return(
-                                    <SelectField key={index} placeholder={categoryField.field.name} option={categoryField.field.field_option} type="customField" />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'radio'){
-                                 return (
-                                    <Radio key={index} label={categoryField.field.name} option={categoryField.field.field_option} />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'file'){
-                                 return(
-                                    <FileField key={index} placeholder={categoryField.field.name} />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'url'){
-                                 return(
-                                    <TextField handleChange={this.handleChange} name="url" value="url" key={index} placeholder={categoryField.field.name} readonly={false} />
-                                 );
-                              }
-                              else if(categoryField.field.type === 'number'){
-                                 return(
-                                    <Number key={index} placeholder={categoryField.field.name}/>
-                                 );
-                              }
-                              else if(categoryField.field.type === 'date'){
-                                 return(
-                                    <Date key={index} placeholder={categoryField.field.name}/>
-                                 );
-                              }
-                              else if(categoryField.field.type === 'dependency'){
-                                 return (
-                                    <DependencySelect key={index} dependency={categoryField.field.dependency} />
-                                 );
-                              }
-                           })}
-                           <hr />
-                           <h4>Seller Information</h4>
-                           <hr />
+                              <hr />
+                              <LocationPicker subcategoryName={subcategoryName} />
 
-                           <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
-                           <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
-                           <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
-                           <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
-                           <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+                              <div className="form-group">
+                                 <button className="btn btn-primary btn-block">Create</button>
+                              </div>
+                           </>
+                           : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
+                              <>
+                                 <CustomField categoryField={categoryField} />
+                                 <div className="form-group">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
+                              </>
+                           : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
+                           
+                           <>
+                              <h4>Seller Information</h4>
+                              <hr />
 
-                           <hr />
-                           <LocationPicker subcategoryName={subcategoryName} />
+                              <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
+                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
+                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
-                           <div className="form-group">
-                              <button className="btn btn-primary btn-block">Next</button>
-                           </div>
+                              <hr />
+                              <LocationPicker subcategoryName={subcategoryName} />
+
+                              <div className="form-group">
+                                 <button className="btn btn-primary btn-block">Create</button>
+                              </div>
+                           </>
+                           : this.state.formPage == 3 && categoryField.length != 0 ?
+                              <>
+                                 <CustomField categoryField={categoryField} />
+                                 <div className="form-group">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
+                              </>
+                           : this.state.formPage == 3 && categoryField.length == 0 ? 
+                           <>
+                              <h4>Seller Information</h4>
+                              <hr />
+
+                              <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
+                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
+                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+
+                              <hr />
+                              <LocationPicker subcategoryName={subcategoryName} />
+
+                              <div className="form-group">
+                                 <button className="btn btn-primary btn-block">Create</button>
+                              </div>
+                           </>
+                           : <>
+                                 <h4>Seller Information</h4>
+                                 <hr />
+
+                                 <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
+                                 <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
+                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+
+                                 <hr />
+                                 <LocationPicker subcategoryName={subcategoryName} />
+
+                                 <div className="form-group">
+                                    <button className="btn btn-primary btn-block">Create</button>
+                                 </div>
+                              </>
+                           }
                         </div>
                      </div>
                   </div>
