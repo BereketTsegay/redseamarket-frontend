@@ -47,7 +47,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         Favorites
                      </a>
-                     <a href="#" class="header-link">
+                     <a href="#loginModal" data-toggle="modal" class="header-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         Log in or sign up
                      </a>
@@ -178,11 +178,9 @@
                            <li class="nav-item" role="presentation">
                               <a class="nav-link" id="classifieds-tab" data-toggle="tab" href="#classifieds" role="tab" aria-controls="classifieds" aria-selected="false">Classifieds</a>
                            </li>
-
                            <li class="nav-item" role="presentation">
                               <a class="nav-link" id="rent-tab" data-toggle="tab" href="#rent" role="tab" aria-controls="rent" aria-selected="false">Property for Rent</a>
                            </li>
-
                            <li class="nav-item" role="presentation">
                               <a class="nav-link" id="sale-tab" data-toggle="tab" href="#sale" role="tab" aria-controls="sale" aria-selected="false">Property for Sale</a>
                            </li>
@@ -474,83 +472,83 @@
                </div>
             </section>
             
-               <!-- =====[SECTION HOME CATEGORIES]===== -->
-               <section class="section-home-categories-list">
-                  <div class="container">
-                     <div class="row">
-                        <div class="col-12">
-                           <h2 class="section-title text-center">Popular Categories</h2>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-category col-md-4 col-sm-6">
-                           <h4 class="category-title"><img src="img/icon-car.svg" alt="icon">Motors</h4>
-                           <ul class="category-list">
-                              <li><a href="#">Used Cars for Sale </a></li>
-                              <li><a href="#">Motorcycles </a></li>
-                              <li><a href="#">Auto Accessories & Parts </a></li>
-                              <li><a href="#">Heavy Vehicles</a></li>
-                           </ul>
-                           <a href="#" class="btn btn-link">
-                              View All
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                           </a>
-                        </div>
-                        <div class="col-category col-md-4 col-sm-6">
-                           <h4 class="category-title"><img src="img/icon-flat.svg" alt="icon">Property for Rent</h4>
-                           <ul class="category-list">
-                              <li><a href="#">Residential Units for Rent </a></li>
-                              <li><a href="#">Rooms for rent (Flatmates) </a></li>
-                              <li><a href="#">Short Term (Monthly) </a></li>
-                              <li><a href="#">Commercial for Rent</a></li>
-                           </ul>
-                           <a href="#" class="btn btn-link">
-                              View All
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                           </a>
-                        </div>
-                        <div class="col-category col-md-4 col-sm-6">
-                           <h4 class="category-title"><img src="img/icon-house.svg" alt="icon">Property for Sale</h4>
-                           <ul class="category-list">
-                              <li><a href="#">Residential for Sale </a></li>
-                              <li><a href="#">Commercial for Sale </a></li>
-                              <li><a href="#">Land for Sale </a></li>
-                              <li><a href="#">Multiple Units for Sale</a></li>
-                           </ul>
-                           <a href="#" class="btn btn-link">
-                              View All
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                           </a>
-                        </div>
-                        <div class="col-category col-md-4 col-sm-6">
-                           <h4 class="category-title"><img src="img/icon-washing-machine.svg" alt="icon">Classifieds</h4>
-                           <ul class="category-list">
-                              <li><a href="#">Electronics </a></li>
-                              <li><a href="#">Computers & Networking </a></li>
-                              <li><a href="#">Jewelry & Watches </a></li>
-                              <li><a href="#">Clothing & Accessories</a></li>
-                           </ul>
-                           <a href="#" class="btn btn-link">
-                              View All
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                           </a>
-                        </div>
-                        <div class="col-category col-md-4 col-sm-6">
-                           <h4 class="category-title"><img src="img/icon-tab-mobile.svg" alt="icon">Mobile & Tablets</h4>
-                           <ul class="category-list">
-                              <li><a href="#">Accounting </a></li>
-                              <li><a href="#">Sales</a></li>
-                              <li><a href="#">Engineering </a></li>
-                              <li><a href="#">Secretarial</a></li>
-                           </ul>
-                           <a href="#" class="btn btn-link">
-                              View All
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                           </a>
-                        </div>
+            <!-- =====[SECTION HOME CATEGORIES]===== -->
+            <section class="section-home-categories-list">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-12">
+                        <h2 class="section-title text-center">Popular Categories</h2>
                      </div>
                   </div>
-               </section>
+                  <div class="row">
+                     <div class="col-category col-md-4 col-sm-6">
+                        <h4 class="category-title"><img src="img/icon-car.svg" alt="icon">Motors</h4>
+                        <ul class="category-list">
+                           <li><a href="#">Used Cars for Sale </a></li>
+                           <li><a href="#">Motorcycles </a></li>
+                           <li><a href="#">Auto Accessories & Parts </a></li>
+                           <li><a href="#">Heavy Vehicles</a></li>
+                        </ul>
+                        <a href="#" class="btn btn-link">
+                           View All
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                     </div>
+                     <div class="col-category col-md-4 col-sm-6">
+                        <h4 class="category-title"><img src="img/icon-flat.svg" alt="icon">Property for Rent</h4>
+                        <ul class="category-list">
+                           <li><a href="#">Residential Units for Rent </a></li>
+                           <li><a href="#">Rooms for rent (Flatmates) </a></li>
+                           <li><a href="#">Short Term (Monthly) </a></li>
+                           <li><a href="#">Commercial for Rent</a></li>
+                        </ul>
+                        <a href="#" class="btn btn-link">
+                           View All
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                     </div>
+                     <div class="col-category col-md-4 col-sm-6">
+                        <h4 class="category-title"><img src="img/icon-house.svg" alt="icon">Property for Sale</h4>
+                        <ul class="category-list">
+                           <li><a href="#">Residential for Sale </a></li>
+                           <li><a href="#">Commercial for Sale </a></li>
+                           <li><a href="#">Land for Sale </a></li>
+                           <li><a href="#">Multiple Units for Sale</a></li>
+                        </ul>
+                        <a href="#" class="btn btn-link">
+                           View All
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                     </div>
+                     <div class="col-category col-md-4 col-sm-6">
+                        <h4 class="category-title"><img src="img/icon-washing-machine.svg" alt="icon">Classifieds</h4>
+                        <ul class="category-list">
+                           <li><a href="#">Electronics </a></li>
+                           <li><a href="#">Computers & Networking </a></li>
+                           <li><a href="#">Jewelry & Watches </a></li>
+                           <li><a href="#">Clothing & Accessories</a></li>
+                        </ul>
+                        <a href="#" class="btn btn-link">
+                           View All
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                     </div>
+                     <div class="col-category col-md-4 col-sm-6">
+                        <h4 class="category-title"><img src="img/icon-tab-mobile.svg" alt="icon">Mobile & Tablets</h4>
+                        <ul class="category-list">
+                           <li><a href="#">Accounting </a></li>
+                           <li><a href="#">Sales</a></li>
+                           <li><a href="#">Engineering </a></li>
+                           <li><a href="#">Secretarial</a></li>
+                        </ul>
+                        <a href="#" class="btn btn-link">
+                           View All
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </section>
 
             <!-- =====[SECTION HOME CATEGORIES]===== -->
             <section class="section-home-categories">
@@ -984,6 +982,69 @@
                </div>
             </div>
          </footer>
+
+         <!-- =====[MODALS]===== -->
+         <div class="modal fade log-sign-modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                     </button>
+                     <h5 class="modal-title text-center text-brand">Log in to your account</h5>
+                     <div class="modal-form">
+                        <div class="form-group">
+                           <input type="email" class="form-control" placeholder="Email address">
+                        </div>
+                        <div class="form-group">
+                           <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group text-right">
+                           <a href="#" class="btn btn-link p-0">Forgot your password?</a>
+                        </div>
+                        <div class="form-group">
+                           <button class="btn btn-primary d-block w-100">Login</button>
+                        </div>
+                        <div class="form-group-line text-center">
+                           <button class="btn btn-link p-0" data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
+                        </div>
+                     </div>
+                     <div class="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="modal fade log-sign-modal" id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                     </button>
+                     <h5 class="modal-title text-center text-brand">Create an account</h5>
+                     <div class="modal-form">
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                           <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                           <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                           <button class="btn btn-primary d-block w-100">Sign Up</button>
+                        </div>
+                        <div class="form-group-line text-center">
+                           <button class="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
+                        </div>
+                     </div>
+                     <div class="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                  </div>
+               </div>
+            </div>
+         </div>
 
       </div>
       <!-- SCRIPT FILES -->
