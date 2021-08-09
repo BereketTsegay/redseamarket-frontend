@@ -18,6 +18,7 @@ export default class categoryMotors extends Component {
          subcategory: [],
          ads: [],
          testimonial: [],
+         searchKey: '',
       }
    }
 
@@ -41,9 +42,21 @@ export default class categoryMotors extends Component {
       })
    }
 
+   searchEvent = e => {
+
+      this.setState({
+         searchKey: e.target.value,
+      });
+   }
+
+   searchMotors = () => {
+
+      this.props.history.push('/motor/list/'+this.state.searchKey+'/search');
+   }
+
    render() {
 
-      let {subcategory, ads, testimonial} = this.state;
+      let {subcategory, ads, testimonial, searchKey} = this.state;
       
          return (
             <div id="page" className="site-page">
@@ -62,11 +75,11 @@ export default class categoryMotors extends Component {
                               <div className="row">
                                  <div className="col-md-9">
                                     <div className="form-group">
-                                       <input type="text" className="form-control" placeholder="Search for anything…" />
+                                       <input type="text" onChange={(e) => this.searchEvent(e)} value={searchKey} className="form-control" placeholder="Search for anything…" />
                                     </div>
                                  </div>
                                  <div className="col-md-3">
-                                    <button className="btn btn-primary has-icon w-100">
+                                    <button className="btn btn-primary has-icon w-100" onClick={this.searchMotors}>
                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                        Search
                                     </button>

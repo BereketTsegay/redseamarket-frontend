@@ -16,6 +16,7 @@ import AdsDetails from "./components/ads/adsDetails";
 import Profile from "./components/account/profile";
 import CategoryMotors from "./components/automobile/categoryMotors";
 import CategoryProperty from "./components/property/categoryProperty";
+import MotorListing from "./components/automobile/motorListing";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/adsdetails/:id" component={AdsDetails} />
             <Route path="/categoryMotors" component={CategoryMotors} />
             <Route path="/categoryProperty/:id" component={CategoryProperty} />
+            <Route path="/motor/list/:key/:event" component={MotorListing} />
           </Switch>
         </Router>
     );
