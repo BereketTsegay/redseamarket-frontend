@@ -50,8 +50,8 @@ export default class categoryMotors extends Component {
    }
 
    searchMotors = () => {
-
-      this.props.history.push('/motor/list/'+this.state.searchKey+'/search');
+     
+      this.props.history.push('/motor/list/'+this.state.searchKey+'/search/ ');
    }
 
    render() {

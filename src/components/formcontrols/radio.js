@@ -7,6 +7,7 @@ export default class radio extends Component {
         this.state = {
             option : this.props.option,
             label : this.props.label,
+            name: this.props.name,
         }
         
     }
@@ -18,7 +19,7 @@ export default class radio extends Component {
     
     render() {
 
-        let {option, label} = this.state;
+        let {option, label, name} = this.state;
 
         return (
             <div className="form-group">
@@ -27,7 +28,7 @@ export default class radio extends Component {
                     return (
                        
                         <div class="custom-control custom-radio mb-3" key={index}>
-                            <input type="radio" onChange={(e) => this.eventChange(e)} name={label} value={a.value} class="custom-control-input" id={a.value}/>
+                            <input type="radio" onChange={(e) => this.eventChange(e)} name={name} value={a.value} class="custom-control-input" id={a.value}/>
                             <label class="custom-control-label font-weight-normal" for={a.value}>{a.value} </label>
                         </div>
                     )

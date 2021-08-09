@@ -129,7 +129,7 @@ export default class propertyCreate extends Component {
             <div>
                 <Number placeholder="Size" handleChange={this.handleChange} name="size" value={size} />
                 <Number placeholder="Room" handleChange={this.handleChange} name="room" value={room} />
-                <Radio label="furnished" radioChange={this.radioChange} option={furnishedOption} />
+                <Radio label="Furnished" name="furnished" radioChange={this.radioChange} option={furnishedOption} />
                 <SelectField placeholder="Building Type" optionChange={this.typeChange} option={building} type="common"  />
                 <Checkbox checkboxChange={this.checkboxChange} name="parking" label="Parking" />
             </div>

@@ -4,7 +4,7 @@ import Menu from '../layouts/menu';
 import Signup from '../login/signup';
 import axios from 'axios';
 import Logo from '../../../src/web-assets/img/brand.svg';
-import { Button, Modal } from 'react-bootstrap';
+// import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL } from '../../projectString'; 
 import {
    BrowserRouter as Router,
@@ -89,7 +89,7 @@ class Header extends React.Component{
                      <div className="container d-flex align-items-center flex-wrap">
                         <div className="brand">
                        
-                           <Link href="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
+                           <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
                         </div>
                        <CitySelect />
                       
@@ -123,7 +123,7 @@ class Header extends React.Component{
 
 
 
-             <div className="container">
+             {/* <div className="container">
                     <Modal size="lg" show={this.state.showHistory} animation={false} style={modalLogin}>
                         <Modal.Header>
                         <h4 class="modal-title">Login to your account</h4>
@@ -156,7 +156,7 @@ class Header extends React.Component{
                         </Button>
                         </Modal.Footer>
                     </Modal>
-                </div>              
+                </div>               */}
 
 
              </div>

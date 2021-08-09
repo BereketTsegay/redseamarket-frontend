@@ -294,6 +294,7 @@ button:focus,
 	height: 360px;
 	background: #FFF;
 	padding: 6px 0;
+	z-index: 10;
 }
 .menu .menu-item.menu-item-has-children:hover .sub-menu { display: block; }
 .menu .menu-item .sub-menu:after {
@@ -305,6 +306,7 @@ button:focus,
 	top: 0;
 	left: 100%;
 	display: block;
+	z-index: 10;
 }
 .menu .menu-item .sub-menu .menu-item .sub-menu-child {
 	position: absolute;

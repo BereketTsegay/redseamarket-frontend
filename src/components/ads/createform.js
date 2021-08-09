@@ -13,7 +13,7 @@ import Date from '../formcontrols/date';
 import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 import axios from 'axios';
-import {BASE_URL} from '../../projectString';
+import {BASE_URL, userToken} from '../../projectString';
 import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
@@ -42,6 +42,8 @@ class CreateForm extends React.Component{
          userName: '',
          email: '',
          description: '',
+         latitude: 0,
+         longitude: 0,
          number: '',
          address: '',
          country_id: '',
@@ -70,6 +72,10 @@ class CreateForm extends React.Component{
          parking: '',
 
          formPage: 1,
+
+         fieldValue: [],
+         image: '',
+         token: userToken,
       }
    }
 
@@ -189,7 +195,7 @@ class CreateForm extends React.Component{
          });
 
       }
-      console.log(name, value);
+      
    }
 
    checkboxChange = (name, value) => {
@@ -233,6 +239,79 @@ class CreateForm extends React.Component{
       });
    }
 
+   pageUpdateDown = () => {
+      this.setState({
+         formPage: this.state.formPage - 1,
+      });
+   }
+
+   fieldValues = (values) => {
+      
+      this.setState({
+         fieldValue: values,
+      });
+   }
+
+   fileUpload = (file) => {
+
+      this.setState({
+         image: file,
+      });
+   }
+
+   adSubmitHandler = () => {
+
+      axios({
+         url: ``,
+         method: 'POST',
+         headers: { Authorization: "Bearer " + this.state.token },
+         data: {
+            category: this.state.category,
+            subcategory: this.state.subcategory,
+            title: this.state.title,
+            canonical_name: this.state.canonicalName,
+            description: this.state.description,
+            price: this.state.price,
+            featured: this.state.featured,
+            negotiable: this.state.negotiable,
+            country: this.state.country_id,
+            state: this.state.state_id,
+            city: this.state.city_id,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            name: this.state.userName,
+            email: this.state.email,
+            phone: this.state.phone,
+            phone_hide: this.state.phoneHide,
+            address: this.state.address,
+            image: this.state.image,
+            make_id: this.state.make_id,
+            model_id: this.state.model_id,
+            registration_year: this.state.registration_year,
+            fuel: this.state.fuel,
+            transmission: this.state.transmission,
+            condition: this.state.condition,
+            mileage: this.state.mileage,
+            aircondition: this.state.aircondition,
+            gps: this.state.gps,
+            security: this.state.security,
+            tire: this.state.tire,
+            size: this.state.size,
+            room: this.state.room,
+            furnished: this.state.furnished,
+            building: this.state.building,
+            parking: this.state.parking,
+            fieldValue: this.state.fieldValue,
+         }
+
+      }).then(response => {
+         console.log(response);
+
+      }).catch((error) => {
+
+      });
+   }
+
     render() {
       
       
@@ -270,7 +349,7 @@ class CreateForm extends React.Component{
                            <>
                               <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} />
                               <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
-                              <FileField placeholder="Add Pictures" />
+                              <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" />
                               <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false}/>
                               <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} />
                               <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />
@@ -287,37 +366,62 @@ class CreateForm extends React.Component{
                            this.state.formPage == 2 && category == 1 ?  
                            <>
                               <MotorCreate motorEvents={this.motorChanges} /> 
-                              <div className="form-group">
-                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
                               </div>
                            </>
                            : this.state.formPage == 2 && category == 2 ? 
                            <>
                               <PropertyCreate propertyEvent={this.propertyChange} />
-                              <div className="form-group">
-                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
                               </div>
                            </>
                            : this.state.formPage == 2 && category == 3 ? 
                            <>
                               <PropertyCreate propertyEvent={this.propertyChange} />
-                              <div className="form-group">
-                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 </div>
                               </div>
                            </>
                            : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) &&  categoryField.length != 0 ? 
                               <>
-                                 <CustomField categoryField={categoryField} />
-                                 <div className="form-group">
+                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                 <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
                                  </div>
+                              </div>
                               </>
                            : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
                               <>
-                                 <CustomField categoryField={categoryField} />
-                                 <div className="form-group">
+                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                 <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
                                  </div>
+                              </div>
                               </>
                            : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) && categoryField.length == 0 ? 
                            <>
@@ -333,16 +437,26 @@ class CreateForm extends React.Component{
                               <hr />
                               <LocationPicker subcategoryName={subcategoryName} />
 
-                              <div className="form-group">
-                                 <button className="btn btn-primary btn-block">Create</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                 </div>
                               </div>
                            </>
                            : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
                               <>
-                                 <CustomField categoryField={categoryField} />
-                                 <div className="form-group">
+                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                 <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
                                  </div>
+                              </div>
                               </>
                            : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
                            
@@ -359,15 +473,25 @@ class CreateForm extends React.Component{
                               <hr />
                               <LocationPicker subcategoryName={subcategoryName} />
 
-                              <div className="form-group">
-                                 <button className="btn btn-primary btn-block">Create</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                 </div>
                               </div>
                            </>
                            : this.state.formPage == 3 && categoryField.length != 0 ?
                               <>
-                                 <CustomField categoryField={categoryField} />
-                                 <div className="form-group">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
                                  </div>
                               </>
                            : this.state.formPage == 3 && categoryField.length == 0 ? 
@@ -384,8 +508,13 @@ class CreateForm extends React.Component{
                               <hr />
                               <LocationPicker subcategoryName={subcategoryName} />
 
-                              <div className="form-group">
-                                 <button className="btn btn-primary btn-block">Create</button>
+                              <div className="row">
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                 </div>
+                                 <div className="form-group col-md-6">
+                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                 </div>
                               </div>
                            </>
                            : <>
@@ -401,8 +530,13 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker subcategoryName={subcategoryName} />
 
-                                 <div className="form-group">
-                                    <button className="btn btn-primary btn-block">Create</button>
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div>
                                  </div>
                               </>
                            }

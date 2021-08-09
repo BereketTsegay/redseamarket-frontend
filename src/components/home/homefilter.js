@@ -1,14 +1,16 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { BASE_URL } from '../../projectString';
+import { withRouter } from 'react-router';
 
-class HomeFilter extends React.Component{
+class homefilter extends Component {
 
    constructor(props){
       super(props);
 
       this.state = {
          searchKey: '',
+         category: '',
+         subcategory: '',
+         city: '',
       }
    }
 
@@ -16,34 +18,27 @@ class HomeFilter extends React.Component{
 
       this.setState({
          searchKey: e.target.value,
-         city: null,
-         category: null,
-         result: [],
       });
       
    }
 
-   handlSubmit = (e) => {
+   handlSubmit = () => {
+      
+      if(this.state.searchKey != ''){
 
-      e.preventDefault();
-
-      axios({
-         url: `${BASE_URL}/customer/search/ads`,
-         method: 'POST',
-         data:{
-            search_key: this.state.searchKey,
-            category: this.state.category,
-            city: this.state.city,
-         }
-      }).then(response => {
-
-         if(response.data.status == 'success'){
+         if(this.state.category == '' && this.state.city == ''){
             
+            this.props.history.push('/common/search/'+this.state.searchKey+'/-/-/-');
          }
+         else if(this.state.category != ''){
 
-      }).catch((error) => {
+         if(this.state.category == 1){
 
-      });
+            this.props.history.push('/motor/list/'+this.state.searchKey+'/search');
+         }
+         else if(this.state.category == 2 || this.state.category == 3){}
+         }
+      }
 
    }
 
@@ -95,7 +90,7 @@ class HomeFilter extends React.Component{
                                        </div>
                                     </div>
                                     <div className="col-md-3">
-                                       <button className="btn btn-primary has-icon w-100" onClick={(e) => this.handlSubmit(e)}>
+                                       <button className="btn btn-primary has-icon w-100" onClick={this.handlSubmit}>
                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                           Search
                                        </button>
@@ -109,7 +104,7 @@ class HomeFilter extends React.Component{
                                     <div className="tab-pane fade" id={`cat${index}`} role="tabpanel" aria-labelledby="motors-tab">
                                        <div className="hero-search hero-search-home">
                                           <div className="row row-options">
-                                             <div className="col-md-4">
+                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                    <select className="form-control">
                                                       <option>All Cities</option>
@@ -120,18 +115,7 @@ class HomeFilter extends React.Component{
                                                    </select>
                                                 </div>
                                              </div>
-                                             <div className="col-md-4">
-                                                <div className="form-group">
-                                                   <select className="form-control">
-                                                      <option>All</option>
-                                                      <option>2</option>
-                                                      <option>3</option>
-                                                      <option>4</option>
-                                                      <option>5</option>
-                                                   </select>
-                                                </div>
-                                             </div>
-                                             <div className="col-md-4">
+                                             <div className="col-md-6">
                                                 <div className="form-group">
                                                    <select className="form-control">
                                                       <option>All Categories</option>
@@ -183,5 +167,6 @@ class HomeFilter extends React.Component{
 
 )
         }
-    }
-    export default HomeFilter
+}
+
+export default withRouter(homefilter);

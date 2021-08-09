@@ -123,22 +123,19 @@ export default class motorListing extends Component {
                     <div class="row">
                         <div class="col-xl-9 col-lg-11 mx-auto">
                             <ul class="motor-sort-list">
+                                
                                 {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
                                     adList.length != 0 && adList.map((adList, index) => {
                                     return (
                                         <ListAdItem key={index} ads={adList} />
                                     )
                                 }) }
-                                {/* <ListAdItem />
-                                <ListAdItem />
-                                <ListAdItem />
-                                <ListAdItem /> */}
-                            
+                                
                             </ul>
                         </div>
                     </div>
 
-                    {last == 1 ? '' :
+                    {last == 1 || last == '' ? '' :
                         <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
                     }
                     

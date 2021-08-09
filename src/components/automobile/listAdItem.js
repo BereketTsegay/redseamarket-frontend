@@ -25,24 +25,71 @@ export default class listAdItem extends Component {
                         <span class="label">{ads.created_on}</span> 
                         {ads.featured_flag == 1 ? <span class="badge-featured ml-3"><span>Featured</span></span> : ''}
                     </div>
-                    <div class="panel-meta">
-                        <span class="label">Year:</span>
-                        <strong>{ads.motore_value.registration_year}</strong>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-4 col-6">
+                    {ads.category_id == 1 ? 
+                    <>
                         <div class="panel-meta">
-                            <span class="label">Fuel:</span>
-                            <strong>{ads.motore_value.fuel_type}</strong>
+                            <span class="label">Year:</span>
+                            <strong>{ads.motore_value ? ads.motore_value.registration_year : ''}</strong>
                         </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Fuel:</span>
+                                <strong>{ads.motore_value ? ads.motore_value.fuel_type : ''}</strong>
+                            </div>
+                            </div>
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Condition:</span>
+                                <strong>{ads.motore_value ? ads.motore_value.condition : ''}</strong>
+                            </div>
+                            </div>
                         </div>
-                        <div class="col-xl-4 col-6">
+                    </>
+                    : ads.category_id == 2 ?
+                    <>
                         <div class="panel-meta">
-                            <span class="label">Condition:</span>
-                            <strong>{ads.motore_value.condition}</strong>
+                            <span class="label">Size:</span>
+                            <strong>{ads.property_rend ? ads.property_rend.size : ''}</strong>
                         </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Rooms:</span>
+                                <strong>{ads.property_rend ? ads.property_rend.room : ''}</strong>
+                            </div>
+                            </div>
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Furnished:</span>
+                                <strong>{ads.property_rend ? ads.property_rend.furnished : ''}</strong>
+                            </div>
+                            </div>
                         </div>
-                    </div>
+                    </>
+                    : ads.category_id == 3 ?
+                    <>
+                        <div class="panel-meta">
+                            <span class="label">Size:</span>
+                            <strong>{ads.property_sale ? ads.property_sale.size : ''}</strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Rooms:</span>
+                                <strong>{ads.property_sale ? ads.property_sale.room : ''}</strong>
+                            </div>
+                            </div>
+                            <div class="col-xl-4 col-6">
+                            <div class="panel-meta">
+                                <span class="label">Furnished:</span>
+                                <strong>{ads.property_sale ? ads.property_sale.furnished : ''}</strong>
+                            </div>
+                            </div>
+                        </div>
+                    </>
+                    : ''
+                    }
                     <div class="row">
                         <div class="col-lg-8">
                         <div class="panel-meta">

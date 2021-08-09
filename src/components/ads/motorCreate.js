@@ -240,8 +240,8 @@ export default class motorCreate extends Component {
                 <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common"  />
                 <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} />
                 <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common"  />
-                <Radio label="transmission"  radioChange={this.radioChange} option={transmissionOption} />
-                <Radio label="condition" radioChange={this.radioChange} option={conditionOption} />
+                <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} />
+                <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} />
                 <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} />
                 <label>Features</label>
                 <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
