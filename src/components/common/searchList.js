@@ -24,6 +24,7 @@ export default class searchList extends Component {
             subcategory: '',
             city: '',
             searchKey: '',
+            total: 0,
         }
     }
 
@@ -64,6 +65,7 @@ export default class searchList extends Component {
                             previousPage: response.data.ads.prev_page_url,
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
+                            total:response.data.ads.total,
                         })
                     }
 
@@ -98,6 +100,7 @@ export default class searchList extends Component {
                             previousPage: response.data.ads.prev_page_url,
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
+                            total:response.data.ads.total,
                         })
                     }
 
@@ -133,6 +136,7 @@ export default class searchList extends Component {
                             previousPage: response.data.ads.prev_page_url,
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
+                            total:response.data.ads.total,
                         })
                     }
 
@@ -168,6 +172,7 @@ export default class searchList extends Component {
                             previousPage: response.data.ads.prev_page_url,
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
+                            total:response.data.ads.total,
                         })
                     }
 
@@ -202,6 +207,7 @@ export default class searchList extends Component {
                             previousPage: response.data.ads.prev_page_url,
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
+                            total:response.data.ads.total,
                         })
                     }
 
@@ -212,7 +218,7 @@ export default class searchList extends Component {
     }
 
     paginationCall = (url) => {
-
+        
         axios({
             url: url,
             method: 'POST',
@@ -222,7 +228,7 @@ export default class searchList extends Component {
                 city: this.state.city,
             },
         }).then(response => {
-
+            
             if(response.data.status == 'success'){
                 
                 this.setState({
@@ -233,7 +239,9 @@ export default class searchList extends Component {
                     previousPage: response.data.ads.prev_page_url,
                     nexPage: response.data.ads.next_page_url,
                     last:response.data.ads.last_page,
+                    total:response.data.ads.total,
                 })
+                window.scrollTo(0, 0);
             }
 
         }).catch((error) => {
@@ -243,7 +251,7 @@ export default class searchList extends Component {
 
     render() {
 
-        let {paginataionArray, previousPage, nexPage, last, adList, resultKey} = this.state;
+        let {paginataionArray, previousPage, nexPage, last, adList, resultKey, category, subcategory, city, searchKey, total} = this.state;
 
         return (
             <div id="page" class="site-page">
@@ -269,7 +277,7 @@ export default class searchList extends Component {
                     <div class="row">
                         <div class="col-12">
                             <div class="section-title-panel text-center">
-                            <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {adList.length} ads</small></h2>
+                            <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {total} ads</small></h2>
                             <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on dubizzle &amp; reach 1.6 million buyers today.</p>
                             </div>
                         </div>

@@ -340,7 +340,7 @@ button:focus,
 	padding: 12px 12px;
 	height: 360px;
 	display: none;
-	z-index: 1;
+	z-index: 15;
 }
 .menu .menu-item .sub-menu .menu-item:hover .sub-menu-child { display: block; }
 .menu .menu-item .sub-menu .menu-item .sub-menu-child h6 {

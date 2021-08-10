@@ -18,7 +18,7 @@ import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
 import CustomField from './customField.js';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 class CreateForm extends React.Component{
 
@@ -320,7 +320,9 @@ class CreateForm extends React.Component{
                text: response.data.message,
                icon: 'success',
                confirmButtonText: 'OK'
-           });
+            }).then((result) => {
+               this.props.history.push('/');
+            });
          }
 
       }).catch((error) => {
