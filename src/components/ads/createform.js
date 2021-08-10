@@ -260,7 +260,7 @@ class CreateForm extends React.Component{
    fileUpload = (file) => {
       
       this.setState({
-         image: file,
+         image: [...this.state.image, file],
       });
    }
 
@@ -271,7 +271,6 @@ class CreateForm extends React.Component{
          method: 'POST',
          headers: {
             Authorization: "Bearer " + this.state.token,
-            "Content-Type": "multipart/form-data",
          },
          data: {
             category: this.state.category,
@@ -331,7 +330,6 @@ class CreateForm extends React.Component{
 
     render() {
       
-      
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
          description, phone, address} = this.state;
@@ -366,7 +364,7 @@ class CreateForm extends React.Component{
                            <>
                               <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} />
                               <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
-                              <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" />
+                              <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} />
                               <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false}/>
                               <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} />
                               <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" />

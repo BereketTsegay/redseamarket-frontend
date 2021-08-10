@@ -19,6 +19,7 @@ export default class adsDetails extends Component {
             ads: [],
             mainImage: null,
             modalShow: false,
+            phone: '',
         }
     }
 
@@ -48,34 +49,24 @@ export default class adsDetails extends Component {
         });
     }
 
-    showPhone = () => {
-        this.setState({ modalShow: !this.state.modalShow });
+    showPhone = (phone) => {
+        this.setState({ 
+            modalShow: !this.state.modalShow,
+            phone: phone,
+         });
     }
 
     render() {
         
-        let {id, ads, mainImage} = this.state;
-
-        let loginStyle = {
-            marginRight: '0px',
-          };
-          
-          let globalError ={
-            color: 'red',
-            fontSize: 'large',
-            fontWeight: '600',
-          }
-         let ErrorStyle = {
-            color: 'red',
-          };
-          let modalLogin ={
-               position:  'fixed',
-               width: '600px',
-               top: '40px',
-               left: 'calc(50% - 300px)',
-               bottom: '40px',
-             
-          }
+        let {id, ads, mainImage, modalShow, phone} = this.state;
+        
+            let modalLogin ={
+                position:  'fixed',
+                width: '600px',
+                top: '40px',
+                left: 'calc(50% - 300px)',
+                bottom: '40px',
+            }
         
         return (
             <div id="page" className="site-page">
@@ -149,7 +140,7 @@ export default class adsDetails extends Component {
                                                     {ads.country_name}, {ads.state_name}, {ads.city_name}
                                                 </div>
                                                 <div className="product-btn-group d-flex justify-content-between">
-                                                    <a href="#" onClick={this.showPhone} className="btn btn-primary has-icon d-block">
+                                                    <a href="javascript:void(0);" onClick={() => this.showPhone(ads.seller_information ? ads.seller_information.phone : '')} className="btn btn-primary has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                                         Show Phone Number
                                                     </a>
@@ -323,13 +314,13 @@ export default class adsDetails extends Component {
                         
                         <Modal.Body>
                        
-                              <button  onClick={this.showPhone }  type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                              </button>
-                              <h5 className="modal-title text-center text-brand">Phone Number</h5>
-                              <div className="modal-form">
-                                 
-                              </div>
+                                <button  onClick={() => this.showPhone('') }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <h5 className="modal-title text-center text-brand">Phone Number</h5>
+                                <div className="modal-form">
+                                    <label>{phone}</label>
+                                </div>
                         </Modal.Body>
                         
                     </Modal>
