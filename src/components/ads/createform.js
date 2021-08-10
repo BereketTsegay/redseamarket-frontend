@@ -18,6 +18,7 @@ import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
 import CustomField from './customField.js';
+import Swal from 'sweetalert2'
 
 class CreateForm extends React.Component{
 
@@ -44,7 +45,7 @@ class CreateForm extends React.Component{
          description: '',
          latitude: 0,
          longitude: 0,
-         number: '',
+         phone: '',
          address: '',
          country_id: '',
          state_id: '',
@@ -74,7 +75,7 @@ class CreateForm extends React.Component{
          formPage: 1,
 
          fieldValue: [],
-         image: '',
+         image: [],
          token: userToken,
       }
    }
@@ -234,12 +235,16 @@ class CreateForm extends React.Component{
    }
 
    pageUpdate = () => {
+      window.scrollTo(0, 0);
+
       this.setState({
          formPage: this.state.formPage + 1,
       });
    }
 
    pageUpdateDown = () => {
+      window.scrollTo(0, 0);
+
       this.setState({
          formPage: this.state.formPage - 1,
       });
@@ -253,7 +258,7 @@ class CreateForm extends React.Component{
    }
 
    fileUpload = (file) => {
-
+      
       this.setState({
          image: file,
       });
@@ -262,9 +267,12 @@ class CreateForm extends React.Component{
    adSubmitHandler = () => {
 
       axios({
-         url: ``,
+         url: `${BASE_URL}/customer/ads/store`,
          method: 'POST',
-         headers: { Authorization: "Bearer " + this.state.token },
+         headers: {
+            Authorization: "Bearer " + this.state.token,
+            "Content-Type": "multipart/form-data",
+         },
          data: {
             category: this.state.category,
             subcategory: this.state.subcategory,
@@ -305,7 +313,16 @@ class CreateForm extends React.Component{
          }
 
       }).then(response => {
-         console.log(response);
+         
+         if(response.data.status == 'success'){
+            
+            Swal.fire({
+               title: 'success!',
+               text: response.data.message,
+               icon: 'success',
+               confirmButtonText: 'OK'
+           });
+         }
 
       }).catch((error) => {
 
@@ -317,7 +334,7 @@ class CreateForm extends React.Component{
       
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
-         description, number, address} = this.state;
+         description, phone, address} = this.state;
       
          return (
             <div className="site-frame">
@@ -365,6 +382,7 @@ class CreateForm extends React.Component{
                            : 
                            this.state.formPage == 2 && category == 1 ?  
                            <>
+                               
                               <MotorCreate motorEvents={this.motorChanges} /> 
                               <div className="row">
                                  <div className="form-group col-md-6">
@@ -377,6 +395,7 @@ class CreateForm extends React.Component{
                            </>
                            : this.state.formPage == 2 && category == 2 ? 
                            <>
+                               
                               <PropertyCreate propertyEvent={this.propertyChange} />
                               <div className="row">
                                  <div className="form-group col-md-6">
@@ -389,6 +408,7 @@ class CreateForm extends React.Component{
                            </>
                            : this.state.formPage == 2 && category == 3 ? 
                            <>
+                               
                               <PropertyCreate propertyEvent={this.propertyChange} />
                               <div className="row">
                                  <div className="form-group col-md-6">
@@ -401,6 +421,7 @@ class CreateForm extends React.Component{
                            </>
                            : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) &&  categoryField.length != 0 ? 
                               <>
+                                  
                                  <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
                                  <div className="row">
                                  <div className="form-group col-md-6">
@@ -413,6 +434,7 @@ class CreateForm extends React.Component{
                               </>
                            : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
                               <>
+                                  
                                  <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
                                  <div className="row">
                                  <div className="form-group col-md-6">
@@ -425,12 +447,13 @@ class CreateForm extends React.Component{
                               </>
                            : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) && categoryField.length == 0 ? 
                            <>
+                               
                               <h4>Seller Information</h4>
                               <hr />
 
                               <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
                               <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
-                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" />
                               <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
                               <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
@@ -448,6 +471,7 @@ class CreateForm extends React.Component{
                            </>
                            : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
                               <>
+                                  
                                  <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
                                  <div className="row">
                                  <div className="form-group col-md-6">
@@ -461,12 +485,13 @@ class CreateForm extends React.Component{
                            : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
                            
                            <>
+                               
                               <h4>Seller Information</h4>
                               <hr />
 
                               <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
                               <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
-                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" />
                               <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
                               <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
@@ -484,6 +509,7 @@ class CreateForm extends React.Component{
                            </>
                            : this.state.formPage == 3 && categoryField.length != 0 ?
                               <>
+                                  
                                  <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
                                  <div className="row">
                                     <div className="form-group col-md-6">
@@ -496,12 +522,13 @@ class CreateForm extends React.Component{
                               </>
                            : this.state.formPage == 3 && categoryField.length == 0 ? 
                            <>
+                               
                               <h4>Seller Information</h4>
                               <hr />
 
                               <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
                               <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
-                              <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" />
                               <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
                               <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
@@ -518,12 +545,14 @@ class CreateForm extends React.Component{
                               </div>
                            </>
                            : <>
+                                  
+
                                  <h4>Seller Information</h4>
                                  <hr />
 
-                                 <TextField handleChange={this.handleChange} name="name" value={userName} placeholder="Name" readonly={false} />
+                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} />
                                  <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} />
-                                 <Number handleChange={this.handleChange} name="number" value={number} placeholder="Phone" />
+                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" />
                                  <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" />
                                  <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 

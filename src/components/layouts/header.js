@@ -4,7 +4,7 @@ import Menu from '../layouts/menu';
 import Signup from '../login/signup';
 import axios from 'axios';
 import Logo from '../../../src/web-assets/img/brand.svg';
-// import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL } from '../../projectString'; 
 import { withRouter } from 'react-router';
 import {
@@ -253,7 +253,93 @@ class Header extends React.Component{
                         </Modal.Body>
                         
                     </Modal>
-                </div>               
+
+
+
+ 
+
+                    <Modal className="modal fade log-sign-modal" show={this.state.registerModal}  id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        
+                        <Modal.Body>
+                        <button onClick={() => { this.viewRegisterModal() }} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                     </button>
+                     <h5 className="modal-title text-center text-brand">Create an account</h5>
+                     <div className="modal-form">
+                     <p className="help-block help-block-error" style={globalError}>{(this.state.globalRegisterError!="")? "Sorry... "+this.state.globalRegisterError:''}</p>
+                        <div className="form-group">
+                        <input type="text" value={this.state.name}  onChange={this.onChange2} name="name" className="form-control" placeholder="Name"/>
+                        {errors.username.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors.name}</p>}
+                         
+                        </div>
+                        <div className="form-group">
+                           <input type="email" className="form-control" placeholder="Email"/>
+                        </div>
+                        <div className="form-group">
+                           <input type="password" className="form-control" placeholder="Password"/>
+                        </div>
+                        <div className="form-group">
+                           <button className="btn btn-primary d-block w-100">Sign Up</button>
+                        </div>
+                        <div className="form-group-line text-center">
+                           <button  className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
+                        </div>
+                     </div>
+                     <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                        
+                        </Modal.Body>
+                        
+                    </Modal>              
+
+
+
+
+
+
+{/* 
+                    <div className="modal fade log-sign-modal" id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+               <div className="modal-content">
+                  <div className="modal-body">
+                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                     </button>
+                     <h5 className="modal-title text-center text-brand">Create an account</h5>
+                     <div className="modal-form">
+                        <div className="form-group">
+                           <input type="text" className="form-control" placeholder="Name"/>
+                        </div>
+                        <div className="form-group">
+                           <input type="email" className="form-control" placeholder="Email"/>
+                        </div>
+                        <div className="form-group">
+                           <input type="password" className="form-control" placeholder="Password"/>
+                        </div>
+                        <div className="form-group">
+                           <button className="btn btn-primary d-block w-100">Sign Up</button>
+                        </div>
+                        <div className="form-group-line text-center">
+                           <button className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
+                        </div>
+                     </div>
+                     <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                  </div>
+               </div>
+            </div>
+         </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+</div>              
 
 
              </div>

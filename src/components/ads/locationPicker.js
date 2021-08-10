@@ -8,12 +8,16 @@ export default class locationPicker extends Component {
 
     }
 
+    handleChange = () => {
+        
+    }
+
     render() {
 
         let subcategoryName = this.props.subcategoryName;
         return (
             <>
-                <TextField placeholder={`Locate your ${subcategoryName}`} />
+                <TextField handleChange={this.handleChange} placeholder={`Locate your ${subcategoryName}`} />
 
                 <div className="create-ad-location mb-4 mb-md-5">
                 <h4 className="title mb-2">Is the pin in the right location?</h4>

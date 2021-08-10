@@ -18,6 +18,7 @@ import CategoryMotors from "./components/automobile/categoryMotors";
 import CategoryProperty from "./components/property/categoryProperty";
 import MotorListing from "./components/automobile/motorListing";
 import SearchList from "./components/common/searchList";
+import ScrollToTop from "./components/common/scrollToTop";
 
 function App() {
 
@@ -26,19 +27,21 @@ function App() {
       
         <Router> 
           <Switch>
-            <Route exact path="/" component={Index} />
-            <Route path="/create-ads" component={ CreateAds } />
-            <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/myfavourite" component={Favourite} />
-            <Route path="/myads" component={MyAds} />
-            <Route path="/myprofile" component={Profile} />
-            <Route path="/adsdetails/:id" component={AdsDetails} />
-            <Route path="/categoryMotors" component={CategoryMotors} />
-            <Route path="/categoryProperty/:id" component={CategoryProperty} />
-            <Route path="/motor/list/:key/:event/:city" component={MotorListing} />
-            <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} />
+            <ScrollToTop>
+              <Route exact path="/" component={Index} />
+              <Route path="/create-ads" component={ CreateAds } />
+              <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <Route path="/myfavourite" component={Favourite} />
+              <Route path="/myads" component={MyAds} />
+              <Route path="/myprofile" component={Profile} />
+              <Route path="/adsdetails/:id" component={AdsDetails} />
+              <Route path="/categoryMotors" component={CategoryMotors} />
+              <Route path="/categoryProperty/:id" component={CategoryProperty} />
+              <Route path="/motor/list/:key/:event/:city" component={MotorListing} />
+              <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} />
+            </ScrollToTop>
           </Switch>
         </Router>
     );
