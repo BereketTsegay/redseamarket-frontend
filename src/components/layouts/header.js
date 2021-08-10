@@ -7,6 +7,7 @@ import Logo from '../../../src/web-assets/img/brand.svg';
 import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL } from '../../projectString'; 
 import { withRouter } from 'react-router';
+import Swal from 'sweetalert2'
 import {
    BrowserRouter as Router,
    Link,
@@ -29,13 +30,24 @@ class Header extends React.Component{
             username: '',
             password: '',
         },
-        globalLoginError:''
+        errors2:{
+           namererror:'',
+           emailrerror:'',
+           passwordrerror:''
+        },
+        globalLoginError:'',
+        globalRegError:'',
+        registername:'',
+        registeremail:'',
+        registerpassword:'',
+
       }
 
    }
    
    viewLoginModal = () => {
       this.setState({ showHistory: !this.state.showHistory });
+      this.setState({ registerModal: false });
 
 
   }
@@ -43,6 +55,82 @@ class Header extends React.Component{
 
   viewRegisterModal = () => {
    this.setState({ registerModal: !this.state.registerModal });
+   this.setState({ showHistory: false });
+  }
+
+
+  handleRegisterSubmit = (e) => {
+   
+   e.preventDefault(); 
+   const { name, value } = e.target;
+   let errors2 = this.state.errors2;
+   if(this.state.registername && this.state.registeremail && this.state.registerpassword)
+      {
+
+
+         e.preventDefault();
+
+        axios({
+            url:`${BASE_URL}/user/register`,
+            method: 'POST',
+            data:{
+                name: this.state.registername,
+                email: this.state.registeremail,
+                password: this.state.registerpassword,
+            }
+        }).then(response => {
+            if(response.data.code == '200'){
+               
+
+                localStorage.removeItem('userToken');
+                localStorage.setItem('userToken', response.data.token);
+                localStorage.setItem('loginStatus', true);
+                this.setState({loginStatus:true});
+                Swal.fire({
+                   title: 'success!',
+                   text: response.data.message,
+                   icon: 'success',
+                   confirmButtonText: 'OK'
+               });
+               this.setState({ registerModal: false });
+
+
+
+            }else if(response.data.code == '400'){
+               this.setState({globalRegError:response.data.errors.email[0]});
+            }else{
+               this.setState({globalRegError:'Sorry something went wrong try again...'});
+            }
+
+        }).catch((error) => {
+           //console.log(error,'error')
+         // this.setState({globalRegError:error.response.data.message});
+        });
+
+
+
+
+
+      }else{
+         if(this.state.registername === '' || this.state.registername.trim() === '')
+         {
+             errors2.namererror ='Name cannot be blank'
+         }
+         if(this.state.registeremail === ''  || this.state.registeremail.trim() === '')
+         {
+            
+             errors2.emailrerror = 'Email cannot be blank';
+         }
+         if(this.state.registerpassword === ''  || this.state.registerpassword.trim() === '')
+         {
+            
+             errors2.passwordrerror = 'Password cannot be blank';
+         }
+         this.setState({errors2, [name]: value});
+      }
+
+      // console.log(errors2)
+
   }
 
 
@@ -68,7 +156,17 @@ class Header extends React.Component{
 
                   localStorage.removeItem('userToken');
                   localStorage.setItem('userToken', response.data.token);
-                  this.props.history.push('/#');
+                  localStorage.setItem('loginStatus', true);
+                  this.setState({loginStatus:true});
+                  Swal.fire({
+                     title: 'success!',
+                     text: response.data.message,
+                     icon: 'success',
+                     confirmButtonText: 'OK'
+                 });
+                 this.setState({ showHistory: false });
+               //   console.log(localStorage,"local storage")
+                  // this.props.handleSuccessfullAuth(response.data.message)
               }
 
           }).catch((error) => {
@@ -94,6 +192,53 @@ class Header extends React.Component{
 
       
   }
+
+
+  onChange2 =(e)=>{
+   this.setState({[e.target.name]: e.target.value});
+   this.setState({globalRegisterError:''});
+   e.preventDefault();
+   const { name, value } = e.target;
+   let errors2 = this.state.errors2;
+   switch (name) {
+       case 'registername': 
+           errors2.namererror = (value.length === 0 || (value.trim()).length === 0 )? 'Name cannot be blank': '';
+           if (value.length === 0 || (value.trim()).length === 0)
+           {
+               this.setState({isUsernameError:true});
+           }else{
+               this.setState({isUsernameError:false});
+           }
+       break;
+       case 'registeremail': 
+          errors2.emailrerror = (value.length === 0 || (value.trim()).length === 0)? 'Email cannot be blank' : '';
+           if (value.length === 0 || (value.trim()).length === 0)
+           {
+               this.setState({isPasswordError:true});
+           }else{
+               this.setState({isPasswordError:false});
+           }
+       break;
+       case 'registerpassword': 
+       errors2.passwordrerror = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
+        if (value.length === 0 || (value.trim()).length === 0)
+        {
+            this.setState({isPasswordError:true});
+        }else{
+            this.setState({isPasswordError:false});
+        }
+    break;
+       default:
+         break;
+   }
+   this.setState({errors2, [name]: value});
+}
+
+
+
+
+
+
 
   onChange =(e)=>{
    this.setState({[e.target.name]: e.target.value});
@@ -142,10 +287,9 @@ class Header extends React.Component{
 
 
 
-
     render() {
       
-      let {user, loginStatus, dataArray} = this.state;
+      let {user, dataArray} = this.state;
 
       let loginStyle = {
          marginRight: '0px',
@@ -169,9 +313,9 @@ class Header extends React.Component{
         
        }
 
-       const {errors} = this.state;
-
-
+       const {errors,errors2} = this.state;
+       const {loginStatus} =this.state;
+      console.log(loginStatus,"log status")
         return (
            <div>
             <header id="header" className="site-header">
@@ -184,8 +328,8 @@ class Header extends React.Component{
                        <CitySelect />
                       
                         <div className="header-right d-none d-lg-flex align-items-center ml-auto">
-                          
-                           {loginStatus === 'true' ? 
+                      
+                           {(loginStatus)? 
                            <div>
                                <Link to="/myfavourite" className="header-link">
                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -202,7 +346,12 @@ class Header extends React.Component{
                                  <a href="javascript:void(0)" onClick={() => { this.viewLoginModal() }} className="header-link" style={loginStyle}>Log in</a> or <a href="javascript:void(0)" onClick={() => { this.viewRegisterModal() }} className="header-link">sign up</a>
                                  </span>
                            }
+                           {(loginStatus ) ? 
+
                            <Link to='/create-ads' className="btn btn-primary">Place Your Ad</Link>
+                           :
+                           <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
+                            }
                         </div>
                         <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -245,7 +394,7 @@ class Header extends React.Component{
                                     <button onClick={this.handleSubmit} className="btn btn-primary d-block w-100">Login</button>
                                  </div>
                                  <div className="form-group-line text-center">
-                                    <button className="btn btn-link p-0" data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
+                                    <button className="btn btn-link p-0" onClick={() => { this.viewRegisterModal() }} data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
                                  </div>
                               </div>
                               <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
@@ -254,7 +403,7 @@ class Header extends React.Component{
                         
                     </Modal>
 
-
+                    
 
  
 
@@ -266,23 +415,25 @@ class Header extends React.Component{
                      </button>
                      <h5 className="modal-title text-center text-brand">Create an account</h5>
                      <div className="modal-form">
-                     <p className="help-block help-block-error" style={globalError}>{(this.state.globalRegisterError!="")? "Sorry... "+this.state.globalRegisterError:''}</p>
+                     <p className="help-block help-block-error" >{(this.state.globalRegError!="")? "Sorry... "+this.state.globalRegError:''}</p>
                         <div className="form-group">
-                        <input type="text" value={this.state.name}  onChange={this.onChange2} name="name" className="form-control" placeholder="Name"/>
-                        {errors.username.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors.name}</p>}
+                        <input type="text" value={this.state.registername}  onChange={this.onChange2} name="registername" className="form-control" placeholder="Name"/>
+                        {errors2.namererror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.namererror}</p>}
                          
                         </div>
                         <div className="form-group">
-                           <input type="email" className="form-control" placeholder="Email"/>
+                           <input type="email" value={this.state.registeremail}  onChange={this.onChange2}  name="registeremail" className="form-control" placeholder="Email"/>
+                           {errors2.emailrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.emailrerror}</p>}
                         </div>
                         <div className="form-group">
-                           <input type="password" className="form-control" placeholder="Password"/>
+                           <input type="password"  value={this.state.registerpassword}  onChange={this.onChange2}  name="registerpassword"  className="form-control" placeholder="Password"/>
+                           {errors2.passwordrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.passwordrerror}</p>}
                         </div>
                         <div className="form-group">
-                           <button className="btn btn-primary d-block w-100">Sign Up</button>
+                           <button  onClick= { this.handleRegisterSubmit} className="btn btn-primary d-block w-100">Sign Up</button>
                         </div>
                         <div className="form-group-line text-center">
-                           <button  className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
+                           <button  onClick={() => { this.viewLoginModal() }} className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
                         </div>
                      </div>
                      <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
@@ -296,37 +447,6 @@ class Header extends React.Component{
 
 
 
-{/* 
-                    <div className="modal fade log-sign-modal" id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
-               <div className="modal-content">
-                  <div className="modal-body">
-                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                     </button>
-                     <h5 className="modal-title text-center text-brand">Create an account</h5>
-                     <div className="modal-form">
-                        <div className="form-group">
-                           <input type="text" className="form-control" placeholder="Name"/>
-                        </div>
-                        <div className="form-group">
-                           <input type="email" className="form-control" placeholder="Email"/>
-                        </div>
-                        <div className="form-group">
-                           <input type="password" className="form-control" placeholder="Password"/>
-                        </div>
-                        <div className="form-group">
-                           <button className="btn btn-primary d-block w-100">Sign Up</button>
-                        </div>
-                        <div className="form-group-line text-center">
-                           <button className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
-                        </div>
-                     </div>
-                     <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
-                  </div>
-               </div>
-            </div>
-         </div> */}
 
 
 
