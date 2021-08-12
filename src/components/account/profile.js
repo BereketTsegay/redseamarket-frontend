@@ -75,7 +75,10 @@ export default class profile extends Component {
         e.preventDefault();
         
         localStorage.removeItem('userToken');
-        
+       
+      
+        localStorage.setItem('loginStatus', false);
+        this.setState({loginStatus:false});
         axios({
             url: `${BASE_URL}/customer/logout`,
             method: 'POST',
@@ -88,7 +91,7 @@ export default class profile extends Component {
             }
 
         }).catch((error) => {
-
+            this.props.history.push('/');
         });
 
     }
