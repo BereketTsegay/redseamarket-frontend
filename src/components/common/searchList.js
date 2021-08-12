@@ -8,6 +8,7 @@ import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
 
+
 export default class searchList extends Component {
 
     constructor(props){
@@ -25,33 +26,37 @@ export default class searchList extends Component {
             city: '',
             searchKey: '',
             total: 0,
+            latitude: 0,
+            longitude: 0,
         }
+        
     }
 
-    componentWillMount = () => {
+
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
         
-        let key = this.props.match.params.key;
-        let event = this.props.match.params.event;
-        let city = this.props.match.params.city;
-        let category = this.props.match.params.category;
-        let subcategory = this.props.match.params.subcategory;
+        let key = nextProps.match.params.key;
+        let event = nextProps.match.params.event;
+        let city = nextProps.match.params.city;
+        let category = nextProps.match.params.category;
+        let subcategory = nextProps.match.params.subcategory;
+        
+        if(key == '~' && category != '-'){
 
-
-        if(category != '-' && subcategory != '-' && city != '_'){
-            
             this.setState({
                 category: category,
                 city: city,
                 subcategory: subcategory,
                 searchKey: key
+
             }, () => {
                 axios({
-                    url: `${BASE_URL}/customer/search/ads`,
+                    url: `${BASE_URL}/customer/get/category/ads`,
                     method: 'POST',
                     data: {
-                        search_key: key,
-                        category: this.state.category,
-                        city: this.state.city,
+                        category_id: this.state.category,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
                     },
                 }).then(response => {
 
@@ -73,99 +78,31 @@ export default class searchList extends Component {
 
                 });
             });
+
         }
-        else if(category != '-' && subcategory != '-'){
-
-            this.setState({
-                category: category,
-                subcategory: subcategory,
-                searchKey: key
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/search/ads`,
-                    method: 'POST',
-                    data: {
-                        search_key: key,
-                        category: this.state.category,
-                    },
-                }).then(response => {
-
-                    if(response.data.status == 'success'){
-                        
-                        this.setState({
-                            
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        })
-                    }
-
-                }).catch((error) => {
-
-                });
-            });
-        }
-        else if(category != '-' && city != '_'){
-
-            this.setState({
-                category: category,
-                city: city,
-                searchKey: key
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/search/ads`,
-                    method: 'POST',
-                    data: {
-                        search_key: key,
-                        category: this.state.category,
-                        city: this.state.city,
-                    },
-                }).then(response => {
-
-                    if(response.data.status == 'success'){
-                        
-                        this.setState({
-                            
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        })
-                    }
-
-                }).catch((error) => {
-
-                });
-            });
-        }
-        else if(subcategory != '-' && city != '_'){
+        else if(key == '~' && subcategory != '-'){
 
             this.setState({
                 category: category,
                 city: city,
                 subcategory: subcategory,
                 searchKey: key
+
             }, () => {
                 axios({
-                    url: `${BASE_URL}/customer/search/ads`,
+                    url: `${BASE_URL}/customer/get/subcategory/ads`,
                     method: 'POST',
                     data: {
-                        search_key: key,
-                        city: this.state.city,
+                        subcategory_id: this.state.subcategory,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
                     },
                 }).then(response => {
 
                     if(response.data.status == 'success'){
                         
                         this.setState({
-                            
+
                             resultKey: response.data.message,
                             adList: response.data.ads.data,
                             paginataionArray: response.data.ads.links,
@@ -182,25 +119,228 @@ export default class searchList extends Component {
             });
         }
         else{
+            if(category != '-' && subcategory != '-' && city != '-'){
+                
+                this.setState({
+                    category: category,
+                    city: city,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            category: this.state.category,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
 
-            this.setState({
-                searchKey: key,
-            });
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(category != '-' && subcategory != '-'){
+
+                this.setState({
+                    category: category,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            category: this.state.category,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(category != '-' && city != '_'){
+
+                this.setState({
+                    category: category,
+                    city: city,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            category: this.state.category,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(subcategory != '-' && city != '_'){
+
+                this.setState({
+                    category: category,
+                    city: city,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else{
+
+                this.setState({
+                    searchKey: key,
+                });
+                
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            category: this.state.category,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+            }
+        }
+    }
+
+    componentWillMount = () => {
+        
+        let key = this.props.match.params.key;
+        let event = this.props.match.params.event;
+        let city = this.props.match.params.city;
+        let category = this.props.match.params.category;
+        let subcategory = this.props.match.params.subcategory;
+        
+        if(key == '~' && category != '-'){
             
+            this.setState({
+                category: category,
+                city: city,
+                subcategory: subcategory,
+                searchKey: key
+
+            }, () => {
                 axios({
-                    url: `${BASE_URL}/customer/search/ads`,
+                    url: `${BASE_URL}/customer/get/category/ads`,
                     method: 'POST',
                     data: {
-                        search_key: key,
-                        category: this.state.category,
-                        city: this.state.city,
+                        category_id: this.state.category,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
                     },
                 }).then(response => {
 
                     if(response.data.status == 'success'){
                         
                         this.setState({
-                            
+
                             resultKey: response.data.message,
                             adList: response.data.ads.data,
                             paginataionArray: response.data.ads.links,
@@ -214,45 +354,343 @@ export default class searchList extends Component {
                 }).catch((error) => {
 
                 });
+            });
+
+        }
+        else if(key == '~' && subcategory != '-'){
+
+            this.setState({
+                category: category,
+                city: city,
+                subcategory: subcategory,
+                searchKey: key
+
+            }, () => {
+                axios({
+                    url: `${BASE_URL}/customer/get/subcategory/ads`,
+                    method: 'POST',
+                    data: {
+                        subcategory_id: this.state.subcategory,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
+                    },
+                }).then(response => {
+
+                    if(response.data.status == 'success'){
+                        
+                        this.setState({
+
+                            resultKey: response.data.message,
+                            adList: response.data.ads.data,
+                            paginataionArray: response.data.ads.links,
+                            previousPage: response.data.ads.prev_page_url,
+                            nexPage: response.data.ads.next_page_url,
+                            last:response.data.ads.last_page,
+                            total:response.data.ads.total,
+                        })
+                    }
+
+                }).catch((error) => {
+
+                });
+            });
+        }
+        else{
+            if(category != '-' && subcategory != '-' && city != '-'){
+                
+                this.setState({
+                    category: category,
+                    city: city,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            category: this.state.category,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(category != '-' && subcategory != '-'){
+                
+                this.setState({
+                    category: category,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            category: this.state.category,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(category != '-' && city != '_'){
+
+                this.setState({
+                    category: category,
+                    city: city,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            category: this.state.category,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else if(subcategory != '-' && city != '_'){
+
+                this.setState({
+                    category: category,
+                    city: city,
+                    subcategory: subcategory,
+                    searchKey: key
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+                });
+            }
+            else{
+
+                this.setState({
+                    searchKey: key,
+                });
+                
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            category: this.state.category,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                            })
+                        }
+
+                    }).catch((error) => {
+
+                    });
+            }
         }
     }
 
     paginationCall = (url) => {
         
-        axios({
-            url: url,
-            method: 'POST',
-            data: {
-                search_key: this.state.searchKey,
-                category: this.state.category,
-                city: this.state.city,
-            },
-        }).then(response => {
+        if(this.state.search_key = '~' && this.state.category != '-'){
             
-            if(response.data.status == 'success'){
+            axios({
+                url: url,
+                method: 'POST',
+                data: {
+                    category_id: this.state.category,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                },
+            }).then(response => {
                 
-                this.setState({
+                if(response.data.status == 'success'){
                     
-                    resultKey: response.data.message,
-                    adList: response.data.ads.data,
-                    paginataionArray: response.data.ads.links,
-                    previousPage: response.data.ads.prev_page_url,
-                    nexPage: response.data.ads.next_page_url,
-                    last:response.data.ads.last_page,
-                    total:response.data.ads.total,
-                })
-                window.scrollTo(0, 0);
-            }
+                    this.setState({
+                        
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                        total:response.data.ads.total,
+                    })
+                    window.scrollTo(0, 0);
+                }
 
-        }).catch((error) => {
+            }).catch((error) => {
 
-        });
+            });
+        }
+        else if(this.state.search_key = '~' && this.state.subcategory != '-'){
+
+            axios({
+                url: url,
+                method: 'POST',
+                data: {
+                    subcategory_id: this.state.subcategory,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                },
+            }).then(response => {
+                
+                if(response.data.status == 'success'){
+                    
+                    this.setState({
+                        
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                        total:response.data.ads.total,
+                    })
+                    window.scrollTo(0, 0);
+                }
+
+            }).catch((error) => {
+
+            });
+
+        }
+        else{
+
+            axios({
+                url: url,
+                method: 'POST',
+                data: {
+                    search_key: this.state.searchKey,
+                    category: this.state.category,
+                    city: this.state.city,
+                },
+            }).then(response => {
+                
+                if(response.data.status == 'success'){
+                    
+                    this.setState({
+                        
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                        total:response.data.ads.total,
+                    })
+                    window.scrollTo(0, 0);
+                }
+
+            }).catch((error) => {
+
+            });
+        }
     }
 
     render() {
 
         let {paginataionArray, previousPage, nexPage, last, adList, resultKey, category, subcategory, city, searchKey, total} = this.state;
-
+        
         return (
             <div id="page" class="site-page">
                 <Header />

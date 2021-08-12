@@ -121,7 +121,7 @@ export default class categoryProperty extends Component {
             <div id="page" className="site-page">
 
             <Header />
-            <SearchArea category={category} changeCategoryToggle={this.changeCategory} />
+            <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
             
             {/* <!-- =====[SECTION CATEGORY CAROUSEL] **===== --> */}
             <section className="section-category-carousel">

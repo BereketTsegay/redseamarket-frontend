@@ -14,6 +14,8 @@ export default class subcategoryListing extends Component {
         let name = this.props.name != undefined ? this.props.name : '';
         let subcategory = this.props.subcategory ? this.props.subcategory : [];
         let image = this.props.image ? this.props.image : '';
+        let category_id = subcategory[0] ? subcategory[0].category_id : '' ;
+
         return (
             <div className="col-category col-md-4 col-sm-6">
                 <h4 className="category-title">
@@ -23,7 +25,7 @@ export default class subcategoryListing extends Component {
                     {subcategory && subcategory.map((subcategory, index) => {
 
                         if(index < 4){
-                            return <li key={index}><Link to="#">{subcategory.name} </Link></li>
+                            return <li key={index}><Link to={`/common/search/~/-/-/${subcategory.id}`}>{subcategory.name} </Link></li>
                         }
                         else{
                             return '';
@@ -31,7 +33,7 @@ export default class subcategoryListing extends Component {
                         
                     })}
                 </ul>
-                <Link to="#" className="btn btn-link">
+                <Link to={`/common/search/~/-/${category_id}/-`} className="btn btn-link">
                 View All
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </Link>

@@ -8,6 +8,7 @@ import Footer from '../layouts/footer'
 import Header from '../layouts/header'
 import AdEnquire from './adEnquire'
 import MotorProperty from './motorProperty';
+import PropertyForRendProperty from './propertyForRendProperty';
 
 export default class adsDetails extends Component {
 
@@ -35,6 +36,7 @@ export default class adsDetails extends Component {
             if(response.data.status == 'success'){
                 this.setState({
                     ads: response.data.ads,
+                    phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
                 })
             }
 
@@ -122,28 +124,39 @@ export default class adsDetails extends Component {
                                                 <p className="product-desc">{ads.description.substring(0, 250)}</p>
                                                 <div className="product-price font-weight-bold text-brand">AED {ads.price}</div>
                                                 <ul className="product-meta">
+
                                                     {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value.registration_year} fuel={ads.motore_value.fuel_type} />
-                                                    : ads.category_id == 2 ? 'rend' 
-                                                    : ads.category_id == 3 ? 'sale' 
+                                                    : ads.category_id == 2 ? ads.property_rend ? <PropertyForRendProperty room={ads.property_rend.room} property_type={ads.property_rend.building_type} size={ads.property_rend.size} furnished={ads.property_rend.furnished} /> : <PropertyForRendProperty room="" property_type="" size="" furnished="" />
+                                                    : ads.category_id == 3 ? ads.property_sale ? <PropertyForRendProperty room={ads.property_sale.room} property_type={ads.property_sale.building_type} size={ads.property_sale.size} furnished={ads.property_sale.furnished} /> : <PropertyForRendProperty room="" property_type="" size="" furnished="" />
                                                     : ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position === 'top'){
                                                             return <li key={index}>{customValue.value} : {customValue.name} </li>
                                                         }
                                                     })}
-                                                    {/* <li><img src="assets/img/pdt-bed.svg" alt="media" />1 Bed </li>
-                                                    <li><img src="assets/img/pdt-bathtub.svg" alt="media" />2 Baths </li>
-                                                    <li><img src="assets/img/pdt-space.svg" alt="media" />650 SqFt </li>
-                                                    <li><img src="assets/img/pdt-sofa.svg" alt="media" />Unfurnished</li> */}
+                                                    
                                                 </ul>
                                                 <div className="product-location">
                                                     <img src="assets/img/pdt-location.svg" alt="media" />
                                                     {ads.country_name}, {ads.state_name}, {ads.city_name}
                                                 </div>
                                                 <div className="product-btn-group d-flex justify-content-between">
+                                                    {ads.SellerInformation ? ads.SellerInformation.phone_hide_flag == 0 ? 
                                                     <a href="javascript:void(0);" onClick={() => this.showPhone(ads.seller_information ? ads.seller_information.phone : '')} className="btn btn-primary has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                                         Show Phone Number
                                                     </a>
+                                                    :
+                                                    <a href="javascript:void(0);" className="btn btn-primary has-icon d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        Show Phone Number
+                                                    </a>
+                                                    : 
+                                                    <a href="javascript:void(0);" className="btn btn-primary has-icon d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        Show Phone Number
+                                                    </a>
+                                                     }
+                                                    
                                                     <a href="#" className="btn btn-dark has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                                         Enquire Now
@@ -201,13 +214,13 @@ export default class adsDetails extends Component {
                                                         {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong>Furnished</strong></div>
                                                             <div className="col-1 text-center">:</div>
-                                                            <div className="col-7">{ads.property_rend.furnished}</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.furnished : ''}</div>
                                                         </div> : ''}
 
                                                         {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong>Furnished</strong></div>
                                                             <div className="col-1 text-center">:</div>
-                                                            <div className="col-7">{ads.property_sale.furnished}</div>
+                                                            <div className="col-7">{ads.property_sale ? ads.property_sale.furnished : ''}</div>
                                                         </div> : ''}
 
                                                         {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
@@ -220,6 +233,54 @@ export default class adsDetails extends Component {
                                                             <div className="col-4"><strong> Apartment For</strong></div>
                                                             <div className="col-1 text-center">:</div>
                                                             <div className="col-7">Sale</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Rooms</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.room : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Rooms</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_sale ? ads.property_sale.furnished : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Size</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.size : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Size</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_sale ? ads.property_sale.size : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Building Type</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.building_type : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Building Type</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_sale ? ads.property_sale.building_type : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Parking</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.parking == 1 ? 'Yes' : 'NO' : ''}</div>
+                                                        </div> : '' }
+
+                                                        {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Parking</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.parking == 1 ? 'Yes' : 'NO' : ''}</div>
                                                         </div> : '' }
 
                                                         {ads.category_id == 1 ?
@@ -237,27 +298,27 @@ export default class adsDetails extends Component {
                                                             <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Registration Year</strong></div>
                                                                 <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">{ads.motore_value.registration_year}</div>
+                                                                <div className="col-7">{ads.motore_value ? ads.motore_value.registration_year : ''}</div>
                                                             </div>
                                                             <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Fuel</strong></div>
                                                                 <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">{ads.motore_value.fuel_type}</div>
+                                                                <div className="col-7">{ads.motore_value ? ads.motore_value.fuel_type : ''}</div>
                                                             </div>
                                                             <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Transmission</strong></div>
                                                                 <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">{ads.motore_value.transmission}</div>
+                                                                <div className="col-7">{ads.motore_value ? ads.motore_value.transmission : ''}</div>
                                                             </div>
                                                             <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Condition</strong></div>
                                                                 <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">{ads.motore_value.condition}</div>
+                                                                <div className="col-7">{ads.motore_value ? ads.motore_value.condition : ''}</div>
                                                             </div>
                                                             <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Milage</strong></div>
                                                                 <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">{ads.motore_value.milage}</div>
+                                                                <div className="col-7">{ads.motore_value ? ads.motore_value.milage : ''}</div>
                                                             </div>
                                                         </>
                                                         

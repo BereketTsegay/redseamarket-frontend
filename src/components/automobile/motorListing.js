@@ -20,6 +20,8 @@ export default class motorListing extends Component {
             last: '',
             adList: [],
             resultKey: '',
+            latitude: 0,
+            longitude: 0,
         }
     }
     
@@ -36,6 +38,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
                 },
             }).then(response => {
 
@@ -67,6 +71,8 @@ export default class motorListing extends Component {
             data:{
                 search_key: this.props.match.params.key,
                 category: 1,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
             },
         }).then(response => {
 

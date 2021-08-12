@@ -25,21 +25,55 @@ class homefilter extends Component {
    handlSubmit = () => {
       
       if(this.state.searchKey != ''){
-
+         
          if(this.state.category == '' && this.state.city == ''){
             
             this.props.history.push('/common/search/'+this.state.searchKey+'/-/-/-');
          }
          else if(this.state.category != ''){
+            
+            if(this.state.category == 1 && this.state.city == '' && this.state.subcategory == ''){
+               
+               this.props.history.push('/motor/list/'+this.state.searchKey+'/search/ ');
+            }
+            else if((this.state.category == 2 && this.state.city == '' && this.state.subcategory == '') || (this.state.category == 3 && this.state.city == '' && this.state.subcategory == '')){
 
-         if(this.state.category == 1){
+            }
+            else if (this.state.subcategory != '' && this.state.city != '') {
 
-            this.props.history.push('/motor/list/'+this.state.searchKey+'/search');
-         }
-         else if(this.state.category == 2 || this.state.category == 3){}
+               this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/'+this.state.subcategory);
+            }
+            else if(this.state.subcategory != '') {
+               
+               this.props.history.push('/common/search/'+this.state.searchKey+'/-/'+this.state.category+'/'+this.state.subcategory);
+            }
+            else if(this.state.city != ''){
+               this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/-');
+            }
          }
       }
 
+   }
+
+   subcategoryChange = e => {
+
+      this.setState({
+         subcategory: e.target.value,
+      });
+   }
+
+   categoryChange = category_id => {
+
+      this.setState({
+         category: category_id,
+      });
+   }
+
+   cityChange = e => {
+
+      this.setState({
+         city: e.target.value,
+      });
    }
 
     render() {
@@ -69,7 +103,7 @@ class homefilter extends Component {
                            {categoryList && categoryList.map((categoryList, index) => {
                               if(index < 5){
                                  return (
-                                    <li className="nav-item" role="presentation" key={index}>
+                                    <li className="nav-item" role="presentation" key={index} onClick={() => this.categoryChange(categoryList.id)}>
                                        <a className="nav-link" id="motors-tab" data-toggle="tab" href={`#cat${index}`} role="tab" aria-controls={`cat${index}`} aria-selected="false">{categoryList.name}</a>
                                     </li>
                                  )
@@ -99,6 +133,7 @@ class homefilter extends Component {
                               </div>
                            </div>
                            {categoryList && categoryList.map((categoryList, index) => {
+                              
                               if(index < 5){
                                  return (
                                     <div className="tab-pane fade" id={`cat${index}`} role="tabpanel" aria-labelledby="motors-tab">
@@ -106,7 +141,7 @@ class homefilter extends Component {
                                           <div className="row row-options">
                                              <div className="col-md-6">
                                                 <div className="form-group">
-                                                   <select className="form-control">
+                                                   <select onChange={(e) => this.cityChange(e)} className="form-control">
                                                       <option>All Cities</option>
                                                       <option>2</option>
                                                       <option>3</option>
@@ -117,12 +152,11 @@ class homefilter extends Component {
                                              </div>
                                              <div className="col-md-6">
                                                 <div className="form-group">
-                                                   <select className="form-control">
-                                                      <option>All Categories</option>
-                                                      <option>2</option>
-                                                      <option>3</option>
-                                                      <option>4</option>
-                                                      <option>5</option>
+                                                   <select className="form-control" onChange={(e) => this.subcategoryChange(e)}>
+                                                      <option>All Subcategories</option>
+                                                      {categoryList.subcategory ? categoryList.subcategory.map((subcategory, index) => {
+                                                         return <option value={subcategory.id}>{subcategory.name}</option>;
+                                                      }) : ''}
                                                    </select>
                                                 </div>
                                              </div>
@@ -130,11 +164,11 @@ class homefilter extends Component {
                                           <div className="row">
                                              <div className="col-md-9">
                                                 <div className="form-group">
-                                                   <input type="text" className="form-control" placeholder="Search for anything…" />
+                                                   <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" />
                                                 </div>
                                              </div>
                                              <div className="col-md-3">
-                                                <button className="btn btn-primary has-icon w-100">
+                                                <button onClick={this.handlSubmit} className="btn btn-primary has-icon w-100">
                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                                    Search
                                                 </button>
@@ -154,13 +188,6 @@ class homefilter extends Component {
                   </div>
                </div>
            
-          
-
-               
-
-
-
-
         </section>
         
         </div>

@@ -21,8 +21,7 @@ class Home extends React.Component{
                     
                 <CategoryListingImage key={indexi} dataArray={dataArray} />
                 
-                ))   
-            }
+                ))}
                
                 {/* <CategoryListingImage2 />
                 <CategoryListingImage3 />

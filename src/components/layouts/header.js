@@ -315,7 +315,7 @@ class Header extends React.Component{
 
        const {errors,errors2} = this.state;
        const {loginStatus} =this.state;
-      console.log(loginStatus,"log status")
+      
         return (
            <div>
             <header id="header" className="site-header">
