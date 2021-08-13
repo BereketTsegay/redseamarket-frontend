@@ -75,9 +75,11 @@ export default class profile extends Component {
         e.preventDefault();
         
         localStorage.removeItem('userToken');
-       
+        sessionStorage.removeItem('loginStatus');
+   
+        sessionStorage.setItem('loginStatus',false);
       
-        localStorage.setItem('loginStatus', false);
+        // localStorage.setItem('loginStatus', false);
         this.setState({loginStatus:false});
         axios({
             url: `${BASE_URL}/customer/logout`,
