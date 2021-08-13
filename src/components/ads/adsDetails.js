@@ -15,6 +15,8 @@ export default class adsDetails extends Component {
     constructor(props){
         super(props);
 
+        this.myRef = React.createRef();
+
         this.state = {
             id:this.props.match.params.id,
             ads: [],
@@ -57,6 +59,9 @@ export default class adsDetails extends Component {
             phone: phone,
          });
     }
+
+    scrollToRef = () => this.myRef.current.scrollIntoView()
+
 
     render() {
         
@@ -157,7 +162,7 @@ export default class adsDetails extends Component {
                                                     </a>
                                                      }
                                                     
-                                                    <a href="#" className="btn btn-dark has-icon d-block">
+                                                    <a href="javascript:void(0);" onClick={this.scrollToRef} className="btn btn-dark has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                                         Enquire Now
                                                     </a>
@@ -366,7 +371,7 @@ export default class adsDetails extends Component {
                 })}
                 
 
-                <AdEnquire adsId={id}/>
+                <AdEnquire adsId={id} refprop={this.myRef}/>
                 <AppDownload />
                 <Footer/>
 

@@ -62,7 +62,7 @@ export default class adEnquire extends Component {
         let {id, name, email, message, phone} = this.state;
 
         return (
-            <section className="section-enquire" id="ad_enquire">
+            <section className="section-enquire" id="ad_enquire" ref={this.props.refprop}>
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6 col-md-8 mx-auto">
