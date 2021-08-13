@@ -16,10 +16,16 @@ export default class number extends Component {
 
         let name = this.props.name;
         let value = this.props.value;
+        let error = this.props.error ? this.props.error : '';
+
+        let ErrorStyle = {
+            color: 'red',
+        };
 
         return (
             <div className="form-group">
                 <input type="number" name={name} value={value} onChange={(e) => this.handleEvent(e)} className="form-control" placeholder={this.props.placeholder} />
+                {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
             </div>
         )
     }

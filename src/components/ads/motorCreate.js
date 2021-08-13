@@ -231,18 +231,18 @@ export default class motorCreate extends Component {
         let {makeOption, modelOption, fuelOption, transmissionOption, conditionOption, make_id, model_id, 
             registration_year, mileage, transmission, condition} = this.state;
             
-            
+        let errors = this.props.errors ? this.props.errors : '';
 
         return (
             
             <div>
-                <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" />
-                <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common"  />
-                <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} />
-                <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common"  />
-                <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} />
-                <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} />
-                <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} />
+                <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
+                <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
+                <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />
+                <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
+                <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} error={errors.errors_transmission} />
+                <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} error={errors.errors_condition} />
+                <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} error={errors.errors_mileage} />
                 <label>Features</label>
                 <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
                 <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />

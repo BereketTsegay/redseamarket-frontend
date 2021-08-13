@@ -27,13 +27,11 @@ class CategoryListingImage extends React.Component{
                         <Link to={`/adsdetails/${subcatArray.id}`}>
                            <div className="panel-media">
                            {
-                           (subcatArray['image'].length >0)?
-                              (subcatArray['image'] && subcatArray['image'].map((img,image) =>
-                               (img.image!="") ? <img src={IMAGE_URL+'/'+img.image} alt="media" />:<img src={defaultImage} alt="media" />
-                               
-                              ))
-                             : <img src={defaultImage} alt="media" Style={"width:100%","height: 174px"} />
-                              } 
+                           (subcatArray['image'].length > 0) ? 
+                              
+                              <img src={subcatArray.image[0] ? IMAGE_URL+'/'+subcatArray.image[0].image : defaultImage} alt="media" />:<img src={defaultImage} alt="media" />
+                           
+                           } 
                              
                            </div>
                            <div className="panel-content">

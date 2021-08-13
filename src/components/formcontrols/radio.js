@@ -20,6 +20,11 @@ export default class radio extends Component {
     render() {
 
         let {option, label, name} = this.state;
+        let error = this.props.error ? this.props.error : '';
+
+        let ErrorStyle = {
+            color: 'red',
+        };
 
         return (
             <div className="form-group">
@@ -33,6 +38,7 @@ export default class radio extends Component {
                         </div>
                     )
                 })}
+                {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
             </div>
         )
     }

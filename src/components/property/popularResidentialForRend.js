@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { IMAGE_URL } from '../../projectString';
 
@@ -16,7 +17,7 @@ export default class popularResidentialForRend extends Component {
         return (
             <div className="col-product-panel">
                 <div className="product-panel">
-                    <a href="#">
+                    <Link to={`/adsdetails/${ads.id}`}>
                         <div className="panel-media">
                             <img src={ads.image[0] ? IMAGE_URL+'/'+ads.image[0].image : defaultImage } alt="media" />
                         </div>
@@ -25,7 +26,7 @@ export default class popularResidentialForRend extends Component {
                             <h4 className="panel-title">{ads.room} Room • {ads.size} SqFt</h4>
                             <p className="panel-description">{ads.state_name}, {ads.city_name}</p>
                         </div>
-                    </a>
+                    </Link>
                 </div>
             </div>
         )

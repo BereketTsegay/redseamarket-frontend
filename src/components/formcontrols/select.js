@@ -33,6 +33,12 @@ class SelectField extends React.Component{
             
             this.props.optionChange(e.target.value);
         }
+
+        let error = this.props.error ? this.props.error : '';
+
+        let ErrorStyle = {
+            color: 'red',
+        };
         
         if(this.props.type === 'Make'){
             
@@ -48,6 +54,7 @@ class SelectField extends React.Component{
                         })}
                         
                     </select>
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             );
         }
@@ -66,6 +73,7 @@ class SelectField extends React.Component{
                         })}
                         
                     </select>
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             );
         }
@@ -84,6 +92,7 @@ class SelectField extends React.Component{
                         })}
                         
                     </select>
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             );
         }
@@ -102,6 +111,7 @@ class SelectField extends React.Component{
                         })}
                         
                     </select>
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             );
         }
@@ -120,6 +130,7 @@ class SelectField extends React.Component{
                         })}
                         
                     </select>
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             );
 

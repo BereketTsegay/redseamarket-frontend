@@ -57,6 +57,12 @@ class FileField extends React.Component{
         let fileName = this.state.fileName;
         let fileCount = this.state.fileCount;
 
+        let error = this.props.error ? this.props.error : '';
+
+        let ErrorStyle = {
+            color: 'red',
+        };
+
         return (
                 <div className="form-group form-ad-media-upload">
                         <label for="mediaUpload" className="d-flex align-items-center rounded mb-0 overflow-hidden">
@@ -66,6 +72,7 @@ class FileField extends React.Component{
                         {fileCount > 1 ? fileCount + ' File Selected' : fileName != '' ? fileName : 'No file chosen'}
                         </label>
                         <input type="file" onChange={(e) => this.fileUpload(e)} className="form-control-file" id="mediaUpload" multiple={this.props.multiple} />
+                        {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             )
         }
