@@ -4,6 +4,7 @@ import { BASE_URL, IMAGE_URL, userToken } from '../../projectString';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Loader from '../Loader';
 
 export default class listAdItem extends Component {
 
@@ -13,10 +14,15 @@ export default class listAdItem extends Component {
         this.state = {
             isFavourite: 0,
             isAd: 0,
+            loaderStatus: false,
         }
     }
 
     componentWillMount = () => {
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         if(userToken != null){
             axios({
@@ -38,10 +44,16 @@ export default class listAdItem extends Component {
                             isAd: 1,
                         });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
                 }
                 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
         }
     }
@@ -56,6 +68,10 @@ export default class listAdItem extends Component {
         else{
             action = 'remove';
         }
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         axios({
             url: `${BASE_URL}/customer/favourite/adOrRemove`,
@@ -74,6 +90,7 @@ export default class listAdItem extends Component {
                 this.setState({
                     isFavourite: !this.state.isFavourite,
                     isAd: !this.state.isAd,
+                    loaderStatus: false,
                 });
 
                 Swal.fire({
@@ -85,15 +102,19 @@ export default class listAdItem extends Component {
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
     render() {
         let ads = this.props.ads;
-        let {isFavourite, isAd} = this.state;
+        let {isFavourite, isAd, loaderStatus} = this.state;
         
         return (
+            <>
+            {loaderStatus == true ? <Loader /> :
             <li>
                 <div class="panel-media">
                     <a href="#"><img src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></a>
@@ -196,6 +217,8 @@ export default class listAdItem extends Component {
                     </div>
                 </div>
             </li>
+            }
+            </>
         )
     }
 }

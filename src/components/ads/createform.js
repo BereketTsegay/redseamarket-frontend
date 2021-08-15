@@ -19,6 +19,7 @@ import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
 import CustomField from './customField.js';
 import Swal from 'sweetalert2';
+import Loader from '../Loader';
 
 class CreateForm extends React.Component{
 
@@ -72,7 +73,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 1,
+         formPage: 3,
 
          fieldValue: [],
          image: [],
@@ -107,6 +108,8 @@ class CreateForm extends React.Component{
          errors_longitude: '',
          errors_phone: '',
          errors_address: '',
+
+         loaderStatus: false,
       }
    }
 
@@ -118,6 +121,7 @@ class CreateForm extends React.Component{
          subcategory: this.props.match.params.subcategory_id,
          categoryName: this.props.match.params.category,
          subcategoryName: this.props.match.params.subcategory,
+         loaderStatus: true,
 
       }, () => {
          axios({
@@ -133,11 +137,20 @@ class CreateForm extends React.Component{
                
                this.setState({
                   categoryField:response.data.data.category_field,
+                  loaderStatus: false,
                });
                
             }
+         }).catch((error) => {
+            this.setState({
+               loaderStatus: false,
+            });
          });
       });
+
+      this.setState({
+         loaderStatus: true,
+      })
 
       axios({
          method: 'POST',
@@ -147,9 +160,14 @@ class CreateForm extends React.Component{
          if(response.data.status == 'success'){
             this.setState({
                country: response.data.country,
+               loaderStatus: false,
             });
          }
 
+      }).catch((error) => {
+         this.setState({
+            loaderStatus: false,
+         });
       });
 
    }
@@ -169,11 +187,14 @@ class CreateForm extends React.Component{
             this.setState({
                country_id: id,
                state: response.data.state,
+               loaderStatus:false,
             });
          }
 
       }).catch((error) => {
-        
+         this.setState({
+            loaderStatus: false,
+         });
       });
    }
 
@@ -191,11 +212,14 @@ class CreateForm extends React.Component{
             this.setState({
                state_id: id,
                city: response.data.city,
+               loaderStatus: false,
             });
          }
 
       }).catch((error) => {
-        
+         this.setState({
+            loaderStatus: false,
+         });
       });
    }
 
@@ -462,10 +486,15 @@ class CreateForm extends React.Component{
    }
 
    adSubmitHandler = () => {
+
+      this.setState({
+         // loaderStatus: true,
+      });
       
       let state = this.state;
+      console.log(state.userName, state.email, state.latitude, state.longitude, state.phone, state.address);
       if(state.userName && state.email && state.latitude && state.longitude && state.phone && state.address){
-       
+         console.log('hi');
          axios({
             url: `${BASE_URL}/customer/ads/store`,
             method: 'POST',
@@ -523,9 +552,18 @@ class CreateForm extends React.Component{
                }).then((result) => {
                   this.props.history.push('/');
                });
+
+               this.setState({
+                  loaderStatus: false,
+               });
+
             }
 
          }).catch((error) => {
+
+            this.setState({
+               loaderStatus: false,
+            });
 
          });
       }
@@ -570,181 +608,58 @@ class CreateForm extends React.Component{
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
          description, phone, address} = this.state;
       
+      let loaderStatus = this.state.loaderStatus;
+
          return (
             <div className="site-frame">
-                <Header />
+               {loaderStatus == true ? <Loader /> :
+               <>
+                  <Header />
             
-                <div id="page" className="site-page">
-                <section className="section-create-ad-1">
-               <div className="container">
-                  <div className="row">
-                     <div className="col-12">
-                        <div className="section-title-panel text-center">
-                           <h2 className="section-title mb-2">You’re almost there!</h2>
-                           <p>Include as much details and pictures as possible, and set the right price!</p>
+                  <div id="page" className="site-page">
+                  <section className="section-create-ad-1">
+                  <div className="container">
+                     <div className="row">
+                        <div className="col-12">
+                           <div className="section-title-panel text-center">
+                              <h2 className="section-title mb-2">You’re almost there!</h2>
+                              <p>Include as much details and pictures as possible, and set the right price!</p>
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div className="row">
-                     <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
-                        <ol className="breadcrumb p-0 bg-white justify-content-center">
-                           <li className="breadcrumb-item"><a>{categoryName}</a></li>
-                           <li className="breadcrumb-item"><a>{subcategoryName}</a></li>
-                        </ol>
+                     <div className="row">
+                        <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
+                           <ol className="breadcrumb p-0 bg-white justify-content-center">
+                              <li className="breadcrumb-item"><a>{categoryName}</a></li>
+                              <li className="breadcrumb-item"><a>{subcategoryName}</a></li>
+                           </ol>
+                        </div>
                      </div>
-                  </div>
-                  <div className="row">
-                     <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
-                        <div className="create-ad-form">
-                          {this.state.formPage == 1 ?
-                           <>
-                              <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
-                              <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
-                              <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
-                              <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
-                              <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
-                              <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
-                              <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
-                              <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
-                              <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
-                              <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
-                              
-                              <div className="form-group">
-                                 <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                              </div>
-                           </>
-                           : 
-                           this.state.formPage == 2 && category == 1 ?  
-                           <>
-                               
-                              <MotorCreate motorEvents={this.motorChanges} errors={this.state} /> 
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                 </div>
-                              </div>
-                           </>
-                           : this.state.formPage == 2 && category == 2 ? 
-                           <>
-                               
-                              <PropertyCreate propertyEvent={this.propertyChange} errors={this.state} />
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                 </div>
-                              </div>
-                           </>
-                           : this.state.formPage == 2 && category == 3 ? 
-                           <>
-                               
-                              <PropertyCreate propertyEvent={this.propertyChange} errors={this.state} />
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                 </div>
-                              </div>
-                           </>
-                           : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) &&  categoryField.length != 0 ? 
+                     <div className="row">
+                        <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
+                           <div className="create-ad-form">
+                           {this.state.formPage == 1 ?
                               <>
-                                  
-                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
-                                 <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
+                                 <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
+                                 <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
+                                 <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
+                                 <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
+                                 <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
+                                 <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
+                                 <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
+                                 <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
+                                 <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
+                                 <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
+                                 
+                                 <div className="form-group">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
                                  </div>
-                              </div>
                               </>
-                           : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
+                              : 
+                              this.state.formPage == 2 && category == 1 ?  
                               <>
-                                  
-                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
-                                 <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                 </div>
-                              </div>
-                              </>
-                           : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) && categoryField.length == 0 ? 
-                           <>
-                               
-                              <h4>Seller Information</h4>
-                              <hr />
-
-                              <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
-                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
-                              <hr />
-                              <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
-
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
-                                 </div>
-                              </div>
-                           </>
-                           : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
-                              <>
-                                  
-                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
-                                 <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                 </div>
-                              </div>
-                              </>
-                           : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
-                           
-                           <>
-                               
-                              <h4>Seller Information</h4>
-                              <hr />
-
-                              <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
-                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
-                              <hr />
-                              <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
-
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                 </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
-                                 </div>
-                              </div>
-                           </>
-                           : this.state.formPage == 3 && categoryField.length != 0 ?
-                              <>
-                                  
-                                 <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                 
+                                 <MotorCreate motorEvents={this.motorChanges} errors={this.state} /> 
                                  <div className="row">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
@@ -754,33 +669,61 @@ class CreateForm extends React.Component{
                                     </div>
                                  </div>
                               </>
-                           : this.state.formPage == 3 && categoryField.length == 0 ? 
-                           <>
-                               
-                              <h4>Seller Information</h4>
-                              <hr />
-
-                              <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                              <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                              <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                              <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
-                              <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
-                              <hr />
-                              <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
-
-                              <div className="row">
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                              : this.state.formPage == 2 && category == 2 ? 
+                              <>
+                                 
+                                 <PropertyCreate propertyEvent={this.propertyChange} errors={this.state} />
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
                                  </div>
-                                 <div className="form-group col-md-6">
-                                    <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                              </>
+                              : this.state.formPage == 2 && category == 3 ? 
+                              <>
+                                 
+                                 <PropertyCreate propertyEvent={this.propertyChange} errors={this.state} />
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
                                  </div>
-                              </div>
-                           </>
-                           : <>
-                                  
-
+                              </>
+                              : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) &&  categoryField.length != 0 ? 
+                                 <>
+                                    
+                                    <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                    <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
+                                 </div>
+                                 </>
+                              : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
+                                 <>
+                                    
+                                    <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                    <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
+                                 </div>
+                                 </>
+                              : this.state.formPage == 2 && (category != 1 || category != 2 || category != 3 ) && categoryField.length == 0 ? 
+                              <>
+                                 
                                  <h4>Seller Information</h4>
                                  <hr />
 
@@ -802,23 +745,114 @@ class CreateForm extends React.Component{
                                     </div>
                                  </div>
                               </>
-                           }
+                              : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
+                                 <>
+                                    
+                                    <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                    <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                    </div>
+                                 </div>
+                                 </>
+                              : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
+                              
+                              <>
+                                 
+                                 <h4>Seller Information</h4>
+                                 <hr />
+
+                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+
+                                 <hr />
+                                 <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div>
+                                 </div>
+                              </>
+                              : this.state.formPage == 3 && categoryField.length != 0 ?
+                                 <>
+                                    
+                                    <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                                    <div className="row">
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                       </div>
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                                       </div>
+                                    </div>
+                                 </>
+                              : this.state.formPage == 3 && categoryField.length == 0 ? 
+                              <>
+                                 
+                                 <h4>Seller Information</h4>
+                                 <hr />
+
+                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+
+                                 <hr />
+                                 <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+
+                                 <div className="row">
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div>
+                                 </div>
+                              </>
+                              : <>
+                                    <h4>Seller Information</h4>
+                                    <hr />
+
+                                    <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                    <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                    <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                    <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                    <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+
+                                    <hr />
+                                    <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+
+                                    <div className="row">
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                       </div>
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       </div>
+                                    </div>
+                                 </>
+                              }
+                           </div>
                         </div>
                      </div>
                   </div>
+               </section>
                </div>
-            </section>
-            </div>
 
-
-
-
-
-
-
-
-                <AppDownload/>
-                <Footer/>
+                  <AppDownload/>
+                  <Footer/>
+               </>}
             </div>
             )
         }

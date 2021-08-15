@@ -37,10 +37,11 @@ class homefilter extends Component {
                this.props.history.push('/motor/list/'+this.state.searchKey+'/search/ ');
             }
             else if((this.state.category == 2 && this.state.city == '' && this.state.subcategory == '') || (this.state.category == 3 && this.state.city == '' && this.state.subcategory == '')){
-
+               
+               this.props.history.push('/categoryProperty/'+this.state.category)
             }
             else if (this.state.subcategory != '' && this.state.city != '') {
-
+               
                this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/'+this.state.subcategory);
             }
             else if(this.state.subcategory != '') {
@@ -48,7 +49,12 @@ class homefilter extends Component {
                this.props.history.push('/common/search/'+this.state.searchKey+'/-/'+this.state.category+'/'+this.state.subcategory);
             }
             else if(this.state.city != ''){
+               
                this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/-');
+            }
+            else if(this.state.category != '' && this.state.subcategory == '' && this.state.city == ''){
+
+               this.props.history.push('/common/search/'+this.state.searchKey+'/-/'+this.state.category+'/-');
             }
          }
       }

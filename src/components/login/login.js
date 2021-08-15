@@ -9,7 +9,6 @@ export default class login extends Component {
         this.state = {
             email: '',
             password: '',
-
         }
 
     }
@@ -54,12 +53,14 @@ export default class login extends Component {
     render() {
 
         return (
+            
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email" />
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
                     <button type="submit">Login</button>
                 </form>
+                
             </div>
         )
     }

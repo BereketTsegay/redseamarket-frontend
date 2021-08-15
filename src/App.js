@@ -21,8 +21,8 @@ import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
 import PropertyList from "./components/property/propertyList";
 
-function App() {
 
+function App() {
 
     return (
       

@@ -9,7 +9,8 @@ import PopularAreaInDubai from './popularAreaInDubai'
 import PopularCategory from './popularCategory'
 import PopularResidentialForRend from './popularResidentialForRend'
 import SearchArea from './searchArea'
-import SubcategoryList from './subcategoryList'
+import SubcategoryList from './subcategoryList';
+import Loader from '../Loader';
 
 export default class categoryProperty extends Component {
     
@@ -20,6 +21,7 @@ export default class categoryProperty extends Component {
             category_id: '',
             popularCategory: [],
             subcategory: [],
+            loaderStatus: false,
         }
     }
 
@@ -27,6 +29,7 @@ export default class categoryProperty extends Component {
 
         this.setState({
             category_id: this.props.match.params.id,
+            loaderStatus: true,
         }, () => {
 
             axios({
@@ -42,11 +45,14 @@ export default class categoryProperty extends Component {
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
+                        loaderStatus:false,
                     })
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                })
             });
         })
     }
@@ -56,6 +62,7 @@ export default class categoryProperty extends Component {
         if(this.state.category_id != this.props.match.params.id){
             this.setState({
                 category_id: this.props.match.params.id,
+                loaderStatus: true,
             }, () => {
 
                 axios({
@@ -71,11 +78,14 @@ export default class categoryProperty extends Component {
                         this.setState({
                             popularCategory: response.data.data.property.subcategory,
                             subcategory: response.data.data.subcategory,
-                        })
+                            loaderStatus: false,
+                        });
                     }
         
                 }).catch((error) => {
-        
+                    this.setState({
+                        loaderStatus: false,
+                    });
                 });
 
             });
@@ -87,6 +97,7 @@ export default class categoryProperty extends Component {
 
         this.setState({
             category_id: category_id,
+            loaderStatus: true,
         }, () => {
 
             axios({
@@ -102,11 +113,14 @@ export default class categoryProperty extends Component {
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
+                        loaderStatus: false,
                     })
                 }
     
             }).catch((error) => {
-    
+                this.setState({
+                    loaderStatus: false,
+                });
             });
 
         });
@@ -116,78 +130,81 @@ export default class categoryProperty extends Component {
 
         let category = this.props.match.params.id
         let {category_id, popularCategory, subcategory} = this.state;
+        let loaderStatus = this.state.loaderStatus;
 
         return (
             <div id="page" className="site-page">
-
-            <Header />
-            <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
-            
-            {/* <!-- =====[SECTION CATEGORY CAROUSEL] **===== --> */}
-            <section className="section-category-carousel">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h2 className="section-title text-center">Popular Categories</h2>
+            {loaderStatus == true ? <Loader /> : 
+            <>
+                <Header />
+                <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
+                
+                {/* <!-- =====[SECTION CATEGORY CAROUSEL] **===== --> */}
+                <section className="section-category-carousel">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <h2 className="section-title text-center">Popular Categories</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div id="categoryCarousel" className="owl-carousel category-carousel">
+                        <div className="row">
+                            <div className="col-12">
+                                <div id="categoryCarousel" className="owl-carousel category-carousel">
 
-                                {popularCategory && popularCategory.map((popularCategory, index) => {
+                                    {popularCategory && popularCategory.map((popularCategory, index) => {
+                                        
+                                        return <PopularCategory key={index} id={popularCategory.id} category_id={popularCategory.category_id} name={popularCategory.name} image={popularCategory.image} />
+                                    })}
                                     
-                                    return <PopularCategory key={index} id={popularCategory.id} category_id={popularCategory.category_id} name={popularCategory.name} image={popularCategory.image} />
-                                })}
-                                
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* <!-- =====[SECTION PLACE PANEL] **===== --> */}
-            
-            {/* <PopularAreaInDubai /> */}
+                {/* <!-- =====[SECTION PLACE PANEL] **===== --> */}
+                
+                {/* <PopularAreaInDubai /> */}
 
-            {/* <!-- =====[SECTION]===== --> */}
-            
-            <section className="section-no-padding pt-5">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h2 className="section-title text-center">{subcategory[0] ? subcategory[0].name : ''}</h2>
+                {/* <!-- =====[SECTION]===== --> */}
+                
+                <section className="section-no-padding pt-5">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <h2 className="section-title text-center">{subcategory[0] ? subcategory[0].name : ''}</h2>
+                            </div>
+                        </div>
+                        <div className="row row-product-panel">
+                            
+                        {subcategory[0] ? subcategory[0].ads.map((ads, index) => {
+                            
+                            if(index < 5){
+                                return <PopularResidentialForRend key={index} ads={ads} />
+                            }
+
+                        }) : ''}
+                            
                         </div>
                     </div>
-                    <div className="row row-product-panel">
-                        
-                    {subcategory[0] ? subcategory[0].ads.map((ads, index) => {
-                        
-                        if(index < 5){
-                            return <PopularResidentialForRend key={index} ads={ads} />
-                        }
+                </section>
 
-                    }) : ''}
+                {/* <!-- =====[SECTION PLACE LIST]===== --> */}
+                <section className="section-place-list">
+                    <div className="container">
                         
+                        {subcategory && subcategory.map((subcategory, index) => {
+                            if(index != 0){
+                                return <SubcategoryList key={index} subcategory={subcategory} />
+                            }
+                        })} 
+
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* <!-- =====[SECTION PLACE LIST]===== --> */}
-            <section className="section-place-list">
-                <div className="container">
-                    
-                    {subcategory && subcategory.map((subcategory, index) => {
-                        if(index != 0){
-                            return <SubcategoryList key={index} subcategory={subcategory} />
-                        }
-                    })} 
-
-                </div>
-            </section>
-
-            <AppDownload />
-            <Footer />
+                <AppDownload />
+                <Footer />
+            </>}
          </div>
         )
     }

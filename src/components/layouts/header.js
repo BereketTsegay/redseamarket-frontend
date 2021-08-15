@@ -12,7 +12,10 @@ import {
    BrowserRouter as Router,
    Link,
    Route // for later
- } from 'react-router-dom'
+ } from 'react-router-dom';
+
+import Loader from '../Loader';
+
 class Header extends React.Component{
 
    constructor(props){
@@ -41,7 +44,7 @@ class Header extends React.Component{
         registername:'',
         registeremail:'',
         registerpassword:'',
-
+        loaderStatus: false,
       }
 
    }
@@ -68,6 +71,9 @@ class Header extends React.Component{
    if(this.state.registername && this.state.registeremail && this.state.registerpassword)
       {
 
+        this.setState({
+            loaderStatus: true,
+        });
 
          e.preventDefault();
 
@@ -84,10 +90,17 @@ class Header extends React.Component{
                
 
                 localStorage.removeItem('userToken');
-                localStorage.removeItem('loginStatus');
+                sessionStorage.removeItem('loginStatus');
 
                 localStorage.setItem('userToken', response.data.token);
-                localStorage.setItem('loginStatus', true);
+                // localStorage.setItem('loginStatus', true);
+                this.setState({
+                   loginStatus:true,
+                   user: localStorage.getItem('user'),
+                });
+                
+                sessionStorage.setItem('loginStatus',true);
+
                 this.setState({loginStatus:true});
                 Swal.fire({
                    title: 'success!',
@@ -95,7 +108,7 @@ class Header extends React.Component{
                    icon: 'success',
                    confirmButtonText: 'OK'
                });
-               this.setState({ registerModal: false });
+               this.setState({ registerModal: false, loaderStatus: false,});
 
 
 
@@ -106,6 +119,9 @@ class Header extends React.Component{
             }
 
         }).catch((error) => {
+            this.setState({
+                loaderStatus:false,
+            });
            //console.log(error,'error')
          // this.setState({globalRegError:error.response.data.message});
         });
@@ -146,6 +162,10 @@ class Header extends React.Component{
         let errors = this.state.errors;
         if(this.state.email && this.state.password)
         {
+
+            this.setState({
+                loaderStatus: true,
+            });
       
           axios({
               url: `${BASE_URL}/user/login`,
@@ -173,14 +193,14 @@ class Header extends React.Component{
                      icon: 'success',
                      confirmButtonText: 'OK'
                  });
-                 this.setState({ showHistory: false });
+                 this.setState({ showHistory: false, loaderStatus:false, });
                //   console.log(localStorage,"local storage")
                   // this.props.handleSuccessfullAuth(response.data.message)
               }
 
           }).catch((error) => {
             // console.log(error,'error');
-            this.setState({globalLoginError:error.response.data.message});
+            this.setState({globalLoginError:error.response.data.message, loaderStatus:false,});
             //   console.log(error.response.data.message);
           })
          }
@@ -285,7 +305,7 @@ class Header extends React.Component{
 
 
 logout = (e) => {
-   this.setState({loginStatus:false});
+   this.setState({loginStatus:false, loaderStatus: true,});
    sessionStorage.removeItem('loginStatus');
    
    sessionStorage.setItem('loginStatus',false);
@@ -306,10 +326,16 @@ logout = (e) => {
 
        if(response.data.status === 'success'){
            this.props.history.push('/');
+           this.setState({
+               loaderStatus: false,
+           });
        }
 
    }).catch((error) => {
-       this.props.history.push('/');
+        this.props.history.push('/');
+        this.setState({
+            oaderStatus: false,
+        });
    });
 
 }
@@ -351,169 +377,150 @@ logout = (e) => {
 
        const {errors,errors2} = this.state;
        const {loginStatus} =this.state;
+
+       let loaderStatus = this.state.loaderStatus;
       
-       
-       
-
-console.log(this.state.loginStatus,'login status')
-
         return (
-           <div>
-            <header id="header" className="site-header">
-            <div className="main-header">
-                     <div className="container d-flex align-items-center flex-wrap">
-                        <div className="brand">
-                       
-                           <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
-                        </div>
-                       <CitySelect />
-                      
-                        <div className="header-right d-none d-lg-flex align-items-center ml-auto">
-                      
-                           {this.state.loginStatus === 'true' || this.state.loginStatus === true ?
-                           
-                           <div>
-                               <Link to="/myfavourite" className="header-link">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                               Favorites
-                               </Link>
-                              <Link to="/myprofile" className="header-link">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                 {user}
-                              </Link> 
-                              <Link className="header-link" onClick={(e) => this.logout(e)}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-sign-out"><path d=""></path><circle cx="12" cy="12" r="10"></circle></svg>
-                                 Logout</Link>
-                           </div>
-                           :
-                           <span>
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                 <a href="javascript:void(0)" onClick={() => { this.viewLoginModal() }} className="header-link" style={loginStyle}>Log in</a> or <a href="javascript:void(0)" onClick={() => { this.viewRegisterModal() }} className="header-link">sign up</a>
+            <div>
+                {loaderStatus == true ? <Loader /> :
+                
+                <>
+                <header id="header" className="site-header">
+                    <div className="main-header">
+                            <div className="container d-flex align-items-center flex-wrap">
+                                <div className="brand">
+                            
+                                <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
+                                </div>
+                            <CitySelect />
+                            
+                                <div className="header-right d-none d-lg-flex align-items-center ml-auto">
+                            
+                                {this.state.loginStatus === 'true' || this.state.loginStatus === true ?
                                 
-                           </span>
-                           }
+                                <div>
+                                    <Link to="/myfavourite" className="header-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    Favorites
+                                    </Link>
+                                    <Link to="/myprofile" className="header-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        {user}
+                                    </Link> 
+                                    <Link className="header-link" onClick={(e) => this.logout(e)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-sign-out"><path d=""></path><circle cx="12" cy="12" r="10"></circle></svg>
+                                        Logout</Link>
+                                </div>
+                                :
+                                <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        <a href="javascript:void(0)" onClick={() => { this.viewLoginModal() }} className="header-link" style={loginStyle}>Log in</a> or <a href="javascript:void(0)" onClick={() => { this.viewRegisterModal() }} className="header-link">sign up</a>
+                                        
+                                </span>
+                                }
 
 
 
 
 
-                           {(this.state.loginStatus) ? 
+                                {(this.state.loginStatus) ? 
 
-                           <Link to='/create-ads' className="btn btn-primary">Place Your Ad</Link>
-                           :
-                           <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
-                            }
+                                <Link to='/create-ads' className="btn btn-primary">Place Your Ad</Link>
+                                :
+                                <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
+                                    }
+                                </div>
+                                <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                                </button>
+                            </div>
                         </div>
-                        <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                        </button>
-                     </div>
-                  </div>
-            </header>
-             <Menu category={dataArray}/>
+                    </header>
+                    <Menu category={dataArray}/>
 
-
-            
-
-
-<div className="container">
-                     <Modal className="modal fade log-sign-modal" show={this.state.showHistory}  style={modalLogin} id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-                        
-                        <Modal.Body>
-                       
-                              <button  onClick={() => { this.viewLoginModal() }}  type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                              </button>
-                              <h5 className="modal-title text-center text-brand">Log in to your account</h5>
-                              <div className="modal-form">
-                                 <div className="form-group">
-                                
-                                 <p className="help-block help-block-error" style={globalError}>{(this.state.globalLoginError!="")? "Sorry... "+this.state.globalLoginError:''}</p>
-                                 {/* globalLoginError */}
-                                 <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address"/>
-                                 {errors.username.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors.username}</p>}
-                                 </div>
-                                 <div className="form-group">
-                                    <input type="password" value={this.state.password} name="password" onChange={this.onChange} className="form-control"  placeholder="Password"/>
-                                 {errors.password.length > 0 && <p className="help-block help-block-error" style={ErrorStyle}>{errors.password}</p>}
-                                 </div>
-                                 <div className="form-group text-right">
-                                    <a href="#" className="btn btn-link p-0">Forgot your password?</a>
-                                 </div>
-                                 <div className="form-group">
-                                 
-                                    <button onClick={this.handleSubmit} className="btn btn-primary d-block w-100">Login</button>
-                                 </div>
-                                 <div className="form-group-line text-center">
-                                    <button className="btn btn-link p-0" onClick={() => { this.viewRegisterModal() }} data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
-                                 </div>
-                              </div>
-                              <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
-                        
-                        </Modal.Body>
-                        
-                    </Modal>
 
                     
 
- 
 
-                    <Modal className="modal fade log-sign-modal" show={this.state.registerModal}  id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-                        
-                        <Modal.Body>
-                        <button onClick={() => { this.viewRegisterModal() }} type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                     </button>
-                     <h5 className="modal-title text-center text-brand">Create an account</h5>
-                     <div className="modal-form">
-                     <p className="help-block help-block-error" >{(this.state.globalRegError!="")? "Sorry... "+this.state.globalRegError:''}</p>
-                        <div className="form-group">
-                        <input type="text" value={this.state.registername}  onChange={this.onChange2} name="registername" className="form-control" placeholder="Name"/>
-                        {errors2.namererror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.namererror}</p>}
-                         
+                    <div className="container">
+                            <Modal className="modal fade log-sign-modal" show={this.state.showHistory}  style={modalLogin} id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                                
+                                <Modal.Body>
+                            
+                                    <button  onClick={() => { this.viewLoginModal() }}  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                    <h5 className="modal-title text-center text-brand">Log in to your account</h5>
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                        
+                                        <p className="help-block help-block-error" style={globalError}>{(this.state.globalLoginError!="")? "Sorry... "+this.state.globalLoginError:''}</p>
+                                        {/* globalLoginError */}
+                                        <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address"/>
+                                        {errors.username.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors.username}</p>}
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="password" value={this.state.password} name="password" onChange={this.onChange} className="form-control"  placeholder="Password"/>
+                                        {errors.password.length > 0 && <p className="help-block help-block-error" style={ErrorStyle}>{errors.password}</p>}
+                                        </div>
+                                        <div className="form-group text-right">
+                                            <a href="#" className="btn btn-link p-0">Forgot your password?</a>
+                                        </div>
+                                        <div className="form-group">
+                                        
+                                            <button onClick={this.handleSubmit} className="btn btn-primary d-block w-100">Login</button>
+                                        </div>
+                                        <div className="form-group-line text-center">
+                                            <button className="btn btn-link p-0" onClick={() => { this.viewRegisterModal() }} data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
+                                        </div>
+                                    </div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                                
+                                </Modal.Body>
+                                
+                            </Modal>
+
+                            
+
+        
+
+                            <Modal className="modal fade log-sign-modal" show={this.state.registerModal}  id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                                
+                                <Modal.Body>
+                                <button onClick={() => { this.viewRegisterModal() }} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                            <h5 className="modal-title text-center text-brand">Create an account</h5>
+                            <div className="modal-form">
+                            <p className="help-block help-block-error" >{(this.state.globalRegError!="")? "Sorry... "+this.state.globalRegError:''}</p>
+                                <div className="form-group">
+                                <input type="text" value={this.state.registername}  onChange={this.onChange2} name="registername" className="form-control" placeholder="Name"/>
+                                {errors2.namererror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.namererror}</p>}
+                                
+                                </div>
+                                <div className="form-group">
+                                <input type="email" value={this.state.registeremail}  onChange={this.onChange2}  name="registeremail" className="form-control" placeholder="Email"/>
+                                {errors2.emailrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.emailrerror}</p>}
+                                </div>
+                                <div className="form-group">
+                                <input type="password"  value={this.state.registerpassword}  onChange={this.onChange2}  name="registerpassword"  className="form-control" placeholder="Password"/>
+                                {errors2.passwordrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.passwordrerror}</p>}
+                                </div>
+                                <div className="form-group">
+                                <button  onClick= { this.handleRegisterSubmit} className="btn btn-primary d-block w-100">Sign Up</button>
+                                </div>
+                                <div className="form-group-line text-center">
+                                <button  onClick={() => { this.viewLoginModal() }} className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
+                                </div>
+                            </div>
+                            <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                                
+                                </Modal.Body>
+                                
+                            </Modal>              
                         </div>
-                        <div className="form-group">
-                           <input type="email" value={this.state.registeremail}  onChange={this.onChange2}  name="registeremail" className="form-control" placeholder="Email"/>
-                           {errors2.emailrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.emailrerror}</p>}
-                        </div>
-                        <div className="form-group">
-                           <input type="password"  value={this.state.registerpassword}  onChange={this.onChange2}  name="registerpassword"  className="form-control" placeholder="Password"/>
-                           {errors2.passwordrerror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.passwordrerror}</p>}
-                        </div>
-                        <div className="form-group">
-                           <button  onClick= { this.handleRegisterSubmit} className="btn btn-primary d-block w-100">Sign Up</button>
-                        </div>
-                        <div className="form-group-line text-center">
-                           <button  onClick={() => { this.viewLoginModal() }} className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
-                        </div>
-                     </div>
-                     <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
-                        
-                        </Modal.Body>
-                        
-                    </Modal>              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>              
-
-
-             </div>
+                </>}
+            </div>
 
              
         )

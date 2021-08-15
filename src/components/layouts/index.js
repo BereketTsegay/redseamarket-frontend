@@ -7,6 +7,7 @@ import AppDownload from '../home/app-download';
 import axios from 'axios';
 import dataArray from '../common/test.json';
 import { BASE_URL, userToken } from '../../projectString.js';
+import Loader from "../Loader";
 
 class Index extends React.Component{
     constructor(props) {
@@ -17,12 +18,17 @@ class Index extends React.Component{
            dataArray:[],
            token: userToken,
            categoryDefault: '',
+           loaderState: false,
   
         };
   
     }   
     componentWillMount() {
         
+        this.setState({
+            loaderState: true,
+        });
+
         if(this.state.token == null){
             axios({
                 url : `${BASE_URL}/customer/dashboard`,
@@ -40,6 +46,7 @@ class Index extends React.Component{
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
                     this.setState({categoryDefault:result.data.data.category_default});
+                    this.setState({ loaderState: false,});
 
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
@@ -52,7 +59,7 @@ class Index extends React.Component{
                 }
             
             }).catch((error) => {
-
+                this.setState({ loaderState: false,});
             });
         }
         else{
@@ -73,7 +80,8 @@ class Index extends React.Component{
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
                     this.setState({categoryDefault:result.data.data.category_default});
-                    
+                    this.setState({ loaderState: false,});
+
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
                     localStorage.removeItem('dataArray');
@@ -85,19 +93,25 @@ class Index extends React.Component{
                 }
               
             }).catch((error) => {
-
+                this.setState({ loaderState: false,});
             });
         }
       }
     render() {
         
+        let loaderState = this.state.loaderState;
+
         return (
             <div className="site-frame">
-                <Header />
-                <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} />
+                { loaderState == true ? <Loader /> :
+                <>
+                    <Header />
+                    <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} />
 
-                <AppDownload/>
-                <Footer/>
+                    <AppDownload/>
+                    <Footer/>
+                </>
+                }
             </div>
             )
         }

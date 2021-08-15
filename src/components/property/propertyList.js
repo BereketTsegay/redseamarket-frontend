@@ -7,7 +7,8 @@ import Footer from '../layouts/footer';
 import Header from '../layouts/header'
 import PropertyAdsItem from './propertyAdsItem';
 import PropertyCityList from './propertyCityList';
-import SearchArea from './searchArea'
+import SearchArea from './searchArea';
+import Loader from '../Loader';
 
 export default class propertyList extends Component {
 
@@ -30,6 +31,7 @@ export default class propertyList extends Component {
             subcategory: {},
             latitude: 0,
             longitude: 0,
+            loaderStatus: false,
         }
     }
 
@@ -42,6 +44,8 @@ export default class propertyList extends Component {
             property_type: this.props.match.params.property_type == '-' ? '' : this.props.match.params.property_type,
             price: this.props.match.params.price == '-' ? '' : this.props.match.params.price,
             room: this.props.match.params.room == '-' ? '' : this.props.match.params.room,
+            loaderStatus: true,
+
         }, () => {
             
             axios({
@@ -71,11 +75,14 @@ export default class propertyList extends Component {
                         nextPage: response.data.ads.next_page_url,
                         total: response.data.ads.total,
                         subcategory: response.data.subcategory,
+                        loaderStatus:false,
                     });
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
         });
     }
@@ -89,6 +96,7 @@ export default class propertyList extends Component {
             property_type: nextProps.match.params.property_type == '-' ? '' : nextProps.match.params.property_type,
             price: nextProps.match.params.price == '-' ? '' : nextProps.match.params.price,
             room: nextProps.match.params.room == '-' ? '' : nextProps.match.params.room,
+            loaderStatus: true,
         }, () => {
             
             axios({
@@ -118,17 +126,24 @@ export default class propertyList extends Component {
                         nextPage: response.data.ads.next_page_url,
                         total: response.data.ads.total,
                         subcategory: response.data.subcategory,
+                        loaderStatus: false,
                     });
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
         });
 
     }
 
     changeCategory = (category_id) => {
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         axios({
 
@@ -157,15 +172,22 @@ export default class propertyList extends Component {
                     nextPage: response.data.ads.next_page_url,
                     total: response.data.ads.total,
                     subcategory: response.data.subcategory,
+                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
     paginationCall = url => {
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         axios({
 
@@ -194,77 +216,83 @@ export default class propertyList extends Component {
                     nextPage: response.data.ads.next_page_url,
                     total: response.data.ads.total,
                     subcategory: response.data.subcategory,
+                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
     render() {
 
         let {category_id, subcategory_id, city, property_type, price, room, ads, paginataionArray,
-            last, previousPage, nextPage, total, subcategory} = this.state;
+            last, previousPage, nextPage, total, subcategory, latitude, longitude, loaderStatus} = this.state;
 
         return (
             <div id="page" class="site-page">
-                <Header />
-                {/* <!-- =====[SECTION HERO] **===== --> */}
-                
-                <SearchArea category={category_id} changeCategoryToggle={this.changeCategory} type="result" />
+                {loaderStatus == true ? <Loader /> :
+                <>
+                    <Header />
+                    {/* <!-- =====[SECTION HERO] **===== --> */}
+                    
+                    <SearchArea category={category_id} changeCategoryToggle={this.changeCategory} type="result" />
 
-                {/* <!-- =====[SECTION CATEGORY LIST HEAD] **===== --> */}
-                <section class="section-category-list-head">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-xl-8 col-lg-7">
-                                <h2 class="section-title">{subcategory ? subcategory.name : ''} <small class="text-muted d-inline-block pl-2">{total} results</small> </h2>
-                            </div>
-                            {/* <div class="col-xl-4 col-lg-5">
-                                <div class="form-group mb-0">
-                                <label class="mb-0 pr-3">Sort By </label>
-                                <select class="form-control">
-                                    <option>Newest to Oldest</option>
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
-                                    <option>Option 4</option>
-                                </select>
+                    {/* <!-- =====[SECTION CATEGORY LIST HEAD] **===== --> */}
+                    <section class="section-category-list-head">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 col-lg-7">
+                                    <h2 class="section-title">{subcategory ? subcategory.name : ''} <small class="text-muted d-inline-block pl-2">{total} results</small> </h2>
                                 </div>
-                            </div> */}
-                        </div>
-                    </div>
-                </section>
-                <hr className="mb-5" />
-                {/* <!-- =====[SECTION CATEGORY TAGS] **===== --> */}
-
-                {/* <PropertyCityList /> */}
-
-                {/* <!-- =====[SECTION CATEGORY LIST] **===== --> */}
-                <section class="section-category-list">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-10 mx-auto">
-                                <ul class="category-sort-list">
-                                    {ads ? ads.map((ads, index) => {
-                                        return <PropertyAdsItem key={index} ads={ads} />
-                                    })
-                                    : <h3 className="text-center">No Data found!</h3>}
-                                    
-                                </ul>
+                                {/* <div class="col-xl-4 col-lg-5">
+                                    <div class="form-group mb-0">
+                                    <label class="mb-0 pr-3">Sort By </label>
+                                    <select class="form-control">
+                                        <option>Newest to Oldest</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                        <option>Option 4</option>
+                                    </select>
+                                    </div>
+                                </div> */}
                             </div>
                         </div>
+                    </section>
+                    <hr className="mb-5" />
+                    {/* <!-- =====[SECTION CATEGORY TAGS] **===== --> */}
 
-                        {last == 1 || last == '' ? '' :
-                            <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nextPage} paginationChange={this.paginationCall} />
-                        }
-                    </div>
-                </section>
+                    {/* <PropertyCityList /> */}
+
+                    {/* <!-- =====[SECTION CATEGORY LIST] **===== --> */}
+                    <section class="section-category-list">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-10 mx-auto">
+                                    <ul class="category-sort-list">
+                                        {ads ? ads.map((ads, index) => {
+                                            return <PropertyAdsItem key={index} ads={ads} />
+                                        })
+                                        : <h3 className="text-center">No Data found!</h3>}
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {last == 1 || last == '' ? '' :
+                                <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nextPage} paginationChange={this.paginationCall} />
+                            }
+                        </div>
+                    </section>
 
 
-                <AppDownload />
-                <Footer />
+                    <AppDownload />
+                    <Footer />
+                </>}
             </div>
         )
     }

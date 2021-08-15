@@ -14,8 +14,8 @@ export default class subcategoryListing extends Component {
         let name = this.props.name != undefined ? this.props.name : '';
         let subcategory = this.props.subcategory ? this.props.subcategory : [];
         let image = this.props.image ? this.props.image : '';
-        let category_id = subcategory[0] ? subcategory[0].category_id : '' ;
-
+        let category_id = this.props.category_id ;
+        
         return (
             <div className="col-category col-md-4 col-sm-6">
                 <h4 className="category-title">

@@ -4,7 +4,8 @@ import { BASE_URL, userToken } from '../../projectString';
 import Checkbox from '../formcontrols/checkbox';
 import Number from '../formcontrols/number';
 import Radio from '../formcontrols/radio';
-import SelectField from '../formcontrols/select'
+import SelectField from '../formcontrols/select';
+import Loader from '../Loader';
 
 export default class motorCreate extends Component {
     constructor(props){
@@ -59,6 +60,7 @@ export default class motorCreate extends Component {
             security: false,
             tire: false,
             token: userToken,
+            loaderStatus: false,
 
         }
     }
@@ -75,11 +77,15 @@ export default class motorCreate extends Component {
             if(response.data.status == 'success'){
                 this.setState({
                     makeOption: response.data.make,
+                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
 
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
@@ -98,11 +104,14 @@ export default class motorCreate extends Component {
                 this.setState({
                     make_id: id,
                     modelOption: response.data.model,
+                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
@@ -232,23 +241,27 @@ export default class motorCreate extends Component {
             registration_year, mileage, transmission, condition} = this.state;
             
         let errors = this.props.errors ? this.props.errors : '';
+        let loaderStatus = this.state.loaderStatus;
 
         return (
             
             <div>
-                <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
-                <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
-                <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />
-                <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
-                <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} error={errors.errors_transmission} />
-                <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} error={errors.errors_condition} />
-                <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} error={errors.errors_mileage} />
-                <label>Features</label>
-                <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
-                <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />
-                <Checkbox checkboxChange={this.checkboxChange} name="security" label="Security System" />
-                <Checkbox checkboxChange={this.checkboxChange} name="tire" label="Spare Tire" />
+                {loaderStatus == true ? <Loader /> : 
+                <>
+                    <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
+                    <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
+                    <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />
+                    <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
+                    <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} error={errors.errors_transmission} />
+                    <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} error={errors.errors_condition} />
+                    <Number placeholder="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} error={errors.errors_mileage} />
+                    <label>Features</label>
+                    <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
+                    <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />
+                    <Checkbox checkboxChange={this.checkboxChange} name="security" label="Security System" />
+                    <Checkbox checkboxChange={this.checkboxChange} name="tire" label="Spare Tire" />
+                </>}
             </div>
-        )
+        );
     }
 }

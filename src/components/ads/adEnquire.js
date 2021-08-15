@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import { BASE_URL } from '../../projectString';
+import Loader from '../Loader';
 
 export default class adEnquire extends Component {
 
@@ -12,7 +13,7 @@ export default class adEnquire extends Component {
             email: null,
             message: null,
             phone:null,
-
+            loaderStatus: false,
         }
 
     }
@@ -27,6 +28,10 @@ export default class adEnquire extends Component {
     }
 
     handleSubmit = (e) => {
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         e.preventDefault();
 
@@ -48,21 +53,26 @@ export default class adEnquire extends Component {
                     name: '',
                     email: '',
                     phone: '',
+                    loaderStatus:false,
                 });
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
 
     }
 
     render() {
 
-        let {id, name, email, message, phone} = this.state;
+        let {id, name, email, message, phone, loaderStatus} = this.state;
 
         return (
-            <section className="section-enquire" id="ad_enquire" ref={this.props.refprop}>
+            <>
+                {loaderStatus == true ? <Loader /> : 
+                <section className="section-enquire" id="ad_enquire" ref={this.props.refprop}>
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6 col-md-8 mx-auto">
@@ -100,7 +110,8 @@ export default class adEnquire extends Component {
                             </div>
                         </div> */}
                     </div>
-                </section>
+                </section>}
+            </>
         )
     }
 }

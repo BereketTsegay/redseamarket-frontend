@@ -6,7 +6,8 @@ import HeadFilter from '../automobile/headFilter'
 import ListAdItem from '../automobile/listAdItem'
 import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
-import Header from '../layouts/header'
+import Header from '../layouts/header';
+import Loader from '../Loader';
 
 
 export default class searchList extends Component {
@@ -28,8 +29,8 @@ export default class searchList extends Component {
             total: 0,
             latitude: 0,
             longitude: 0,
+            loaderStatus: false,
         }
-        
     }
 
 
@@ -47,7 +48,8 @@ export default class searchList extends Component {
                 category: category,
                 city: city,
                 subcategory: subcategory,
-                searchKey: key
+                searchKey: key,
+                loaderStatus: true,
 
             }, () => {
                 axios({
@@ -71,11 +73,14 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
+                            loaderStatus:false,
                         })
                     }
 
                 }).catch((error) => {
-
+                    this.setState({
+                        loaderStatus:false,
+                    })
                 });
             });
 
@@ -86,7 +91,8 @@ export default class searchList extends Component {
                 category: category,
                 city: city,
                 subcategory: subcategory,
-                searchKey: key
+                searchKey: key,
+                loaderStatus:true,
 
             }, () => {
                 axios({
@@ -110,11 +116,14 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
+                            loaderStatus:false,
                         })
                     }
 
                 }).catch((error) => {
-
+                    this.setState({
+                        loaderStatus: false,
+                    });
                 });
             });
         }
@@ -125,7 +134,9 @@ export default class searchList extends Component {
                     category: category,
                     city: city,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -150,11 +161,14 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
@@ -163,7 +177,9 @@ export default class searchList extends Component {
                 this.setState({
                     category: category,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -187,20 +203,25 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: true,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        });
                     });
                 });
             }
-            else if(category != '-' && city != '_'){
+            else if(category != '-' && city != '-'){
 
                 this.setState({
                     category: category,
                     city: city,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -225,21 +246,26 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
-            else if(subcategory != '-' && city != '_'){
+            else if(subcategory != '-' && city != '-'){
 
                 this.setState({
                     category: category,
                     city: city,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -263,11 +289,14 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                            })
+                                loaderStatus: false,
+                            });
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
@@ -275,6 +304,7 @@ export default class searchList extends Component {
 
                 this.setState({
                     searchKey: key,
+                    loaderStatus: true,
                 });
                 
                     axios({
@@ -300,11 +330,14 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
             }
         }
@@ -324,7 +357,8 @@ export default class searchList extends Component {
                 category: category,
                 city: city,
                 subcategory: subcategory,
-                searchKey: key
+                searchKey: key,
+                loaderStatus: true,
 
             }, () => {
                 axios({
@@ -348,11 +382,14 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
+                            loaderStatus:false,
                         })
                     }
 
                 }).catch((error) => {
-
+                    this.setState({
+                        loaderStatus: false,
+                    })
                 });
             });
 
@@ -363,7 +400,8 @@ export default class searchList extends Component {
                 category: category,
                 city: city,
                 subcategory: subcategory,
-                searchKey: key
+                searchKey: key,
+                loaderStatus: true,
 
             }, () => {
                 axios({
@@ -387,22 +425,28 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
+                            loaderStatus: false,
                         })
                     }
 
                 }).catch((error) => {
-
+                    this.setState({
+                        loaderStatus: false,
+                    })
                 });
             });
         }
         else{
+            
             if(category != '-' && subcategory != '-' && city != '-'){
                 
                 this.setState({
                     category: category,
                     city: city,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -427,11 +471,14 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
@@ -440,7 +487,9 @@ export default class searchList extends Component {
                 this.setState({
                     category: category,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -464,20 +513,25 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
-            else if(category != '-' && city != '_'){
-
+            else if(category != '-' && city != '-'){
+                
                 this.setState({
                     category: category,
                     city: city,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -502,21 +556,26 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus: false,
                             })
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        });
                     });
                 });
             }
-            else if(subcategory != '-' && city != '_'){
+            else if(subcategory != '-' && city != '-'){
 
                 this.setState({
                     category: category,
                     city: city,
                     subcategory: subcategory,
-                    searchKey: key
+                    searchKey: key,
+                    loaderStatus: true,
+
                 }, () => {
                     axios({
                         url: `${BASE_URL}/customer/search/ads`,
@@ -540,11 +599,56 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
+                                loaderStatus:false,
                             })
                         }
 
                     }).catch((error) => {
+                        this.setState({
+                            loaderStatus: false,
+                        })
+                    });
+                });
+            }
+            else if(category != '-' && subcategory == '-' && city == '-'){
+                
+                this.setState({
+                    category: category,
+                    searchKey: key,
+                    loaderStatus: true,
 
+                }, () => {
+                    axios({
+                        url: `${BASE_URL}/customer/search/ads`,
+                        method: 'POST',
+                        data: {
+                            search_key: key,
+                            category: this.state.category,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            city: this.state.city,
+                        },
+                    }).then(response => {
+
+                        if(response.data.status == 'success'){
+                            
+                            this.setState({
+                                
+                                resultKey: response.data.message,
+                                adList: response.data.ads.data,
+                                paginataionArray: response.data.ads.links,
+                                previousPage: response.data.ads.prev_page_url,
+                                nexPage: response.data.ads.next_page_url,
+                                last:response.data.ads.last_page,
+                                total:response.data.ads.total,
+                                loaderStatus: false,
+                            })
+                        }
+
+                    }).catch((error) => {
+                        this.setState({
+                            loaderStatus: false,
+                        })
                     });
                 });
             }
@@ -552,6 +656,7 @@ export default class searchList extends Component {
 
                 this.setState({
                     searchKey: key,
+                    loaderStatus: true,
                 });
                 
                     axios({
@@ -577,18 +682,26 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                            })
+                                loaderStatus: false,
+                            });
                         }
 
                     }).catch((error) => {
-
+                        this.setState({
+                            loaderStatus: false,
+                        });
                     });
             }
+            
         }
     }
 
     paginationCall = (url) => {
         
+        this.setState({
+            loaderStatus: true,
+        });
+
         if(this.state.search_key = '~' && this.state.category != '-'){
             
             axios({
@@ -612,12 +725,15 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
+                        loaderStatus: false,
                     })
                     window.scrollTo(0, 0);
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                })
             });
         }
         else if(this.state.search_key = '~' && this.state.subcategory != '-'){
@@ -643,12 +759,15 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
+                        loaderStatus: false,
                     })
                     window.scrollTo(0, 0);
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
 
         }
@@ -677,12 +796,15 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
+                        loaderStatus: false,
                     })
                     window.scrollTo(0, 0);
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
         }
     }
@@ -690,61 +812,65 @@ export default class searchList extends Component {
     render() {
 
         let {paginataionArray, previousPage, nexPage, last, adList, resultKey, category, subcategory, city, searchKey, total} = this.state;
-        
+        let loaderStatus = this.state.loaderStatus;
+
         return (
             <div id="page" class="site-page">
+            {loaderStatus == true ? <Loader /> :
+            <>
                 <Header />
-            {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
-            <section class="section-hero-banner" style={{position: 'relative', background: '#0783FF', padding: '55px 0 120px 0'}}>
-               <div class="container">
-                  <div class="row">
-                     <div class="col-12">
-                        <h2 class="section-title text-white text-center">The UAE’s leading marketplace to buy and sell Products</h2>
-                     </div>
-                  </div>
-               </div>
-            </section>
-
-            {/* <!-- =====[SECTION MOTOR FILTER] **===== --> */}
-            
-            {/* <HeadFilter /> */}
-
-            {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
-            <section class="section-motor-sort-listing">
+                {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
+                <section class="section-hero-banner" style={{position: 'relative', background: '#0783FF', padding: '55px 0 120px 0'}}>
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="section-title-panel text-center">
-                            <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {total} ads</small></h2>
-                            <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on dubizzle &amp; reach 1.6 million buyers today.</p>
+                            <h2 class="section-title text-white text-center">The UAE’s leading marketplace to buy and sell Products</h2>
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+                {/* <!-- =====[SECTION MOTOR FILTER] **===== --> */}
+                
+                {/* <HeadFilter /> */}
+
+                {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
+                <section class="section-motor-sort-listing">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="section-title-panel text-center">
+                                <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {total} ads</small></h2>
+                                <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on Jamal al bahr &amp; reach 1.6 million buyers today.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-11 mx-auto">
-                            <ul class="motor-sort-list">
-                                {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
-                                    adList.length != 0 && adList.map((adList, index) => {
-                                    return (
-                                        <ListAdItem key={index} ads={adList} />
-                                    )
-                                }) }
-                                
-                            </ul>
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-11 mx-auto">
+                                <ul class="motor-sort-list">
+                                    {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
+                                        adList.length != 0 && adList.map((adList, index) => {
+                                        return (
+                                            <ListAdItem key={index} ads={adList} />
+                                        )
+                                    }) }
+                                    
+                                </ul>
+                            </div>
                         </div>
+
+                        {last == 1 || last == '' ? '' :
+                            <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
+                        }
+                        
+
                     </div>
+                </section>
 
-                    {last == 1 || last == '' ? '' :
-                        <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
-                    }
-                    
-
-                </div>
-            </section>
-
-            
-            <AppDownload />
-            <Footer />
+                
+                <AppDownload />
+                <Footer />
+            </>}
          </div>
         )
     }

@@ -7,6 +7,7 @@ import Footer from '../layouts/footer'
 import Header from '../layouts/header'
 import HeadFilter from './headFilter'
 import ListAdItem from './listAdItem'
+import Loader from '../Loader';
 
 export default class motorListing extends Component {
 
@@ -22,11 +23,16 @@ export default class motorListing extends Component {
             resultKey: '',
             latitude: 0,
             longitude: 0,
+            loaderStatus: false,
         }
     }
     
     componentWillMount = () => {
         
+        this.setState({
+            loaderStatus: true,
+        });
+
         let key = this.props.match.params.key;
         let event = this.props.match.params.event;
 
@@ -51,11 +57,14 @@ export default class motorListing extends Component {
                         previousPage: response.data.ads.prev_page_url,
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
+                        loaderStatus: false,
                     });
                 }
 
             }).catch((error) => {
-
+                this.setState({
+                    loaderStatus: false,
+                });
             });
         }
         else{
@@ -64,6 +73,10 @@ export default class motorListing extends Component {
     }
 
     paginationCall = (url) => {
+
+        this.setState({
+            loaderStatus: true,
+        });
 
         axios({
             url: url,
@@ -84,75 +97,81 @@ export default class motorListing extends Component {
                     previousPage: response.data.ads.prev_page_url,
                     nexPage: response.data.ads.next_page_url,
                     last:response.data.ads.last_page,
+                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
     render() {
 
         let {paginataionArray, previousPage, nexPage, last, adList, resultKey} = this.state;
-        
+        let loaderStatus = this.state.loaderStatus;
+
         return (
-            
             <div id="page" class="site-page">
+                {loaderStatus == true ? <Loader /> :
+                <>
                 <Header />
-            {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
-            <section class="section-hero-banner section-hero-motor-filter">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-12">
-                        <h2 class="section-title text-white text-center">The UAE’s leading marketplace to buy and sell cars</h2>
-                     </div>
-                  </div>
-               </div>
-            </section>
-
-            {/* <!-- =====[SECTION MOTOR FILTER] **===== --> */}
-            
-            <HeadFilter />
-
-            {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
-            <section class="section-motor-sort-listing">
+                {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
+                <section class="section-hero-banner section-hero-motor-filter">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="section-title-panel text-center">
-                            <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {adList.length} ads</small></h2>
-                            <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on dubizzle &amp; reach 1.6 million buyers today.</p>
+                            <h2 class="section-title text-white text-center">The UAE’s leading marketplace to buy and sell cars</h2>
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+                {/* <!-- =====[SECTION MOTOR FILTER] **===== --> */}
+                
+                <HeadFilter />
+
+                {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
+                <section class="section-motor-sort-listing">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="section-title-panel text-center">
+                                <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {adList.length} ads</small></h2>
+                                <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on dubizzle &amp; reach 1.6 million buyers today.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-11 mx-auto">
-                            <ul class="motor-sort-list">
-                                
-                                {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
-                                    adList.length != 0 && adList.map((adList, index) => {
-                                    return (
-                                        <ListAdItem key={index} ads={adList} />
-                                    )
-                                }) }
-                                
-                            </ul>
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-11 mx-auto">
+                                <ul class="motor-sort-list">
+                                    
+                                    {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
+                                        adList.length != 0 && adList.map((adList, index) => {
+                                        return (
+                                            <ListAdItem key={index} ads={adList} />
+                                        )
+                                    }) }
+                                    
+                                </ul>
+                            </div>
                         </div>
+
+                        {last == 1 || last == '' ? '' :
+                            <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
+                        }
+                        
+
                     </div>
+                </section>
 
-                    {last == 1 || last == '' ? '' :
-                        <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
-                    }
-                    
-
-                </div>
-            </section>
-
-            
-            <AppDownload />
-            <Footer />
-         </div>
+                
+                <AppDownload />
+                <Footer />
+                </>}
+            </div>
         )
     }
 }

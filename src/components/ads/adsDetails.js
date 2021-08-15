@@ -9,6 +9,7 @@ import Header from '../layouts/header'
 import AdEnquire from './adEnquire'
 import MotorProperty from './motorProperty';
 import PropertyForRendProperty from './propertyForRendProperty';
+import Loader from '../Loader';
 
 export default class adsDetails extends Component {
 
@@ -23,10 +24,16 @@ export default class adsDetails extends Component {
             mainImage: null,
             modalShow: false,
             phone: '',
+            loaderStatus: false,
         }
     }
 
     componentWillMount(){
+
+        this.setState({
+            loaderStatus: true,
+        });
+
         axios({
             url: `${BASE_URL}/customer/ad/view`,
             method: 'POST',
@@ -39,11 +46,14 @@ export default class adsDetails extends Component {
                 this.setState({
                     ads: response.data.ads,
                     phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
+                    loaderStatus: false,
                 })
             }
 
         }).catch((error) => {
-
+            this.setState({
+                loaderStatus: false,
+            })
         });
     }
 
@@ -65,7 +75,7 @@ export default class adsDetails extends Component {
 
     render() {
         
-        let {id, ads, mainImage, modalShow, phone} = this.state;
+        let {id, ads, mainImage, modalShow, phone, loaderStatus} = this.state;
         
             let modalLogin ={
                 position:  'fixed',
@@ -77,7 +87,8 @@ export default class adsDetails extends Component {
         
         return (
             <div id="page" className="site-page">
-
+                {loaderStatus == true ? <Loader /> :
+                <>
                 <Header />
                 <section className="section-breadcrumb">
                     <div className="container">
@@ -391,6 +402,7 @@ export default class adsDetails extends Component {
                         
                     </Modal>
                   </div>
+                </>}
             </div>
         )
     }

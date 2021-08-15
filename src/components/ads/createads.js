@@ -71,10 +71,10 @@ class CreateAds extends React.Component{
         }
         return (
             <div>
-            <Header />
-            {formField}
-            <AppDownload/>
-            <Footer/>
+                <Header />
+                {formField}
+                <AppDownload/>
+                <Footer/>
             </div>
         )
     }

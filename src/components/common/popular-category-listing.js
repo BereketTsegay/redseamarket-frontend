@@ -28,7 +28,7 @@ class PopularCategoryListing extends React.Component{
                         {categoryDefault && categoryDefault.map((categoryDefault, index) => {
 
                             if(index < 5){
-                                return <SubcategoryListing key={index} name={categoryDefault.name} image={categoryDefault.image} subcategory={categoryDefault.subcategory} />
+                                return <SubcategoryListing key={index} name={categoryDefault.name} image={categoryDefault.image} subcategory={categoryDefault.subcategory} category_id={categoryDefault.id} />
                             }
                             else{
                                 return '';
