@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { BASE_URL } from '../../projectString';
 
 class homefilter extends Component {
 
@@ -11,6 +13,8 @@ class homefilter extends Component {
          category: '',
          subcategory: '',
          city: '',
+         country_id: 229,
+         cityArray: [],
       }
    }
 
@@ -20,6 +24,27 @@ class homefilter extends Component {
          searchKey: e.target.value,
       });
       
+   }
+
+   componentWillMount = () => {
+
+      axios({
+         url: `${BASE_URL}/customer/city/list`,
+         method: 'POST',
+         data: {
+             country_id: this.state.country_id,
+         },
+      }).then(response => {
+            if(response.data.status === 'success'){
+
+               this.setState({
+                  cityArray: response.data.city,
+               });
+            }
+
+      }).catch((error) => {
+
+      });
    }
 
    handlSubmit = () => {
@@ -88,6 +113,8 @@ class homefilter extends Component {
 
       let categoryList = this.props.category;
 
+      let cityArray = this.state.cityArray;
+
         return (
            <div> 
         <section className="section-home-hero">
@@ -148,11 +175,12 @@ class homefilter extends Component {
                                              <div className="col-md-6">
                                                 <div className="form-group">
                                                    <select onChange={(e) => this.cityChange(e)} className="form-control">
-                                                      <option>All Cities</option>
-                                                      <option>2</option>
-                                                      <option>3</option>
-                                                      <option>4</option>
-                                                      <option>5</option>
+                                                      <option value="">All Cities</option>
+
+                                                      {cityArray ? cityArray.map((city, index) => {
+                                                         return <option value={city.id}>{city.name}</option>
+                                                      }) : ''}
+                                                      
                                                    </select>
                                                 </div>
                                              </div>

@@ -41,7 +41,7 @@ export default class categoryProperty extends Component {
             }).then(response => {
 
                 if(response.data.status == 'success'){
-
+                    console.log(response.data);
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
@@ -77,7 +77,7 @@ export default class categoryProperty extends Component {
                 }).then(response => {
         
                     if(response.data.status == 'success'){
-        
+                        
                         this.setState({
                             popularCategory: response.data.data.property.subcategory,
                             subcategory: response.data.data.subcategory,
@@ -140,7 +140,7 @@ export default class categoryProperty extends Component {
         let category = this.props.match.params.id
         let {category_id, popularCategory, subcategory} = this.state;
         let loaderStatus = this.state.loaderStatus;
-
+        
         return (
             <div id="page" className="site-page">
             {loaderStatus == true ? <Loader /> : 

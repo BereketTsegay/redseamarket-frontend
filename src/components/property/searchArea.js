@@ -19,6 +19,8 @@ class searchArea extends Component {
             price: '-',
             room: '-',
             loaderStatus: false,
+            country_id: 229,
+            cityArray: [],
         }
     }
 
@@ -51,6 +53,24 @@ class searchArea extends Component {
             this.setState({
                 loaderStatus: false,
             });
+        });
+
+        axios({
+            url: `${BASE_URL}/customer/city/list`,
+            method: 'POST',
+            data: {
+                country_id: this.state.country_id,
+            },
+        }).then(response => {
+               if(response.data.status === 'success'){
+   
+                  this.setState({
+                     cityArray: response.data.city,
+                  });
+               }
+   
+        }).catch((error) => {
+   
         });
     }
 
@@ -133,6 +153,7 @@ class searchArea extends Component {
         let category1 = this.props.category;
         let {category, subcategory} = this.state;
         let loaderStatus = this.state.loaderStatus;
+        let cityArray = this.state.cityArray;
         
         return (
             <>
@@ -184,9 +205,12 @@ class searchArea extends Component {
                                                                     <div className="form-group">
                                                                     <label>City</label>
                                                                     <select name="city" onChange={(e) => this.handleChange(e)} className="form-control">
-                                                                        <option>Dubai</option>
-                                                                        <option>Option 1</option>
-                                                                        <option>Option 2</option>
+                                                                        <option value="">Select city</option>
+
+                                                                        {cityArray ? cityArray.map((city, index) => {
+                                                                            return <option key={index} value={city.id}>{city.name}</option>
+                                                                        }) : ''}
+                                                                        
                                                                     </select>
                                                                     </div>
                                                                 </div>

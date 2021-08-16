@@ -39,12 +39,14 @@ class Header extends React.Component{
            emailrerror:'',
            passwordrerror:''
         },
+        emailError: '',
         globalLoginError:'',
         globalRegError:'',
         registername:'',
         registeremail:'',
         registerpassword:'',
         loaderStatus: false,
+        forgotPasswordModal: false,
       }
 
    }
@@ -309,7 +311,86 @@ class Header extends React.Component{
 }
 
 
+    viewForgotpasswordModal = () => {
 
+        this.setState({
+            forgotPasswordModal: !this.state.forgotPasswordModal,
+            showHistory: !this.state.showHistory,
+            error: '',
+        });
+    }
+
+    forgotSubmit = (e) => {
+
+        const { name, value } = e.target;
+        let errors = this.state.errors;
+
+        if(this.state.email){
+
+            this.setState({
+                loaderStatus: true,
+            });
+      
+            axios({
+
+                url: `${BASE_URL}/user/forgot/send/password/toMail`,
+                method: 'POST',
+                data:{
+                    email:this.state.email,
+                },
+
+            }).then(response => {
+                if(response.data.status == 'success'){
+                    
+                    Swal.fire({
+                        title: 'success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+
+                    this.setState({
+
+                        forgotPasswordModal: false,
+                    });
+                
+                }
+
+                if(response.data.status == 'error'){
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            })
+        }
+        else{
+            let emailError = '';
+            if(this.state.email === '' || this.state.email.trim() === ''){
+
+                emailError ='Email cannot be blank';
+
+                this.setState({isUsernameError:true});
+            }
+            this.setState({
+                emailError: emailError,
+            });
+        }
+
+    }
 
 
 logout = (e) => {
@@ -348,12 +429,6 @@ logout = (e) => {
    });
 
 }
-
-
-
-
-
-
 
 
 
@@ -401,7 +476,7 @@ logout = (e) => {
                             
                                 <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
                                 </div>
-                            <CitySelect />
+                                <CitySelect />
                             
                                 <div className="header-right d-none d-lg-flex align-items-center ml-auto">
                             
@@ -451,7 +526,7 @@ logout = (e) => {
                     
 
 
-                    <div className="container">
+                        <div className="container">
                             <Modal className="modal fade log-sign-modal" show={this.state.showHistory}  style={modalLogin} id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
                                 
                                 <Modal.Body>
@@ -473,7 +548,7 @@ logout = (e) => {
                                         {errors.password.length > 0 && <p className="help-block help-block-error" style={ErrorStyle}>{errors.password}</p>}
                                         </div>
                                         <div className="form-group text-right">
-                                            <a href="#" className="btn btn-link p-0">Forgot your password?</a>
+                                            <a href="javascript:void(0)" onClick={this.viewForgotpasswordModal} className="btn btn-link p-0">Forgot your password?</a>
                                         </div>
                                         <div className="form-group">
                                         
@@ -526,7 +601,39 @@ logout = (e) => {
                                 
                                 </Modal.Body>
                                 
-                            </Modal>              
+                            </Modal> 
+
+
+
+                            <Modal className="modal fade log-sign-modal" show={this.state.forgotPasswordModal}  style={modalLogin} id="forgotModal" tabindex="-1" aria-labelledby="forgotModalLabel" aria-hidden="true">
+                                
+                                <Modal.Body>
+                            
+                                    <button  onClick={ this.viewForgotpasswordModal }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                    <h5 className="modal-title text-center text-brand">Recover your account</h5>
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                        
+                                        <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address"/>
+                                            {this.state.emailError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.emailError}</p>}
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                        
+                                            <button onClick={ this.forgotSubmit } className="btn btn-primary d-block w-100">Recover</button>
+                                        </div>
+                                        <div className="form-group-line text-center">
+                                            <button className="btn btn-link p-0" onClick={ this.viewForgotpasswordModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
+                                        </div>
+                                    </div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link href="#"> Privacy Policy</Link></div>
+                                
+                                </Modal.Body>
+                                
+                            </Modal>
+
                         </div>
                 </>}
             </div>

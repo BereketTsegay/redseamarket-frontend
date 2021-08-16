@@ -25,10 +25,14 @@ class headFilter extends Component {
             seller: '-',
             keyword: '',
             loaderStatus: false,
+            country_id: 229,
+            cityArray: [],
+
         }
     }
 
     componentWillMount = () => {
+
         axios({
             url: `${BASE_URL}/customer/get/subcategory`,
             method: 'POST',
@@ -47,6 +51,24 @@ class headFilter extends Component {
 
         }).catch((error) => {
 
+        });
+
+        axios({
+            url: `${BASE_URL}/customer/city/list`,
+            method: 'POST',
+            data: {
+                country_id: this.state.country_id,
+            },
+        }).then(response => {
+               if(response.data.status === 'success'){
+   
+                  this.setState({
+                     cityArray: response.data.city,
+                  });
+               }
+   
+        }).catch((error) => {
+   
         });
     }
 
@@ -70,7 +92,7 @@ class headFilter extends Component {
     render() {
 
         let {subcategory, category_id, city, subcategory_id, condition, transimission, priceFrom, yearFrom, mileageFrom, priceTo,
-            yearTo, mileageTo, seller, keyword, loaderStatus} = this.state;
+            yearTo, mileageTo, seller, keyword, loaderStatus, country_id, cityArray} = this.state;
 
         return (
             <>
@@ -89,8 +111,11 @@ class headFilter extends Component {
                                     <div className="col-xl-3 col-md-6">
                                         <div className="form-group">
                                             <select onChange={(e) => this.handleChange(e)} name="city" className="form-control">
-                                            <option value="">Dubai</option>
-                                            <option value="">Option 1</option>
+                                            <option value="">Select City</option>
+                                            {cityArray ? cityArray.map((city, index) => {
+                                                return <option key={index} value={city.id}>{city.name}</option>
+                                            }) : ''}
+                                            
                                             </select>
                                         </div>
                                     </div>

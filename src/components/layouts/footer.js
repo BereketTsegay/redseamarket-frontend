@@ -1,7 +1,41 @@
+import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../projectString';
 class Footer extends React.Component{
-    render() {
-        return (
+
+   constructor(props){
+      super(props);
+
+      this.state = {
+         socialLink: [],
+      }
+
+   }
+
+   componentWillMount = () => {
+
+      axios({
+         url: `${BASE_URL}/customer/social/link`,
+         method: 'POST',
+      }).then(response => {
+
+         if(response.data.status === 'success'){
+            this.setState({
+               socialLink: response.data.social,
+            });
+         }
+
+      }).catch((error) => {
+
+      });
+   }
+
+   render() {
+
+      let {socialLink} = this.state;
+
+      return (
                
             <footer id="footer" className="site-footer">
                <div className="top-footer">
@@ -63,10 +97,11 @@ class Footer extends React.Component{
                            <div className="footer-panel text-center text-lg-left">
                               <h4 className="footer-title">Get Social</h4>
                               <div className="footer-social">
-                                 <a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a>
-                                 <a href="#"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
-                                 <a href="#"><i className="fa fa-twitter" aria-hidden="true"></i></a>
-                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"></i></a>
+
+                                 {socialLink ? socialLink.map((socialLink, index) => {
+                                    return <a key={index} href={socialLink.url}><i className={socialLink.social_icons} aria-hidden="true"></i></a>
+                                 }) : ''}
+                                 
                               </div>
                            </div>
                         </div>
@@ -77,7 +112,7 @@ class Footer extends React.Component{
                   <div className="container">
                      <div className="row">
                         <div className="col-12">
-                           <p className="text-center text-md-left mb-0">© <a href="#">Jamal al bahr general trading</a> , All Rights Reserved.</p>
+                           <p className="text-center text-md-left mb-0">© <Link to="/">Jamal al bahr general trading</Link> , All Rights Reserved.</p>
                         </div>
                      </div>
                   </div>
