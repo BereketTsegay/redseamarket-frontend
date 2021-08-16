@@ -509,7 +509,7 @@ logout = (e) => {
 
                                 {this.state.loginStatus === true || this.state.loginStatus === 'true' ? 
 
-                                <Link to='/create-ads' className="btn btn-primary">Place Your Ad</Link>
+                                <Link to='/create-ads' className="btn btn-primary" replace>Place Your Ad</Link>
                                 :
                                 <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
                                     }

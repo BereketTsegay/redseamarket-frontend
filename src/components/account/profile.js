@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL, userToken } from '../../projectString';
 import Header from '../layouts/header'
 import Breadcrumb from './breadcrumb'
@@ -25,6 +26,14 @@ export default class profile extends Component {
             phone: '',
             nationality: '',
             loaderState: false,
+            changePasswordModal: false,
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+
+            passwordError: '',
+            newPasswordError: '',
+            confirmPasswordError: '',
             
         }
     }
@@ -174,9 +183,124 @@ export default class profile extends Component {
         });
     }
 
+    changePasswordModal = () => {
+
+        this.setState({
+            changePasswordModal: !this.state.changePasswordModal,
+        });
+    }
+
+    onChange = (e) => {
+
+        this.setState({
+            [e.target.name]: e.target.value,
+        }, () => {
+
+            switch(e.target.name){
+                case 'oldPassword':
+                    this.setState({
+                        passwordError: this.state.oldPassword ? '' : 'Current password cannot be blank!',
+                    });
+                    break;
+                case 'newPassword':
+                    this.setState({
+                        newPasswordError: this.state.newPassword ? '' : 'New password cannot be blank!',
+                    });
+                    break;
+                case 'confirmPassword':
+                    this.setState({
+                        confirmPasswordError: this.state.confirmPassword ? '' : 'Confirm password cannot be blank!',
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
+
+    changePasswordSubmit = (e) => {
+
+        e.preventDefault();
+
+        if(this.state.oldPassword && this.state.newPassword && this.state.confirmPassword){
+
+            axios({
+                url: `${BASE_URL}/customer/change/password`,
+                method: 'POST',
+                headers:{ Authorization: "Bearer " + this.state.token },
+                data: {
+                    old_password: this.state.oldPassword,
+                    password: this.state.newPassword,
+                    password_confirmation: this.state.confirmPassword,
+                },
+
+            }).then(response => {
+
+                if(response.data.status === 'success'){
+                    
+                    Swal.fire({
+                        title: 'success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                if(response.data.status === 'error'){
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                this.setState({
+                    changePasswordModal: !this.state.changePasswordModal,
+                });
+
+            }).catch((error) => {
+                
+                if(error.response.data.status === 'error'){
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                this.setState({
+                    changePasswordModal: !this.state.changePasswordModal,
+                });
+
+            });
+        }
+        else{
+            this.setState({
+                passwordError: this.state.oldPassword ? '' : 'Current password cannot be blank!',
+                newPasswordError: this.state.newPassword ? '' : 'New password cannot be blank!',
+                confirmPasswordError: this.state.confirmPassword ? '' : 'Confirm password cannot be blank!',
+            });
+        }
+    }
+
     render() {
 
         let {token, myAds, myFavourite, user, loginStatus, country, name, email, phone, nationality, loaderState} = this.state;
+
+        let ErrorStyle = {
+            color: 'red',
+        };
+
+        let modalLogin ={
+            position:  'fixed',
+            width: '600px',
+            top: '40px',
+            left: 'calc(50% - 300px)',
+            bottom: '40px',
+        }
         
         return (
             <div id="page" className="site-page">
@@ -194,7 +318,7 @@ export default class profile extends Component {
                             <div className="my-profile-title-panel">
                                 <div className="row">
                                     <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
-                                    <div className="col-lg-4 text-center"><a href="#" className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Change Password</a></div>
+                                    <div className="col-lg-4 text-center"><a href="javascript:void(0);" onClick={this.changePasswordModal} className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Change Password</a></div>
                                 </div>
                                 <div className="row mt-4 mt-lg-5">
                                     <div className="col-12 d-flex justify-content-center">
@@ -265,6 +389,40 @@ export default class profile extends Component {
                         </div>
                     </section>
                 </>}
+
+                <Modal className="modal fade log-sign-modal" show={this.state.changePasswordModal}  style={modalLogin} id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
+                                
+                    <Modal.Body>
+                            
+                        <button  onClick={ this.changePasswordModal }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                        <h5 className="modal-title text-center text-brand">Change your password</h5>
+                        <div className="modal-form">
+                            <div className="form-group">           
+                                <input type="password" value={this.state.oldPassword}  onChange={this.onChange} name="oldPassword" className="form-control" placeholder="Current Password"/>
+                                {this.state.passwordError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.passwordError}</p>}
+                            </div>
+                            <div className="form-group">
+                                <input type="password" value={this.state.newPassword}  onChange={this.onChange} name="newPassword" className="form-control" placeholder="New Password"/>
+                                {this.state.newPasswordError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.newPasswordError}</p>}
+                            </div>
+                            <div className="form-group">
+                                <input type="password" value={this.state.confirmPassword}  onChange={this.onChange} name="confirmPassword" className="form-control" placeholder="Confirm Password"/>
+                                {this.state.confirmPasswordError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.confirmPasswordError}</p>}
+                            </div>
+                                                
+                            <div className="form-group">
+                                                
+                                <button onClick={ this.changePasswordSubmit } className="btn btn-primary d-block w-100">Change</button>
+                            </div>
+                        </div>
+                        
+                                
+                    </Modal.Body>
+                                
+                </Modal>
+
             </div>
         )
     }

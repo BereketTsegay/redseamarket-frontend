@@ -41,7 +41,7 @@ class CreateAds extends React.Component{
         switch (pageValue) {
             case 'category':
 
-            console.log(categoryId,"categoryId");        
+                  
             this.setState({ categoryId:categoryId});   
             this.setState({ pageSelectVal:1});
             break;
@@ -55,14 +55,18 @@ class CreateAds extends React.Component{
             default:
             break;
         }
-
-
-
     };
+
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            pageSelectVal: 1,
+        });
+    }
+    
     render() {
         const pageSelectVal = this.state.pageSelectVal;
         let formField;
-            console.log(pageSelectVal,"id value")
+            
         if (pageSelectVal=="1") {
             formField = <CreateAdsCategory parentCallback = {this.handleCallback}/>;
         } else if(pageSelectVal=="2") {

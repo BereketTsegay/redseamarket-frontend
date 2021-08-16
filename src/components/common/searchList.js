@@ -365,7 +365,7 @@ export default class searchList extends Component {
     }
 
     componentWillMount = () => {
-        
+        console.log(this.props);
         let key = this.props.match.params.key;
         let event = this.props.match.params.event;
         let city = this.props.match.params.city;
