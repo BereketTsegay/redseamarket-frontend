@@ -45,14 +45,17 @@ export default class categoryProperty extends Component {
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
-                        loaderStatus:false,
                     })
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({
                     loaderStatus: false,
-                })
+                });
             });
         })
     }
@@ -78,9 +81,12 @@ export default class categoryProperty extends Component {
                         this.setState({
                             popularCategory: response.data.data.property.subcategory,
                             subcategory: response.data.data.subcategory,
-                            loaderStatus: false,
                         });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
         
                 }).catch((error) => {
                     this.setState({
@@ -113,9 +119,12 @@ export default class categoryProperty extends Component {
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
-                        loaderStatus: false,
                     })
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
     
             }).catch((error) => {
                 this.setState({

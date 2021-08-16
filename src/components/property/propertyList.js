@@ -75,9 +75,12 @@ export default class propertyList extends Component {
                         nextPage: response.data.ads.next_page_url,
                         total: response.data.ads.total,
                         subcategory: response.data.subcategory,
-                        loaderStatus:false,
                     });
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({
@@ -126,9 +129,12 @@ export default class propertyList extends Component {
                         nextPage: response.data.ads.next_page_url,
                         total: response.data.ads.total,
                         subcategory: response.data.subcategory,
-                        loaderStatus: false,
                     });
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({
@@ -172,9 +178,12 @@ export default class propertyList extends Component {
                     nextPage: response.data.ads.next_page_url,
                     total: response.data.ads.total,
                     subcategory: response.data.subcategory,
-                    loaderStatus: false,
                 });
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({
@@ -216,9 +225,12 @@ export default class propertyList extends Component {
                     nextPage: response.data.ads.next_page_url,
                     total: response.data.ads.total,
                     subcategory: response.data.subcategory,
-                    loaderStatus: false,
                 });
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({

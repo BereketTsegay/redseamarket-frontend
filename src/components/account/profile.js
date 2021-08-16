@@ -46,7 +46,6 @@ export default class profile extends Component {
                     myAds:response.data.data.myads,
                     myFavourite:response.data.data.myfavourite,
                     user:response.data.data.user,
-                    loaderState: false,
                 }, () => {
                     this.setState({
                         name: this.state.user.name,
@@ -57,15 +56,19 @@ export default class profile extends Component {
                 });
             }
 
-        }).catch((error) => {
             this.setState({
                 loaderState: false,
             })
+
+        }).catch((error) => {
+            this.setState({
+                loaderState: false,
+            });
         })
 
         this.setState({
             loaderState: true,
-        })
+        });
 
         axios({
             url: `${BASE_URL}/customer/get/country`,
@@ -75,9 +78,12 @@ export default class profile extends Component {
             if(response.data.status == 'success'){
                 this.setState({
                     country: response.data.country,
-                    loaderState: false,
                 });
             }
+
+            this.setState({
+                loaderState: false,
+            })
 
         }).catch((error) => {
             this.setState({
@@ -110,10 +116,11 @@ export default class profile extends Component {
 
             if(response.data.status === 'success'){
                 this.props.history.push('/');
-                this.setState({
-                    loaderState: false,
-                })
             }
+
+            this.setState({
+                loaderState: false,
+            });
 
         }).catch((error) => {
             this.props.history.push('/');
@@ -154,12 +161,11 @@ export default class profile extends Component {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
-
-                this.setState({
-                    loaderState: false,
-                });
-
             }
+
+            this.setState({
+                loaderState: false,
+            });
 
         }).catch((error) => {
             this.setState({

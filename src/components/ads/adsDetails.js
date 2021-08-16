@@ -46,14 +46,17 @@ export default class adsDetails extends Component {
                 this.setState({
                     ads: response.data.ads,
                     phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
-                    loaderStatus: false,
                 })
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({
                 loaderStatus: false,
-            })
+            });
         });
     }
 

@@ -8,6 +8,7 @@ import Header from '../layouts/header'
 import HeadFilter from './headFilter'
 import ListAdItem from './listAdItem'
 import Loader from '../Loader';
+import ResultTitleArea from './resultTitleArea';
 
 export default class searchResult extends Component {
     constructor(props){
@@ -76,7 +77,7 @@ export default class searchResult extends Component {
                         last:response.data.ads.last_page,
                     });
                 }
-
+                
                 this.setState({
                     loaderStatus: false,
                 });
@@ -241,14 +242,9 @@ export default class searchResult extends Component {
                 {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
                 <section class="section-motor-sort-listing">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="section-title-panel text-center">
-                                <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {adList.length} ads</small></h2>
-                                <p class="text-muted">Brand new &amp; used Motorcycles for sale in Dubai - Sell your 2nd hand Motorcycles on dubizzle &amp; reach 1.6 million buyers today.</p>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        <ResultTitleArea resultKey={resultKey} lengthValue={adList.length} />
+                        
                         <div class="row">
                             <div class="col-xl-9 col-lg-11 mx-auto">
                                 <ul class="motor-sort-list">

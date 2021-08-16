@@ -20,11 +20,12 @@ export default class listAdItem extends Component {
 
     componentWillMount = () => {
 
-        this.setState({
-            loaderStatus: true,
-        });
-
         if(userToken != null){
+
+            this.setState({
+                loaderStatus: true,
+            });
+            
             axios({
                 url: `${BASE_URL}/customer/ad/favourite`,
                 method: 'POST',
@@ -44,11 +45,11 @@ export default class listAdItem extends Component {
                             isAd: 1,
                         });
                     }
-
-                    this.setState({
-                        loaderStatus: false,
-                    });
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
                 
             }).catch((error) => {
                 this.setState({
@@ -90,7 +91,6 @@ export default class listAdItem extends Component {
                 this.setState({
                     isFavourite: !this.state.isFavourite,
                     isAd: !this.state.isAd,
-                    loaderStatus: false,
                 });
 
                 Swal.fire({
@@ -100,6 +100,10 @@ export default class listAdItem extends Component {
                     confirmButtonText: 'OK'
                  });
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({

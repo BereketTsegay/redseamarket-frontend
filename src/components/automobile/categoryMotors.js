@@ -41,9 +41,12 @@ export default class categoryMotors extends Component {
                subcategory: response.data.data.motors.subcategory,
                ads: response.data.data.ads,
                testimonial: response.data.data.testimonial,
-               loaderStatus: false,
             });
          }
+
+         this.setState({
+            loaderStatus:false,
+         });
 
       }).catch((error) => {
          this.setState({

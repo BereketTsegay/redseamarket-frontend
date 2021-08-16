@@ -37,10 +37,13 @@ class CreateAdsCategory extends React.Component{
             //  this.setState({loginStatus:result.data.data.loged_user_status}); 
              this.setState({
                 categoryArray:result.data.categories,
-                loaderStatus: false,
                });
    
         }
+
+        this.setState({
+         loaderStatus: false,
+     })
        
           
       })

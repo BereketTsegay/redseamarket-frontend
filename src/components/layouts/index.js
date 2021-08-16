@@ -46,7 +46,6 @@ class Index extends React.Component{
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
                     this.setState({categoryDefault:result.data.data.category_default});
-                    this.setState({ loaderState: false,});
 
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
@@ -57,6 +56,10 @@ class Index extends React.Component{
                     localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
             
                 }
+                console.log('hi')
+                this.setState({
+                    loaderState: false,
+                });
             
             }).catch((error) => {
                 this.setState({ loaderState: false,});
@@ -80,7 +83,6 @@ class Index extends React.Component{
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
                     this.setState({categoryDefault:result.data.data.category_default});
-                    this.setState({ loaderState: false,});
 
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
@@ -91,6 +93,10 @@ class Index extends React.Component{
                     localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
             
                 }
+
+                this.setState({
+                    loaderState: false,
+                });
               
             }).catch((error) => {
                 this.setState({ loaderState: false,});

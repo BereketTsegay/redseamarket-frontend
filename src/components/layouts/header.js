@@ -108,7 +108,7 @@ class Header extends React.Component{
                    icon: 'success',
                    confirmButtonText: 'OK'
                });
-               this.setState({ registerModal: false, loaderStatus: false,});
+               this.setState({ registerModal: false});
 
 
 
@@ -117,6 +117,10 @@ class Header extends React.Component{
             }else{
                this.setState({globalRegError:'Sorry something went wrong try again...'});
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({
@@ -193,10 +197,14 @@ class Header extends React.Component{
                      icon: 'success',
                      confirmButtonText: 'OK'
                  });
-                 this.setState({ showHistory: false, loaderStatus:false, });
+                 this.setState({ showHistory: false});
                //   console.log(localStorage,"local storage")
                   // this.props.handleSuccessfullAuth(response.data.message)
               }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
           }).catch((error) => {
             // console.log(error,'error');
@@ -324,12 +332,13 @@ logout = (e) => {
 
    }).then(response => {
 
-       if(response.data.status === 'success'){
-           this.props.history.push('/');
-           this.setState({
-               loaderStatus: false,
-           });
-       }
+        if(response.data.status === 'success'){
+            this.props.history.push('/');
+        }
+
+        this.setState({
+            loaderStatus: false,
+        });
 
    }).catch((error) => {
         this.props.history.push('/');
@@ -423,7 +432,7 @@ logout = (e) => {
 
 
 
-                                {(this.state.loginStatus) ? 
+                                {this.state.loginStatus === true || this.state.loginStatus === 'true' ? 
 
                                 <Link to='/create-ads' className="btn btn-primary">Place Your Ad</Link>
                                 :

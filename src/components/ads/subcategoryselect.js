@@ -33,10 +33,13 @@ class SubCategorySelect extends React.Component{
             // console.log(result.data.categories,"list of all categories");
                this.setState({
                   categories:result.data.subcategories,
-                  loaderStatus: false,
                });
      
           }
+
+          this.setState({
+            loaderStatus: false,
+         });
          
             
         }).catch((error) => {

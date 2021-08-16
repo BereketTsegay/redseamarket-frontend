@@ -53,9 +53,12 @@ export default class adEnquire extends Component {
                     name: '',
                     email: '',
                     phone: '',
-                    loaderStatus:false,
                 });
             }
+
+            this.setState({
+                loaderStatus: false,
+            });
 
         }).catch((error) => {
             this.setState({

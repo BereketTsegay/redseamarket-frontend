@@ -49,9 +49,12 @@ export default class myAds extends Component {
                     previousPage: response.data.ads.prev_page_url,
                     nexPage: response.data.ads.next_page_url,
                     last:response.data.ads.last_page,
-                    loaderState:false,
                 });
             }
+
+            this.setState({
+                loaderState: false,
+            });
 
         }).catch((error) => {
             this.setState({
@@ -82,9 +85,12 @@ export default class myAds extends Component {
                     previousPage: response.data.ads.prev_page_url,
                     nexPage: response.data.ads.next_page_url,
                     last:response.data.ads.last_page,
-                    loaderState: true,
                 });
             }
+
+            this.setState({
+                loaderState: false,
+            });
 
         }).catch((error) => {
             this.setState({

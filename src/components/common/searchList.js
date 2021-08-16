@@ -73,9 +73,12 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
-                            loaderStatus:false,
-                        })
+                        });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
 
                 }).catch((error) => {
                     this.setState({
@@ -116,9 +119,12 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
-                            loaderStatus:false,
-                        })
+                        });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
 
                 }).catch((error) => {
                     this.setState({
@@ -161,9 +167,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -203,9 +212,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: true,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -246,9 +258,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -289,9 +304,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
                             });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -330,9 +348,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -382,9 +403,12 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
-                            loaderStatus:false,
-                        })
+                        });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
 
                 }).catch((error) => {
                     this.setState({
@@ -425,9 +449,12 @@ export default class searchList extends Component {
                             nexPage: response.data.ads.next_page_url,
                             last:response.data.ads.last_page,
                             total:response.data.ads.total,
-                            loaderStatus: false,
-                        })
+                        });
                     }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
 
                 }).catch((error) => {
                     this.setState({
@@ -471,9 +498,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -513,9 +543,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -556,9 +589,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -599,9 +635,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus:false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -641,9 +680,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
-                            })
+                            });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -682,9 +724,12 @@ export default class searchList extends Component {
                                 nexPage: response.data.ads.next_page_url,
                                 last:response.data.ads.last_page,
                                 total:response.data.ads.total,
-                                loaderStatus: false,
                             });
                         }
+
+                        this.setState({
+                            loaderStatus: false,
+                        });
 
                     }).catch((error) => {
                         this.setState({
@@ -725,10 +770,13 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
-                        loaderStatus: false,
-                    })
+                    });
                     window.scrollTo(0, 0);
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({
@@ -759,10 +807,13 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
-                        loaderStatus: false,
-                    })
+                    });
                     window.scrollTo(0, 0);
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({
@@ -796,10 +847,13 @@ export default class searchList extends Component {
                         nexPage: response.data.ads.next_page_url,
                         last:response.data.ads.last_page,
                         total:response.data.ads.total,
-                        loaderStatus: false,
-                    })
+                    });
                     window.scrollTo(0, 0);
                 }
+
+                this.setState({
+                    loaderStatus: false,
+                });
 
             }).catch((error) => {
                 this.setState({

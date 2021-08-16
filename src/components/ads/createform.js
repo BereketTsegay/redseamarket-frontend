@@ -137,10 +137,14 @@ class CreateForm extends React.Component{
                
                this.setState({
                   categoryField:response.data.data.category_field,
-                  loaderStatus: false,
                });
                
             }
+
+            this.setState({
+               loaderStatus: false,
+           })
+
          }).catch((error) => {
             this.setState({
                loaderStatus: false,
@@ -160,7 +164,6 @@ class CreateForm extends React.Component{
          if(response.data.status == 'success'){
             this.setState({
                country: response.data.country,
-               loaderStatus: false,
             });
          }
 
@@ -187,7 +190,6 @@ class CreateForm extends React.Component{
             this.setState({
                country_id: id,
                state: response.data.state,
-               loaderStatus:false,
             });
          }
 
@@ -212,7 +214,6 @@ class CreateForm extends React.Component{
             this.setState({
                state_id: id,
                city: response.data.city,
-               loaderStatus: false,
             });
          }
 

@@ -77,15 +77,11 @@ export default class motorCreate extends Component {
             if(response.data.status == 'success'){
                 this.setState({
                     makeOption: response.data.make,
-                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
 
-            this.setState({
-                loaderStatus: false,
-            });
         });
     }
 
@@ -104,14 +100,11 @@ export default class motorCreate extends Component {
                 this.setState({
                     make_id: id,
                     modelOption: response.data.model,
-                    loaderStatus: false,
                 });
             }
 
         }).catch((error) => {
-            this.setState({
-                loaderStatus: false,
-            });
+            
         });
     }
 
