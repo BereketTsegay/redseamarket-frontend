@@ -73,7 +73,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 3,
+         formPage: 2,
 
          fieldValue: [],
          image: [],
@@ -487,14 +487,14 @@ class CreateForm extends React.Component{
 
    adSubmitHandler = () => {
 
-      this.setState({
-         // loaderStatus: true,
-      });
-      
       let state = this.state;
-      console.log(state.userName, state.email, state.latitude, state.longitude, state.phone, state.address);
-      if(state.userName && state.email && state.latitude && state.longitude && state.phone && state.address){
-         console.log('hi');
+      
+      if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== ''){
+         
+         this.setState({
+            loaderStatus: true,
+         });
+
          axios({
             url: `${BASE_URL}/customer/ads/store`,
             method: 'POST',
@@ -553,11 +553,11 @@ class CreateForm extends React.Component{
                   this.props.history.push('/');
                });
 
-               this.setState({
-                  loaderStatus: false,
-               });
-
             }
+
+            this.setState({
+               loaderStatus: false,
+            });
 
          }).catch((error) => {
 
@@ -568,7 +568,7 @@ class CreateForm extends React.Component{
          });
       }
       else{
-
+         
          if(state.userName === '' || state.userName.trim() === ''){
             let userName = 'Name cannot be blank';
             this.setState({

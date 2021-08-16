@@ -20,6 +20,7 @@ import MotorListing from "./components/automobile/motorListing";
 import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
 import PropertyList from "./components/property/propertyList";
+import SearchResult from "./components/automobile/searchResult";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/motor/list/:key/:event/:city" component={MotorListing} />
               <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} />
               <Route path="/property/list/:category_id/:subcategory_id/:city/:property_type/:price/:room" component={PropertyList} />
+              <Route path="/motor/result/:keyword/:subcategory/:condition/:transmission/:priceFrom/:priceTo/:yearFrom/:yearTo/:mileageFrom/:mileageTo/:seller" component={SearchResult} />
             </ScrollToTop>
           </Switch>
         </Router>
