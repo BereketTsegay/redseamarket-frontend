@@ -38,12 +38,12 @@ export default class propertyList extends Component {
     componentWillMount = () => {
 
         this.setState({
-            category_id: this.props.match.params.category_id,
-            subcategory_id: this.props.match.params.subcategory_id,
-            city: this.props.match.params.city == '-' ? '' : this.props.match.params.city,
-            property_type: this.props.match.params.property_type == '-' ? '' : this.props.match.params.property_type,
-            price: this.props.match.params.price == '-' ? '' : this.props.match.params.price,
-            room: this.props.match.params.room == '-' ? '' : this.props.match.params.room,
+            category_id: ((new URLSearchParams(this.props.location.search).get('category_id')) != '') ? (new URLSearchParams(this.props.location.search).get('category_id')) : '',
+            subcategory_id: ((new URLSearchParams(this.props.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory_id')) : '',
+            city: ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : '',
+            property_type: ((new URLSearchParams(this.props.location.search).get('property_type')) != '') ? (new URLSearchParams(this.props.location.search).get('property_type')) : '',
+            price: ((new URLSearchParams(this.props.location.search).get('price')) != '') ? (new URLSearchParams(this.props.location.search).get('price')) : '',
+            room: ((new URLSearchParams(this.props.location.search).get('room')) != '') ? (new URLSearchParams(this.props.location.search).get('room')) : '',
             loaderStatus: true,
 
         }, () => {
@@ -93,12 +93,12 @@ export default class propertyList extends Component {
     UNSAFE_componentWillReceiveProps = (nextProps) => {
 
         this.setState({
-            category_id: nextProps.match.params.category_id,
-            subcategory_id: nextProps.match.params.subcategory_id,
-            city: nextProps.match.params.city == '-' ? '' : nextProps.match.params.city,
-            property_type: nextProps.match.params.property_type == '-' ? '' : nextProps.match.params.property_type,
-            price: nextProps.match.params.price == '-' ? '' : nextProps.match.params.price,
-            room: nextProps.match.params.room == '-' ? '' : nextProps.match.params.room,
+            category_id: ((new URLSearchParams(nextProps.location.search).get('category_id')) != '') ? (new URLSearchParams(nextProps.location.search).get('category_id')) : '',
+            subcategory_id: ((new URLSearchParams(nextProps.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory_id')) : '',
+            city: ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : '',
+            property_type: ((new URLSearchParams(nextProps.location.search).get('property_type')) != '') ? (new URLSearchParams(nextProps.location.search).get('property_type')) : '',
+            price: ((new URLSearchParams(nextProps.location.search).get('price')) != '') ? (new URLSearchParams(nextProps.location.search).get('price')) : '',
+            room: ((new URLSearchParams(nextProps.location.search).get('room')) != '') ? (new URLSearchParams(nextProps.location.search).get('room')) : '',
             loaderStatus: true,
         }, () => {
             

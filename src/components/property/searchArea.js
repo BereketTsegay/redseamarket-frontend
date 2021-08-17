@@ -14,10 +14,10 @@ class searchArea extends Component {
             subcategory: [],
             category_id: '',
             subcategory_id: '',
-            city: '-',
-            property_type: '-',
-            price: '-',
-            room: '-',
+            city: '',
+            property_type: '',
+            price: '',
+            room: '',
             loaderStatus: false,
             country_id: 229,
             cityArray: [],
@@ -142,7 +142,7 @@ class searchArea extends Component {
         
         if(category_id != '' && subcategory_id != ''){
             
-            this.props.history.push(`/property/list/${category_id}/${subcategory_id}/${city}/${property_type}/${price}/${room}`);
+            this.props.history.push(`/property/list?category_id=${category_id}&subcategory_id=${subcategory_id}&city=${city}&property_type=${property_type}&price=${price}&room=${room}`);
         }
         
     }
@@ -263,9 +263,11 @@ class searchArea extends Component {
                                                                 <div className="form-group">
                                                                 <label>City</label>
                                                                 <select name="city" onChange={(e) => this.handleChange(e)} className="form-control">
-                                                                    <option>Dubai</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
+                                                                    <option value="">Select city</option>
+
+                                                                    {cityArray ? cityArray.map((city, index) => {
+                                                                        return <option key={index} value={city.id}>{city.name}</option>
+                                                                    }) : ''}
                                                                 </select>
                                                                 </div>
                                                             </div>

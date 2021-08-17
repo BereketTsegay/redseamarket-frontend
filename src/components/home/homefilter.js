@@ -53,33 +53,33 @@ class homefilter extends Component {
          
          if(this.state.category == '' && this.state.city == ''){
             
-            this.props.history.push('/search/'+this.state.searchKey);
+            this.props.history.push('/search?key='+this.state.searchKey);
          }
          else if(this.state.category != ''){
             
             if(this.state.category == 1 && this.state.city == '' && this.state.subcategory == ''){
                
-               this.props.history.push('/motor/list/'+this.state.searchKey+'/search/ ');
+               this.props.history.push('/motor/list?key='+this.state.searchKey);
             }
-            else if((this.state.category == 2 && this.state.city == '' && this.state.subcategory == '') || (this.state.category == 3 && this.state.city == '' && this.state.subcategory == '')){
+            else if((this.state.category == 2 && this.state.city == '' && this.state.subcategory == '' && !this.state.searchKey) || (this.state.category == 3 && this.state.city == '' && this.state.subcategory == '' && !this.state.searchKey)){
                
                this.props.history.push('/categoryProperty/'+this.state.category)
             }
             else if (this.state.subcategory != '' && this.state.city != '') {
                
-               this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/'+this.state.subcategory);
+               this.props.history.push('/search?key='+this.state.searchKey+'&city='+this.state.city+'&category='+this.state.category+'&subcategory='+this.state.subcategory);
             }
             else if(this.state.subcategory != '') {
                
-               this.props.history.push('/common/search/'+this.state.searchKey+'/-/'+this.state.category+'/'+this.state.subcategory);
+               this.props.history.push('/search?key='+this.state.searchKey+'&city=?category='+this.state.category+'&subcategory='+this.state.subcategory);
             }
             else if(this.state.city != ''){
                
-               this.props.history.push('/common/search/'+this.state.searchKey+'/'+this.state.city+'/'+this.state.category+'/-');
+               this.props.history.push('/search?key='+this.state.searchKey+'&city='+this.state.city+'&category='+this.state.category+'&subcategory=');
             }
             else if(this.state.category != '' && this.state.subcategory == '' && this.state.city == ''){
 
-               this.props.history.push('/common/search/'+this.state.searchKey+'/-/'+this.state.category+'/-');
+               this.props.history.push('/search?key='+this.state.searchKey+'&city=&category='+this.state.category+'&subcategory=');
             }
          }
       }

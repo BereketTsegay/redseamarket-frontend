@@ -33,17 +33,18 @@ export default class searchResult extends Component {
             loaderStatus: true,
         });
 
-        let key = this.props.match.params.keyword;
-        let subcategory = this.props.match.params.subcategory == '-' ? '' : this.props.match.params.subcategory;
-        let condition = this.props.match.params.condition == '-' ? '' : this.props.match.params.condition;
-        let transmission = this.props.match.params.transmission == '-' ? '' : this.props.match.params.transmission;
-        let priceFrom = this.props.match.params.priceFrom == '-' ? '' : this.props.match.params.priceFrom;
-        let priceTo = this.props.match.params.priceTo == '-' ? '' : this.props.match.params.priceTo;
-        let yearFrom = this.props.match.params.yearFrom == '-' ? '' : this.props.match.params.yearFrom;
-        let yearTo = this.props.match.params.yearTo == '-' ? '' : this.props.match.params.yearTo;
-        let mileageFrom = this.props.match.params.mileageFrom == '-' ? '' : this.props.match.params.mileageFrom;
-        let mileageTo = this.props.match.params.mileageTo == '-' ? '' : this.props.match.params.mileageTo;
-        let seller = this.props.match.params.seller == '-' ? '' : this.props.match.params.seller;
+        let key = ((new URLSearchParams(this.props.location.search).get('keyword')) != '') ? (new URLSearchParams(this.props.location.search).get('keyword')) : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
+        let condition = ((new URLSearchParams(this.props.location.search).get('condition')) != '') ? (new URLSearchParams(this.props.location.search).get('condition')) : '';
+        let transmission = ((new URLSearchParams(this.props.location.search).get('transmission')) != '') ? (new URLSearchParams(this.props.location.search).get('transmission')) : '';
+        let priceFrom = ((new URLSearchParams(this.props.location.search).get('priceFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('priceFrom')) : '';
+        let priceTo = ((new URLSearchParams(this.props.location.search).get('priceTo')) != '') ? (new URLSearchParams(this.props.location.search).get('priceTo')) : '';
+        let yearFrom = ((new URLSearchParams(this.props.location.search).get('yearFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('yearFrom')) : '';
+        let yearTo = ((new URLSearchParams(this.props.location.search).get('yearTo')) != '') ? (new URLSearchParams(this.props.location.search).get('yearTo')) : '';
+        let mileageFrom = ((new URLSearchParams(this.props.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageFrom')) : '';
+        let mileageTo = ((new URLSearchParams(this.props.location.search).get('mileageTo')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageTo')) : '';
+        let seller = ((new URLSearchParams(this.props.location.search).get('seller')) != '') ? (new URLSearchParams(this.props.location.search).get('seller')) : '';
 
         if(key != ''){
             axios({
@@ -64,6 +65,7 @@ export default class searchResult extends Component {
                     mileageFrom: mileageFrom,
                     mileageTo: mileageTo,
                     seller: seller,
+                    city: city,
                 },
             }).then(response => {
 
@@ -96,18 +98,19 @@ export default class searchResult extends Component {
             loaderStatus: true,
         });
 
-        let key = nextProps.match.params.keyword;
-        let subcategory = nextProps.match.params.subcategory == '-' ? '' : nextProps.match.params.subcategory;
-        let condition = nextProps.match.params.condition == '-' ? '' : nextProps.match.params.condition;
-        let transmission = nextProps.match.params.transmission == '-' ? '' : nextProps.match.params.transmission;
-        let priceFrom = nextProps.match.params.priceFrom == '-' ? '' : nextProps.match.params.priceFrom;
-        let priceTo = nextProps.match.params.priceTo == '-' ? '' : nextProps.match.params.priceTo;
-        let yearFrom = nextProps.match.params.yearFrom == '-' ? '' : nextProps.match.params.yearFrom;
-        let yearTo = nextProps.match.params.yearTo == '-' ? '' : nextProps.match.params.yearTo;
-        let mileageFrom = nextProps.match.params.mileageFrom == '-' ? '' : nextProps.match.params.mileageFrom;
-        let mileageTo = nextProps.match.params.mileageTo == '-' ? '' : nextProps.match.params.mileageTo;
-        let seller = nextProps.match.params.seller == '-' ? '' : nextProps.match.params.seller;
-
+        let key = ((new URLSearchParams(nextProps.location.search).get('keyword')) != '') ? (new URLSearchParams(nextProps.location.search).get('keyword')) : '';
+        let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(nextProps.location.search).get('subcategory')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory')) : '';
+        let condition = ((new URLSearchParams(nextProps.location.search).get('condition')) != '') ? (new URLSearchParams(nextProps.location.search).get('condition')) : '';
+        let transmission = ((new URLSearchParams(nextProps.location.search).get('transmission')) != '') ? (new URLSearchParams(nextProps.location.search).get('transmission')) : '';
+        let priceFrom = ((new URLSearchParams(nextProps.location.search).get('priceFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceFrom')) : '';
+        let priceTo = ((new URLSearchParams(nextProps.location.search).get('priceTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceTo')) : '';
+        let yearFrom = ((new URLSearchParams(nextProps.location.search).get('yearFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('yearFrom')) : '';
+        let yearTo = ((new URLSearchParams(nextProps.location.search).get('yearTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('yearTo')) : '';
+        let mileageFrom = ((new URLSearchParams(nextProps.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('mileageFrom')) : '';
+        let mileageTo = ((new URLSearchParams(nextProps.location.search).get('mileageTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('mileageTo')) : '';
+        let seller = ((new URLSearchParams(nextProps.location.search).get('seller')) != '') ? (new URLSearchParams(nextProps.location.search).get('seller')) : '';
+ 
         if(key != ''){
             axios({
                 url: `${BASE_URL}/customer/search/motors`,
@@ -127,11 +130,12 @@ export default class searchResult extends Component {
                     mileageFrom: mileageFrom,
                     mileageTo: mileageTo,
                     seller: seller,
+                    city: city,
                 },
             }).then(response => {
 
                 if(response.data.status == 'success'){
-                    console.log(response.data);
+                    
                     this.setState({
                         resultKey: response.data.message,
                         adList: response.data.ads.data,
@@ -160,17 +164,18 @@ export default class searchResult extends Component {
             loaderStatus: true,
         });
 
-        let key = this.props.match.params.keyword;
-        let subcategory = this.props.match.params.subcategory == '-' ? '' : this.props.match.params.subcategory;
-        let condition = this.props.match.params.condition == '-' ? '' : this.props.match.params.condition;
-        let transmission = this.props.match.params.transmission == '-' ? '' : this.props.match.params.transmission;
-        let priceFrom = this.props.match.params.priceFrom == '-' ? '' : this.props.match.params.priceFrom;
-        let priceTo = this.props.match.params.priceTo == '-' ? '' : this.props.match.params.priceTo;
-        let yearFrom = this.props.match.params.yearFrom == '-' ? '' : this.props.match.params.yearFrom;
-        let yearTo = this.props.match.params.yearTo == '-' ? '' : this.props.match.params.yearTo;
-        let mileageFrom = this.props.match.params.mileageFrom == '-' ? '' : this.props.match.params.mileageFrom;
-        let mileageTo = this.props.match.params.mileageTo == '-' ? '' : this.props.match.params.mileageTo;
-        let seller = this.props.match.params.seller == '-' ? '' : this.props.match.params.seller;
+        let key = ((new URLSearchParams(this.props.location.search).get('keyword')) != '') ? (new URLSearchParams(this.props.location.search).get('keyword')) : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
+        let condition = ((new URLSearchParams(this.props.location.search).get('condition')) != '') ? (new URLSearchParams(this.props.location.search).get('condition')) : '';
+        let transmission = ((new URLSearchParams(this.props.location.search).get('transmission')) != '') ? (new URLSearchParams(this.props.location.search).get('transmission')) : '';
+        let priceFrom = ((new URLSearchParams(this.props.location.search).get('priceFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('priceFrom')) : '';
+        let priceTo = ((new URLSearchParams(this.props.location.search).get('priceTo')) != '') ? (new URLSearchParams(this.props.location.search).get('priceTo')) : '';
+        let yearFrom = ((new URLSearchParams(this.props.location.search).get('yearFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('yearFrom')) : '';
+        let yearTo = ((new URLSearchParams(this.props.location.search).get('yearTo')) != '') ? (new URLSearchParams(this.props.location.search).get('yearTo')) : '';
+        let mileageFrom = ((new URLSearchParams(this.props.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageFrom')) : '';
+        let mileageTo = ((new URLSearchParams(this.props.location.search).get('mileageTo')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageTo')) : '';
+        let seller = ((new URLSearchParams(this.props.location.search).get('seller')) != '') ? (new URLSearchParams(this.props.location.search).get('seller')) : '';
 
         axios({
             url: url,
@@ -190,6 +195,7 @@ export default class searchResult extends Component {
                 mileageFrom: mileageFrom,
                 mileageTo: mileageTo,
                 seller: seller,
+                city: city,
             },
         }).then(response => {
 

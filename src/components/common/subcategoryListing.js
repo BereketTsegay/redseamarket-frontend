@@ -25,7 +25,7 @@ export default class subcategoryListing extends Component {
                     {subcategory && subcategory.map((subcategory, index) => {
 
                         if(index < 4){
-                            return <li key={index}><Link to={`/common/search/~/-/-/${subcategory.id}`}>{subcategory.name} </Link></li>
+                            return <li key={index}><Link to={`/search?key=&city=&category=&subcategory=${subcategory.id}`}>{subcategory.name} </Link></li>
                         }
                         else{
                             return '';
@@ -33,7 +33,7 @@ export default class subcategoryListing extends Component {
                         
                     })}
                 </ul>
-                <Link to={`/common/search/~/-/${category_id}/-`} className="btn btn-link">
+                <Link to={`/search?key=&city=&category=${category_id}&subcategory=`} className="btn btn-link">
                 View All
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </Link>

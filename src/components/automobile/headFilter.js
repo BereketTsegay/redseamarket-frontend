@@ -12,17 +12,17 @@ class headFilter extends Component {
         this.state = {
             subcategory: [],
             category_id: 1,
-            city: '-',
-            subcategory_id: '-',
-            condition: '-',
-            transimission: '-',
-            priceFrom: '-',
-            yearFrom: '-',
-            mileageFrom: '-',
-            priceTo: '-',
-            yearTo: '-',
-            mileageTo: '-',
-            seller: '-',
+            city: '',
+            subcategory_id: '',
+            condition: '',
+            transimission: '',
+            priceFrom: '',
+            yearFrom: '',
+            mileageFrom: '',
+            priceTo: '',
+            yearTo: '',
+            mileageTo: '',
+            seller: '',
             keyword: '',
             loaderStatus: false,
             country_id: 229,
@@ -84,7 +84,8 @@ class headFilter extends Component {
         let state = this.state;
 
         if(state.keyword !== ''){
-            this.props.history.push(`/motor/result/${state.keyword}/${state.subcategory_id}/${state.condition}/${state.transimission}/${state.priceFrom}/${state.priceTo}/${state.yearFrom}/${state.yearTo}/${state.mileageFrom}/${state.mileageTo}/${state.seller}`);
+           
+            this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}`);
     
         }
     }

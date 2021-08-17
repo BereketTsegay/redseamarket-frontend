@@ -34,10 +34,11 @@ export default class motorListing extends Component {
             loaderStatus: true,
         });
 
-        let key = this.props.match.params.key;
-        let event = this.props.match.params.event;
+        // let key = this.props.match.params.key;
+        // let event = this.props.match.params.event;
 
-        if(event == 'search'){
+        let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
 
             axios({
                 url: `${BASE_URL}/customer/search/ads`,
@@ -47,6 +48,7 @@ export default class motorListing extends Component {
                     category: 1,
                     latitude: this.state.latitude,
                     longitude: this.state.longitude,
+                    city: city,
                 },
             }).then(response => {
 
@@ -70,13 +72,13 @@ export default class motorListing extends Component {
                     loaderStatus: false,
                 });
             });
-        }
-        else{
-
-        }
+        
     }
 
     paginationCall = (url) => {
+
+        let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
 
         this.setState({
             loaderStatus: true,
@@ -86,10 +88,11 @@ export default class motorListing extends Component {
             url: url,
             method: 'POST',
             data:{
-                search_key: this.props.match.params.key,
+                search_key: key,
                 category: 1,
                 latitude: this.state.latitude,
                 longitude: this.state.longitude,
+                city: city,
             },
         }).then(response => {
 

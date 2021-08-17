@@ -41,7 +41,7 @@ function App() {
               <Route path="/adsdetails/:id" component={AdsDetails} />
               <Route path="/categoryMotors" component={CategoryMotors} />
               <Route path="/categoryProperty/:id" component={CategoryProperty} />
-              <Route path="/motor/list/:key/:event/:city" component={MotorListing} />
+              <Route path="/motor/list" component={MotorListing} />
               {/* <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} /> */}
               {/* <Route path="/search/" component={SearchList} /> */}
 
@@ -62,8 +62,8 @@ function App() {
               <Route path="/search/:key" component={SearchList} /> */}
 
 
-              <Route path="/property/list/:category_id/:subcategory_id/:city/:property_type/:price/:room" component={PropertyList} />
-              <Route path="/motor/result/:keyword/:subcategory/:condition/:transmission/:priceFrom/:priceTo/:yearFrom/:yearTo/:mileageFrom/:mileageTo/:seller" component={SearchResult} />
+              <Route path="/property/list" component={PropertyList} />
+              <Route path="/motor/result" component={SearchResult} />
             </ScrollToTop>
           </Switch>
         </Router>
