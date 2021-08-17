@@ -44,16 +44,22 @@ function App() {
               <Route path="/motor/list/:key/:event/:city" component={MotorListing} />
               {/* <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} /> */}
               {/* <Route path="/search/" component={SearchList} /> */}
-              <Route path="/search/:category/:subcategory" component={SearchList} />
-             
-              <Route path="/search/:city" component={SearchList} />
+
+
+              <Route path="/search" component={SearchList} />
+              {/* <Route path="/search/:x" component={SearchList} /> */}
+
+
+
+
+              {/* <Route path="/search/:city" component={SearchList} />
               <Route path="/search/:category/:subcategory" component={SearchList} />
 
 
-              
+
               <Route path="/search/:city/:key" component={SearchList} />
               <Route path="/search/:city/:category/:subcategory" component={SearchList} />
-              <Route path="/search/:key" component={SearchList} />
+              <Route path="/search/:key" component={SearchList} /> */}
 
 
               <Route path="/property/list/:category_id/:subcategory_id/:city/:property_type/:price/:room" component={PropertyList} />

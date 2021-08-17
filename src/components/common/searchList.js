@@ -375,61 +375,77 @@ export default class searchList extends Component {
         // var searchParams = new URLSearchParams(window.location.hash);
         // console.log(new URLSearchParams(this.props.location.search));
         // let category = new URLSearchParams(this.props.location.search).get("category");
-        let category=this.props.match.params['category'];
-        let subcategory=this.props.match.params['subcategory'];
+        // let category=this.props.match.params['category'];
+        // let subcategory=this.props.match.params['subcategory'];
+        // let subcategory=this.props.match.params['subcategory'];
         // let city=this.props.match.params['city'];we can take from session
-        let key='';
-        let apiUrl='';
+    //     let category=this.props.match.params['category'];
+    //     let subcategory=this.props.match.params['subcategory'];
+    //    let key=this.props.match.params['key'];
+
+
+    //     let apiUrl='';
         let searchStatus=0;
-        if(subcategory!=''){
-            apiUrl=`${BASE_URL}/customer/get/category/ads`;
-            searchStatus=1;
-        }
+    //     if(subcategory!=='' &&key&&category){
+    //         console.log("don result1 ")
+    //         apiUrl=`${BASE_URL}/customer/get/category/ads`;
+    //         searchStatus=1;
+    //     }else if(key !==''&&category&&subcategory){
+    //         console.log("don result2")
+    //         apiUrl=`${BASE_URL}/customer/search/ads`;
+    //         searchStatus=1;
+    //     }
 
-        if(searchStatus==1){
-            this.setState({
-                category: category,
-                city: sessionStorage.getItem('city_id'),
-                subcategory: subcategory,
-                searchKey: key,
-                loaderStatus: true,
 
-            }, () => {
-                axios({
-                    url: apiUrl,
-                    method: 'POST',
-                    data: {
-                        canonical_name: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                    },
-                }).then(response => {
+    
+
+        let category =((new URLSearchParams(this.props.location.search).get('category'))!='')?(new URLSearchParams(this.props.location.search).get('category')):'';
+        
+        console.log(category,'category')
+        // if(searchStatus==1){
+        //     this.setState({
+        //         category: category,
+        //         city: sessionStorage.getItem('city_id'),
+        //         subcategory: subcategory,
+        //         searchKey: key,
+        //         loaderStatus: true,
+
+        //     }, () => {
+        //         axios({
+        //             url: apiUrl,
+        //             method: 'POST',
+        //             data: {
+        //                 canonical_name: this.state.category,
+        //                 latitude: this.state.latitude,
+        //                 longitude: this.state.longitude,
+        //             },
+        //         }).then(response => {
                   
-                    if(response.data.status == 'success'){
+        //             if(response.data.status == 'success'){
                         
-                        this.setState({
+        //                 this.setState({
 
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        });
-                    }
+        //                     resultKey: response.data.message,
+        //                     adList: response.data.ads.data,
+        //                     paginataionArray: response.data.ads.links,
+        //                     previousPage: response.data.ads.prev_page_url,
+        //                     nexPage: response.data.ads.next_page_url,
+        //                     last:response.data.ads.last_page,
+        //                     total:response.data.ads.total,
+        //                 });
+        //             }
 
-                    this.setState({
-                        loaderStatus: false,
-                    });
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             });
 
-                }).catch((error) => {
-                    this.setState({
-                        loaderStatus: false,
-                    })
-                });
-            });
-        }
+        //         }).catch((error) => {
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             })
+        //         });
+        //     });
+        // }
 
 
 
