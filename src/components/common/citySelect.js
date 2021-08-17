@@ -14,7 +14,7 @@ class Header extends React.Component{
     }
 
     componentWillMount = () => {
-        
+       
         this.setState({
             city_id: sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '',
         });
@@ -52,22 +52,22 @@ class Header extends React.Component{
         return (
             <div className="country-select-panel d-block d-md-inline-block">
             <select onChange={ (e) => this.countryChange(e) } className="form-control form-control-sm d-block d-md-inline-block">
+                <option value="">All cities</option>
                 {city_id ? city ? city.map((city, index) => {
                     if(city.id == city_id){
                         return <option selected value={city.id}>{city.name}</option>
                     }
                     else{
-                        return <option value={city.id}>{city.name}</option>
+                        return <option key={index} value={city.id}>{city.name}</option>
                     }
 
                 }) : '' : city ? 
-                <>
-                    <option selected value="">All cities</option>
-                    {city.map((city, index) => {
-                        return <option value={city.id}>{city.name}</option>
-                    })}
-                </>
-                : <option selected value="">All cities</option> }
+
+                    city.map((city, index) => {
+                        return <option key={index} value={city.id}>{city.name}</option>
+                    })
+
+                : '' }
                
             </select>
          </div>
