@@ -1,8 +1,25 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
-import { IMAGE_URL } from '../../projectString';
+import { BASE_URL, IMAGE_URL } from '../../projectString';
 class CategoryListingImage extends React.Component{
+
+   viewUpdate = (id) => {
+
+      axios({
+          url: `${BASE_URL}/customer/ads/view/countupdate`,
+          method: 'POST',
+          data: {
+              ads_id: id,
+          },
+      }).then(response => {
+
+      }).catch((error) => {
+
+      });
+   }
+
     render() {
       let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
       let subcategoryArray = (this.props.dataArray.ads != undefined)?this.props.dataArray.ads:[];
@@ -24,7 +41,7 @@ class CategoryListingImage extends React.Component{
 
                   <div className="col-product-panel">
                      <div className="product-panel">
-                        <Link to={`/adsdetails/${subcatArray.id}`}>
+                        <Link to={`/adsdetails/${subcatArray.id}`} onClick={ () => this.viewUpdate(subcatArray.id) }>
                            <div className="panel-media">
                            {
                            (subcatArray['image'].length > 0) ? 

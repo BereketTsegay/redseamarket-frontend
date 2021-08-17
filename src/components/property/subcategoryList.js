@@ -1,11 +1,28 @@
+import axios from 'axios';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../projectString';
 
 export default class subcategoryList extends Component {
 
     constructor(props){
         super(props);
     }
+
+    viewUpdate = (id) => {
+
+        axios({
+            url: `${BASE_URL}/customer/ads/view/countupdate`,
+            method: 'POST',
+            data: {
+                ads_id: id,
+            },
+        }).then(response => {
+  
+        }).catch((error) => {
+  
+        });
+     }
 
     render() {
 
@@ -36,7 +53,7 @@ export default class subcategoryList extends Component {
 
                                         {subcategory && subcategory.map((ads, index) => {
                                             return( 
-                                                <li><Link to={`/adsdetails/${ads.id}`}>{ads.title} </Link></li>
+                                                <li><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>{ads.title} </Link></li>
                                             )
                                         })}
                                         

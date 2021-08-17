@@ -15,7 +15,7 @@ export default class popularCategory extends Component {
         return (
             <div className="item">
                 <div className="cc-panel text-center overflow-hidden">
-                    <Link href="#" className="d-block w-100">
+                    <Link to="#" className="d-block w-100">
                         <div className="panel-media">
                         <img src={IMAGE_URL+'/'+image} alt="media" />
                         </div>

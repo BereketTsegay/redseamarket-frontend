@@ -112,6 +112,21 @@ export default class listAdItem extends Component {
         });
     }
 
+    viewUpdate = (id) => {
+
+        axios({
+            url: `${BASE_URL}/customer/ads/view/countupdate`,
+            method: 'POST',
+            data: {
+                ads_id: id,
+            },
+        }).then(response => {
+
+        }).catch((error) => {
+
+        });
+    }
+
     render() {
         let ads = this.props.ads;
         let {isFavourite, isAd, loaderStatus} = this.state;
@@ -124,7 +139,7 @@ export default class listAdItem extends Component {
                     <a href="#"><img src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></a>
                 </div>
                 <div class="panel-content">
-                    <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`}>{ads.title}</Link></h3>
+                    <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>{ads.title}</Link></h3>
                     <div class="panel-price text-brand">AED {ads.price}</div>
                     <div class="panel-meta d-flex align-items-center">
                         <span class="label">{ads.created_on}</span> 

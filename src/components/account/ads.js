@@ -1,13 +1,30 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
-import { IMAGE_URL } from '../../projectString';
+import { BASE_URL, IMAGE_URL } from '../../projectString';
 
 export default class ads extends Component {
 
     constructor(props){
         super(props);
     }
+
+    viewUpdate = (id) => {
+
+        axios({
+            url: `${BASE_URL}/customer/ads/view/countupdate`,
+            method: 'POST',
+            data: {
+                ads_id: id,
+            },
+        }).then(response => {
+
+        }).catch((error) => {
+
+        });
+    }
+
     render() {
         let ads = this.props.ads;
 
@@ -15,7 +32,7 @@ export default class ads extends Component {
                 
                 <div className="col-lg-3 col-md-4 col-6">
                     <div className="product-panel">
-                        <Link to={`/adsdetails/${ads.id}`}>
+                        <Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>
                             <div className="panel-media">
                                 {ads.image.length > 0 ? <img src={IMAGE_URL+'/'+ ads.image[0].image} alt="media" />: <img src={defaultImage} alt="media" />}
                             </div>

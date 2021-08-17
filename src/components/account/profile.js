@@ -34,6 +34,8 @@ export default class profile extends Component {
             passwordError: '',
             newPasswordError: '',
             confirmPasswordError: '',
+
+            adView: 0,
             
         }
     }
@@ -52,9 +54,10 @@ export default class profile extends Component {
 
             if(response.data.status == 'success'){
                 this.setState({
-                    myAds:response.data.data.myads,
-                    myFavourite:response.data.data.myfavourite,
-                    user:response.data.data.user,
+                    myAds: response.data.data.myads,
+                    myFavourite: response.data.data.myfavourite,
+                    user: response.data.data.user,
+                    adView: response.data.data.adsView,
                 }, () => {
                     this.setState({
                         name: this.state.user.name,
@@ -290,6 +293,8 @@ export default class profile extends Component {
 
         let {token, myAds, myFavourite, user, loginStatus, country, name, email, phone, nationality, loaderState} = this.state;
 
+        let adView = this.state.adView;
+
         let ErrorStyle = {
             color: 'red',
         };
@@ -325,7 +330,7 @@ export default class profile extends Component {
                                     <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
                                         <small className="font-weight-bold text-muted d-inline-block w-100">My Ads</small>
                                         <h4 className="m-0 pt-2 pb-1">{myAds}</h4>
-                                        <small className="font-weight-bold text-muted d-inline-block w-100">ads viewed 0 times</small>
+                                        <small className="font-weight-bold text-muted d-inline-block w-100">ads viewed {adView} times</small>
                                     </div>
                                     <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
                                         <small className="font-weight-bold text-muted d-inline-block w-100">My Favorites</small>
