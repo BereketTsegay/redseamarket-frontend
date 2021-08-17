@@ -74,7 +74,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 2,
+         formPage: 1,
 
          fieldValue: [],
          image: [],
@@ -120,9 +120,9 @@ class CreateForm extends React.Component{
       this.setState({
 
          category: this.props.match.params.category_id,
-         subcategory: this.props.match.params.subcategory_id,
+         subcategory: this.props.match.params.subcategory_id === '&nvlp' ? '' : this.props.match.params.subcategory_id,
          categoryName: this.props.match.params.category,
-         subcategoryName: this.props.match.params.subcategory,
+         subcategoryName: this.props.match.params.subcategory === '&!$*' ? '' : this.props.match.params.subcategory,
          loaderStatus: true,
 
       }, () => {
@@ -642,7 +642,7 @@ class CreateForm extends React.Component{
                         <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
                            <ol className="breadcrumb p-0 bg-white justify-content-center">
                               <li className="breadcrumb-item"><a>{categoryName}</a></li>
-                              <li className="breadcrumb-item"><a>{subcategoryName}</a></li>
+                              {subcategoryName ? <li className="breadcrumb-item"><a>{subcategoryName}</a></li> : ''}
                            </ol>
                         </div>
                      </div>

@@ -9,10 +9,15 @@ class Header extends React.Component{
         this.state = {
             city: [],
             country_id: 229,
+            city_id: '',
         }
     }
 
     componentWillMount = () => {
+        
+        this.setState({
+            city_id: sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '',
+        });
 
         axios({
             url: `${BASE_URL}/customer/city/list`,
@@ -32,18 +37,37 @@ class Header extends React.Component{
 
         });
     }
+    
+    countryChange = (e) => {
+
+        sessionStorage.removeItem('city_id');
+        
+        sessionStorage.setItem('city_id', e.target.value);
+    }
 
     render() {
 
-        let {city, country_id} = this.state;
+        let {city, country_id, city_id} = this.state;
+        
         return (
             <div className="country-select-panel d-block d-md-inline-block">
-            <select className="form-control form-control-sm d-block d-md-inline-block">
+            <select onChange={ (e) => this.countryChange(e) } className="form-control form-control-sm d-block d-md-inline-block">
+                {city_id ? city ? city.map((city, index) => {
+                    if(city.id == city_id){
+                        return <option selected value={city.id}>{city.name}</option>
+                    }
+                    else{
+                        return <option value={city.id}>{city.name}</option>
+                    }
 
-               <option selected>All cities</option>
-               {city ? city.map((city, index) => {
-                   return <option value={city.id}>{city.name}</option>
-               }) : ''}
+                }) : '' : city ? 
+                <>
+                    <option selected value="">All cities</option>
+                    {city.map((city, index) => {
+                        return <option value={city.id}>{city.name}</option>
+                    })}
+                </>
+                : <option selected value="">All cities</option> }
                
             </select>
          </div>
