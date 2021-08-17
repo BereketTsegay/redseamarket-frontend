@@ -53,7 +53,7 @@ class homefilter extends Component {
          
          if(this.state.category == '' && this.state.city == ''){
             
-            this.props.history.push('/common/search/'+this.state.searchKey+'/-/-/-');
+            this.props.history.push('/search/'+this.state.searchKey);
          }
          else if(this.state.category != ''){
             

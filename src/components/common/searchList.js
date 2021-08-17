@@ -8,7 +8,7 @@ import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header';
 import Loader from '../Loader';
-
+import queryString from 'querystring'
 
 export default class searchList extends Component {
 
@@ -366,379 +366,505 @@ export default class searchList extends Component {
 
     componentWillMount = () => {
         
-        let key = this.props.match.params.key;
-        let event = this.props.match.params.event;
-        let city = this.props.match.params.city;
-        let category = this.props.match.params.category;
-        let subcategory = this.props.match.params.subcategory;
+        // let key = this.props.match.params.key;
+        // let event = this.props.match.params.event;
+        // let city = this.props.match.params.city;
+        // let category = this.props.match.params['category'];
+        // let subcategory = this.props.match.params.subcategory;
+        // let queries = queryString.parse(this.props.location.search)
+        // var searchParams = new URLSearchParams(window.location.hash);
+        // console.log(new URLSearchParams(this.props.location.search));
+        // let category = new URLSearchParams(this.props.location.search).get("category");
+        // let category=this.props.match.params['category'];
+        // let subcategory=this.props.match.params['subcategory'];
+        // let subcategory=this.props.match.params['subcategory'];
+        // let city=this.props.match.params['city'];we can take from session
+    //     let category=this.props.match.params['category'];
+    //     let subcategory=this.props.match.params['subcategory'];
+    //    let key=this.props.match.params['key'];
+
+
+    //     let apiUrl='';
+        let searchStatus=0;
+    //     if(subcategory!=='' &&key&&category){
+    //         console.log("don result1 ")
+    //         apiUrl=`${BASE_URL}/customer/get/category/ads`;
+    //         searchStatus=1;
+    //     }else if(key !==''&&category&&subcategory){
+    //         console.log("don result2")
+    //         apiUrl=`${BASE_URL}/customer/search/ads`;
+    //         searchStatus=1;
+    //     }
+
+
+    
+
+        let category =((new URLSearchParams(this.props.location.search).get('category'))!='')?(new URLSearchParams(this.props.location.search).get('category')):'';
         
-        if(key == '~' && category != '-'){
-            
-            this.setState({
-                category: category,
-                city: city,
-                subcategory: subcategory,
-                searchKey: key,
-                loaderStatus: true,
+        console.log(category,'category')
+        // if(searchStatus==1){
+        //     this.setState({
+        //         category: category,
+        //         city: sessionStorage.getItem('city_id'),
+        //         subcategory: subcategory,
+        //         searchKey: key,
+        //         loaderStatus: true,
 
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/get/category/ads`,
-                    method: 'POST',
-                    data: {
-                        category_id: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                    },
-                }).then(response => {
-
-                    if(response.data.status == 'success'){
+        //     }, () => {
+        //         axios({
+        //             url: apiUrl,
+        //             method: 'POST',
+        //             data: {
+        //                 canonical_name: this.state.category,
+        //                 latitude: this.state.latitude,
+        //                 longitude: this.state.longitude,
+        //             },
+        //         }).then(response => {
+                  
+        //             if(response.data.status == 'success'){
                         
-                        this.setState({
+        //                 this.setState({
 
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        });
-                    }
+        //                     resultKey: response.data.message,
+        //                     adList: response.data.ads.data,
+        //                     paginataionArray: response.data.ads.links,
+        //                     previousPage: response.data.ads.prev_page_url,
+        //                     nexPage: response.data.ads.next_page_url,
+        //                     last:response.data.ads.last_page,
+        //                     total:response.data.ads.total,
+        //                 });
+        //             }
 
-                    this.setState({
-                        loaderStatus: false,
-                    });
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             });
 
-                }).catch((error) => {
-                    this.setState({
-                        loaderStatus: false,
-                    })
-                });
-            });
+        //         }).catch((error) => {
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             })
+        //         });
+        //     });
+        // }
 
-        }
-        else if(key == '~' && subcategory != '-'){
 
-            this.setState({
-                category: category,
-                city: city,
-                subcategory: subcategory,
-                searchKey: key,
-                loaderStatus: true,
 
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/get/subcategory/ads`,
-                    method: 'POST',
-                    data: {
-                        subcategory_id: this.state.subcategory,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                    },
-                }).then(response => {
+        // if(city!='' && category!=''){
 
-                    if(response.data.status == 'success'){
+        //     this.setState({
+        //                 category: category,
+        //                 city: city,
+        //                 subcategory: subcategory,
+        //                 searchKey: key,
+        //                 loaderStatus: true,
+        
+        //             }, () => {
+        //                 axios({
+        //                     url: `${BASE_URL}/customer/get/category/ads`,
+        //                     method: 'POST',
+        //                     data: {
+        //                         canonical_name: this.state.category,
+        //                         latitude: this.state.latitude,
+        //                         longitude: this.state.longitude,
+        //                     },
+        //                 }).then(response => {
+                          
+        //                     if(response.data.status == 'success'){
+                                
+        //                         this.setState({
+        
+        //                             resultKey: response.data.message,
+        //                             adList: response.data.ads.data,
+        //                             paginataionArray: response.data.ads.links,
+        //                             previousPage: response.data.ads.prev_page_url,
+        //                             nexPage: response.data.ads.next_page_url,
+        //                             last:response.data.ads.last_page,
+        //                             total:response.data.ads.total,
+        //                         });
+        //                     }
+        
+        //                     this.setState({
+        //                         loaderStatus: false,
+        //                     });
+        
+        //                 }).catch((error) => {
+        //                     this.setState({
+        //                         loaderStatus: false,
+        //                     })
+        //                 });
+        //             });
+
+
+
+        // }
+
+        // if(key == '~' && category != '-'){
+            
+        //     this.setState({
+        //         category: category,
+        //         city: city,
+        //         subcategory: subcategory,
+        //         searchKey: key,
+        //         loaderStatus: true,
+
+        //     }, () => {
+        //         axios({
+        //             url: `${BASE_URL}/customer/get/category/ads`,
+        //             method: 'POST',
+        //             data: {
+        //                 category_id: this.state.category,
+        //                 latitude: this.state.latitude,
+        //                 longitude: this.state.longitude,
+        //             },
+        //         }).then(response => {
+
+        //             if(response.data.status == 'success'){
                         
-                        this.setState({
+        //                 this.setState({
 
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        });
-                    }
+        //                     resultKey: response.data.message,
+        //                     adList: response.data.ads.data,
+        //                     paginataionArray: response.data.ads.links,
+        //                     previousPage: response.data.ads.prev_page_url,
+        //                     nexPage: response.data.ads.next_page_url,
+        //                     last:response.data.ads.last_page,
+        //                     total:response.data.ads.total,
+        //                 });
+        //             }
 
-                    this.setState({
-                        loaderStatus: false,
-                    });
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             });
 
-                }).catch((error) => {
-                    this.setState({
-                        loaderStatus: false,
-                    })
-                });
-            });
-        }
-        else{
+        //         }).catch((error) => {
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             })
+        //         });
+        //     });
+
+        // }
+        // else if(key == '~' && subcategory != '-'){
+
+        //     this.setState({
+        //         category: category,
+        //         city: city,
+        //         subcategory: subcategory,
+        //         searchKey: key,
+        //         loaderStatus: true,
+
+        //     }, () => {
+        //         axios({
+        //             url: `${BASE_URL}/customer/get/subcategory/ads`,
+        //             method: 'POST',
+        //             data: {
+        //                 subcategory_id: this.state.subcategory,
+        //                 latitude: this.state.latitude,
+        //                 longitude: this.state.longitude,
+        //             },
+        //         }).then(response => {
+
+        //             if(response.data.status == 'success'){
+                        
+        //                 this.setState({
+
+        //                     resultKey: response.data.message,
+        //                     adList: response.data.ads.data,
+        //                     paginataionArray: response.data.ads.links,
+        //                     previousPage: response.data.ads.prev_page_url,
+        //                     nexPage: response.data.ads.next_page_url,
+        //                     last:response.data.ads.last_page,
+        //                     total:response.data.ads.total,
+        //                 });
+        //             }
+
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             });
+
+        //         }).catch((error) => {
+        //             this.setState({
+        //                 loaderStatus: false,
+        //             })
+        //         });
+        //     });
+        // }
+        // else{
             
-            if(category != '-' && subcategory != '-' && city != '-'){
+        //     if(category != '-' && subcategory != '-' && city != '-'){
                 
-                this.setState({
-                    category: category,
-                    city: city,
-                    subcategory: subcategory,
-                    searchKey: key,
-                    loaderStatus: true,
+        //         this.setState({
+        //             category: category,
+        //             city: city,
+        //             subcategory: subcategory,
+        //             searchKey: key,
+        //             loaderStatus: true,
 
-                }, () => {
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            category: this.state.category,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            city: this.state.city,
-                        },
-                    }).then(response => {
+        //         }, () => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     category: this.state.category,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     city: this.state.city,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        })
-                    });
-                });
-            }
-            else if(category != '-' && subcategory != '-'){
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 })
+        //             });
+        //         });
+        //     }
+        //     else if(category != '-' && subcategory != '-'){
                 
-                this.setState({
-                    category: category,
-                    subcategory: subcategory,
-                    searchKey: key,
-                    loaderStatus: true,
+        //         this.setState({
+        //             category: category,
+        //             subcategory: subcategory,
+        //             searchKey: key,
+        //             loaderStatus: true,
 
-                }, () => {
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            category: this.state.category,
-                        },
-                    }).then(response => {
+        //         }, () => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     category: this.state.category,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
                                 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        })
-                    });
-                });
-            }
-            else if(category != '-' && city != '-'){
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 })
+        //             });
+        //         });
+        //     }
+        //     else if(category != '-' && city != '-'){
                 
-                this.setState({
-                    category: category,
-                    city: city,
-                    searchKey: key,
-                    loaderStatus: true,
+        //         this.setState({
+        //             category: category,
+        //             city: city,
+        //             searchKey: key,
+        //             loaderStatus: true,
 
-                }, () => {
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            category: this.state.category,
-                            city: this.state.city,
-                        },
-                    }).then(response => {
+        //         }, () => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     category: this.state.category,
+        //                     city: this.state.city,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
                                 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        });
-                    });
-                });
-            }
-            else if(subcategory != '-' && city != '-'){
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
+        //             });
+        //         });
+        //     }
+        //     else if(subcategory != '-' && city != '-'){
 
-                this.setState({
-                    category: category,
-                    city: city,
-                    subcategory: subcategory,
-                    searchKey: key,
-                    loaderStatus: true,
+        //         this.setState({
+        //             category: category,
+        //             city: city,
+        //             subcategory: subcategory,
+        //             searchKey: key,
+        //             loaderStatus: true,
 
-                }, () => {
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            city: this.state.city,
-                        },
-                    }).then(response => {
+        //         }, () => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     city: this.state.city,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
                                 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        })
-                    });
-                });
-            }
-            else if(category != '-' && subcategory == '-' && city == '-'){
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 })
+        //             });
+        //         });
+        //     }
+        //     else if(category != '-' && subcategory == '-' && city == '-'){
                 
-                this.setState({
-                    category: category,
-                    searchKey: key,
-                    loaderStatus: true,
+        //         this.setState({
+        //             category: category,
+        //             searchKey: key,
+        //             loaderStatus: true,
 
-                }, () => {
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            category: this.state.category,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            city: this.state.city,
-                        },
-                    }).then(response => {
+        //         }, () => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     category: this.state.category,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     city: this.state.city,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
                                 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        })
-                    });
-                });
-            }
-            else{
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 })
+        //             });
+        //         });
+        //     }
+        //     else{
 
-                this.setState({
-                    searchKey: key,
-                    loaderStatus: true,
-                });
+        //         this.setState({
+        //             searchKey: key,
+        //             loaderStatus: true,
+        //         });
                 
-                    axios({
-                        url: `${BASE_URL}/customer/search/ads`,
-                        method: 'POST',
-                        data: {
-                            search_key: key,
-                            category: this.state.category,
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                            city: this.state.city,
-                        },
-                    }).then(response => {
+        //             axios({
+        //                 url: `${BASE_URL}/customer/search/ads`,
+        //                 method: 'POST',
+        //                 data: {
+        //                     search_key: key,
+        //                     category: this.state.category,
+        //                     latitude: this.state.latitude,
+        //                     longitude: this.state.longitude,
+        //                     city: this.state.city,
+        //                 },
+        //             }).then(response => {
 
-                        if(response.data.status == 'success'){
+        //                 if(response.data.status == 'success'){
                             
-                            this.setState({
+        //                     this.setState({
                                 
-                                resultKey: response.data.message,
-                                adList: response.data.ads.data,
-                                paginataionArray: response.data.ads.links,
-                                previousPage: response.data.ads.prev_page_url,
-                                nexPage: response.data.ads.next_page_url,
-                                last:response.data.ads.last_page,
-                                total:response.data.ads.total,
-                            });
-                        }
+        //                         resultKey: response.data.message,
+        //                         adList: response.data.ads.data,
+        //                         paginataionArray: response.data.ads.links,
+        //                         previousPage: response.data.ads.prev_page_url,
+        //                         nexPage: response.data.ads.next_page_url,
+        //                         last:response.data.ads.last_page,
+        //                         total:response.data.ads.total,
+        //                     });
+        //                 }
 
-                        this.setState({
-                            loaderStatus: false,
-                        });
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
 
-                    }).catch((error) => {
-                        this.setState({
-                            loaderStatus: false,
-                        });
-                    });
-            }
+        //             }).catch((error) => {
+        //                 this.setState({
+        //                     loaderStatus: false,
+        //                 });
+        //             });
+        //     }
             
-        }
+        // }
     }
 
     paginationCall = (url) => {

@@ -27,7 +27,8 @@ class Menu extends React.Component{
                                        {category.subcategory.map((subcategory, index) => {
                                           return (
                                              <li key={index} className="menu-item menu-item-has-children">
-                                                <Link to={`/common/search/~/-/-/${subcategory.id}`}>{subcategory.name}</Link>
+                                              <Link to={`/search/${category.canonical_name}/${subcategory.canonical_name}`}>{subcategory.name}</Link>
+                                                {/* <Link to={`/common/search/~/-/-/${subcategory.canonical_name}`}>{subcategory.name}</Link> */}
                                                 <div class="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
@@ -35,7 +36,7 @@ class Menu extends React.Component{
                                                       {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
                                                          
                                                          return (
-                                                            <li key={index}><Link to={`/common/search/~/-/-/${child.id}`}>{child.name}</Link></li>
+                                                            <li key={index}><Link to={`/search/~/-/-/${child.id}`}>{child.canonical_name}</Link></li>
                                                          )
                                                       }) : '' }
                                                       
