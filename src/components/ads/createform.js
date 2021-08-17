@@ -57,6 +57,7 @@ class CreateForm extends React.Component{
 
          make_id: '',
          model_id: '',
+         variant_id: '',
          registration_year: '',
          fuel: '',
          transmission: '',
@@ -73,7 +74,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 1,
+         formPage: 2,
 
          fieldValue: [],
          image: [],
@@ -90,6 +91,7 @@ class CreateForm extends React.Component{
 
          errors_make_id: '',
          errors_model_id: '',
+         errors_variant_id: '',
          errors_registration_year: '',
          errors_fuel: '',
          errors_transmission: '',
@@ -266,6 +268,7 @@ class CreateForm extends React.Component{
          this.setState({
             make_id: motor.make_id,
             model_id: motor.model_id,
+            variant_id: motor.variant_id,
             registration_year: motor.registration_year,
             fuel: motor.fuel,
             transmission: motor.transmission,
@@ -373,6 +376,12 @@ class CreateForm extends React.Component{
                   let model_id = 'Model cannot be blank';
                   this.setState({
                      errors_model_id: model_id,
+                  });
+               }
+               if(state.variant_id === '' || state.variant_id.trim() === ''){
+                  let variant_id = 'Variant cannot be blank';
+                  this.setState({
+                     errors_variant_id: variant_id,
                   });
                }
                if(state.registration_year === '' || state.registration_year.trim() === ''){
@@ -524,6 +533,7 @@ class CreateForm extends React.Component{
                image: this.state.image,
                make_id: this.state.make_id,
                model_id: this.state.model_id,
+               variant_id: this.state.variant_id,
                registration_year: this.state.registration_year,
                fuel: this.state.fuel,
                transmission: this.state.transmission,

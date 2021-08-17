@@ -315,6 +315,11 @@ export default class adsDetails extends Component {
                                                                 <div className="col-7">{ads.model}</div>
                                                             </div>
                                                             <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Variant</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{ads.variant}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
                                                                 <div className="col-4"><strong> Registration Year</strong></div>
                                                                 <div className="col-1 text-center">:</div>
                                                                 <div className="col-7">{ads.motore_value ? ads.motore_value.registration_year : ''}</div>

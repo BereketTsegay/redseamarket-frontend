@@ -14,6 +14,7 @@ export default class motorCreate extends Component {
         this.state = {
             makeOption: [],
             modelOption: [],
+            variantOption: [],
             fuelOption: [
                 {
                     'id': 'Petrol',
@@ -50,6 +51,7 @@ export default class motorCreate extends Component {
             ],
             make_id: '',
             model_id: '',
+            variant_id: '',
             registration_year: '',
             mileage: '',
             fuel: '',
@@ -109,14 +111,58 @@ export default class motorCreate extends Component {
     }
 
     modelChange = (id) => {
+        
+        axios({
+            url: `${BASE_URL}/customer/get/variant`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+                model_id: id,
+            }
+        }).then(response => {
+            if(response.data.status === 'success'){
+
+                this.setState({
+                    model_id: id,
+                    variantOption: response.data.variant,
+
+                }, () => {
+                    
+                    let motoreValue = {
+                        'make_id'           : this.state.make_id,
+                        'model_id'          : this.state.model_id,
+                        'variant_id'        : this.state.variant_id,
+                        'registration_year' : this.state.registration_year,
+                        'fuel'              : this.state.fuel,
+                        'transmission'      : this.state.transmission,
+                        'condition'         : this.state.condition,
+                        'mileage'           : this.state.mileage,
+                        'aircondition'      : this.state.aircondition,
+                        'gps'               : this.state.gps,
+                        'security'          : this.state.security,
+                        'tire'              : this.state.tire,
+                    };
+            
+                    this.props.motorEvents(motoreValue)
+                });
+            }
+
+        }).catch((error) => {
+
+        });
+
+    }
+
+    variantChange = (id) => {
 
         this.setState({
-            model_id: id,
+            variant_id: id,
         }, () => {
             
             let motoreValue = {
                 'make_id'           : this.state.make_id,
                 'model_id'          : this.state.model_id,
+                'variant_id'        : this.state.variant_id,
                 'registration_year' : this.state.registration_year,
                 'fuel'              : this.state.fuel,
                 'transmission'      : this.state.transmission,
@@ -130,17 +176,19 @@ export default class motorCreate extends Component {
     
             this.props.motorEvents(motoreValue)
         });
+
     }
 
     checkboxChange = (name, value) => {
-
+        
         this.setState({
-            [name]: value,
+            [name]: value === true ? name : '',
          }, () => {
             
             let motoreValue = {
                 'make_id'           : this.state.make_id,
                 'model_id'          : this.state.model_id,
+                'variant_id'        : this.state.variant_id,
                 'registration_year' : this.state.registration_year,
                 'fuel'              : this.state.fuel,
                 'transmission'      : this.state.transmission,
@@ -151,7 +199,7 @@ export default class motorCreate extends Component {
                 'security'          : this.state.security,
                 'tire'              : this.state.tire,
             };
-    
+            
             this.props.motorEvents(motoreValue)
         });
     }
@@ -165,6 +213,7 @@ export default class motorCreate extends Component {
             let motoreValue = {
                 'make_id'           : this.state.make_id,
                 'model_id'          : this.state.model_id,
+                'variant_id'        : this.state.variant_id,
                 'registration_year' : this.state.registration_year,
                 'fuel'              : this.state.fuel,
                 'transmission'      : this.state.transmission,
@@ -189,6 +238,7 @@ export default class motorCreate extends Component {
             let motoreValue = {
                 'make_id'           : this.state.make_id,
                 'model_id'          : this.state.model_id,
+                'variant_id'        : this.state.variant_id,
                 'registration_year' : this.state.registration_year,
                 'fuel'              : this.state.fuel,
                 'transmission'      : this.state.transmission,
@@ -213,6 +263,7 @@ export default class motorCreate extends Component {
             let motoreValue = {
                 'make_id'           : this.state.make_id,
                 'model_id'          : this.state.model_id,
+                'variant_id'        : this.state.variant_id,
                 'registration_year' : this.state.registration_year,
                 'fuel'              : this.state.fuel,
                 'transmission'      : this.state.transmission,
@@ -230,7 +281,7 @@ export default class motorCreate extends Component {
 
     render() {
 
-        let {makeOption, modelOption, fuelOption, transmissionOption, conditionOption, make_id, model_id, 
+        let {makeOption, modelOption, variantOption, fuelOption, transmissionOption, conditionOption, make_id, model_id, 
             registration_year, mileage, transmission, condition} = this.state;
             
         let errors = this.props.errors ? this.props.errors : '';
@@ -243,6 +294,7 @@ export default class motorCreate extends Component {
                 <>
                     <SelectField placeholder="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
                     <SelectField placeholder="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
+                    <SelectField placeholder="Variant" optionChange={this.variantChange} option={variantOption} type="common" error={errors.errors_variant_id} />
                     <Number placeholder="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />
                     <SelectField placeholder="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
                     <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} error={errors.errors_transmission} />
