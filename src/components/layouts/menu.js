@@ -8,9 +8,11 @@ class Menu extends React.Component{
       super(props);
    }
    
-    render() {
+   render() {
        
-        return (
+         let city = localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
+
+         return (
             <nav className="main-menubar">
                <div className="container">
                   <div className="menubar">
@@ -27,8 +29,7 @@ class Menu extends React.Component{
                                        {category.subcategory.map((subcategory, index) => {
                                           return (
                                              <li key={index} className="menu-item menu-item-has-children">
-                                              <Link to={`/search?category=${category.canonical_name}&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
-                                                {/* <Link to={`/common/search/~/-/-/${subcategory.canonical_name}`}>{subcategory.name}</Link> */}
+                                              <Link to={`/motor/list?key=&city=${city}&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
                                                 <div class="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
@@ -57,7 +58,7 @@ class Menu extends React.Component{
                                        {category.subcategory.map((subcategory, index) => {
                                           return (
                                              <li key={index} className="menu-item">
-                                                <Link to={`/search?key=&city=&category=&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
+                                                <Link to={`/property/list?category_id=2&subcategory_id=${subcategory.id}&city=&property_type=&price=&room=`}>{subcategory.name}</Link>
                                                 <div class="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
@@ -65,7 +66,7 @@ class Menu extends React.Component{
                                                       {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
                                                          
                                                          return (
-                                                            <li key={index}><Link to={`/search?key=&city=category=&subcategory=${child.id}`}>{child.name}</Link></li>
+                                                            <li key={index}><Link to={`/property/list?category_id=2&subcategory_id=${child.id}&city=&property_type=&price=&room=`}>{child.name}</Link></li>
                                                          )
                                                       }) : '' }
                                                       

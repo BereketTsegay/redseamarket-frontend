@@ -34,11 +34,11 @@ export default class motorListing extends Component {
             loaderStatus: true,
         });
 
-        // let key = this.props.match.params.key;
-        // let event = this.props.match.params.event;
-
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
+
+        if(key){
 
             axios({
                 url: `${BASE_URL}/customer/search/ads`,
@@ -72,50 +72,176 @@ export default class motorListing extends Component {
                     loaderStatus: false,
                 });
             });
+        }
+        else{
+
+            axios({
+                url: `${BASE_URL}/customer/get/motor/list`,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                    subcategory: subcategory,
+                },
+            }).then(response => {
+
+                if(response.data.status == 'success'){
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            });
+
+        }
         
+    }
+
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
+
+        this.setState({
+            loaderStatus: true,
+        });
+
+        let key = ((new URLSearchParams(nextProps.location.search).get('key')) != '') ? (new URLSearchParams(nextProps.location.search).get('key')) : '';
+        let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(nextProps.location.search).get('subcategory')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory')) : '';
+
+        if(key){
+
+            axios({
+                url: `${BASE_URL}/customer/search/ads`,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                },
+            }).then(response => {
+
+                if(response.data.status == 'success'){
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            });
+        }
+        else{
+
+            axios({
+                url: `${BASE_URL}/customer/get/motor/list`,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                    subcategory: subcategory,
+                },
+            }).then(response => {
+
+                if(response.data.status == 'success'){
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            });
+
+        }
+
     }
 
     paginationCall = (url) => {
 
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
 
         this.setState({
             loaderStatus: true,
         });
 
-        axios({
-            url: url,
-            method: 'POST',
-            data:{
-                search_key: key,
-                category: 1,
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
-                city: city,
-            },
-        }).then(response => {
+            axios({
+                url: url,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                    subcategory: subcategory,
+                },
+            }).then(response => {
 
-            if(response.data.status == 'success'){
+                if(response.data.status == 'success'){
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
                 this.setState({
-                    resultKey: response.data.message,
-                    adList: response.data.ads.data,
-                    paginataionArray: response.data.ads.links,
-                    previousPage: response.data.ads.prev_page_url,
-                    nexPage: response.data.ads.next_page_url,
-                    last:response.data.ads.last_page,
+                    loaderStatus: false,
                 });
-            }
 
-            this.setState({
-                loaderStatus: false,
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
             });
-
-        }).catch((error) => {
-            this.setState({
-                loaderStatus: false,
-            });
-        });
+        
     }
 
     render() {

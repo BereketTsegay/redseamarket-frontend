@@ -34,7 +34,7 @@ export default class featuredAds extends Component {
                 <div className="product-panel">
                     <Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>
                         <div className="panel-media">
-                            <img src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" />
+                            <img style={{minHeight:'150px', maxHeight:'150px'}} src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" />
                             {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : '' }
                         </div>
                         <div className="panel-content">

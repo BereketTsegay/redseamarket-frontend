@@ -42,26 +42,7 @@ function App() {
               <Route path="/categoryMotors" component={CategoryMotors} />
               <Route path="/categoryProperty/:id" component={CategoryProperty} />
               <Route path="/motor/list" component={MotorListing} />
-              {/* <Route path="/common/search/:key/:city/:category/:subcategory" component={SearchList} /> */}
-              {/* <Route path="/search/" component={SearchList} /> */}
-
-
               <Route path="/search" component={SearchList} />
-              {/* <Route path="/search/:x" component={SearchList} /> */}
-
-
-
-
-              {/* <Route path="/search/:city" component={SearchList} />
-              <Route path="/search/:category/:subcategory" component={SearchList} />
-
-
-
-              <Route path="/search/:city/:key" component={SearchList} />
-              <Route path="/search/:city/:category/:subcategory" component={SearchList} />
-              <Route path="/search/:key" component={SearchList} /> */}
-
-
               <Route path="/property/list" component={PropertyList} />
               <Route path="/motor/result" component={SearchResult} />
             </ScrollToTop>

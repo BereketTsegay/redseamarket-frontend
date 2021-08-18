@@ -46,7 +46,7 @@ class CategoryListingImage extends React.Component{
                            {
                            (subcatArray['image'].length > 0) ? 
                               
-                              <img src={subcatArray.image[0] ? IMAGE_URL+'/'+subcatArray.image[0].image : defaultImage} alt="media" />:<img src={defaultImage} alt="media" />
+                              <img style={{minHeight:'150px', maxHeight:'150px'}} src={subcatArray.image[0] ? IMAGE_URL+'/'+subcatArray.image[0].image : defaultImage} alt="media" />:<img style={{minHeight:'150px', maxHeight:'150px'}} src={defaultImage} alt="media" />
                            
                            } 
                              
