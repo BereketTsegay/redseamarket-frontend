@@ -87,7 +87,7 @@ class SubCategorySelect extends React.Component{
                               }
                            ))}
                            </div>
-                           <Link to={`/create-form/${categoryId}/&nvlp/${categoryName}/&!$*`} className="float-right">Skip this<i className="fa fa-angle-right ml-1" aria-hidden="true"></i></Link>
+                           {/* <Link to={`/create-form/${categoryId}/&nvlp/${categoryName}/&!$*`} className="float-right">Skip this<i className="fa fa-angle-right ml-1" aria-hidden="true"></i></Link> */}
                         </div>
                      </div>
                   </div>

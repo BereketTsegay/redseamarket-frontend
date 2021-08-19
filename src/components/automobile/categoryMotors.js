@@ -21,6 +21,7 @@ export default class categoryMotors extends Component {
          testimonial: [],
          searchKey: '',
          loaderStatus: false,
+         dealer: [],
       }
    }
 
@@ -53,6 +54,22 @@ export default class categoryMotors extends Component {
             loaderStatus:false,
          });
       })
+
+      axios({
+         url: `${BASE_URL}/customer/get/featured/dealer`,
+         method: 'POST',
+     }).then(response => {
+
+         if(response.data.status === 'success'){
+             
+             this.setState({
+                 dealer: response.data.featured,
+             });
+         }
+
+     }).catch((error) => {
+
+     });
    }
 
    searchEvent = e => {
@@ -70,7 +87,8 @@ export default class categoryMotors extends Component {
    render() {
 
       let {subcategory, ads, testimonial, searchKey, loaderStatus} = this.state;
-      
+      let dealer = this.state.dealer;
+         console.log(dealer, 'dealer');
          return (
             <div id="page" className="site-page">
                {loaderStatus == true ? <Loader /> :
@@ -129,13 +147,11 @@ export default class categoryMotors extends Component {
                         </div>
                         <div className="row">
 
-                           <FeaturedDealers image="assets/img/motor-brand-1.jpg" />
-                           <FeaturedDealers image="assets/img/motor-brand-2.jpg" />
-                           <FeaturedDealers image="assets/img/motor-brand-3.jpg" />
-                           <FeaturedDealers image="assets/img/motor-brand-4.jpg" />
-                           <FeaturedDealers image="assets/img/motor-brand-5.jpg" />
-                           <FeaturedDealers image="assets/img/motor-brand-6.jpg" />
-                           
+                        {dealer ? dealer.map((dealer, index) => {
+
+                           return <FeaturedDealers key={index} image={dealer.dealer_image} />
+
+                        }) : ''}
                         </div>
                      </div>
                   </section>

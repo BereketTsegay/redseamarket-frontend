@@ -77,7 +77,7 @@ class CreateAdsCategory extends React.Component{
                               
                               {(categoryArray && categoryArray.map((categoryArray,indexi) => 
                               
-                                 <div className="col-md-4 col-6">
+                                 <div className="col-md-4 col-6" key={indexi}>
                                     <a onClick={e => this.onClickHandler((categoryArray['id'])?categoryArray['id']:'', categoryArray.name)} href="javascript:void(0)" className="category-block-panel text-center d-flex align-items-center" style={{fill:"currentColor"}} >
                                        <div className="w-100">
                                           <div className="panel-media">

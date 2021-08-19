@@ -56,7 +56,7 @@ class Index extends React.Component{
                     localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
             
                 }
-                console.log('hi')
+                
                 this.setState({
                     loaderState: false,
                 });

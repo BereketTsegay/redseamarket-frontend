@@ -30,6 +30,13 @@ export default class favourite extends Component {
 
     componentWillMount(){
         
+        if(sessionStorage.getItem('loginStatus') === 'false' || sessionStorage.getItem('loginStatus') === false){
+
+            this.props.history.push('/');
+        }
+
+        
+
         this.setState({
             loaderState: true,
         });
@@ -102,7 +109,7 @@ export default class favourite extends Component {
 
         return (
             <div id="page" className="site-page">
-                {loaderState == true ? <Loader /> :
+                {loaderState === true ? <Loader /> :
                 <>
                     <Header />
                     <Breadcrumb section="My Favorites" />
@@ -138,7 +145,7 @@ export default class favourite extends Component {
                                 </div>
                             </div>
 
-                            {last == 1 || last == '' ? '' : 
+                            {last === 1 || last === '' ? '' : 
                                 <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
                                 
                             }

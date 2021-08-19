@@ -141,10 +141,16 @@ class Header extends React.Component{
          {
              errors2.namererror ='Name cannot be blank'
          }
+
          if(this.state.registeremail === ''  || this.state.registeremail.trim() === '')
          {
             
              errors2.emailrerror = 'Email cannot be blank';
+         }
+         else if(!this.state.registeremail.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+
+            errors2.emailrerror ='Must be an email';
+
          }
          if(this.state.registerpassword === ''  || this.state.registerpassword.trim() === '')
          {
@@ -181,6 +187,7 @@ class Header extends React.Component{
                   password:this.state.password,
               }
           }).then(response => {
+            
               if(response.data.status == 'success'){
 
                   localStorage.removeItem('userToken');
@@ -202,6 +209,10 @@ class Header extends React.Component{
                  this.setState({ showHistory: false});
                //   console.log(localStorage,"local storage")
                   // this.props.handleSuccessfullAuth(response.data.message)
+              }
+              else{
+                console.log(response.data);
+                this.setState({globalLoginError:response.data.message, loaderStatus:false,});
               }
 
                 this.setState({
@@ -249,7 +260,8 @@ class Header extends React.Component{
                this.setState({isUsernameError:false});
            }
        break;
-       case 'registeremail': 
+       case 'registeremail':
+
           errors2.emailrerror = (value.length === 0 || (value.trim()).length === 0)? 'Email cannot be blank' : '';
            if (value.length === 0 || (value.trim()).length === 0)
            {
@@ -257,6 +269,11 @@ class Header extends React.Component{
            }else{
                this.setState({isPasswordError:false});
            }
+
+            if(!value.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+                errors2.emailrerror ='Must be an email';
+                this.setState({isPasswordError:true});
+            }
        break;
        case 'registerpassword': 
        errors2.passwordrerror = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
@@ -492,7 +509,7 @@ logout = (e) => {
                                         {user}
                                     </Link> 
                                     <Link className="header-link" onClick={(e) => this.logout(e)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-sign-out"><path d=""></path><circle cx="12" cy="12" r="10"></circle></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                         Logout</Link>
                                 </div>
                                 :

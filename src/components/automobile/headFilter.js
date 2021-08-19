@@ -94,10 +94,10 @@ class headFilter extends Component {
 
         let {subcategory, category_id, city, subcategory_id, condition, transimission, priceFrom, yearFrom, mileageFrom, priceTo,
             yearTo, mileageTo, seller, keyword, loaderStatus, country_id, cityArray} = this.state;
-
+            
         return (
             <>
-                {loaderStatus == true ? <Loader /> : 
+                {/* {loaderStatus == true ? <Loader /> :  */}
                 <section className="section-motor-filter">
                     <div className="container">
                         <div className="row">
@@ -114,7 +114,13 @@ class headFilter extends Component {
                                             <select onChange={(e) => this.handleChange(e)} name="city" className="form-control">
                                             <option value="">Select City</option>
                                             {cityArray ? cityArray.map((city, index) => {
-                                                return <option key={index} value={city.id}>{city.name}</option>
+                                                if(this.state.city === city.id){
+                                                    return <option selected key={index} value={city.id}>{city.name}</option>
+                                                }
+                                                else{
+                                                    return <option key={index} value={city.id}>{city.name}</option>
+                                                }
+                                                
                                             }) : ''}
                                             
                                             </select>
@@ -204,7 +210,7 @@ class headFilter extends Component {
                         </div>
                     </div>
                 </section>
-            }
+            {/* } */}
             </>
         )
     }

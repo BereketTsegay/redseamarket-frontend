@@ -38,7 +38,7 @@ export default class featuredAds extends Component {
                             {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : '' }
                         </div>
                         <div className="panel-content">
-                            <h3 className="panel-price">AED {ads.price}</h3>
+                            <h3 className="panel-price">{ads.currency} {ads.price}</h3>
                             <h4 className="panel-title">{ads.make} • {ads.model}</h4>
                             <p className="panel-description">{ads.year} Year • {ads.milage} km</p>
                             <p className="panel-description mt-1">{ads.state_name}, {ads.city_name}</p>

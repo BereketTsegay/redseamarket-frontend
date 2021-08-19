@@ -24,6 +24,7 @@ export default class adsDetails extends Component {
             mainImage: null,
             modalShow: false,
             phone: '',
+            sellerName: '',
             loaderStatus: false,
         }
     }
@@ -66,10 +67,11 @@ export default class adsDetails extends Component {
         });
     }
 
-    showPhone = (phone) => {
+    showPhone = (phone, name) => {
         this.setState({ 
             modalShow: !this.state.modalShow,
             phone: phone,
+            sellerName: name,
          });
     }
 
@@ -78,7 +80,7 @@ export default class adsDetails extends Component {
 
     render() {
         
-        let {id, ads, mainImage, modalShow, phone, loaderStatus} = this.state;
+        let {id, ads, mainImage, modalShow, phone, sellerName, loaderStatus} = this.state;
         
             let modalLogin ={
                 position:  'fixed',
@@ -141,7 +143,7 @@ export default class adsDetails extends Component {
                                             <div className="w-100">
                                                 <h3 className="product-title">{ads.title}</h3>
                                                 <p className="product-desc">{ads.description.substring(0, 250)}</p>
-                                                <div className="product-price font-weight-bold text-brand">AED {ads.price}</div>
+                                                <div className="product-price font-weight-bold text-brand">{ads.currency} {ads.price}</div>
                                                 <ul className="product-meta">
 
                                                     {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value.registration_year} fuel={ads.motore_value.fuel_type} />
@@ -159,8 +161,8 @@ export default class adsDetails extends Component {
                                                     {ads.country_name}, {ads.state_name}, {ads.city_name}
                                                 </div>
                                                 <div className="product-btn-group d-flex justify-content-between">
-                                                    {ads.SellerInformation ? ads.SellerInformation.phone_hide_flag == 0 ? 
-                                                    <a href="javascript:void(0);" onClick={() => this.showPhone(ads.seller_information ? ads.seller_information.phone : '')} className="btn btn-primary has-icon d-block">
+                                                    {ads.seller_information ? ads.seller_information.phone_hide_flag == 0 ?
+                                                    <a href="javascript:void(0);" onClick={() => this.showPhone(ads.seller_information ? ads.seller_information.phone : '', ads.seller_information ? ads.seller_information.name : '')} className="btn btn-primary has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                                         Show Phone Number
                                                     </a>
@@ -403,8 +405,12 @@ export default class adsDetails extends Component {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                 </button>
                                 <h5 className="modal-title text-center text-brand">Phone Number</h5>
-                                <div className="modal-form">
-                                    <label>{phone}</label>
+                                <div className="modal-form text-center">
+                                    
+                                    <label>Name : {sellerName}</label>
+                                    <br />
+                                    <a href={`tel:${phone}`}>{phone}</a>
+
                                 </div>
                         </Modal.Body>
                         

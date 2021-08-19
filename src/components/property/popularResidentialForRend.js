@@ -35,10 +35,10 @@ export default class popularResidentialForRend extends Component {
                 <div className="product-panel">
                     <Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>
                         <div className="panel-media">
-                            <img src={ads.image[0] ? IMAGE_URL+'/'+ads.image[0].image : defaultImage } alt="media" />
+                            <img style={{maxHeight: '150px', minHeight: '150px'}} src={ads.image[0] ? IMAGE_URL+'/'+ads.image[0].image : defaultImage } alt="media" />
                         </div>
                         <div className="panel-content">
-                            <h3 className="panel-price">AED {ads.price}</h3>
+                            <h3 className="panel-price">{ads.currency} {ads.price}</h3>
                             <h4 className="panel-title">{ads.room} Room • {ads.size} SqFt</h4>
                             <p className="panel-description">{ads.state_name}, {ads.city_name}</p>
                         </div>

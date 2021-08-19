@@ -37,7 +37,8 @@ class CreateAds extends React.Component{
 
 
 
-    handleCallback = (categoryId,pageValue, name) =>{
+    handleCallback = (categoryId,pageValue, name) => {
+        window.scrollTo(0, 0);
         switch (pageValue) {
             case 'category':
 
@@ -58,6 +59,7 @@ class CreateAds extends React.Component{
     };
 
     UNSAFE_componentWillReceiveProps = (nextProps) => {
+        window.scrollTo(0, 0);
         this.setState({
             pageSelectVal: 1,
         });

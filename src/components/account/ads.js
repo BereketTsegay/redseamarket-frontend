@@ -37,7 +37,7 @@ export default class ads extends Component {
                                 {ads.image.length > 0 ? <img src={IMAGE_URL+'/'+ ads.image[0].image} alt="media" />: <img src={defaultImage} alt="media" />}
                             </div>
                             <div className="panel-content">
-                                <h3 className="panel-price">AED {ads.price}</h3>
+                                <h3 className="panel-price">{ads.currency} {ads.price}</h3>
                                 <h4 className="panel-title">{ads.custom_value ? ads.custom_value.map((customValue, index) => {
                                     if(index < 2){
                                         return customValue.value+' '+ customValue.name+' • '

@@ -90,14 +90,47 @@ export default class searchResult extends Component {
                 });
             });
         }
+        else{
+
+            axios({
+                url: `${BASE_URL}/customer/get/motor/list`,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                    subcategory: subcategory,
+                },
+            }).then(response => {
+
+                if(response.data.status == 'success'){
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            });
+        }
     }
 
     UNSAFE_componentWillReceiveProps = (nextProps) => {
         
-        this.setState({
-            loaderStatus: true,
-        });
-
+        
         let key = ((new URLSearchParams(nextProps.location.search).get('keyword')) != '') ? (new URLSearchParams(nextProps.location.search).get('keyword')) : '';
         let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(nextProps.location.search).get('subcategory')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory')) : '';
@@ -112,6 +145,11 @@ export default class searchResult extends Component {
         let seller = ((new URLSearchParams(nextProps.location.search).get('seller')) != '') ? (new URLSearchParams(nextProps.location.search).get('seller')) : '';
  
         if(key != ''){
+
+            // this.setState({
+            //     loaderStatus: true,
+            // });
+
             axios({
                 url: `${BASE_URL}/customer/search/motors`,
                 method: 'POST',
@@ -136,6 +174,41 @@ export default class searchResult extends Component {
 
                 if(response.data.status == 'success'){
                     
+                    this.setState({
+                        resultKey: response.data.message,
+                        adList: response.data.ads.data,
+                        paginataionArray: response.data.ads.links,
+                        previousPage: response.data.ads.prev_page_url,
+                        nexPage: response.data.ads.next_page_url,
+                        last:response.data.ads.last_page,
+                    });
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderStatus: false,
+                });
+            });
+        }
+        else{
+            axios({
+                url: `${BASE_URL}/customer/get/motor/list`,
+                method: 'POST',
+                data:{
+                    search_key: key,
+                    category: 1,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: city,
+                    subcategory: subcategory,
+                },
+            }).then(response => {
+
+                if(response.data.status == 'success'){
                     this.setState({
                         resultKey: response.data.message,
                         adList: response.data.ads.data,

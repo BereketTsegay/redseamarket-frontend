@@ -253,7 +253,39 @@ class CreateForm extends React.Component{
          });
 
       }
-      
+
+      if(name === 'title' && value === ''){
+         
+         this.setState({
+            errors_title: 'Title cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_title: '',
+         })
+      }
+      if(name === 'price' && value === ''){
+         this.setState({
+            errors_price: 'Price cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_price: '',
+         });
+      }
+      if(name === 'description' && value === ''){
+         
+         this.setState({
+            errors_description: 'Description cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_description: '',
+         });
+      }
    }
 
    checkboxChange = (name, value) => {
@@ -313,12 +345,22 @@ class CreateForm extends React.Component{
                   errors_title: 'Title cannot be blank',
                });
             }
+            else{
+               this.setState({
+                  errors_title: '',
+               });
+            }
             if(state.image === '' || state.image.length == 0){
 
                let image = 'Image cannot be blank';
 
                this.setState({
                   errors_image: image,
+               });
+            }
+            else{
+               this.setState({
+                  errors_image: '',
                });
             }
             if(state.price === '' || state.price.trim() === ''){
@@ -329,11 +371,21 @@ class CreateForm extends React.Component{
                });
                
             }
+            else{
+               this.setState({
+                  errors_price: '',
+               });
+            }
             if(state.description === '' || state.description.trim() === ''){
 
                let description = 'Description cannot be blank';
                this.setState({
                   errors_description: description,
+               });
+            }
+            else{
+               this.setState({
+                  errors_description: '',
                });
             }
             if(state.country_id === '' || state.country_id.trim() === ''){
@@ -343,11 +395,21 @@ class CreateForm extends React.Component{
                   errors_country_id: country_id,
                });
             }
+            else{
+               this.setState({
+                  errors_country_id: '',
+               });
+            }
             if(state.state_id === '' || state.state_id.trim() === ''){
 
                let state_id = 'State cannot be blank';
                this.setState({
                   errors_state_id: state_id,
+               });
+            }
+            else{
+               this.setState({
+                  errors_state_id: '',
                });
             }
 
@@ -478,6 +540,37 @@ class CreateForm extends React.Component{
 
       this.setState({
          formPage: this.state.formPage - 1,
+
+         errors_title: '',
+         errors_image: '',
+         errors_price: '',
+         errors_description: '',
+         errors_country_id: '',
+         errors_state_id: '',
+         errors_city_id: '',
+
+         errors_make_id: '',
+         errors_model_id: '',
+         errors_variant_id: '',
+         errors_registration_year: '',
+         errors_fuel: '',
+         errors_transmission: '',
+         errors_condition: '',
+         errors_mileage: '',
+
+         errors_size: '',
+         errors_room: '',
+         errors_furnished: '',
+         errors_building: '',
+         errors_parking: '',
+
+         errors_userName: '',
+         errors_email: '',
+         errors_latitude: '',
+         errors_longitude: '',
+         errors_phone: '',
+         errors_address: '',
+
       });
    }
 
@@ -490,6 +583,12 @@ class CreateForm extends React.Component{
 
    fileUpload = (file) => {
       
+      if(file.length === 0){
+         this.setState({
+            errors_image: 'Image cannot be blank',
+         });
+      }
+
       this.setState({
          image: [...this.state.image, file],
       });

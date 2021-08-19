@@ -42,6 +42,11 @@ export default class profile extends Component {
 
     componentWillMount(){
 
+        if(sessionStorage.getItem('loginStatus') === 'false' || sessionStorage.getItem('loginStatus') === false){
+
+            this.props.history.push('/');
+        }
+
         this.setState({
             loaderState: true,
         });
@@ -367,7 +372,7 @@ export default class profile extends Component {
                                             <select className="form-control" onChange={(e) => this.valueChange(e)} name="nationality">
                                                 
                                                 {country && country.map((country, index) => {
-                                                    if(country.id === nationality){
+                                                    if(country.id == nationality){
                                                         return <option selected key={index} value={country.id}>{country.name}</option>
                                                     }
                                                     else{

@@ -54,7 +54,7 @@ class CategoryListingImage extends React.Component{
                            <div className="panel-content">
 
                            
-                              <h3 className="panel-price">AED {subcatArray && (subcatArray['price'])?subcatArray['price']:''}</h3>
+                              <h3 className="panel-price">{subcatArray['currency']} {subcatArray && (subcatArray['price'])?subcatArray['price']:''}</h3>
                               <h4 className="panel-title">
                               {
                               (subcatArray['custom_value'].length >0)?

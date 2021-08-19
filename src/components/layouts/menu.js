@@ -29,8 +29,8 @@ class Menu extends React.Component{
                                        {category.subcategory.map((subcategory, index) => {
                                           return (
                                              <li key={index} className="menu-item menu-item-has-children">
-                                              <Link to={`/motor/list?key=&city=${city}&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
-                                                <div class="sub-menu-child">
+                                              <Link to={`/motor/result?key=&city=${city}&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
+                                                <div className="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
                                                 
@@ -59,7 +59,7 @@ class Menu extends React.Component{
                                           return (
                                              <li key={index} className="menu-item">
                                                 <Link to={`/property/list?category_id=2&subcategory_id=${subcategory.id}&city=&property_type=&price=&room=`}>{subcategory.name}</Link>
-                                                <div class="sub-menu-child">
+                                                <div className="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
                                                 
@@ -89,7 +89,7 @@ class Menu extends React.Component{
                                           return (
                                              <li key={index} className="menu-item">
                                                 <Link to={`/search?key=&city=&category=&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
-                                                <div class="sub-menu-child">
+                                                <div className="sub-menu-child">
                                                    <h6>{subcategory.name}</h6>
                                                    <ul>
                                                 
