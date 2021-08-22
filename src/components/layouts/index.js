@@ -37,6 +37,7 @@ class Index extends React.Component{
                 data:{
                     latitude:0,
                     longitude:0,
+                    city: sessionStorage.getItem('city_id'),
                 }
 
             }).then(result => {
@@ -74,6 +75,7 @@ class Index extends React.Component{
                 data:{
                     latitude:0,
                     longitude:0,
+                    city: sessionStorage.getItem('city_id'),
                 }
 
             }).then(result => {

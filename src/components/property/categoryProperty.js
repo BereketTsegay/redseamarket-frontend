@@ -22,6 +22,8 @@ export default class categoryProperty extends Component {
             popularCategory: [],
             subcategory: [],
             loaderStatus: false,
+            latitude: 0,
+            longitude: 0,
         }
     }
 
@@ -37,7 +39,11 @@ export default class categoryProperty extends Component {
                 method: 'POST',
                 data: {
                     category_id: this.state.category_id,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: sessionStorage.getItem('city_id'),
                 }
+
             }).then(response => {
 
                 if(response.data.status == 'success'){
@@ -73,7 +79,11 @@ export default class categoryProperty extends Component {
                     method: 'POST',
                     data: {
                         category_id: this.state.category_id,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
+                        city: sessionStorage.getItem('city_id'),
                     }
+
                 }).then(response => {
         
                     if(response.data.status == 'success'){
@@ -111,6 +121,9 @@ export default class categoryProperty extends Component {
                 method: 'POST',
                 data: {
                     category_id: this.state.category_id,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    city: sessionStorage.getItem('city_id'),
                 }
             }).then(response => {
     

@@ -43,6 +43,8 @@ class Header extends React.Component{
         sessionStorage.removeItem('city_id');
         
         sessionStorage.setItem('city_id', e.target.value);
+
+        window.location.reload();
     }
 
     render() {

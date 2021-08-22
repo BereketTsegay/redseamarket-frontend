@@ -22,6 +22,8 @@ export default class categoryMotors extends Component {
          searchKey: '',
          loaderStatus: false,
          dealer: [],
+         latitude: 0,
+         longitude: 0,
       }
    }
 
@@ -34,6 +36,12 @@ export default class categoryMotors extends Component {
       axios({
          url: `${BASE_URL}/customer/get/motors`,
          method: 'POST',
+         data: {
+            city: sessionStorage.getItem('city_id'),
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+         },
+
       }).then(response => {
 
          if(response.data.status == 'success'){
