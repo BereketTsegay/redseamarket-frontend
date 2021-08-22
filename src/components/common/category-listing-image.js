@@ -48,8 +48,8 @@ class CategoryListingImage extends React.Component{
                               
                               <img style={{minHeight:'150px', maxHeight:'150px'}} src={subcatArray.image[0] ? IMAGE_URL+'/'+subcatArray.image[0].image : defaultImage} alt="media" />:<img style={{minHeight:'150px', maxHeight:'150px'}} src={defaultImage} alt="media" />
                            
-                           } 
-                             
+                           }
+                           {subcatArray.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : '' }
                            </div>
                            <div className="panel-content">
 

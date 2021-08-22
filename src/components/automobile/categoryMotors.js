@@ -88,7 +88,7 @@ export default class categoryMotors extends Component {
 
       let {subcategory, ads, testimonial, searchKey, loaderStatus} = this.state;
       let dealer = this.state.dealer;
-         console.log(dealer, 'dealer');
+         
          return (
             <div id="page" className="site-page">
                {loaderStatus == true ? <Loader /> :
