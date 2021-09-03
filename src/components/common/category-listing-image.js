@@ -66,7 +66,8 @@ class CategoryListingImage extends React.Component{
                               subcatArray['title'].substring(0, 150)
                               } 
                               </h4>
-                              <p className="panel-description">{subcatArray['description'].substring(0, 150)}</p>
+                              {/* <p className="panel-description">{subcatArray['description'].substring(0, 150)}</p> */}
+                              <p className="panel-description">{subcatArray['city']} &gt; { subcatArray['state']} &gt; { subcatArray['country']}</p>
                            </div>
                         </Link>
                      </div>

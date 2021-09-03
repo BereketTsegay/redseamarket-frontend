@@ -85,13 +85,13 @@ export default class dependencySelect extends Component {
                 
                 if(dependency.master == 'Make'){
                     return (
-                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={dependency.option} type="Make" />
+                        <SelectField key={index} onOptionChange={this.optionHandling} label="Make" placeholder={dependency.master} option={dependency.option} type="Make" />
                     );
                 }
                 else{
                     return (
                         
-                        <SelectField key={index} onOptionChange={this.optionHandling} placeholder={dependency.master} option={option} type={this.state.master} />
+                        <SelectField key={index} onOptionChange={this.optionHandling} label={dependency.master} placeholder={dependency.master} option={option} type={this.state.master} />
                     );
                 }
             })

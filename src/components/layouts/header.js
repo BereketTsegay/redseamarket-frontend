@@ -47,9 +47,43 @@ class Header extends React.Component{
         registerpassword:'',
         loaderStatus: false,
         forgotPasswordModal: false,
+        emailVerifydModal: false,
+        otp: '',
+        otpError: '',
+        countryListModal: sessionStorage.getItem('country') ? false : true,
+        countryList: [],
       }
 
    }
+
+    componentWillMount = () => {
+        
+        axios({
+            url: `${BASE_URL}/customer/get/country`,
+            method: 'POST',
+        }).then(response => {
+
+            if(response.data.status === 'success'){
+                this.setState({
+                    countryList: response.data.country,
+                });
+            }
+
+        }).catch((error) => {
+
+        });
+
+        if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('latitude')){
+            navigator.geolocation.getCurrentPosition((position) => {
+
+                sessionStorage.removeItem('latitude');
+                sessionStorage.removeItem('longitude');
+
+                sessionStorage.setItem('latitude', position.coords.latitude);
+                sessionStorage.setItem('longitude', position.coords.longitude);
+            });
+        }
+    }
    
    viewLoginModal = () => {
       this.setState({ showHistory: !this.state.showHistory });
@@ -70,6 +104,11 @@ class Header extends React.Component{
    e.preventDefault(); 
    const { name, value } = e.target;
    let errors2 = this.state.errors2;
+
+    this.setState({
+        globalRegError: '',
+    });
+    
    if(this.state.registername && this.state.registeremail && this.state.registerpassword)
       {
 
@@ -88,34 +127,40 @@ class Header extends React.Component{
                 password: this.state.registerpassword,
             }
         }).then(response => {
-            if(response.data.code == '200'){
+
+            if(response.data.code === '200'){
                
 
-                localStorage.removeItem('userToken');
-                sessionStorage.removeItem('loginStatus');
+            //     localStorage.removeItem('userToken');
+            //     sessionStorage.removeItem('loginStatus');
 
-                localStorage.setItem('userToken', response.data.token);
-                // localStorage.setItem('loginStatus', true);
-                this.setState({
-                   loginStatus:true,
-                   user: localStorage.getItem('user'),
-                });
+            //     localStorage.setItem('userToken', response.data.token);
+            //     // localStorage.setItem('loginStatus', true);
+            //     this.setState({
+            //        loginStatus:true,
+            //        user: localStorage.getItem('user'),
+            //     });
                 
-                sessionStorage.setItem('loginStatus',true);
+            //     sessionStorage.setItem('loginStatus',true);
 
-                this.setState({loginStatus:true});
-                Swal.fire({
-                   title: 'success!',
-                   text: response.data.message,
-                   icon: 'success',
-                   confirmButtonText: 'OK'
-               });
-               this.setState({ registerModal: false});
+            //     this.setState({loginStatus:true});
+            //     Swal.fire({
+            //        title: 'success!',
+            //        text: response.data.message,
+            //        icon: 'success',
+            //        confirmButtonText: 'OK'
+            //    });
+               this.setState({
+                   registerModal: false,
+                   emailVerifydModal: !this.state.emailVerifydModal,
+                });
 
 
 
-            }else if(response.data.code == '400'){
-               this.setState({globalRegError:response.data.errors.email[0]});
+            }else if(response.data.code === '400'){
+               this.setState({
+                   globalRegError: response.data.message ? response.data.message : response.data.errors.email[0] ? response.data.errors.email[0] : '',
+                });
             }else{
                this.setState({globalRegError:'Sorry something went wrong try again...'});
             }
@@ -290,39 +335,36 @@ class Header extends React.Component{
    this.setState({errors2, [name]: value});
 }
 
-
-
-
-
-
-
   onChange =(e)=>{
-   this.setState({[e.target.name]: e.target.value});
-   this.setState({globalLoginError:''});
-   e.preventDefault();
-   const { name, value } = e.target;
-   let errors = this.state.errors;
-   switch (name) {
-       case 'email': 
-           errors.username = (value.length === 0 || (value.trim()).length === 0 )? 'Email cannot be blank': '';
-           if (value.length === 0 || (value.trim()).length === 0)
-           {
-               this.setState({isUsernameError:true});
-           }else{
-               this.setState({isUsernameError:false});
-           }
-       break;
-       case 'password': 
-          errors.password = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
-           if (value.length === 0 || (value.trim()).length === 0)
-           {
-               this.setState({isPasswordError:true});
-           }else{
-               this.setState({isPasswordError:false});
-           }
-       break;
-       default:
-         break;
+    this.setState({[e.target.name]: e.target.value});
+    this.setState({globalLoginError:''});
+    e.preventDefault();
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+    switch (name) {
+        case 'email': 
+            errors.username = (value.length === 0 || (value.trim()).length === 0 )? 'Email cannot be blank': '';
+            if (value.length === 0 || (value.trim()).length === 0)
+            {
+                this.setState({isUsernameError:true});
+            }else{
+                this.setState({isUsernameError:false});
+            }
+            break;
+        case 'password': 
+            errors.password = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
+            if (value.length === 0 || (value.trim()).length === 0)
+            {
+                this.setState({isPasswordError:true});
+            }else{
+                this.setState({isPasswordError:false});
+            }
+            break;
+        case 'otp':
+            this.state.otpError = (value.length === 0 || (value.trim()).length === 0 ) ? 'OTP cannot be blank': '';
+            break;
+        default:
+            break;
    }
    this.setState({errors, [name]: value});
 }
@@ -441,13 +483,89 @@ logout = (e) => {
    }).catch((error) => {
         this.props.history.push('/');
         this.setState({
-            oaderStatus: false,
+            loaderStatus: false,
         });
    });
 
 }
 
 
+    viewVerifyEmaildModal = () => {
+
+        this.setState({
+            emailVerifydModal: !this.state.emailVerifydModal,
+            showHistory: !this.state.showHistory,
+            error: '',
+        });
+    }
+
+    otpSubmit = () => {
+        
+        this.setState({
+            otpError: this.state.otp === '' ? 'OTP cannot be blank': '',
+        }, () => {
+
+            if(this.state.otp !== ''){
+
+                axios({
+                    url: `${BASE_URL}/verify/email`,
+                    method: 'POST',
+                    data: {
+                        email: this.state.email,
+                        otp: this.state.otp,
+                    }
+                }).then(response => {
+
+                    if(response.data.status === 'success'){
+
+                        localStorage.removeItem('userToken');
+                        sessionStorage.removeItem('loginStatus');
+                        localStorage.removeItem('user');
+
+                        localStorage.setItem('userToken', response.data.token);
+                        localStorage.setItem('user', response.data.user);
+                        // localStorage.setItem('loginStatus', true);
+                        this.setState({
+                            loginStatus:true,
+                            user: localStorage.getItem('user'),
+                        });
+                        
+                        sessionStorage.setItem('loginStatus',true);
+
+                        this.setState({loginStatus:true});
+                        Swal.fire({
+                            title: 'success!',
+                            text: response.data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+
+                    }
+
+                }).catch((error) => {
+
+                });
+            }
+        });
+    }
+
+    countryModal = () => {
+
+        this.setState({
+            countryListModal: !this.state.countryListModal,
+        })
+    }
+
+    onCountryChange = (e) => {
+
+        sessionStorage.setItem('country', e.target.value);
+
+        this.setState({
+            countryListModal: !this.state.countryListModal,
+        });
+
+        window.location.reload();
+    }
 
 
     render() {
@@ -479,6 +597,9 @@ logout = (e) => {
        const {errors,errors2} = this.state;
        const {loginStatus} =this.state;
 
+       let countryList = this.state.countryList;
+       let country_id = sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0;
+
        let loaderStatus = this.state.loaderStatus;
       
         return (
@@ -491,10 +612,14 @@ logout = (e) => {
                             <div className="container d-flex align-items-center flex-wrap">
                                 <div className="brand">
                             
-                                <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
+                                    <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
                                 </div>
+                                <div className="country-select-panel d-block d-md-inline-block" onClick={() => this.setState({countryListModal: !this.countryListModal})} style={{cursor: 'pointer'}}>
+                                    Change Country
+                                </div>
+                                
                                 <CitySelect />
-                            
+
                                 <div className="header-right d-none d-lg-flex align-items-center ml-auto">
                             
                                 {this.state.loginStatus === 'true' || this.state.loginStatus === true ?
@@ -538,9 +663,6 @@ logout = (e) => {
                         </div>
                     </header>
                     <Menu category={dataArray}/>
-
-
-                    
 
 
                         <div className="container">
@@ -593,7 +715,7 @@ logout = (e) => {
                             </button>
                             <h5 className="modal-title text-center text-brand">Create an account</h5>
                             <div className="modal-form">
-                            <p className="help-block help-block-error" >{(this.state.globalRegError!="")? "Sorry... "+this.state.globalRegError:''}</p>
+                            <p className="help-block help-block-error" style={{color:'red',}}>{(this.state.globalRegError!="")? "Sorry... "+this.state.globalRegError:''}</p>
                                 <div className="form-group">
                                 <input type="text" value={this.state.registername}  onChange={this.onChange2} name="registername" className="form-control" placeholder="Name"/>
                                 {errors2.namererror.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors2.namererror}</p>}
@@ -647,6 +769,63 @@ logout = (e) => {
                                     </div>
                                     <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link href="#"> Privacy Policy</Link></div>
                                 
+                                </Modal.Body>
+                                
+                            </Modal>
+
+
+                            <Modal className="modal fade log-sign-modal" show={this.state.emailVerifydModal}  style={modalLogin} id="emailVerfyModal" tabindex="-1" aria-labelledby="forgotModalLabel" aria-hidden="true">
+                                
+                                <Modal.Body>
+                            
+                                    <button  onClick={ this.viewVerifyEmaildModal }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                    <h5 className="modal-title text-center text-brand">Verify Your Email</h5>
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                        
+                                        <input type="text" value={this.state.otp}  onChange={this.onChange} name="otp" className="form-control" placeholder="OTP"/>
+                                            {this.state.otpError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.otpError}</p>}
+                                        </div>
+                                        
+                                        <div className="form-group">
+                                        
+                                            <button onClick={ this.otpSubmit } className="btn btn-primary d-block w-100">Verify</button>
+                                        </div>
+                                        <div className="form-group-line text-center">
+                                            <button className="btn btn-link p-0" onClick={ this.viewVerifyEmaildModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
+                                        </div>
+                                    </div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link href="#"> Privacy Policy</Link></div>
+                                
+                                </Modal.Body>
+                                
+                            </Modal>
+
+
+                            <Modal className="modal fade log-sign-modal" show={this.state.countryListModal}  style={modalLogin} id="emailVerfyModal" tabindex="-1" aria-labelledby="forgotModalLabel" aria-hidden="true">
+                                
+                                <Modal.Body>
+                                    <button  onClick={ this.countryModal }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                    <h5 className="modal-title text-center text-brand">Select Your Country</h5>
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                            <select type="text" onChange={this.onCountryChange} name="country" className="form-control">
+                                                <option value="">Select Country</option>
+                                                {countryList && countryList.map((country, index) => {
+                                                    if(country_id == country.id){
+                                                        return <option selected value={country.id}>{country.name}</option>
+                                                    }
+                                                    else{
+                                                        return <option value={country.id}>{country.name}</option>
+                                                    }
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </Modal.Body>
                                 
                             </Modal>

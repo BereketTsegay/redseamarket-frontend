@@ -22,8 +22,8 @@ export default class categoryMotors extends Component {
          searchKey: '',
          loaderStatus: false,
          dealer: [],
-         latitude: 0,
-         longitude: 0,
+         latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
+         longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
       }
    }
 

@@ -19,7 +19,8 @@ export default class date extends Component {
 
         return (
             <div className="form-group">
-            <input type="date" name={name} value={value} onChange={(e) => this.handleChange(e)} className="form-control" placeholder={this.props.placeholder} readOnly={readonly} />
+                <label>{this.props.label}</label>
+                <input type="date" name={name} value={value} onChange={(e) => this.handleChange(e)} className="form-control" placeholder={this.props.placeholder} readOnly={readonly} />
             </div>
         )
     }

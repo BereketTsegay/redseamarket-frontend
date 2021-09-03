@@ -44,6 +44,7 @@ class SelectField extends React.Component{
             
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select onChange={(e) => this.masterChange(e, placeholder)} className="form-control">
                         <option value="">Select {placeholder}</option>
                         {this.props.option.map((option, index) => {
@@ -63,6 +64,7 @@ class SelectField extends React.Component{
             
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select onChange={(e) => this.masterChange(e, placeholder)} className="form-control">
                         <option value="" selected>Select {placeholder}</option>
                         {this.props.option.map((option, index) => {
@@ -82,6 +84,7 @@ class SelectField extends React.Component{
             
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select className="form-control">
                         <option value="" selected>Select {placeholder}</option>
                         {this.props.option.map((option, index) => {
@@ -101,6 +104,7 @@ class SelectField extends React.Component{
 
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select className="form-control">
                         <option value="">Select {placeholder}</option>
                         {option.map((option, index) => {
@@ -120,6 +124,7 @@ class SelectField extends React.Component{
      
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select onChange={(e) => this.optionChange(e)} className="form-control">
                         <option value="">Select {placeholder}</option>
                         {this.props.option.map((option, index) => {
@@ -139,6 +144,7 @@ class SelectField extends React.Component{
         else {
             return (
                 <div className="form-group">
+                    <label>{this.props.label}</label>
                     <select className="form-control">
                         <option value="">Select {placeholder}</option>
                     </select>

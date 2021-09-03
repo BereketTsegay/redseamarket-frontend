@@ -22,8 +22,8 @@ export default class motorListing extends Component {
             last: '',
             adList: [],
             resultKey: '',
-            latitude: 0,
-            longitude: 0,
+            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
+            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
             loaderStatus: false,
         }
     }

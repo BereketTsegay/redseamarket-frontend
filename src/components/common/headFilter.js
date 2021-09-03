@@ -11,17 +11,12 @@ class headFilter extends Component {
 
         this.state = {
             subcategory: [],
-            category_id: 1,
+            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
+            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
             city: '',
-            subcategory_id: '',
-            condition: '',
-            transimission: '',
+            category_id: '',
             priceFrom: '',
-            yearFrom: '',
-            mileageFrom: '',
             priceTo: '',
-            yearTo: '',
-            mileageTo: '',
             seller: '',
             keyword: '',
             loaderStatus: false,
@@ -34,10 +29,11 @@ class headFilter extends Component {
     componentWillMount = () => {
 
         axios({
-            url: `${BASE_URL}/customer/get/subcategory`,
+            url: `${BASE_URL}/customer/get/category`,
             method: 'POST',
             data: {
-                category: this.state.category_id,
+                latitude:this.state.latitude,
+                longitude: this.state.longitude,
             },
 
         }).then(response => {
@@ -45,7 +41,7 @@ class headFilter extends Component {
             if(response.data.status === 'success'){
 
                 this.setState({
-                    subcategory: response.data.subcategories,
+                    subcategory: response.data.categories,
                 });
             }
 
@@ -85,8 +81,7 @@ class headFilter extends Component {
 
         if(state.keyword !== ''){
            
-            this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}`);
-    
+            this.props.history.push(`/search?key=${state.keyword}&city=${state.city}&category=${state.category_id}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&seller=${state.seller}`);
         }
     }
 
@@ -137,21 +132,12 @@ class headFilter extends Component {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="col-xl-3 col-md-6">
+                                    <div className="col-xl-3 col-lg-4 col-md-6">
                                         <div className="form-group">
-                                            <select onChange={(e) => this.handleChange(e)} name="condition" className="form-control">
-                                            <option value="">Condition</option>
-                                            <option value="New">New</option>
-                                            <option value="Used">Used</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-3 col-md-6">
-                                        <div className="form-group">
-                                            <select onChange={(e) => this.handleChange(e)} name="transimission" className="form-control">
-                                            <option value="">Transmission</option>
-                                            <option value="Manual">Manual</option>
-                                            <option value="Automatic">Automatic</option>
+                                            <select onChange={(e) => this.handleChange(e)} className="form-control" name="seller">
+                                            <option selected="">Seller type</option>
+                                            <option value="0">Admin</option>
+                                            <option value="1">Users</option>
                                             </select>
                                         </div>
                                     </div>
@@ -164,33 +150,7 @@ class headFilter extends Component {
                                             <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="priceTo" placeholder="To" />
                                         </div>
                                     </div>
-                                    <div className="col-xl-3 col-lg-4 col-md-6 col-min-inputs">
-                                        <label for="">Year</label>
-                                        <div className="form-group">
-                                            <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="yearFrom" placeholder="From" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="yearTo" placeholder="To" />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-3 col-lg-4 col-md-6 col-min-inputs">
-                                        <label for="">Mileage</label>
-                                        <div className="form-group">
-                                            <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="mileageFrom" placeholder="From" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="mileageTo" placeholder="To" />
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-3 col-lg-4 col-md-6">
-                                        <div className="form-group">
-                                            <select onChange={(e) => this.handleChange(e)} className="form-control" name="seller">
-                                            <option selected="">Seller type</option>
-                                            <option value="0">Admin</option>
-                                            <option value="1">Users</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div className="col-xl-9 col-lg-4 col-md-6">
                                         <div className="form-group">
                                             <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" />

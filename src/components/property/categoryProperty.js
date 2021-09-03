@@ -22,8 +22,8 @@ export default class categoryProperty extends Component {
             popularCategory: [],
             subcategory: [],
             loaderStatus: false,
-            latitude: 0,
-            longitude: 0,
+            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
+            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
         }
     }
 

@@ -35,7 +35,7 @@ export default class myAds extends Component {
         }
 
         this.setState({
-            loaderState: true,
+            loaderState: false,
         });
 
         axios({

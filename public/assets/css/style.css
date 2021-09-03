@@ -1753,8 +1753,8 @@ button:focus,
 	color: #000000;
 }
 .category-block-panel:hover {
-	/* background: var(--brand-color); */
-	background: #007bff91;
+	background: var(--brand-color);
+	/* background: #007bff91; */
 	box-shadow: none;
 }
 .category-block-panel:hover .panel-media { color: #FFF; }

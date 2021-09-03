@@ -8,7 +8,7 @@ class Header extends React.Component{
 
         this.state = {
             city: [],
-            country_id: 229,
+            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 229,
             city_id: '',
         }
     }

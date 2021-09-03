@@ -24,6 +24,7 @@ export default class number extends Component {
 
         return (
             <div className="form-group">
+                <label>{this.props.label}</label>
                 <input type="number" name={name} value={value} onChange={(e) => this.handleEvent(e)} className="form-control" placeholder={this.props.placeholder} />
                 {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
             </div>

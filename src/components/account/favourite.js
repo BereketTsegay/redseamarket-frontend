@@ -38,7 +38,7 @@ export default class favourite extends Component {
         
 
         this.setState({
-            loaderState: true,
+            loaderState: false,
         });
 
         axios({

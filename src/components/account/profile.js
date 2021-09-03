@@ -48,7 +48,7 @@ export default class profile extends Component {
         }
 
         this.setState({
-            loaderState: true,
+            loaderState: false,
         });
 
         axios({
@@ -84,7 +84,7 @@ export default class profile extends Component {
         })
 
         this.setState({
-            loaderState: true,
+            loaderState: false,
         });
 
         axios({

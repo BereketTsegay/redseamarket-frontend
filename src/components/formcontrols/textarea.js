@@ -23,6 +23,7 @@ class TextArea extends React.Component{
 
       return (
         <div className="form-group">
+          <label>{this.props.label}</label>
           <textarea name={name} value={value} onChange={(e) => this.handleChange(e)} className="form-control" rows="3" placeholder={this.props.placeholder}></textarea>
           {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
         </div>

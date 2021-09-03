@@ -200,7 +200,7 @@ export default class adsDetails extends Component {
                                                 <a className="nav-link active" id="pdttab1-tab" data-toggle="pill" href="#pdttab1" role="tab" aria-controls="pdttab1" aria-selected="true">Description</a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link" id="pdttab2-tab" data-toggle="pill" href="#pdttab2" role="tab" aria-controls="pdttab2" aria-selected="false">Amenities</a>
+                                                <a className="nav-link" id="pdttab2-tab" data-toggle="pill" href="#pdttab2" role="tab" aria-controls="pdttab2" aria-selected="false">{ads.category_id == 2 ? 'Amenities' : ads.category_id == 3 ? 'Amenities' : 'More Details'}</a>
                                             </li>
                                             <li className="nav-item" role="presentation">
                                                 <a className="nav-link" id="pdttab3-tab" data-toggle="pill" href="#pdttab3" role="tab" aria-controls="pdttab3" aria-selected="false">{ads.category_id == 1 ? 'Motor Info' : ads.category_id == 2 ? 'Property Info' : ads.category_id == 3 ? 'Property Info' : 'Info' }</a>
@@ -218,11 +218,11 @@ export default class adsDetails extends Component {
                                             <div className="tab-pane fade" id="pdttab2" role="tabpanel" aria-labelledby="pdttab2-tab">
                                                 <div className="pdt-tab-list">
                                                     <ul>
-                                                    {ads.custom_value.map((customValue, index) => {
+                                                    {ads.custom_value.length > 0 ? ads.custom_value && ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position != 'top'){
                                                             return <li key={index}>{customValue.value}</li>
                                                         }
-                                                    })}
+                                                    }) : 'No data found!'}
                                                         
                                                     </ul>
                                                 </div>

@@ -13,7 +13,7 @@ class homefilter extends Component {
          category: '',
          subcategory: '',
          city: '',
-         country_id: 229,
+         country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 229,
          cityArray: [],
       }
    }

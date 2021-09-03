@@ -13,12 +13,14 @@ class Index extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-           loginStatus: false,
-           user: '',
-           dataArray:[],
-           token: userToken,
-           categoryDefault: '',
-           loaderState: false,
+            loginStatus: false,
+            user: '',
+            dataArray:[],
+            token: userToken,
+            categoryDefault: '',
+            loaderState: false,
+            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
+            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
   
         };
   
@@ -35,8 +37,8 @@ class Index extends React.Component{
                 method: 'POST',
                 headers: { Authorization: "Bearer " + this.state.token },
                 data:{
-                    latitude:0,
-                    longitude:0,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
                     city: sessionStorage.getItem('city_id'),
                 }
 
@@ -73,8 +75,8 @@ class Index extends React.Component{
                 method: 'POST',
                 headers: { Authorization: "Bearer " + this.state.token },
                 data:{
-                    latitude:0,
-                    longitude:0,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
                     city: sessionStorage.getItem('city_id'),
                 }
 

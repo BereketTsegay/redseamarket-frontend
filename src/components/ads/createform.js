@@ -20,6 +20,9 @@ import LocationPicker from './locationPicker.js';
 import CustomField from './customField.js';
 import Swal from 'sweetalert2';
 import Loader from '../Loader';
+import FeaturedPayment from './featuredPayment.js';
+import InjectedCheckoutForm from '../common/paymentForm';
+import Checkout from '../../Checkout.js';
 
 class CreateForm extends React.Component{
 
@@ -74,7 +77,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 1,
+         formPage: 3,
 
          fieldValue: [],
          image: [],
@@ -112,6 +115,7 @@ class CreateForm extends React.Component{
          errors_address: '',
 
          loaderStatus: false,
+         paymentMethod: '',
       }
    }
 
@@ -595,6 +599,7 @@ class CreateForm extends React.Component{
    }
 
    adSubmitHandler = () => {
+      
 
       let state = this.state;
       
@@ -605,7 +610,7 @@ class CreateForm extends React.Component{
          });
 
          axios({
-            url: `${BASE_URL}/customer/ads/store`,
+            // url: `${BASE_URL}/customer/ads/store`,
             method: 'POST',
             headers: {
                Authorization: "Bearer " + this.state.token,
@@ -712,6 +717,21 @@ class CreateForm extends React.Component{
       }
    }
 
+   latLngChange = (latitude, longitude) => {
+      
+      this.setState({
+         latitude: latitude,
+         longitude: longitude,
+      });
+   }
+
+   paymentMethod = (method) => {
+
+      this.setState({
+         paymentMethod: method,
+      });
+   }
+
     render() {
       
       let {category, subcategory, categoryField, master, master_id, option, country, state,
@@ -750,14 +770,14 @@ class CreateForm extends React.Component{
                            <div className="create-ad-form">
                            {this.state.formPage == 1 ?
                               <>
-                                 <TextField handleChange={this.handleChange} name="title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
-                                 <TextField handleChange={this.handleChange} name="canonicalName" value={canonicalName} placeholder="Canonical Name" readonly={true} />
+                                 <TextField handleChange={this.handleChange} name="title" label="Title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
+                                 <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
-                                 <TextField handleChange={this.handleChange} name="price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
-                                 <TextArea handleChange={this.handleChange} name="description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
-                                 <SelectField placeholder="Country" option={country} optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
-                                 <SelectField placeholder="State" option={state} optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
-                                 <SelectField placeholder="City" option={city} optionChange={this.cityChange} type="common" />
+                                 <TextField handleChange={this.handleChange} name="price" label="Price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
+                                 <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
+                                 <SelectField placeholder="Country" option={country} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
+                                 <SelectField placeholder="State" option={state} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
+                                 <SelectField placeholder="City" option={city} label="City" optionChange={this.cityChange} type="common" />
                                  <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
                                  <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
                                  
@@ -837,14 +857,14 @@ class CreateForm extends React.Component{
                                  <h4>Seller Information</h4>
                                  <hr />
 
-                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                 <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                 <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                 <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                 <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
                                  <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
 
                                  <hr />
-                                 <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+                                 <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
                                  <div className="row">
                                     <div className="form-group col-md-6">
@@ -866,7 +886,7 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
                                     </div>
-                                 </div>
+                                    </div>
                                  </>
                               : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length == 0 ? 
                               
@@ -875,21 +895,31 @@ class CreateForm extends React.Component{
                                  <h4>Seller Information</h4>
                                  <hr />
 
-                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                 <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                 <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                 <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                 <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
                                  <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
+                                 
                                  <hr />
-                                 <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+                                 <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div className="row">
+                                 <FeaturedPayment paymentMethod={this.paymentMethod} />
+
+                                 {/* <InjectedCheckoutForm /> */}
+
+                                 <Checkout 
+                                    name="Anas"
+                                    description="item name"
+                                    amount="100"
+                                 />
+
+                                 <div className="row mt-4">
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                                       <button type="button" onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button type="submit" onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div>
                                  </div>
                               </>
@@ -912,14 +942,14 @@ class CreateForm extends React.Component{
                                  <h4>Seller Information</h4>
                                  <hr />
 
-                                 <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                                 <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                                 <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                                 <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                 <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                 <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                 <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                 <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
                                  <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
+                                 
                                  <hr />
-                                 <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+                                 <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
                                  <div className="row">
                                     <div className="form-group col-md-6">
@@ -934,14 +964,14 @@ class CreateForm extends React.Component{
                                     <h4>Seller Information</h4>
                                     <hr />
 
-                                    <TextField handleChange={this.handleChange} name="userName" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                                    <TextField handleChange={this.handleChange} name="email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                                    <Number handleChange={this.handleChange} name="phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                                    <TextArea handleChange={this.handleChange} name="address" value={address} placeholder="Address" error={this.state.errors_address} />
+                                    <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                                    <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                                    <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                                    <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
                                     <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
-
+                                    
                                     <hr />
-                                    <LocationPicker subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+                                    <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
                                     <div className="row">
                                        <div className="form-group col-md-6">
