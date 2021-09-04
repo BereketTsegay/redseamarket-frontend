@@ -23,13 +23,15 @@ export default class featuredPayment extends Component {
     
     render() {
 
-        
+        let currency = localStorage.getItem('currency');
 
+        let amount = sessionStorage.getItem('newAmount');
         return (
             
             <>
                 <div className="form-group">
-                    <label>Payment</label>
+                    <h6>Payment Type</h6>
+                    <label>Pay <span style={{color:'green', fontWeight:'bold', fontSize:'20px'}}>{currency} {amount}</span> for your featured Ad</label>
                     <div class="custom-control custom-radio mb-3">
                         <input type="radio" onChange={(e) => this.eventChange(e)} name="payment" value="account" class="custom-control-input" id="Account"/>
                         <label class="custom-control-label font-weight-normal" for="Account">Direct Payment</label>

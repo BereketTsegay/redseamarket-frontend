@@ -564,7 +564,24 @@ logout = (e) => {
             countryListModal: !this.state.countryListModal,
         });
 
-        window.location.reload();
+        axios({
+            url: `${BASE_URL}/get/currency`,
+            method: 'POST',
+            data: {
+                country: e.target.value,
+            }
+        }).then(response => {
+            console.log(response.data.currency.currency_code);
+            if(response.data.status === 'success'){
+                
+                localStorage.removeItem('currency');
+
+                localStorage.setItem('currency', response.data ? response.data.currency.currency_code : '');
+
+                window.location.reload();
+            }
+        })
+
     }
 
 

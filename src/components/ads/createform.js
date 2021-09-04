@@ -22,7 +22,6 @@ import Swal from 'sweetalert2';
 import Loader from '../Loader';
 import FeaturedPayment from './featuredPayment.js';
 import InjectedCheckoutForm from '../common/paymentForm';
-import Checkout from '../../Checkout.js';
 
 class CreateForm extends React.Component{
 
@@ -77,7 +76,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 3,
+         formPage: 1,
 
          fieldValue: [],
          image: [],
@@ -116,11 +115,15 @@ class CreateForm extends React.Component{
 
          loaderStatus: false,
          paymentMethod: '',
+         paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+
+         amountType: '',
+         amountPercentage: '',
       }
    }
 
    componentWillMount(){
-
+      
       this.setState({
 
          category: this.props.match.params.category_id,
@@ -177,6 +180,36 @@ class CreateForm extends React.Component{
          this.setState({
             loaderStatus: false,
          });
+      });
+
+      axios({
+         url: `${BASE_URL}/subcategory/featured/amount`,
+         method: 'POST',
+         data: {
+            subcategory: this.props.match.params.subcategory_id,
+         }
+      }).then(response => {
+
+         if(response.data.status === 'success'){
+
+            if(response.data.subcategory.type == 0){
+
+               this.setState({
+                  amountType: 'flat',
+                  amountPercentage: response.data.subcategory.percentage
+               });
+            }
+            else{
+
+               this.setState({
+                  amountType: 'percentage',
+                  amountPercentage: response.data.subcategory.percentage
+               });
+            }
+         }
+
+      }).catch((error) => {
+
       });
 
    }
@@ -340,6 +373,20 @@ class CreateForm extends React.Component{
             this.setState({
                formPage: this.state.formPage + 1,
             });
+
+            if(state.featured == true){
+
+               if(state.amountType === 'flat'){
+                  sessionStorage.removeItem('newAmount');
+                  sessionStorage.setItem('newAmount', state.amountPercentage);
+               }
+               else{
+                  let amount = state.price * (state.amountPercentage / 100);
+
+                  sessionStorage.removeItem('newAmount');
+                  sessionStorage.setItem('newAmount', amount);
+               }
+            }
          }
          else{
             
@@ -609,78 +656,175 @@ class CreateForm extends React.Component{
             loaderStatus: true,
          });
 
-         axios({
-            // url: `${BASE_URL}/customer/ads/store`,
-            method: 'POST',
-            headers: {
-               Authorization: "Bearer " + this.state.token,
-            },
-            data: {
-               category: this.state.category,
-               subcategory: this.state.subcategory,
-               title: this.state.title,
-               canonical_name: this.state.canonicalName,
-               description: this.state.description,
-               price: this.state.price,
-               featured: this.state.featured,
-               negotiable: this.state.negotiable,
-               country: this.state.country_id,
-               state: this.state.state_id,
-               city: this.state.city_id,
-               latitude: this.state.latitude,
-               longitude: this.state.longitude,
-               name: this.state.userName,
-               email: this.state.email,
-               phone: this.state.phone,
-               phone_hide: this.state.phoneHide,
-               address: this.state.address,
-               image: this.state.image,
-               make_id: this.state.make_id,
-               model_id: this.state.model_id,
-               variant_id: this.state.variant_id,
-               registration_year: this.state.registration_year,
-               fuel: this.state.fuel,
-               transmission: this.state.transmission,
-               condition: this.state.condition,
-               mileage: this.state.mileage,
-               aircondition: this.state.aircondition,
-               gps: this.state.gps,
-               security: this.state.security,
-               tire: this.state.tire,
-               size: this.state.size,
-               room: this.state.room,
-               furnished: this.state.furnished,
-               building: this.state.building,
-               parking: this.state.parking,
-               fieldValue: this.state.fieldValue,
-            }
+         if(state.featured){
 
-         }).then(response => {
-            
-            if(response.data.status == 'success'){
-               
+            if(state.paymentMethod !== ''){
+
+               axios({
+                  url: `${BASE_URL}/customer/ads/store`,
+                  method: 'POST',
+                  headers: {
+                     Authorization: "Bearer " + this.state.token,
+                  },
+                  data: {
+                     category: this.state.category,
+                     subcategory: this.state.subcategory,
+                     title: this.state.title,
+                     canonical_name: this.state.canonicalName,
+                     description: this.state.description,
+                     price: this.state.price,
+                     featured: this.state.featured,
+                     negotiable: this.state.negotiable,
+                     country: this.state.country_id,
+                     state: this.state.state_id,
+                     city: this.state.city_id,
+                     latitude: this.state.latitude,
+                     longitude: this.state.longitude,
+                     name: this.state.userName,
+                     email: this.state.email,
+                     phone: this.state.phone,
+                     phone_hide: this.state.phoneHide,
+                     address: this.state.address,
+                     image: this.state.image,
+                     make_id: this.state.make_id,
+                     model_id: this.state.model_id,
+                     variant_id: this.state.variant_id,
+                     registration_year: this.state.registration_year,
+                     fuel: this.state.fuel,
+                     transmission: this.state.transmission,
+                     condition: this.state.condition,
+                     mileage: this.state.mileage,
+                     aircondition: this.state.aircondition,
+                     gps: this.state.gps,
+                     security: this.state.security,
+                     tire: this.state.tire,
+                     size: this.state.size,
+                     room: this.state.room,
+                     furnished: this.state.furnished,
+                     building: this.state.building,
+                     parking: this.state.parking,
+                     fieldValue: this.state.fieldValue,
+                     paymentMethod: this.state.paymentMethod,
+                     paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                  }
+      
+               }).then(response => {
+                  
+                  if(response.data.status == 'success'){
+                     
+                     Swal.fire({
+                        title: 'success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                     }).then((result) => {
+                        this.props.history.push('/');
+                     });
+      
+                  }
+      
+                  this.setState({
+                     loaderStatus: false,
+                  });
+      
+               }).catch((error) => {
+      
+                  this.setState({
+                     loaderStatus: false,
+                  });
+      
+               });
+            }
+            else{
+
                Swal.fire({
-                  title: 'success!',
-                  text: response.data.message,
-                  icon: 'success',
+                  title: 'Warning!',
+                  icon: 'warning',
+                  text: 'Please select a payment method',
                   confirmButtonText: 'OK'
-               }).then((result) => {
-                  this.props.history.push('/');
+               });
+            }
+         }
+         else{
+            axios({
+               url: `${BASE_URL}/customer/ads/store`,
+               method: 'POST',
+               headers: {
+                  Authorization: "Bearer " + this.state.token,
+               },
+               data: {
+                  category: this.state.category,
+                  subcategory: this.state.subcategory,
+                  title: this.state.title,
+                  canonical_name: this.state.canonicalName,
+                  description: this.state.description,
+                  price: this.state.price,
+                  featured: this.state.featured,
+                  negotiable: this.state.negotiable,
+                  country: this.state.country_id,
+                  state: this.state.state_id,
+                  city: this.state.city_id,
+                  latitude: this.state.latitude,
+                  longitude: this.state.longitude,
+                  name: this.state.userName,
+                  email: this.state.email,
+                  phone: this.state.phone,
+                  phone_hide: this.state.phoneHide,
+                  address: this.state.address,
+                  image: this.state.image,
+                  make_id: this.state.make_id,
+                  model_id: this.state.model_id,
+                  variant_id: this.state.variant_id,
+                  registration_year: this.state.registration_year,
+                  fuel: this.state.fuel,
+                  transmission: this.state.transmission,
+                  condition: this.state.condition,
+                  mileage: this.state.mileage,
+                  aircondition: this.state.aircondition,
+                  gps: this.state.gps,
+                  security: this.state.security,
+                  tire: this.state.tire,
+                  size: this.state.size,
+                  room: this.state.room,
+                  furnished: this.state.furnished,
+                  building: this.state.building,
+                  parking: this.state.parking,
+                  fieldValue: this.state.fieldValue,
+                  paymentMethod: this.state.paymentMethod,
+                  paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+               }
+
+            }).then(response => {
+               
+               if(response.data.status == 'success'){
+                  
+                  Swal.fire({
+                     title: 'success!',
+                     text: response.data.message,
+                     icon: 'success',
+                     confirmButtonText: 'OK'
+                  }).then((result) => {
+                     this.props.history.push('/');
+                  });
+
+               }
+
+               sessionStorage.removeItem('new_payment_id');
+
+               this.setState({
+                  loaderStatus: false,
                });
 
-            }
+            }).catch((error) => {
 
-            this.setState({
-               loaderStatus: false,
+               sessionStorage.removeItem('new_payment_id');
+
+               this.setState({
+                  loaderStatus: false,
+               });
+
             });
-
-         }).catch((error) => {
-
-            this.setState({
-               loaderStatus: false,
-            });
-
-         });
+         }
       }
       else{
          
@@ -866,7 +1010,11 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div className="row">
+                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+
+                                 <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
@@ -904,15 +1052,9 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <FeaturedPayment paymentMethod={this.paymentMethod} />
+                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
-                                 {/* <InjectedCheckoutForm /> */}
-
-                                 <Checkout 
-                                    name="Anas"
-                                    description="item name"
-                                    amount="100"
-                                 />
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
@@ -951,7 +1093,11 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div className="row">
+                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+
+                                 <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
@@ -973,7 +1119,11 @@ class CreateForm extends React.Component{
                                     <hr />
                                     <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                    <div className="row">
+                                    {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+
+                                    {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+
+                                    <div className="row mt-4">
                                        <div className="form-group col-md-6">
                                           <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                        </div>

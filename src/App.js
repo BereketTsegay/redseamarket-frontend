@@ -21,17 +21,18 @@ import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
 import PropertyList from "./components/property/propertyList";
 import SearchResult from "./components/automobile/searchResult";
+import { public_key } from './projectString';
 
-// import {loadStripe} from '@stripe/stripe-js';
-// import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
 // import PaymentIntents from "./components/common/paymentIntents";
 
-// const stripePromise = loadStripe('pk_test_51HqJ58APs1IO5yfEfBSAuoe8rzKF7WM0FGXRU9mz8COOALGdACLE3zTodNT2OJnXlrgJl7nyFrxSdXILI8izGRsn00lMnBCHSK');
+const stripePromise = loadStripe(public_key);
 
 function App() {
 
     return (
-      // <Elements stripe={stripePromise}>
+      <Elements stripe={stripePromise}>
         <Router> 
           <Switch>
             <ScrollToTop>
@@ -50,11 +51,10 @@ function App() {
               <Route path="/search" component={SearchList} />
               <Route path="/property/list" component={PropertyList} />
               <Route path="/motor/result" component={SearchResult} />
-              {/* <Route path='/payment_intents' component={PaymentIntents} /> */}
             </ScrollToTop>
           </Switch>
         </Router>
-      // </Elements>
+      </Elements>
     );
   
 }
