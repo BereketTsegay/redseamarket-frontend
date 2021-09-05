@@ -18,6 +18,8 @@ class SelectField extends React.Component{
     render() {
         
         let {placeholder, option, master, master_id, type} = this.state;
+
+        let selected1 = this.props.selected;
         
         this.masterChange = (event, master) => {
             
@@ -128,10 +130,16 @@ class SelectField extends React.Component{
                     <select onChange={(e) => this.optionChange(e)} className="form-control">
                         <option value="">Select {placeholder}</option>
                         {this.props.option.map((option, index) => {
-                            
-                            return (
-                                <option key={index} value={option.id}>{option.name}</option>
-                            )
+                            if(option.id == selected1){
+                                return (
+                                    <option selected key={index} value={option.id}>{option.name}</option>
+                                )
+                            }
+                            else{
+                                return (
+                                    <option key={index} value={option.id}>{option.name}</option>
+                                )
+                            }
                         })}
                         
                     </select>

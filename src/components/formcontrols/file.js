@@ -65,14 +65,14 @@ class FileField extends React.Component{
 
         return (
                 <div className="form-group form-ad-media-upload">
-                        <label for="mediaUpload" className="d-flex align-items-center rounded mb-0 overflow-hidden">
-                        <i className="fa fa-picture-o" aria-hidden="true"></i>
-                        {this.props.placeholder}
-                        <span className="btn btn-primary">Choose file</span>
-                        {fileCount > 1 ? fileCount + ' File Selected' : fileName != '' ? fileName : 'No file chosen'}
-                        </label>
-                        <input type="file" onChange={(e) => this.fileUpload(e)} className="form-control-file" id="mediaUpload" multiple={this.props.multiple} />
-                        {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
+                    <label for="mediaUpload" className="d-flex align-items-center rounded mb-0 overflow-hidden">
+                    <i className="fa fa-picture-o" aria-hidden="true"></i>
+                    {this.props.placeholder}
+                    <span className="btn btn-primary">Choose file</span>
+                    {fileCount > 1 ? fileCount + ' File Selected' : fileName != '' ? fileName : 'No file chosen'}
+                    </label>
+                    <input type="file" onChange={(e) => this.fileUpload(e)} className="form-control-file" id="mediaUpload" multiple={this.props.multiple} />
+                    {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             )
         }

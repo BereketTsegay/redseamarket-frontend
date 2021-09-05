@@ -206,27 +206,58 @@ export default class motorCreate extends Component {
 
     handleChange = (name, value) => {
 
-        this.setState({
-            [name]: value,
-        }, () => {
+        if(name === 'registration_year'){
+
+            if(value.length <= 4){
+                
+                this.setState({
+                    [name]: value,
+                }, () => {
+                    
+                    let motoreValue = {
+                        'make_id'           : this.state.make_id,
+                        'model_id'          : this.state.model_id,
+                        'variant_id'        : this.state.variant_id,
+                        'registration_year' : this.state.registration_year,
+                        'fuel'              : this.state.fuel,
+                        'transmission'      : this.state.transmission,
+                        'condition'         : this.state.condition,
+                        'mileage'           : this.state.mileage,
+                        'aircondition'      : this.state.aircondition,
+                        'gps'               : this.state.gps,
+                        'security'          : this.state.security,
+                        'tire'              : this.state.tire,
+                    };
             
-            let motoreValue = {
-                'make_id'           : this.state.make_id,
-                'model_id'          : this.state.model_id,
-                'variant_id'        : this.state.variant_id,
-                'registration_year' : this.state.registration_year,
-                'fuel'              : this.state.fuel,
-                'transmission'      : this.state.transmission,
-                'condition'         : this.state.condition,
-                'mileage'           : this.state.mileage,
-                'aircondition'      : this.state.aircondition,
-                'gps'               : this.state.gps,
-                'security'          : this.state.security,
-                'tire'              : this.state.tire,
-            };
-    
-            this.props.motorEvents(motoreValue)
-        });
+                    this.props.motorEvents(motoreValue)
+                });
+            }
+        }
+        else{
+
+            this.setState({
+                [name]: value,
+            }, () => {
+                
+                let motoreValue = {
+                    'make_id'           : this.state.make_id,
+                    'model_id'          : this.state.model_id,
+                    'variant_id'        : this.state.variant_id,
+                    'registration_year' : this.state.registration_year,
+                    'fuel'              : this.state.fuel,
+                    'transmission'      : this.state.transmission,
+                    'condition'         : this.state.condition,
+                    'mileage'           : this.state.mileage,
+                    'aircondition'      : this.state.aircondition,
+                    'gps'               : this.state.gps,
+                    'security'          : this.state.security,
+                    'tire'              : this.state.tire,
+                };
+        
+                this.props.motorEvents(motoreValue)
+            });
+            
+        }
     }
 
     fuelChange = (value) => {

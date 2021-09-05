@@ -97,7 +97,7 @@ export class PaymentForm extends React.Component {
                     url: `${BASE_URL}/stripe/payment`,
                     method: 'POST',
                     data: {
-                        amount: this.state.amount,
+                        amount: Math.round(this.state.amount),
                         currency: this.state.currency,
                         name: this.state.name,
                         email: this.state.email,
@@ -251,39 +251,72 @@ export class PaymentForm extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
         });
+        let name = e.target.name;
+        let value = e.target.value;
 
-        let state = this.state;
+        // if(name === 'name' && value === ''){
 
-        if(state.name){
+        //     this.setState({
+        //         error_name: 'Name Cannot be blank',
+        //     });
+        // }
+        // else{
+        //     this.setState({
+        //         error_name: '',
+        //     });
+        // }
 
-            this.setState({
-                error_name: '',
-            });
-        }
+        // if(name === 'email' && value === ''){
+            
+        //     this.setState({
+        //         error_email: 'Email cannot be blank',
+        //     });
+        // }
+        // else{
+            
+        //     if(value.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+        //         this.setState({
+        //             error_email: '',
+        //         });
+        //     }
+        //     else{
+        //         this.setState({
+        //             error_email: 'Must be an email',
+        //         });
+        //     }
+        // }
 
-        if(state.email){
-            this.setState({
-                error_email: '',
-            });
-        }
-
-        if(state.phone){
-            this.setState({
-                error_phone: '',
-            });
-        }
+        // if(name === 'phone' && value !== ''){
+        //     this.setState({
+        //         error_phone: '',
+        //     });
+        // }
+        // else{
+        //     this.setState({
+        //         error_phone: 'Phone cannot be blank',
+        //     });
+        // }
         
-        if(state.address){
-            this.setState({
-                error_address: '',
-            });
-        }
-
-        if(state.zipcode){
-            this.setState({
-                error_zipcode: '',
-            });
-        }
+        // if(name === 'address' && value !== ''){
+        //     this.setState({
+        //         error_address: '',
+        //     });
+        // }
+        // else{
+        //     this.setState({
+        //         error_address: 'Address cannot be blank',
+        //     });
+        // }
+        // if(name === 'zipcode' && value !== ''){
+        //     this.setState({
+        //         error_zipcode: '',
+        //     });
+        // }
+        // else{
+        //     this.setState({
+        //         error_zipcode: 'Zipcode cannot be blank',
+        //     });
+        // }
     }
 
     componentWillMount = () => {
@@ -465,23 +498,23 @@ export class PaymentForm extends React.Component {
                 </div>
 
                 <CardElement
-
-                onChange={this.handleSubmit}
-                options={{
-                    style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                        color: '#aab7c4',
+                    style={{borderColor:'1px solid black'}}
+                    onChange={this.handleSubmit}
+                    options={{
+                        style: {
+                        base: {
+                            fontSize: '16px',
+                            color: '#424770',
+                            '::placeholder': {
+                            color: '#aab7c4',
+                            },
                         },
-                    },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                    },
-                    hidePostalCode: true,
-                }}
+                        invalid: {
+                            color: '#9e2146',
+                        },
+                        },
+                        hidePostalCode: true,
+                    }}
                 />
 
                 {this.state.loaderStatus == true ? <Loader /> : ''}

@@ -1923,3 +1923,10 @@ button:focus,
 	.log-sign-modal .form-group-line { margin: 18px 0 26px 0; }
 	.log-sign-modal .modal-note { font-size: 13px; }
 }
+
+.StripeElement{
+	padding: 10px 5px 5px 5px;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	height: 40px;
+}

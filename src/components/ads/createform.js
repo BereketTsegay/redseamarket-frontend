@@ -46,8 +46,8 @@ class CreateForm extends React.Component{
          userName: '',
          email: '',
          description: '',
-         latitude: 0,
-         longitude: 0,
+         latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 23.4241,
+         longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 53.8478,
          phone: '',
          address: '',
          country_id: '',
@@ -119,6 +119,7 @@ class CreateForm extends React.Component{
 
          amountType: '',
          amountPercentage: '',
+         motor: [],
       }
    }
 
@@ -307,10 +308,17 @@ class CreateForm extends React.Component{
             errors_price: 'Price cannot be blank',
          });
       }
-      else{
-         this.setState({
-            errors_price: '',
-         });
+      else if(name === 'price'){
+         if(value.match(/^\d+(?:[.,]\d+)*$/)){
+            this.setState({
+               errors_price: '',
+            });
+         }
+         else{
+            this.setState({
+               errors_price: 'Must be numbers',
+            });
+         }
       }
       if(name === 'description' && value === ''){
          
@@ -323,6 +331,55 @@ class CreateForm extends React.Component{
             errors_description: '',
          });
       }
+      if((name === 'email' && value === '')){
+         this.setState({
+            errors_email: 'Email cannot be blank',
+         });
+      }
+      else if(name === 'email'){
+
+         if(!value.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+
+            this.setState({
+               errors_email: 'Must be an email',
+            });
+         }
+         else{
+            this.setState({
+               errors_email: '',
+            });
+         }
+      }
+      if(name === 'userName' && value === ''){
+         this.setState({
+            errors_userName: 'Name cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_userName: '',
+         });
+      }
+      if(name === 'phone' && value === ''){
+         this.setState({
+            errors_phone: 'Phone cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_phone: '',
+         });
+      }
+      if(name === 'address' && value === ''){
+         this.setState({
+            errors_address: 'Address cannot be blank',
+         });
+      }
+      else{
+         this.setState({
+            errors_address: '',
+         });
+      }
    }
 
    checkboxChange = (name, value) => {
@@ -333,8 +390,9 @@ class CreateForm extends React.Component{
    }
 
    motorChanges = (motor) => {
-      
+
          this.setState({
+            motor: motor,
             make_id: motor.make_id,
             model_id: motor.model_id,
             variant_id: motor.variant_id,
@@ -423,9 +481,17 @@ class CreateForm extends React.Component{
                
             }
             else{
-               this.setState({
-                  errors_price: '',
-               });
+               if(state.price.match(/^\d+(?:[.,]\d+)*$/)){
+                  this.setState({
+                     errors_price: '',
+                  });
+               }
+               else{
+                  let price = 'Must be numbers';
+                  this.setState({
+                     errors_price: price,
+                  });
+               }
             }
             if(state.description === '' || state.description.trim() === ''){
 
@@ -639,10 +705,13 @@ class CreateForm extends React.Component{
             errors_image: 'Image cannot be blank',
          });
       }
-
-      this.setState({
-         image: [...this.state.image, file],
-      });
+      else{
+         if(this.state.image.length <= 5){
+            this.setState({
+               image: [...this.state.image, file],
+            });
+         }
+      }
    }
 
    adSubmitHandler = () => {
@@ -660,80 +729,172 @@ class CreateForm extends React.Component{
 
             if(state.paymentMethod !== ''){
 
-               axios({
-                  url: `${BASE_URL}/customer/ads/store`,
-                  method: 'POST',
-                  headers: {
-                     Authorization: "Bearer " + this.state.token,
-                  },
-                  data: {
-                     category: this.state.category,
-                     subcategory: this.state.subcategory,
-                     title: this.state.title,
-                     canonical_name: this.state.canonicalName,
-                     description: this.state.description,
-                     price: this.state.price,
-                     featured: this.state.featured,
-                     negotiable: this.state.negotiable,
-                     country: this.state.country_id,
-                     state: this.state.state_id,
-                     city: this.state.city_id,
-                     latitude: this.state.latitude,
-                     longitude: this.state.longitude,
-                     name: this.state.userName,
-                     email: this.state.email,
-                     phone: this.state.phone,
-                     phone_hide: this.state.phoneHide,
-                     address: this.state.address,
-                     image: this.state.image,
-                     make_id: this.state.make_id,
-                     model_id: this.state.model_id,
-                     variant_id: this.state.variant_id,
-                     registration_year: this.state.registration_year,
-                     fuel: this.state.fuel,
-                     transmission: this.state.transmission,
-                     condition: this.state.condition,
-                     mileage: this.state.mileage,
-                     aircondition: this.state.aircondition,
-                     gps: this.state.gps,
-                     security: this.state.security,
-                     tire: this.state.tire,
-                     size: this.state.size,
-                     room: this.state.room,
-                     furnished: this.state.furnished,
-                     building: this.state.building,
-                     parking: this.state.parking,
-                     fieldValue: this.state.fieldValue,
-                     paymentMethod: this.state.paymentMethod,
-                     paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
-                  }
-      
-               }).then(response => {
-                  
-                  if(response.data.status == 'success'){
-                     
-                     Swal.fire({
-                        title: 'success!',
-                        text: response.data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                     }).then((result) => {
-                        this.props.history.push('/');
+               if(state.paymentMethod === 'stripe'){
+
+                  if(state.paymentId !== ''){
+
+                     axios({
+                        url: `${BASE_URL}/customer/ads/store`,
+                        method: 'POST',
+                        headers: {
+                           Authorization: "Bearer " + this.state.token,
+                        },
+                        data: {
+                           category: this.state.category,
+                           subcategory: this.state.subcategory,
+                           title: this.state.title,
+                           canonical_name: this.state.canonicalName,
+                           description: this.state.description,
+                           price: this.state.price,
+                           featured: this.state.featured,
+                           negotiable: this.state.negotiable,
+                           country: this.state.country_id,
+                           state: this.state.state_id,
+                           city: this.state.city_id,
+                           latitude: this.state.latitude,
+                           longitude: this.state.longitude,
+                           name: this.state.userName,
+                           email: this.state.email,
+                           phone: this.state.phone,
+                           phone_hide: this.state.phoneHide,
+                           address: this.state.address,
+                           image: this.state.image,
+                           make_id: this.state.make_id,
+                           model_id: this.state.model_id,
+                           variant_id: this.state.variant_id,
+                           registration_year: this.state.registration_year,
+                           fuel: this.state.fuel,
+                           transmission: this.state.transmission,
+                           condition: this.state.condition,
+                           mileage: this.state.mileage,
+                           aircondition: this.state.aircondition,
+                           gps: this.state.gps,
+                           security: this.state.security,
+                           tire: this.state.tire,
+                           size: this.state.size,
+                           room: this.state.room,
+                           furnished: this.state.furnished,
+                           building: this.state.building,
+                           parking: this.state.parking,
+                           fieldValue: this.state.fieldValue,
+                           paymentMethod: this.state.paymentMethod,
+                           paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                        }
+            
+                     }).then(response => {
+                        
+                        if(response.data.status == 'success'){
+                           
+                           Swal.fire({
+                              title: 'success!',
+                              text: response.data.message,
+                              icon: 'success',
+                              confirmButtonText: 'OK'
+                           }).then((result) => {
+                              this.props.history.push('/');
+                           });
+            
+                        }
+            
+                        this.setState({
+                           loaderStatus: false,
+                        });
+            
+                     }).catch((error) => {
+            
+                        this.setState({
+                           loaderStatus: false,
+                        });
+            
                      });
-      
                   }
-      
-                  this.setState({
-                     loaderStatus: false,
+                  else{
+
+                     Swal.fire({
+                        title: 'Warning!',
+                        icon: 'warning',
+                        text: 'Please ensure yor payment is done',
+                        confirmButtonText: 'OK'
+                     });
+                  }
+               }
+               else{
+
+                  axios({
+                     url: `${BASE_URL}/customer/ads/store`,
+                     method: 'POST',
+                     headers: {
+                        Authorization: "Bearer " + this.state.token,
+                     },
+                     data: {
+                        category: this.state.category,
+                        subcategory: this.state.subcategory,
+                        title: this.state.title,
+                        canonical_name: this.state.canonicalName,
+                        description: this.state.description,
+                        price: this.state.price,
+                        featured: this.state.featured,
+                        negotiable: this.state.negotiable,
+                        country: this.state.country_id,
+                        state: this.state.state_id,
+                        city: this.state.city_id,
+                        latitude: this.state.latitude,
+                        longitude: this.state.longitude,
+                        name: this.state.userName,
+                        email: this.state.email,
+                        phone: this.state.phone,
+                        phone_hide: this.state.phoneHide,
+                        address: this.state.address,
+                        image: this.state.image,
+                        make_id: this.state.make_id,
+                        model_id: this.state.model_id,
+                        variant_id: this.state.variant_id,
+                        registration_year: this.state.registration_year,
+                        fuel: this.state.fuel,
+                        transmission: this.state.transmission,
+                        condition: this.state.condition,
+                        mileage: this.state.mileage,
+                        aircondition: this.state.aircondition,
+                        gps: this.state.gps,
+                        security: this.state.security,
+                        tire: this.state.tire,
+                        size: this.state.size,
+                        room: this.state.room,
+                        furnished: this.state.furnished,
+                        building: this.state.building,
+                        parking: this.state.parking,
+                        fieldValue: this.state.fieldValue,
+                        paymentMethod: this.state.paymentMethod,
+                        paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                     }
+         
+                  }).then(response => {
+                     
+                     if(response.data.status == 'success'){
+                        
+                        Swal.fire({
+                           title: 'success!',
+                           text: response.data.message,
+                           icon: 'success',
+                           confirmButtonText: 'OK'
+                        }).then((result) => {
+                           this.props.history.push('/');
+                        });
+         
+                     }
+         
+                     this.setState({
+                        loaderStatus: false,
+                     });
+         
+                  }).catch((error) => {
+         
+                     this.setState({
+                        loaderStatus: false,
+                     });
+         
                   });
-      
-               }).catch((error) => {
-      
-                  this.setState({
-                     loaderStatus: false,
-                  });
-      
-               });
+               }
             }
             else{
 
@@ -742,6 +903,10 @@ class CreateForm extends React.Component{
                   icon: 'warning',
                   text: 'Please select a payment method',
                   confirmButtonText: 'OK'
+               });
+
+               this.setState({
+                  loaderStatus: false,
                });
             }
          }
@@ -840,6 +1005,14 @@ class CreateForm extends React.Component{
                errors_email: email,
             });
          }
+         else{
+            if(!state.email.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+               let email = 'Must be an email';
+               this.setState({
+                  errors_email: email,
+               });
+            }
+         }
          if(state.latitude === '' || state.longitude === ''){
             let latitude = 'Please mark a point in maps';
             this.setState({
@@ -884,6 +1057,8 @@ class CreateForm extends React.Component{
       
       let loaderStatus = this.state.loaderStatus;
          
+      let image = this.state.image;
+
          return (
             <div className="site-frame">
                {loaderStatus == true ? <Loader /> :
@@ -917,13 +1092,16 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="title" label="Title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
+                                 {image ? image && image.map((image, index) => {
+                                    return <img src={image} key={index} alt='image' style={{maxWidth:'150px', minWidth:'150px', maxHeight:'150px', minHeight:'150px', margin:'10px'}} />
+                                 }) : ''}
                                  <TextField handleChange={this.handleChange} name="price" label="Price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
-                                 <SelectField placeholder="Country" option={country} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
-                                 <SelectField placeholder="State" option={state} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
-                                 <SelectField placeholder="City" option={city} label="City" optionChange={this.cityChange} type="common" />
-                                 <Checkbox checkboxChange={this.checkboxChange} name="negotiable" label="Price Negotiable" />
-                                 <Checkbox checkboxChange={this.checkboxChange} name="featured" label="Featured" />
+                                 <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
+                                 <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
+                                 <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
                                  
                                  <div className="form-group">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
@@ -933,7 +1111,7 @@ class CreateForm extends React.Component{
                               this.state.formPage == 2 && category == 1 ?  
                               <>
                                  
-                                 <MotorCreate motorEvents={this.motorChanges} errors={this.state} /> 
+                                 <MotorCreate motorList={this.state.motor} motorEvents={this.motorChanges} errors={this.state} /> 
                                  <div className="row">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>

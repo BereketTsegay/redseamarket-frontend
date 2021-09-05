@@ -15,6 +15,7 @@ export default class checkbox extends Component {
 
     render() {
         let name = this.props.name;
+        let checkStatus = this.props.checkStatus;
         
         return (
 
