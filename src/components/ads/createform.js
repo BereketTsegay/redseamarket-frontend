@@ -632,6 +632,7 @@ class CreateForm extends React.Component{
             }
          }
          else{
+            console.log(this.state.formPage);
             if(state.categoryField){
 
                window.scrollTo(0, 0);
@@ -643,7 +644,7 @@ class CreateForm extends React.Component{
          } 
       }
       else if(state.formPage == 3){
-
+         console.log(this.state.formPage);
          window.scrollTo(0, 0);
 
          this.setState({
@@ -716,7 +717,6 @@ class CreateForm extends React.Component{
 
    adSubmitHandler = () => {
       
-
       let state = this.state;
       
       if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== ''){
@@ -731,7 +731,7 @@ class CreateForm extends React.Component{
 
                if(state.paymentMethod === 'stripe'){
 
-                  if(state.paymentId !== ''){
+                  if(sessionStorage.getItem('new_payment_id') !== ''){
 
                      axios({
                         url: `${BASE_URL}/customer/ads/store`,
@@ -815,6 +815,10 @@ class CreateForm extends React.Component{
                         icon: 'warning',
                         text: 'Please ensure yor payment is done',
                         confirmButtonText: 'OK'
+                     });
+
+                     this.setState({
+                        loaderStatus: false,
                      });
                   }
                }
@@ -1242,21 +1246,21 @@ class CreateForm extends React.Component{
                                        <button type="submit" onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div>
                                  </div>
-                              </>
-                              : this.state.formPage == 3 && categoryField.length != 0 ?
-                                 <>
+                              </> :
+                              // : this.state.formPage == 3 && categoryField.length != 0 ?
+                              //    <>
                                     
-                                    <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
-                                    <div className="row">
-                                       <div className="form-group col-md-6">
-                                          <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                       </div>
-                                       <div className="form-group col-md-6">
-                                          <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
-                                       </div>
-                                    </div>
-                                 </>
-                              : this.state.formPage == 3 && categoryField.length == 0 ? 
+                              //       <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
+                              //       <div className="row">
+                              //          <div className="form-group col-md-6">
+                              //             <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                              //          </div>
+                              //          <div className="form-group col-md-6">
+                              //             <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
+                              //          </div>
+                              //       </div>
+                              //    </>
+                              // : this.state.formPage == 3 && categoryField.length == 0 ? 
                               <>
                                  
                                  <h4>Seller Information</h4>
@@ -1284,32 +1288,32 @@ class CreateForm extends React.Component{
                                     </div>
                                  </div>
                               </>
-                              : <>
-                                    <h4>Seller Information</h4>
-                                    <hr />
+                              // : <>
+                              //       <h4>Seller Information</h4>
+                              //       <hr />
 
-                                    <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
-                                    <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
-                                    <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
-                                    <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
-                                    <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+                              //       <TextField handleChange={this.handleChange} name="userName" label="Name" value={userName} placeholder="Name" readonly={false} error={this.state.errors_userName} />
+                              //       <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
+                              //       <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
+                              //       <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
+                              //       <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
                                     
-                                    <hr />
-                                    <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
+                              //       <hr />
+                              //       <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                    {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                              //       {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
-                                    {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+                              //       {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
 
-                                    <div className="row mt-4">
-                                       <div className="form-group col-md-6">
-                                          <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
-                                       </div>
-                                       <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
-                                       </div>
-                                    </div>
-                                 </>
+                              //       <div className="row mt-4">
+                              //          <div className="form-group col-md-6">
+                              //             <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
+                              //          </div>
+                              //          <div className="form-group col-md-6">
+                              //             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                              //          </div>
+                              //       </div>
+                              //    </>
                               }
                            </div>
                         </div>
