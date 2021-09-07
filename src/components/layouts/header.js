@@ -50,7 +50,7 @@ class Header extends React.Component{
         emailVerifydModal: false,
         otp: '',
         otpError: '',
-        countryListModal: sessionStorage.getItem('country') ? false : true,
+        countryListModal: false,
         countryList: [],
       }
 
