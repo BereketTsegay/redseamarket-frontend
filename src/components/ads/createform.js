@@ -13,7 +13,7 @@ import Date from '../formcontrols/date';
 import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 import axios from 'axios';
-import {BASE_URL, userToken} from '../../projectString';
+import {BASE_URL, userToken, GOOGLEMAPS_API} from '../../projectString';
 import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
@@ -22,6 +22,10 @@ import Swal from 'sweetalert2';
 import Loader from '../Loader';
 import FeaturedPayment from './featuredPayment.js';
 import InjectedCheckoutForm from '../common/paymentForm';
+import { Link } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
+import MotorProperty from './motorProperty';
+import PropertyForRendProperty from './propertyForRendProperty';
 
 class CreateForm extends React.Component{
 
@@ -50,7 +54,7 @@ class CreateForm extends React.Component{
          longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 53.8478,
          phone: '',
          address: '',
-         country_id: '',
+         country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
          state_id: '',
          city_id: '',
          negotiable: false,
@@ -115,11 +119,24 @@ class CreateForm extends React.Component{
 
          loaderStatus: false,
          paymentMethod: '',
-         paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+         paymentId: '',
 
          amountType: '',
          amountPercentage: '',
          motor: [],
+         paymentDocument: '',
+         termsCondition: false,
+         errors_terms: '',
+         perviewModal: false,
+         mainImage: '',
+         currency: localStorage.getItem('currency') ? localStorage.getItem('currency') : 'AED',
+         phoneModalShow: false,
+         countryText: '',
+         stateText: '',
+         cityText: '',
+         makeText: '',
+         modelText: '',
+         variantText: '',
       }
    }
 
@@ -164,7 +181,7 @@ class CreateForm extends React.Component{
 
       this.setState({
          loaderStatus: true,
-      })
+      });
 
       axios({
          method: 'POST',
@@ -213,6 +230,193 @@ class CreateForm extends React.Component{
 
       });
 
+      axios({
+         url: `${BASE_URL}/customer/view/profile`,
+         method: 'POST',
+         headers: {
+            Authorization: "Bearer " + this.state.token,
+         },
+      }).then(response => {
+         if(response.data.status === 'success'){
+           
+            this.setState({
+               userName: response.data.data.user.name,
+               email: response.data.data.user.email,
+               phone: response.data.data.user.phone,
+            });
+         }
+      }).catch((error) => {
+
+      });
+
+      axios({
+         method: 'POST',
+         url: `${BASE_URL}/customer/get/state`,
+         data:{
+            country: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+         }
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            this.setState({
+               country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+               state: response.data.state,
+            });
+         }
+
+      }).catch((error) => {
+         this.setState({
+            loaderStatus: false,
+         });
+      });
+
+   }
+
+   perviewModal = () => {
+
+      axios({
+         url: `${BASE_URL}/customer/get/country`,
+         method: 'POST',
+      }).then(response => {
+
+         if(response.data.status === 'success'){
+
+            response.data.country.forEach(country => {
+
+               if(country.id == this.state.country_id){
+                  this.setState({
+                     countryText: country.name,
+                  });
+               }
+            });
+         }
+
+      }).catch((error) => {
+
+      });
+
+      axios({
+         url: `${BASE_URL}/customer/get/state`,
+         method: 'POST',
+         data: {
+            country: this.state.country_id,
+         }
+      }).then(response => {
+
+         if(response.data.status === 'success'){
+            response.data.state.forEach(state => {
+               if(state.id == this.state.state_id){
+
+                  this.setState({
+                     stateText: state.name,
+                  });
+               }
+            });
+         }
+
+      }).catch((error) => {
+
+      });
+
+      axios({
+         url: `${BASE_URL}/customer/get/city`,
+         method: 'POST',
+         data: {
+            state: this.state.state_id,
+         }
+      }).then(response => {
+         if( response.data.status === 'success'){
+            if( response.data.city ){
+
+               response.data.city.forEach(city => {
+                  
+                  if(city.id == this.state.city_id){
+                     this.setState({
+                        cityText: city.name,
+                     });
+                  }
+
+               });
+            }
+         }
+      });
+
+      if(this.state.category == 1){
+
+         axios({
+            url: `${BASE_URL}/customer/get/make`,
+            method: 'POST',
+            headers:{ Authorization: "Bearer " + this.state.token },
+
+        }).then(response => {
+
+            if(response.data.status == 'success'){
+               response.data.make.forEach(make => {
+                  if(make.id == this.state.make_id){
+                     this.setState({
+                        makeText: make.name,
+                    });
+                  }
+               });
+                
+            }
+
+        }).catch((error) => {
+
+        });
+
+         axios({
+            url: `${BASE_URL}/customer/get/model`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+               make_id: this.state.make_id,
+            }
+         }).then(response => {
+
+               if(response.data.status === 'success'){
+                  response.data.model.forEach(model => {
+                     if(model.id == this.state.model_id){
+                        this.setState({
+                           modelText: model.name,
+                        });
+                     }
+                  });
+               }
+
+         }).catch((error) => {
+               
+         });
+
+         axios({
+            url: `${BASE_URL}/customer/get/variant`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+                model_id: this.state.model_id,
+            }
+         }).then(response => {
+            if(response.data.status === 'success'){
+
+               response.data.variant.forEach(variant => {
+                  if(variant.id == this.state.variant_id){
+                     this.setState({
+                        variantText: variant.name,
+                     });
+                  }
+               });
+               
+             }
+
+         }).catch((error) => {
+
+         });
+
+      }
+
+      this.setState({
+         perviewModal: !this.state.perviewModal,
+      });
    }
 
 
@@ -222,7 +426,7 @@ class CreateForm extends React.Component{
          method: 'POST',
          url: `${BASE_URL}/customer/get/state`,
          data:{
-            country:id,
+            country: id,
          }
       }).then(response => {
 
@@ -416,6 +620,13 @@ class CreateForm extends React.Component{
          furnished: property.furnished,
          building: property.buildingType,
          parking: property.parking,
+      });
+   }
+
+   paymentIdGet = (paymentId) => {
+      
+      this.setState({
+         paymentId: paymentId,
       });
    }
 
@@ -632,7 +843,7 @@ class CreateForm extends React.Component{
             }
          }
          else{
-            console.log(this.state.formPage);
+            
             if(state.categoryField){
 
                window.scrollTo(0, 0);
@@ -699,6 +910,13 @@ class CreateForm extends React.Component{
       });
    }
 
+   eventChange = (e) => {
+
+      this.setState({
+         termsCondition: e.target.checked,
+      });
+   }
+
    fileUpload = (file) => {
       
       if(file.length === 0){
@@ -719,7 +937,7 @@ class CreateForm extends React.Component{
       
       let state = this.state;
       
-      if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== ''){
+      if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== '' && this.state.termsCondition == true){
          
          this.setState({
             loaderStatus: true,
@@ -778,7 +996,7 @@ class CreateForm extends React.Component{
                            parking: this.state.parking,
                            fieldValue: this.state.fieldValue,
                            paymentMethod: this.state.paymentMethod,
-                           paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                           paymentId: this.state.paymentId,
                         }
             
                      }).then(response => {
@@ -869,7 +1087,7 @@ class CreateForm extends React.Component{
                         parking: this.state.parking,
                         fieldValue: this.state.fieldValue,
                         paymentMethod: this.state.paymentMethod,
-                        paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                        paymentId: this.state.paymentId,
                      }
          
                   }).then(response => {
@@ -960,7 +1178,7 @@ class CreateForm extends React.Component{
                   parking: this.state.parking,
                   fieldValue: this.state.fieldValue,
                   paymentMethod: this.state.paymentMethod,
-                  paymentId: sessionStorage.getItem('new_payment_id') ? sessionStorage.getItem('new_payment_id') : '',
+                  paymentId: this.state.paymentId,
                }
 
             }).then(response => {
@@ -1035,7 +1253,20 @@ class CreateForm extends React.Component{
                errors_address: address,
             });
          }
+         if(state.termsCondition == false){
+            let termsCondition = 'This field required';
+            this.setState({
+               errors_terms: termsCondition,
+            });
+         }
       }
+   }
+
+   showPhone = () => {
+
+      this.setState({
+         phoneHide: !this.state.phoneHide,
+      });
    }
 
    latLngChange = (latitude, longitude) => {
@@ -1062,6 +1293,20 @@ class CreateForm extends React.Component{
       let loaderStatus = this.state.loaderStatus;
          
       let image = this.state.image;
+
+      let ErrorStyle = {
+         color: 'red',
+      };
+
+      let modalLogin ={
+         position:  'fixed',
+         width: '90vw',
+         margin: 'auto',
+         top: '40px',
+         // left: 'calc(50% - 300px)',
+         bottom: '40px',
+         background:'#FFF',
+      }
 
          return (
             <div className="site-frame">
@@ -1192,17 +1437,38 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
+
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+
+                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
+                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+
+                                       this.state.paymentId !== '' ?
+
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       </div>
+
+                                    : '' :
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div> : 
                                     <div className="form-group col-md-6">
                                        <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div>
+                                    }
                                  </div>
                               </>
                               : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
@@ -1233,18 +1499,39 @@ class CreateForm extends React.Component{
                                  
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
-
+                                 
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
+                                 
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+
+                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button type="button" onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
+                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+
+                                       this.state.paymentId !== '' ?
+
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       </div>
+
+                                    : '' :
                                     <div className="form-group col-md-6">
-                                       <button type="submit" onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div> : 
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div>
+                                    }
                                  </div>
                               </> :
                               // : this.state.formPage == 3 && categoryField.length != 0 ?
@@ -1275,17 +1562,38 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
+
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm /> : '' }
+                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+
+                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
+                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+
+                                       this.state.paymentId !== '' ?
+
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       </div>
+
+                                    : '' :
+                                    <div className="form-group col-md-6">
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                    </div> : 
                                     <div className="form-group col-md-6">
                                        <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div>
+                                    }
                                  </div>
                               </>
                               // : <>
@@ -1325,6 +1633,314 @@ class CreateForm extends React.Component{
                   <AppDownload/>
                   <Footer/>
                </>}
+
+               <Modal className="modal fade log-sign-modal preview-modal" show={this.state.perviewModal}  style={modalLogin} id="perviewModal" tabindex="-1" aria-labelledby="perviewModalLabel" aria-hidden="true">
+                                
+                  <Modal.Body>
+                      <button  onClick={ this.perviewModal } style={{}} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      </button>
+
+                      <div>
+                            <section className="section-single-main pt-3">
+                                <div className="container">
+                                    <div className="row row-product-main">
+                                        <div className="col-xl-7 col-product-gallery">
+                                            <div className="product-gallery-main">
+                                            <div className="row flex-row-reverse">
+                                                <div className="col-md-10">
+                                                    <div className="product-gallery-xl">
+                                                        <img src={this.state.mainImage ? this.state.mainImage : this.state.image[0]} alt="media" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <ul className="product-gallery-sm">
+                                                        {this.state.image ? this.state.image.map((image, index) => {
+                                                            return <li key={index} onClick={() => this.setState({mainImage: image})}><img src={image} alt="media" /></li>
+                                                        }) : <li><img src={this.state.defaultImage} alt="media" /></li>}
+                                                        
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-5 col-product-info">
+                                            <div className="product-info d-flex align-items-center h-100">
+                                            <div className="w-100">
+                                                <h3 className="product-title">{this.state.title}</h3>
+                                                <p className="product-desc">{this.state.description.substring(0, 250)}</p>
+                                                <div className="product-price font-weight-bold text-brand">{this.state.currency} {this.state.price}</div>
+                                                <ul className="product-meta">
+
+                                                    {this.state.category == 1 ? <MotorProperty make={this.state.makeText} year={this.state.registration_year} fuel={this.state.fuel} />
+                                                    : this.state.category == 2 ? <PropertyForRendProperty room={this.state.room} property_type={this.state.building} size={this.state.size} furnished={this.state.furnished} />
+                                                    : this.state.category == 3 ? <PropertyForRendProperty room={this.state.room} property_type={this.state.building} size={this.state.size} furnished={this.state.furnished} />
+                                                    : ''}
+                                                    
+                                                </ul>
+                                                <div className="product-location">
+                                                    <img src="assets/img/pdt-location.svg" alt="media" />
+                                                    {this.state.countryText}, {this.state.stateText}, {this.state.cityText}
+                                                </div>
+                                                <div className="product-btn-group d-flex justify-content-between">
+                                                    {this.state.phoneHide == false ? 
+                                                    <a href="javascript:void(0);" onClick={this.showPhone} className="btn btn-primary has-icon d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        Show Phone Number
+                                                    </a>
+                                                    :
+                                                    <a href="javascript:void(0);" className="btn btn-primary has-icon d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        Show Phone Number
+                                                    </a>
+                                                     }
+                                                    
+                                                    <a href="javascript:void(0);" className="btn btn-dark has-icon d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                                        Enquire Now
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </section>
+
+                              {this.state.featured && this.state.paymentMethod === 'account' ?
+                                 <div className="mb-4 row text-danger container"><b className="col-md-1">Warning: </b> <span className="col-md-11">The Ad is approve only after submitting the proper payment documents</span></div>
+                              : '' }
+                              <section className="section-product-details">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <ul className="nav nav-pills product-tab-nav mb-3" id="pills-tab" role="tablist">
+                                            <li className="nav-item" role="presentation">
+                                                <a className="nav-link active" id="pdttab1-tab" data-toggle="pill" href="#pdttab1" role="tab" aria-controls="pdttab1" aria-selected="true">Description</a>
+                                            </li>
+                                            <li className="nav-item" role="presentation">
+                                                <a className="nav-link" id="pdttab2-tab" data-toggle="pill" href="#pdttab2" role="tab" aria-controls="pdttab2" aria-selected="false">{this.state.category == 2 ? 'Amenities' : this.state.category == 3 ? 'Amenities' : 'More Details'}</a>
+                                            </li>
+                                            <li className="nav-item" role="presentation">
+                                                <a className="nav-link" id="pdttab3-tab" data-toggle="pill" href="#pdttab3" role="tab" aria-controls="pdttab3" aria-selected="false">{this.state.category == 1 ? 'Motor Info' : this.state.category == 2 ? 'Property Info' : this.state.category == 3 ? 'Property Info' : 'Info' }</a>
+                                            </li>
+                                            <li className="nav-item" role="presentation">
+                                                <a className="nav-link" id="pdttab4-tab" data-toggle="pill" href="#pdttab4" role="tab" aria-controls="pdttab4" aria-selected="false">Location</a>
+                                            </li>
+                                            </ul>
+                                            <div className="tab-content product-tab-content" id="pills-tabContent">
+                                            <div className="tab-pane fade show active" id="pdttab1" role="tabpanel" aria-labelledby="pdttab1-tab">
+                                                <div className="pdt-tab-desc">
+                                                    <p>{this.state.description}</p>
+                                                </div>
+                                            </div>
+                                            <div className="tab-pane fade" id="pdttab2" role="tabpanel" aria-labelledby="pdttab2-tab">
+                                                <div className="pdt-tab-list">
+                                                   
+                                                   { this.state.category == 1 ? 
+                                                   
+                                                   <>
+                                                      <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Air Conditioner</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                         <div className="col-7">{this.state.aircondition ? 'Yes' : 'No' }</div>
+                                                      </div>
+
+                                                      <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> GPS</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                         <div className="col-7">{this.state.gps ? 'Yes' : 'No' }</div>
+                                                      </div>
+
+                                                      <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Security System</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                         <div className="col-7">{this.state.security ? 'Yes' : 'No' }</div>
+                                                      </div>
+
+                                                      <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Spare Tire</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                         <div className="col-7">{this.state.tire ? 'Yes' : 'No' }</div>
+                                                      </div>
+                                                   </>
+
+                                                   : ''}
+                                                   <ul>
+
+                                                      {/* {this.state.fieldValue.length > 0 ? this.state.fieldValue && this.state.fieldValue.map((customValue, index) => {
+                                                         if(customValue.position != 'top'){
+                                                               return <li key={index}>{customValue.value}</li>
+                                                         }
+                                                      }) : this.state.category == 1 ? '' : 'No data found!'} */}
+                                                        
+                                                   </ul>
+                                                </div>
+                                            </div>
+                                            <div className="tab-pane fade" id="pdttab3" role="tabpanel" aria-labelledby="pdttab3-tab">
+                                                <div className="pdt-tab-list">
+                                                    <div className="row">
+                                                        <div className="col-lg-8">
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong>Furnished</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.furnished}</div>
+                                                        </div> : ''}
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong>Furnished</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.furnished}</div>
+                                                        </div> : ''}
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Apartment For</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">Rent</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Apartment For</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">Sale</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Rooms</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.room}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Rooms</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.furnished}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Size</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.size}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Size</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.size}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Building Type</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.building}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Building Type</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.building}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 2 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Parking</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.parking == 1 ? 'Yes' : 'NO'}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 3 ? <div className="row mb-3 mb-md-4">
+                                                            <div className="col-4"><strong> Parking</strong></div>
+                                                            <div className="col-1 text-center">:</div>
+                                                            <div className="col-7">{this.state.parking == 1 ? 'Yes' : 'NO'}</div>
+                                                        </div> : '' }
+
+                                                        {this.state.category == 1 ?
+                                                        <>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Make</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.makeText}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Model</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.modelText}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Variant</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.variantText}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Registration Year</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.registration_year}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Fuel</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.fuel}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Transmission</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.transmission}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Condition</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.condition}</div>
+                                                            </div>
+                                                            <div className="row mb-3 mb-md-4">
+                                                                <div className="col-4"><strong> Milage</strong></div>
+                                                                <div className="col-1 text-center">:</div>
+                                                                <div className="col-7">{this.state.mileage}</div>
+                                                            </div>
+                                                        </>
+                                                        
+                                                        : '' }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="tab-pane fade" id="pdttab4" role="tabpanel" aria-labelledby="pdttab4-tab">
+                                                <div className="pdt-tab-map">
+                                                    <div className="map-location mb-3">{this.state.countryText}, {this.state.stateText}, {this.state.cityText}</div>
+                                                    <div className="map-panel rounded-lg overflow-hidden">
+                                                        <iframe src={`https://www.google.com/maps/embed/v1/place?q=${this.state.latitude},${this.state.longitude}&key=${GOOGLEMAPS_API}`} style={{border:0,}} allowfullscreen="" loading="lazy"></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                  </Modal.Body>
+                                
+               </Modal>
+
+               <Modal className="modal fade log-sign-modal" show={this.state.phoneModalShow}  style={modalLogin} id="mobileModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        
+                        <Modal.Body>
+                       
+                                <button  onClick={() => this.showPhone('') }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <h5 className="modal-title text-center text-brand">Phone Number</h5>
+                                <div className="modal-form text-center">
+                                    
+                                    <label>Name : {this.state.name}</label>
+                                    <br />
+                                    <a href={`tel:${this.state.phone}`}>{this.state.phone}</a>
+
+                                </div>
+                        </Modal.Body>
+                        
+                    </Modal>
+                            
             </div>
             )
         }

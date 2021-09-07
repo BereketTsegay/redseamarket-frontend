@@ -71,7 +71,7 @@ class FileField extends React.Component{
                     <span className="btn btn-primary">Choose file</span>
                     {fileCount > 1 ? fileCount + ' File Selected' : fileName != '' ? fileName : 'No file chosen'}
                     </label>
-                    <input type="file" onChange={(e) => this.fileUpload(e)} className="form-control-file" id="mediaUpload" multiple={this.props.multiple} />
+                    <input type="file" onChange={(e) => this.fileUpload(e)} className="form-control-file" id="mediaUpload" multiple={this.props.multiple} accept=".png, .jpg, .jpeg" />
                     {error.length > 0 ? <p className="help-block help-block-error"  style={ErrorStyle}>{error}</p> : '' }
                 </div>
             )

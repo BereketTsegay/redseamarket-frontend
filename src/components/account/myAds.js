@@ -109,7 +109,7 @@ export default class myAds extends Component {
     render() {
 
         let {myAds, paginataionArray, currentPage, previousPage, nexPage, last, token, loaderState} = this.state;
-
+console.log(myAds);
         return (
 
             <div id="page" className="site-page">

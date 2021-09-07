@@ -27,14 +27,15 @@ export default class ads extends Component {
 
     render() {
         let ads = this.props.ads;
-
+        
         return (
                 
                 <div className="col-lg-3 col-md-4 col-6">
                     <div className="product-panel">
                         <Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>
                             <div className="panel-media">
-                                {ads.image.length > 0 ? <img src={IMAGE_URL+'/'+ ads.image[0].image} alt="media" />: <img src={defaultImage} alt="media" />}
+                                {ads.image.length > 0 ? <img style={{minHeight:'150px', maxHeight:'150px'}} src={IMAGE_URL+'/'+ ads.image[0].image} alt="media" />: <img style={{minHeight:'150px', maxHeight:'150px'}} src={defaultImage} alt="media" />}
+                                {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : ''}
                             </div>
                             <div className="panel-content">
                                 <h3 className="panel-price">{ads.currency} {ads.price}</h3>
@@ -46,6 +47,8 @@ export default class ads extends Component {
                                 <p className="panel-description">{ads.country_name}, {ads.state_name}, {ads.city_name}</p>
                             </div>
                         </Link>
+                        {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> : '' }
+                        
                     </div>
                 </div>
         )

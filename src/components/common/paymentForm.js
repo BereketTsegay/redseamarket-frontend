@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 import Stripe from 'stripe';
 import axios from 'axios';
-import { BASE_URL, secret_key } from '../../projectString';
+import { BASE_URL, userToken } from '../../projectString';
 import Swal from 'sweetalert2';
 import Loader from '../Loader';
 
@@ -19,7 +19,7 @@ export class PaymentForm extends React.Component {
             countries: [],
             states: [],
             cities: [],
-            country_id: '',
+            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : '',
             state_id: '',
             country: '',
             state: '',
@@ -36,6 +36,7 @@ export class PaymentForm extends React.Component {
             currency: localStorage.getItem('currency') ? localStorage.getItem('currency').toLowerCase() : 'aed',
             amount: sessionStorage.getItem('newAmount') ? sessionStorage.getItem('newAmount') : 0,
             loaderStatus: false,
+            token: userToken,
         }
     }
 
@@ -148,7 +149,7 @@ export class PaymentForm extends React.Component {
 
                                 sessionStorage.removeItem('new_payment_id');
                                 sessionStorage.setItem('new_payment_id', result.paymentIntent.id);
-
+                                this.props.newPaymentIdGet(result.paymentIntent.id);
                                 this.setState({
                                     loaderStatus: false,
                                 });
@@ -165,7 +166,7 @@ export class PaymentForm extends React.Component {
 
                             sessionStorage.removeItem('new_payment_id');
                             sessionStorage.setItem('new_payment_id', result.error.payment_intent.id);
-
+                            this.props.newPaymentIdGet(result.paymentIntent.id);
                             this.setState({
                                 loaderStatus: false,
                             });
@@ -320,6 +321,9 @@ export class PaymentForm extends React.Component {
     }
 
     componentWillMount = () => {
+
+        sessionStorage.removeItem('new_payment_id');
+
         axios({
             method: 'POST',
             url: `${BASE_URL}/customer/get/country`,
@@ -329,10 +333,59 @@ export class PaymentForm extends React.Component {
                this.setState({
                   countries: response.data.country,
                });
+
+               response.data.country.forEach(element => {
+                   
+                   if(element.id == sessionStorage.getItem('country')){
+                       this.setState({
+                            country: element.code,
+                       });
+                   }
+               });
             }
    
          }).catch((error) => {
             
+         });
+
+         axios({
+            url: `${BASE_URL}/customer/view/profile`,
+            method: 'POST',
+            headers: {
+               Authorization: "Bearer " + this.state.token,
+            },
+         }).then(response => {
+            if(response.data.status === 'success'){
+              
+               this.setState({
+                  name: response.data.data.user.name,
+                  email: response.data.data.user.email,
+                  phone: response.data.data.user.phone,
+               });
+            }
+         }).catch((error) => {
+   
+         });
+
+         axios({
+            method: 'POST',
+            url: `${BASE_URL}/customer/get/state`,
+            data:{
+               country: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+            }
+         }).then(response => {
+   
+            if(response.data.status == 'success'){
+               this.setState({
+                  country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+                  states: response.data.state,
+               });
+            }
+   
+         }).catch((error) => {
+            this.setState({
+               loaderStatus: false,
+            });
          });
     }
 
@@ -456,7 +509,12 @@ export class PaymentForm extends React.Component {
                             <select name='country' onChange={(e) => this.countryChange(e)} className="form-control">
                                 <option value="" data-code="">Select Country</option>
                                 {countries && countries.map((countries, index) => {
-                                    return <option key={index} data-code={countries.code} value={countries.id}>{countries.name}</option>
+                                    if(this.state.country_id == countries.id){
+                                        return <option selected key={index} data-code={countries.code} value={countries.id}>{countries.name}</option>
+                                    }
+                                    else{
+                                        return <option key={index} data-code={countries.code} value={countries.id}>{countries.name}</option>
+                                    }
                                 })}
                             </select>
                             {error_country ? <p className="help-block help-block-error"  style={ErrorStyle}>{error_country}</p> : '' }
@@ -526,15 +584,27 @@ export class PaymentForm extends React.Component {
 
 
 
-const InjectedCheckoutForm = () => {
+class InjectedCheckoutForm extends React.Component {
 
-    return (
-      <ElementsConsumer>
-        {({elements, stripe}) => (
-            <PaymentForm elements={elements} stripe={stripe} />
-        )}
-      </ElementsConsumer>
-    );
-  };
+    constructor(props){
+        super(props);
+    }
+    
+    newPaymentIdGet = (id) => {
 
-  export default InjectedCheckoutForm;
+        this.props.paymentIdGet(id);
+    }
+
+    render(){
+
+        return (
+            <ElementsConsumer>
+              {({elements, stripe}) => (
+                  <PaymentForm newPaymentIdGet={this.newPaymentIdGet} elements={elements} stripe={stripe} />
+              )}
+            </ElementsConsumer>
+        );
+    }
+};
+
+export default InjectedCheckoutForm;

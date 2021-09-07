@@ -25,7 +25,7 @@ export default class paginationLink extends Component {
                 <div className="row">
                     <div className="col-xl-11 mx-auto">
                     <ul className="pagination pagination-alt justify-content-center mt-4 mt-md-2 mb-1">
-                        <li className="page-item"><a className="page-link" href="#" onClick={(e) => this.paginationCall(e, previousPage)} aria-label="Previous"><i className="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                        {previousPage ? <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => this.paginationCall(e, previousPage)} aria-label="Previous"><i className="fa fa-angle-left" aria-hidden="true"></i></a></li> : ''}
                         {paginataionArray.map((paginataionArray, index) => {
                             
                             if(index != 0 && index != last+1){
@@ -33,7 +33,7 @@ export default class paginationLink extends Component {
                             }
                         })} 
                         
-                        <li className="page-item"><a className="page-link" href="#" onClick={(e) => this.paginationCall(e, nexPage)} aria-label="Next"><i className="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        {nexPage ? <li className="page-item"><a className="page-link" href="javascript:void(0);" onClick={(e) => this.paginationCall(e, nexPage)} aria-label="Next"><i className="fa fa-angle-right" aria-hidden="true"></i></a></li> : ''}
                     </ul>
                     </div>
                 </div>

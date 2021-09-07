@@ -178,6 +178,41 @@ button:focus,
 	z-index: 10;
 }
 
+.badge-pending {
+	font-size: 10px;
+	color: #FFF;
+	height: 12px;
+	background: var(--brand-color);
+	position: relative;
+	display: inline-block;
+	padding: 0 6px;
+	line-height: 1.20;
+	text-transform: uppercase;
+}
+.badge-pending:before,
+.badge-pending:after {
+	content: '';
+	position: absolute;
+	height: 6px;
+	width: 12px;
+	background: var(--brand-color);
+	z-index: 1;
+}
+.badge-pending:before {
+	top: 0;
+	left: -6px;
+	transform: skew(-32deg, 0deg);
+}
+.badge-pending::after {
+	top: 6px;
+	left: -6px;
+	transform: skew(32deg, 0deg);
+}
+.badge-pending span {
+	position: relative;
+	z-index: 10;
+}
+
 /* PAGINATION */
 .pagination-alt .page-item { margin: 0 4px; }
 .pagination-alt .page-item .page-link {
@@ -1929,4 +1964,8 @@ button:focus,
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
 	height: 40px;
+}
+
+.preview-modal .modal-dialog{
+	max-width: 90vw;
 }
