@@ -5,7 +5,7 @@ import Signup from '../login/signup';
 import axios from 'axios';
 import Logo from '../../../src/web-assets/img/brand.svg';
 import { Button, Modal } from 'react-bootstrap';
-import { BASE_URL, userToken } from '../../projectString'; 
+import { BASE_URL, userToken, GOOGLEMAPS_API } from '../../projectString'; 
 import { withRouter } from 'react-router';
 import Swal from 'sweetalert2'
 import {
@@ -15,6 +15,7 @@ import {
  } from 'react-router-dom';
 
 import Loader from '../Loader';
+import GoogleTranslate from '../common/googleTranslate';
 
 class Header extends React.Component{
 
@@ -58,6 +59,33 @@ class Header extends React.Component{
 
     componentWillMount = () => {
         
+        if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('latitude')){
+            navigator.geolocation.getCurrentPosition((position) => {
+                
+                sessionStorage.removeItem('latitude');
+                sessionStorage.removeItem('longitude');
+
+                sessionStorage.setItem('latitude', position.coords.latitude);
+                sessionStorage.setItem('longitude', position.coords.longitude);
+
+                axios({
+                    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${sessionStorage.getItem('latitude')},${sessionStorage.getItem('longitude')}&key=${GOOGLEMAPS_API}`,
+                    method: 'GET',
+                }).then(response => {
+                    response.data.results.forEach(gmap => {
+                        
+                        if(gmap.address_components.length == 1){
+                            sessionStorage.setItem('country_name', gmap.formatted_address);
+                        }
+                    });
+        
+                }).catch((error) => {
+        
+                });
+
+            });
+        }
+
         axios({
             url: `${BASE_URL}/customer/get/country`,
             method: 'POST',
@@ -67,22 +95,19 @@ class Header extends React.Component{
                 this.setState({
                     countryList: response.data.country,
                 });
+
+                response.data.country.forEach(country => {
+                    if(country.name === sessionStorage.getItem('country_name')){
+                        sessionStorage.removeItem('country');
+                        sessionStorage.setItem('country', country.id);
+                    }
+                });
             }
 
         }).catch((error) => {
 
         });
 
-        if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('latitude')){
-            navigator.geolocation.getCurrentPosition((position) => {
-
-                sessionStorage.removeItem('latitude');
-                sessionStorage.removeItem('longitude');
-
-                sessionStorage.setItem('latitude', position.coords.latitude);
-                sessionStorage.setItem('longitude', position.coords.longitude);
-            });
-        }
     }
    
    viewLoginModal = () => {
@@ -673,6 +698,7 @@ logout = (e) => {
                                 <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
                                     }
                                 </div>
+                                <GoogleTranslate />
                                 <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                                 </button>
