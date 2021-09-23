@@ -8,7 +8,8 @@ import Header from '../layouts/header'
 import HeadFilter from './headFilter'
 import ListAdItem from './listAdItem'
 import Loader from '../Loader';
-import ResultTitleArea from './resultTitleArea'
+import ResultTitleArea from './resultTitleArea';
+import Nodata from '../../web-assets/img/5406715.jpg';
 
 export default class motorListing extends Component {
 
@@ -22,8 +23,8 @@ export default class motorListing extends Component {
             last: '',
             adList: [],
             resultKey: '',
-            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
-            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
+            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
             loaderStatus: false,
         }
     }
@@ -35,7 +36,7 @@ export default class motorListing extends Component {
         });
 
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
-        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
 
         if(key){
@@ -120,7 +121,7 @@ export default class motorListing extends Component {
         });
 
         let key = ((new URLSearchParams(nextProps.location.search).get('key')) != '') ? (new URLSearchParams(nextProps.location.search).get('key')) : '';
-        let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(nextProps.location.search).get('subcategory')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory')) : '';
 
         if(key){
@@ -201,7 +202,7 @@ export default class motorListing extends Component {
     paginationCall = (url) => {
 
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
-        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
 
         this.setState({
@@ -270,6 +271,7 @@ export default class motorListing extends Component {
                 <HeadFilter />
 
                 {/* <!-- =====[SECTION MOTOR LISTING] **===== --> */}
+                {adList.length == 0 ? <img style={{width: '50%', height: '50%', marginLeft: '25%'}} src={Nodata} /> :
                 <section class="section-motor-sort-listing">
                     <div class="container">
                         
@@ -279,7 +281,7 @@ export default class motorListing extends Component {
                             <div class="col-xl-9 col-lg-11 mx-auto">
                                 <ul class="motor-sort-list">
                                     
-                                    {adList.length == 0 ? <h4 className="text-center">No Data Found!</h4>:
+                                    {adList.length == 0 ? '':
                                         adList.length != 0 && adList.map((adList, index) => {
                                         return (
                                             <ListAdItem key={index} ads={adList} />
@@ -296,7 +298,7 @@ export default class motorListing extends Component {
                         
 
                     </div>
-                </section>
+                </section>}
 
                 
                 <AppDownload />

@@ -19,7 +19,7 @@ class searchArea extends Component {
             price: '',
             room: '',
             loaderStatus: false,
-            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 229,
+            country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
             cityArray: [],
         }
     }

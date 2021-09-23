@@ -29,7 +29,7 @@ export default class myAds extends Component {
 
     componentWillMount(){
 
-        if(sessionStorage.getItem('loginStatus') === 'false' || sessionStorage.getItem('loginStatus') === false){
+        if(localStorage.getItem('loginStatus') === 'false' || localStorage.getItem('loginStatus') === false){
 
             this.props.history.push('/');
         }

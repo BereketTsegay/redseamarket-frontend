@@ -11,8 +11,8 @@ class headFilter extends Component {
 
         this.state = {
             subcategory: [],
-            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
-            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
+            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
             city: '',
             category_id: '',
             priceFrom: '',
@@ -20,7 +20,7 @@ class headFilter extends Component {
             seller: '',
             keyword: '',
             loaderStatus: false,
-            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 229,
+            country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
             cityArray: [],
 
         }

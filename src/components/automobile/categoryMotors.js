@@ -22,8 +22,8 @@ export default class categoryMotors extends Component {
          searchKey: '',
          loaderStatus: false,
          dealer: [],
-         latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
-         longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
+         latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+         longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
       }
    }
 
@@ -37,7 +37,7 @@ export default class categoryMotors extends Component {
          url: `${BASE_URL}/customer/get/motors`,
          method: 'POST',
          data: {
-            city: sessionStorage.getItem('city_id'),
+            city: localStorage.getItem('city_id'),
             latitude: this.state.latitude,
             longitude: this.state.longitude,
          },

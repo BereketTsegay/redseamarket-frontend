@@ -42,7 +42,7 @@ export default class profile extends Component {
 
     componentWillMount(){
 
-        if(sessionStorage.getItem('loginStatus') === 'false' || sessionStorage.getItem('loginStatus') === false){
+        if(localStorage.getItem('loginStatus') === 'false' || localStorage.getItem('loginStatus') === false){
 
             this.props.history.push('/');
         }
@@ -118,9 +118,9 @@ export default class profile extends Component {
         e.preventDefault();
         
         localStorage.removeItem('userToken');
-        sessionStorage.removeItem('loginStatus');
+        localStorage.removeItem('loginStatus');
    
-        sessionStorage.setItem('loginStatus',false);
+        localStorage.setItem('loginStatus',false);
       
         // localStorage.setItem('loginStatus', false);
         this.setState({loginStatus:false});

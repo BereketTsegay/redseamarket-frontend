@@ -25,6 +25,8 @@ import { public_key } from './projectString';
 
 import {loadStripe} from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsConditions from "./components/TermsConditions";
 // import PaymentIntents from "./components/common/paymentIntents";
 
 const stripePromise = loadStripe(public_key);
@@ -51,6 +53,8 @@ function App() {
               <Route path="/search" component={SearchList} />
               <Route path="/property/list" component={PropertyList} />
               <Route path="/motor/result" component={SearchResult} />
+              <Route path="/privacy/policy" component={PrivacyPolicy} />
+              <Route path="/terms/conditions" component={TermsConditions} />
             </ScrollToTop>
           </Switch>
         </Router>

@@ -50,11 +50,13 @@ class CreateForm extends React.Component{
          userName: '',
          email: '',
          description: '',
-         latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 23.4241,
-         longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 53.8478,
+         descriptioninArabic: '',
+         titleinArabic: '',
+         latitude: localStorage.getItem('latitude') ? parseFloat(localStorage.getItem('latitude')) : 23.4241,
+         longitude: localStorage.getItem('longitude') ? parseFloat(localStorage.getItem('longitude')) : 53.8478,
          phone: '',
          address: '',
-         country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+         country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
          state_id: '',
          city_id: '',
          negotiable: false,
@@ -253,13 +255,13 @@ class CreateForm extends React.Component{
          method: 'POST',
          url: `${BASE_URL}/customer/get/state`,
          data:{
-            country: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+            country: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
          }
       }).then(response => {
 
          if(response.data.status == 'success'){
             this.setState({
-               country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+               country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
                state: response.data.state,
             });
          }
@@ -478,7 +480,7 @@ class CreateForm extends React.Component{
 
    handleChange = (name, value) => {
 
-      if(name == 'title'){
+      if(name === 'title' || name === 'titleinArabic'){
 
          let canonical = value.toLowerCase().replace(/ +/g, '-').replace(/[^-\w]/g, '');
 
@@ -496,17 +498,17 @@ class CreateForm extends React.Component{
 
       }
 
-      if(name === 'title' && value === ''){
+      // if(name === 'title' && value === ''){
          
-         this.setState({
-            errors_title: 'Title cannot be blank',
-         });
-      }
-      else{
-         this.setState({
-            errors_title: '',
-         })
-      }
+      //    this.setState({
+      //       errors_title: 'Title cannot be blank',
+      //    });
+      // }
+      // else{
+      //    this.setState({
+      //       errors_title: '',
+      //    })
+      // }
       if(name === 'price' && value === ''){
          this.setState({
             errors_price: 'Price cannot be blank',
@@ -524,17 +526,17 @@ class CreateForm extends React.Component{
             });
          }
       }
-      if(name === 'description' && value === ''){
+      // if(name === 'description' && value === ''){
          
-         this.setState({
-            errors_description: 'Description cannot be blank',
-         });
-      }
-      else{
-         this.setState({
-            errors_description: '',
-         });
-      }
+      //    this.setState({
+      //       errors_description: 'Description cannot be blank',
+      //    });
+      // }
+      // else{
+      //    this.setState({
+      //       errors_description: '',
+      //    });
+      // }
       if((name === 'email' && value === '')){
          this.setState({
             errors_email: 'Email cannot be blank',
@@ -636,7 +638,7 @@ class CreateForm extends React.Component{
 
       if(state.formPage == 1){
 
-         if(state.title && state.image && state.price && state.description && state.country_id && state.state_id){
+         if((state.title || state.titleinArabic) && state.image && state.price && (state.description || state.descriptioninArabic) && state.country_id && state.state_id){
             window.scrollTo(0, 0);
 
             this.setState({
@@ -646,23 +648,23 @@ class CreateForm extends React.Component{
             if(state.featured == true){
 
                if(state.amountType === 'flat'){
-                  sessionStorage.removeItem('newAmount');
-                  sessionStorage.setItem('newAmount', state.amountPercentage);
+                  localStorage.removeItem('newAmount');
+                  localStorage.setItem('newAmount', state.amountPercentage);
                }
                else{
                   let amount = state.price * (state.amountPercentage / 100);
 
-                  sessionStorage.removeItem('newAmount');
-                  sessionStorage.setItem('newAmount', amount);
+                  localStorage.removeItem('newAmount');
+                  localStorage.setItem('newAmount', amount);
                }
             }
          }
          else{
             
-            if(state.title === '' || state.title.trim() === ''){
+            if((state.title === '' || state.title.trim() === '') || (state.titleinArabic === '' || state.titleinArabic.trim() === '')){
                
                this.setState({
-                  errors_title: 'Title cannot be blank',
+                  errors_title: 'Enter title any one of the language',
                });
             }
             else{
@@ -704,9 +706,9 @@ class CreateForm extends React.Component{
                   });
                }
             }
-            if(state.description === '' || state.description.trim() === ''){
+            if((state.description === '' || state.description.trim() === '') || (state.descriptioninArabic === '' || state.descriptioninArabic.trim() === '')){
 
-               let description = 'Description cannot be blank';
+               let description = 'Enter description in any one of the language';
                this.setState({
                   errors_description: description,
                });
@@ -949,7 +951,7 @@ class CreateForm extends React.Component{
 
                if(state.paymentMethod === 'stripe'){
 
-                  if(sessionStorage.getItem('new_payment_id') !== ''){
+                  if(localStorage.getItem('new_payment_id') !== ''){
 
                      axios({
                         url: `${BASE_URL}/customer/ads/store`,
@@ -961,8 +963,10 @@ class CreateForm extends React.Component{
                            category: this.state.category,
                            subcategory: this.state.subcategory,
                            title: this.state.title,
+                           titleinArabic: this.state.titleinArabic,
                            canonical_name: this.state.canonicalName,
                            description: this.state.description,
+                           descriptioninArabic: this.state.descriptioninArabic,
                            price: this.state.price,
                            featured: this.state.featured,
                            negotiable: this.state.negotiable,
@@ -1052,8 +1056,10 @@ class CreateForm extends React.Component{
                         category: this.state.category,
                         subcategory: this.state.subcategory,
                         title: this.state.title,
+                        titleinArabic: this.state.titleinArabic,
                         canonical_name: this.state.canonicalName,
                         description: this.state.description,
+                        descriptioninArabic: this.state.descriptioninArabic,
                         price: this.state.price,
                         featured: this.state.featured,
                         negotiable: this.state.negotiable,
@@ -1143,8 +1149,10 @@ class CreateForm extends React.Component{
                   category: this.state.category,
                   subcategory: this.state.subcategory,
                   title: this.state.title,
+                  titleinArabic: this.state.titleinArabic,
                   canonical_name: this.state.canonicalName,
                   description: this.state.description,
+                  descriptioninArabic: this.state.descriptioninArabic,
                   price: this.state.price,
                   featured: this.state.featured,
                   negotiable: this.state.negotiable,
@@ -1196,7 +1204,7 @@ class CreateForm extends React.Component{
 
                }
 
-               sessionStorage.removeItem('new_payment_id');
+               localStorage.removeItem('new_payment_id');
 
                this.setState({
                   loaderStatus: false,
@@ -1204,7 +1212,7 @@ class CreateForm extends React.Component{
 
             }).catch((error) => {
 
-               sessionStorage.removeItem('new_payment_id');
+               localStorage.removeItem('new_payment_id');
 
                this.setState({
                   loaderStatus: false,
@@ -1339,6 +1347,7 @@ class CreateForm extends React.Component{
                            {this.state.formPage == 1 ?
                               <>
                                  <TextField handleChange={this.handleChange} name="title" label="Title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
+                                 <TextField handleChange={this.handleChange} name="titleinArabic" label="Title Arabic" value={this.state.titleinArabic} placeholder="Title Arabic" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
                                  {image ? image && image.map((image, index) => {
@@ -1346,6 +1355,7 @@ class CreateForm extends React.Component{
                                  }) : ''}
                                  <TextField handleChange={this.handleChange} name="price" label="Price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
+                                 <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
                                  <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
@@ -1439,7 +1449,7 @@ class CreateForm extends React.Component{
 
                                  <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
@@ -1502,7 +1512,7 @@ class CreateForm extends React.Component{
                                  
                                  <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
                                  
@@ -1564,7 +1574,7 @@ class CreateForm extends React.Component{
 
                                  <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="" >Terms &amp; Condition</Link> </label>
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 

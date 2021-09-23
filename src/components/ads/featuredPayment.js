@@ -25,7 +25,7 @@ export default class featuredPayment extends Component {
 
         let currency = localStorage.getItem('currency');
 
-        let amount = sessionStorage.getItem('newAmount');
+        let amount = localStorage.getItem('newAmount');
         return (
             
             <>

@@ -24,7 +24,7 @@ class Header extends React.Component{
 
       this.state = {
          user: localStorage.getItem('user') != '' ? localStorage.getItem('user') : '',
-         loginStatus: (sessionStorage.getItem('loginStatus'))?sessionStorage.getItem('loginStatus'):false,
+         loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
          // loginStatus: false,
          dataArray:JSON.parse(localStorage.getItem('dataArray')),
          showHistory: false,
@@ -59,23 +59,23 @@ class Header extends React.Component{
 
     componentWillMount = () => {
         
-        if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('latitude')){
+        if(!localStorage.getItem('latitude') && !localStorage.getItem('longitude')){
             navigator.geolocation.getCurrentPosition((position) => {
                 
-                sessionStorage.removeItem('latitude');
-                sessionStorage.removeItem('longitude');
+                localStorage.removeItem('latitude');
+                localStorage.removeItem('longitude');
 
-                sessionStorage.setItem('latitude', position.coords.latitude);
-                sessionStorage.setItem('longitude', position.coords.longitude);
+                localStorage.setItem('latitude', position.coords.latitude);
+                localStorage.setItem('longitude', position.coords.longitude);
 
                 axios({
-                    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${sessionStorage.getItem('latitude')},${sessionStorage.getItem('longitude')}&key=${GOOGLEMAPS_API}`,
+                    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${localStorage.getItem('latitude')},${localStorage.getItem('longitude')}&key=${GOOGLEMAPS_API}`,
                     method: 'GET',
                 }).then(response => {
                     response.data.results.forEach(gmap => {
                         
                         if(gmap.address_components.length == 1){
-                            sessionStorage.setItem('country_name', gmap.formatted_address);
+                            localStorage.setItem('country_name', gmap.formatted_address);
                         }
                     });
         
@@ -97,9 +97,9 @@ class Header extends React.Component{
                 });
 
                 response.data.country.forEach(country => {
-                    if(country.name === sessionStorage.getItem('country_name')){
-                        sessionStorage.removeItem('country');
-                        sessionStorage.setItem('country', country.id);
+                    if(country.name === localStorage.getItem('country_name')){
+                        localStorage.removeItem('country_id');
+                        localStorage.setItem('country_id', country.id);
                     }
                 });
             }
@@ -156,25 +156,25 @@ class Header extends React.Component{
             if(response.data.code === '200'){
                
 
-            //     localStorage.removeItem('userToken');
-            //     sessionStorage.removeItem('loginStatus');
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('loginStatus');
 
-            //     localStorage.setItem('userToken', response.data.token);
-            //     // localStorage.setItem('loginStatus', true);
-            //     this.setState({
-            //        loginStatus:true,
-            //        user: localStorage.getItem('user'),
-            //     });
+                localStorage.setItem('userToken', response.data.token);
+                // localStorage.setItem('loginStatus', true);
+                this.setState({
+                   loginStatus:true,
+                   user: localStorage.getItem('user'),
+                });
                 
-            //     sessionStorage.setItem('loginStatus',true);
+                localStorage.setItem('loginStatus',true);
 
-            //     this.setState({loginStatus:true});
-            //     Swal.fire({
-            //        title: 'success!',
-            //        text: response.data.message,
-            //        icon: 'success',
-            //        confirmButtonText: 'OK'
-            //    });
+                this.setState({loginStatus:true});
+                Swal.fire({
+                   title: 'success!',
+                   text: response.data.message,
+                   icon: 'success',
+                   confirmButtonText: 'OK'
+               });
                this.setState({
                    registerModal: false,
                    emailVerifydModal: !this.state.emailVerifydModal,
@@ -261,7 +261,7 @@ class Header extends React.Component{
               if(response.data.status == 'success'){
 
                   localStorage.removeItem('userToken');
-                  sessionStorage.removeItem('loginStatus');
+                  localStorage.removeItem('loginStatus');
 
                   localStorage.setItem('userToken', response.data.token);
                   // localStorage.setItem('loginStatus', true);
@@ -269,7 +269,7 @@ class Header extends React.Component{
                      loginStatus:true,
                      user: localStorage.getItem('user'),
                   });
-                  sessionStorage.setItem('loginStatus',true);
+                  localStorage.setItem('loginStatus',true);
                   Swal.fire({
                      title: 'success!',
                      text: response.data.message,
@@ -479,9 +479,9 @@ class Header extends React.Component{
 
 logout = (e) => {
    this.setState({loginStatus:false, loaderStatus: true,});
-   sessionStorage.removeItem('loginStatus');
+   localStorage.removeItem('loginStatus');
    
-   sessionStorage.setItem('loginStatus',false);
+   localStorage.setItem('loginStatus',false);
    
    e.preventDefault();
    
@@ -544,7 +544,7 @@ logout = (e) => {
                     if(response.data.status === 'success'){
 
                         localStorage.removeItem('userToken');
-                        sessionStorage.removeItem('loginStatus');
+                        localStorage.removeItem('loginStatus');
                         localStorage.removeItem('user');
 
                         localStorage.setItem('userToken', response.data.token);
@@ -555,7 +555,7 @@ logout = (e) => {
                             user: localStorage.getItem('user'),
                         });
                         
-                        sessionStorage.setItem('loginStatus',true);
+                        localStorage.setItem('loginStatus',true);
 
                         this.setState({loginStatus:true});
                         Swal.fire({
@@ -583,7 +583,7 @@ logout = (e) => {
 
     onCountryChange = (e) => {
 
-        sessionStorage.setItem('country', e.target.value);
+        localStorage.setItem('country', e.target.value);
 
         this.setState({
             countryListModal: !this.state.countryListModal,
@@ -640,7 +640,7 @@ logout = (e) => {
        const {loginStatus} =this.state;
 
        let countryList = this.state.countryList;
-       let country_id = sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0;
+       let country_id = localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0;
 
        let loaderStatus = this.state.loaderStatus;
       
@@ -740,7 +740,7 @@ logout = (e) => {
                                             <button className="btn btn-link p-0" onClick={() => { this.viewRegisterModal() }} data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Don’t have an account? Create one</button>
                                         </div>
                                     </div>
-                                    <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="/terms/conditions"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
                                 
                                 </Modal.Body>
                                 
@@ -779,7 +779,7 @@ logout = (e) => {
                                 <button  onClick={() => { this.viewLoginModal() }} className="btn btn-link p-0" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Already have an account? Login here</button>
                                 </div>
                             </div>
-                            <div className="modal-note text-center">By signing up I agree to the  <a href="#"> Terms and Conditions</a> and <a href="#"> Privacy Policy</a></div>
+                            <div className="modal-note text-center">By signing up I agree to the  <Link to="/terms/conditions"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
                                 
                                 </Modal.Body>
                                 
@@ -810,7 +810,7 @@ logout = (e) => {
                                             <button className="btn btn-link p-0" onClick={ this.viewForgotpasswordModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
                                         </div>
                                     </div>
-                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link href="#"> Privacy Policy</Link></div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="/terms/conditions"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
                                 
                                 </Modal.Body>
                                 
@@ -840,7 +840,7 @@ logout = (e) => {
                                             <button className="btn btn-link p-0" onClick={ this.viewVerifyEmaildModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
                                         </div>
                                     </div>
-                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link href="#"> Privacy Policy</Link></div>
+                                    <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
                                 
                                 </Modal.Body>
                                 

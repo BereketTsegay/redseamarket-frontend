@@ -8,7 +8,7 @@ class Header extends React.Component{
 
         this.state = {
             city: [],
-            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 229,
+            country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
             city_id: '',
         }
     }
@@ -16,7 +16,7 @@ class Header extends React.Component{
     componentWillMount = () => {
        
         this.setState({
-            city_id: sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '',
+            city_id: localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '',
         });
 
         axios({
@@ -40,9 +40,9 @@ class Header extends React.Component{
     
     countryChange = (e) => {
 
-        sessionStorage.removeItem('city_id');
+        localStorage.removeItem('city_id');
         
-        sessionStorage.setItem('city_id', e.target.value);
+        localStorage.setItem('city_id', e.target.value);
 
         window.location.reload();
     }

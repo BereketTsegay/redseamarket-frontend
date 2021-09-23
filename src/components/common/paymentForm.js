@@ -19,7 +19,7 @@ export class PaymentForm extends React.Component {
             countries: [],
             states: [],
             cities: [],
-            country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : '',
+            country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : '',
             state_id: '',
             country: '',
             state: '',
@@ -34,7 +34,7 @@ export class PaymentForm extends React.Component {
             error_state: '',
             error_city: '',
             currency: localStorage.getItem('currency') ? localStorage.getItem('currency').toLowerCase() : 'aed',
-            amount: sessionStorage.getItem('newAmount') ? sessionStorage.getItem('newAmount') : 0,
+            amount: localStorage.getItem('newAmount') ? localStorage.getItem('newAmount') : 0,
             loaderStatus: false,
             token: userToken,
         }
@@ -147,8 +147,8 @@ export class PaymentForm extends React.Component {
 
                                 });
 
-                                sessionStorage.removeItem('new_payment_id');
-                                sessionStorage.setItem('new_payment_id', result.paymentIntent.id);
+                                localStorage.removeItem('new_payment_id');
+                                localStorage.setItem('new_payment_id', result.paymentIntent.id);
                                 this.props.newPaymentIdGet(result.paymentIntent.id);
                                 this.setState({
                                     loaderStatus: false,
@@ -164,8 +164,8 @@ export class PaymentForm extends React.Component {
                         }
                         else{
 
-                            sessionStorage.removeItem('new_payment_id');
-                            sessionStorage.setItem('new_payment_id', result.error.payment_intent.id);
+                            localStorage.removeItem('new_payment_id');
+                            localStorage.setItem('new_payment_id', result.error.payment_intent.id);
                             this.props.newPaymentIdGet(result.paymentIntent.id);
                             this.setState({
                                 loaderStatus: false,
@@ -322,7 +322,7 @@ export class PaymentForm extends React.Component {
 
     componentWillMount = () => {
 
-        sessionStorage.removeItem('new_payment_id');
+        localStorage.removeItem('new_payment_id');
 
         axios({
             method: 'POST',
@@ -336,7 +336,7 @@ export class PaymentForm extends React.Component {
 
                response.data.country.forEach(element => {
                    
-                   if(element.id == sessionStorage.getItem('country')){
+                   if(element.id == localStorage.getItem('country_id')){
                        this.setState({
                             country: element.code,
                        });
@@ -371,13 +371,13 @@ export class PaymentForm extends React.Component {
             method: 'POST',
             url: `${BASE_URL}/customer/get/state`,
             data:{
-               country: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+               country: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
             }
          }).then(response => {
    
             if(response.data.status == 'success'){
                this.setState({
-                  country_id: sessionStorage.getItem('country') ? sessionStorage.getItem('country') : 0,
+                  country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
                   states: response.data.state,
                });
             }

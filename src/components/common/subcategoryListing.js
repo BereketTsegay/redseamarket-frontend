@@ -15,7 +15,7 @@ export default class subcategoryListing extends Component {
         let subcategory = this.props.subcategory ? this.props.subcategory : [];
         let image = this.props.image ? this.props.image : '';
         let category_id = this.props.category_id ;
-        let city = sessionStorage.getItem('city_id') ? sessionStorage.getItem('city_id') : '';
+        let city = localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         
         return (
             <div className="col-category col-md-4 col-sm-6">

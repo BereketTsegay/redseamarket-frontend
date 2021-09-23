@@ -48,8 +48,8 @@ class Footer extends React.Component{
                                  <li><a href="#">About Us</a></li>
                                  <li><a href="#">Advertising</a></li>
                                  <li><a href="#">Careers</a></li>
-                                 <li><a href="#">Terms of Use</a></li>
-                                 <li><a href="#">Privacy Policy</a></li>
+                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
+                                 <li><Link to="/privacy/policy">Privacy Policy</Link></li>
                                  <li><a href="#">Contact Us</a></li>
                               </ul>
                            </div>

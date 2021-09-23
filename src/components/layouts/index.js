@@ -19,8 +19,8 @@ class Index extends React.Component{
             token: userToken,
             categoryDefault: '',
             loaderState: false,
-            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
-            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
+            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
   
         };
   
@@ -39,7 +39,7 @@ class Index extends React.Component{
                 data:{
                     latitude: this.state.latitude,
                     longitude: this.state.longitude,
-                    city: sessionStorage.getItem('city_id'),
+                    city: localStorage.getItem('city_id'),
                 }
 
             }).then(result => {
@@ -77,7 +77,7 @@ class Index extends React.Component{
                 data:{
                     latitude: this.state.latitude,
                     longitude: this.state.longitude,
-                    city: sessionStorage.getItem('city_id'),
+                    city: localStorage.getItem('city_id'),
                 }
 
             }).then(result => {

@@ -22,8 +22,8 @@ export default class categoryProperty extends Component {
             popularCategory: [],
             subcategory: [],
             loaderStatus: false,
-            latitude: sessionStorage.getItem('latitude') ? sessionStorage.getItem('latitude') : 0,
-            longitude: sessionStorage.getItem('longitude') ? sessionStorage.getItem('longitude') : 0,
+            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
         }
     }
 
@@ -41,7 +41,7 @@ export default class categoryProperty extends Component {
                     category_id: this.state.category_id,
                     latitude: this.state.latitude,
                     longitude: this.state.longitude,
-                    city: sessionStorage.getItem('city_id'),
+                    city: localStorage.getItem('city_id'),
                 }
 
             }).then(response => {
@@ -81,7 +81,7 @@ export default class categoryProperty extends Component {
                         category_id: this.state.category_id,
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
-                        city: sessionStorage.getItem('city_id'),
+                        city: localStorage.getItem('city_id'),
                     }
 
                 }).then(response => {
@@ -123,7 +123,7 @@ export default class categoryProperty extends Component {
                     category_id: this.state.category_id,
                     latitude: this.state.latitude,
                     longitude: this.state.longitude,
-                    city: sessionStorage.getItem('city_id'),
+                    city: localStorage.getItem('city_id'),
                 }
             }).then(response => {
     

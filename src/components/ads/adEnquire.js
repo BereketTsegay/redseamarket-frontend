@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { BASE_URL } from '../../projectString';
 import Loader from '../Loader';
 
@@ -100,7 +101,7 @@ export default class adEnquire extends Component {
                                     <button onClick={(e) => this.handleSubmit(e)} className="btn btn-primary d-block w-100">Enquire Now</button>
                                 </div>
                                 <div className="form-note text-center">
-                                    By clicking on ‘Enquire Now’, I agree to the Jamal al bahr <a href="#"> Terms & Conditions</a> and <a href="#"> Privacy Policy</a>
+                                    By clicking on ‘Enquire Now’, I agree to the Jamal al bahr <Link to="/terms/conditions"> Terms &amp; Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link>
                                 </div>
                                 </div>
                             </div>
