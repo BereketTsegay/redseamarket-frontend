@@ -401,6 +401,23 @@ export class PaymentForm extends React.Component {
         let country = option;
 
         axios({
+            url: `${BASE_URL}/get/currency`,
+            method: 'POST',
+            data: {
+                country: id,
+            }
+        }).then(response => {
+            
+            if(response.data.status === 'success'){
+                
+                this.setState({
+                    currency: response.data ? response.data.currency.currency_code : localStorage.getItem('currency') ? localStorage.getItem('currency').toLowerCase() : 'aed',
+                });
+
+            }
+        })
+
+        axios({
             method: 'POST',
             url: `${BASE_URL}/customer/get/state`,
             data:{

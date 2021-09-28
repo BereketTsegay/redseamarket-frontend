@@ -251,7 +251,7 @@ export default class adsDetails extends Component {
                                                 <div className="product-price font-weight-bold text-brand">{ads.currency} {ads.price}</div>
                                                 <ul className="product-meta">
 
-                                                    {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value.registration_year} fuel={ads.motore_value.fuel_type} />
+                                                    {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value ? ads.motore_value.registration_year : ''} fuel={ads.motore_value ? ads.motore_value.fuel_type : ''} />
                                                     : ads.category_id == 2 ? ads.property_rend ? <PropertyForRendProperty room={ads.property_rend.room} property_type={ads.property_rend.building_type} size={ads.property_rend.size} furnished={ads.property_rend.furnished} /> : <PropertyForRendProperty room="" property_type="" size="" furnished="" />
                                                     : ads.category_id == 3 ? ads.property_sale ? <PropertyForRendProperty room={ads.property_sale.room} property_type={ads.property_sale.building_type} size={ads.property_sale.size} furnished={ads.property_sale.furnished} /> : <PropertyForRendProperty room="" property_type="" size="" furnished="" />
                                                     : ads.custom_value.map((customValue, index) => {

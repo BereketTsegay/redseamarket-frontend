@@ -3,7 +3,8 @@ import { HashRouter as Router } from "react-router-dom";
 import {
   Switch,
   Route,
-  Link
+  Link,
+  BrowserRouter
 } from "react-router-dom";
 import Index from './components/layouts/index';
 import CreateForm from './components/ads/createform';
@@ -35,7 +36,7 @@ function App() {
 
     return (
       <Elements stripe={stripePromise}>
-        <Router> 
+        <Router > 
           <Switch>
             <ScrollToTop>
               <Route exact path="/" component={Index} />

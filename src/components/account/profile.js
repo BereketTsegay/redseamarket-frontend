@@ -4,6 +4,8 @@ import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL, userToken } from '../../projectString';
 import Header from '../layouts/header'
 import Breadcrumb from './breadcrumb'
+import AppDownload from '../home/app-download'
+import Footer from '../layouts/footer'
 import Loader from '../Loader';
 import NavLinks from './NavLinks'
 import SweetAlert from 'sweetalert2-react';
@@ -327,7 +329,7 @@ export default class profile extends Component {
 
                             <div className="my-profile-title-panel">
                                 <div className="row">
-                                    <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
+                                    <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a style={{cursor: 'pointer'}} onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
                                     <div className="col-lg-4 text-center"><a href="javascript:void(0);" onClick={this.changePasswordModal} className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Change Password</a></div>
                                 </div>
                                 <div className="row mt-4 mt-lg-5">
@@ -398,6 +400,9 @@ export default class profile extends Component {
                             </div>
                         </div>
                     </section>
+                    
+                    <AppDownload />
+                    <Footer />
                 </>}
 
                 <Modal className="modal fade log-sign-modal" show={this.state.changePasswordModal}  style={modalLogin} id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">

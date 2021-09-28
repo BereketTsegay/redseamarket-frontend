@@ -1447,18 +1447,18 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div class="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
-                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
-                                 </div>
-
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
+                                 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
@@ -1510,17 +1510,17 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
                                  
-                                 <div class="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
-                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
-                                 </div>
-                                 
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
+
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
@@ -1572,17 +1572,17 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div class="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
-                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
-                                 </div>
-
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
+
+                                 <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
+                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" >Terms &amp; Condition</Link> </label>
+                                    {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
+                                 </div>
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">

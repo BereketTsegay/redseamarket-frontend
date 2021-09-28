@@ -9,6 +9,7 @@ class Footer extends React.Component{
 
       this.state = {
          socialLink: [],
+         loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
       }
 
    }
@@ -35,6 +36,9 @@ class Footer extends React.Component{
 
       let {socialLink} = this.state;
 
+      let date = new Date();
+      let year = date.getFullYear();
+
       return (
                
             <footer id="footer" className="site-footer">
@@ -46,41 +50,44 @@ class Footer extends React.Component{
                               <h4 className="footer-title">Company</h4>
                               <ul className="footer-menu">
                                  <li><a href="#">About Us</a></li>
-                                 <li><a href="#">Advertising</a></li>
-                                 <li><a href="#">Careers</a></li>
-                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
-                                 <li><Link to="/privacy/policy">Privacy Policy</Link></li>
                                  <li><a href="#">Contact Us</a></li>
+                                 
                               </ul>
                            </div>
                         </div>
                         <div className="col-footer col-md-3 col-6">
                            <div className="footer-panel">
-                              <h4 className="footer-title">UAE</h4>
+                              <h4 className="footer-title" style={{color:'transparent'}}>UAE</h4>
                               <ul className="footer-menu">
-                                 <li><a href="#">Dubai</a></li>
+                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
+                                 <li><Link to="/privacy/policy">Privacy Policy</Link></li>
+                                 {/* <li><a href="#">Dubai</a></li>
                                  <li><a href="#">Abu Dhabi</a></li>
                                  <li><a href="#">Ras al Khaimah</a></li>
                                  <li><a href="#">Sharjah</a></li>
                                  <li><a href="#">Fujairah</a></li>
                                  <li><a href="#">Ajman</a></li>
                                  <li><a href="#">Umm al Quwain</a></li>
-                                 <li><a href="#">Al Ain</a></li>
+                                 <li><a href="#">Al Ain</a></li> */}
                               </ul>
                            </div>
                         </div>
                         <div className="col-footer col-md-3 col-6">
                            <div className="footer-panel">
-                              <h4 className="footer-title">Other Countries</h4>
+                              <h4 className="footer-title" style={{color:'transparent'}}>Other Countries</h4>
                               <ul className="footer-menu">
-                                 <li><a href="#">Egypt</a></li>
+                                 <li>
+                                    {this.state.loginStatus === true || this.state.loginStatus === 'true' ? <Link to='/create-ads'>Advertising</Link> : <a href='javascript:void(0);'>Advertising</a>}
+                                 </li>
+                                 <li><a href="#">Careers</a></li>
+                                 {/* <li><a href="#">Egypt</a></li>
                                  <li><a href="#">Bahrain</a></li>
                                  <li><a href="#">Saudi Arabia</a></li>
                                  <li><a href="#">Lebanon</a></li>
                                  <li><a href="#">Kuwait</a></li>
                                  <li><a href="#">Oman</a></li>
                                  <li><a href="#">Qatar</a></li>
-                                 <li><a href="#">Pakistan</a></li>
+                                 <li><a href="#">Pakistan</a></li> */}
                               </ul>
                            </div>
                         </div>
@@ -112,7 +119,7 @@ class Footer extends React.Component{
                   <div className="container">
                      <div className="row">
                         <div className="col-12">
-                           <p className="text-center text-md-left mb-0">© <Link to="/">Jamal al bahr general trading</Link> , All Rights Reserved.</p>
+                           <p className="text-center text-md-left mb-0"> &copy; <Link to="/">Jamal al bahr general trading</Link>, {year} All Rights Reserved.</p>
                         </div>
                      </div>
                   </div>

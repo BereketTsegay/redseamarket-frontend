@@ -583,7 +583,9 @@ logout = (e) => {
 
     onCountryChange = (e) => {
 
-        localStorage.setItem('country', e.target.value);
+        localStorage.removeItem('country_id');
+
+        localStorage.setItem('country_id', e.target.value);
 
         this.setState({
             countryListModal: !this.state.countryListModal,
@@ -596,7 +598,7 @@ logout = (e) => {
                 country: e.target.value,
             }
         }).then(response => {
-            console.log(response.data.currency.currency_code);
+            // console.log(response.data.currency.currency_code);
             if(response.data.status === 'success'){
                 
                 localStorage.removeItem('currency');
@@ -659,7 +661,7 @@ logout = (e) => {
                                 <div className="country-select-panel d-block d-md-inline-block" onClick={() => this.setState({countryListModal: !this.countryListModal})} style={{cursor: 'pointer'}}>
                                     Change Country
                                 </div>
-                                
+                                    
                                 <CitySelect />
 
                                 <div className="header-right d-none d-lg-flex align-items-center ml-auto">
