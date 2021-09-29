@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { BASE_URL } from '../../projectString';
+import { BASE_URL, IMAGE_URL } from '../../projectString';
+import heroImage from '../../../src/web-assets/img/home-hero-bg.jpg';
+import SearchAutoComplete from './searchAutoComplete';
 
 class homefilter extends Component {
 
@@ -15,6 +17,7 @@ class homefilter extends Component {
          city: '',
          country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
          cityArray: [],
+         banner: null,
       }
    }
 
@@ -39,6 +42,24 @@ class homefilter extends Component {
 
                this.setState({
                   cityArray: response.data.city,
+               });
+            }
+
+      }).catch((error) => {
+
+      });
+
+      axios({
+         url: `${BASE_URL}/customer/get/home/banner`,
+         method: 'POST',
+         data: {
+             country: this.state.country_id,
+         },
+      }).then(response => {
+            if(response.data.status === 'success'){
+
+               this.setState({
+                  banner: response.data.banner,
                });
             }
 
@@ -109,21 +130,27 @@ class homefilter extends Component {
 
     render() {
 
-      let {searchKey, city, category} = this.state;
+      let {searchKey} = this.state;
 
       let categoryList = this.props.category;
 
       let cityArray = this.state.cityArray;
 
+      let banner = this.state.banner;
+
+      let bannerImage = banner ? IMAGE_URL + '/' + banner.image : heroImage;
+      
+      
+
         return (
            <div> 
-        <section className="section-home-hero">
+        <section className="section-home-hero" style={{background: `#000 url('${bannerImage}') no-repeat center/cover`, }}>
            
 
            <div className="container">
                   <div className="row">
                      <div className="col-xl-6 col-lg-8 col-md-11 mx-auto">
-                        <h2 className="section-title text-white text-center">The best place to buy your house, sell your car or find a job in Dubai.</h2>
+                        <h2 className="section-title text-white text-center">{ banner ? banner.name : 'The best place to buy your house, sell your car or find a job.'}</h2>
                      </div>
                   </div>
                   <div className="row">
@@ -153,7 +180,12 @@ class homefilter extends Component {
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" />
+                                          {/* <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" /> */}
+                                          {/* <div className="home-hero-search-dropdown">
+                                             <div className="search-dropdown-item">hi</div>
+                                             <div className="search-dropdown-item">hi</div>
+                                          </div> */}
+                                          <SearchAutoComplete />
                                        </div>
                                     </div>
                                     <div className="col-md-3">
@@ -199,6 +231,7 @@ class homefilter extends Component {
                                              <div className="col-md-9">
                                                 <div className="form-group">
                                                    <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" />
+                                                   
                                                 </div>
                                              </div>
                                              <div className="col-md-3">

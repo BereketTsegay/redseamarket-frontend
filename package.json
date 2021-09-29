@@ -19,6 +19,7 @@
     "react-loader-spinner": "^4.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-search-autocomplete": "^5.4.2",
     "react-stripe-checkout": "^2.6.3",
     "stripe": "^8.174.0",
     "sweetalert2": "^11.1.2",

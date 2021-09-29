@@ -53,6 +53,12 @@ class Header extends React.Component{
         otpError: '',
         countryListModal: false,
         countryList: [],
+        otpFlag: false,
+        changePasswordModal: false,
+        newPassword: '',
+        confirmPassword: '',
+        newPasswordError: '',
+        confirmPasswordError: '',
       }
 
    }
@@ -388,6 +394,12 @@ class Header extends React.Component{
         case 'otp':
             this.state.otpError = (value.length === 0 || (value.trim()).length === 0 ) ? 'OTP cannot be blank': '';
             break;
+        case 'newPassword':
+            this.state.newPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Password cannot be blank': '';
+            break;
+        case 'confirmPassword':
+            this.state.confirmPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Confirm Password cannot be blank': '';
+            break;
         default:
             break;
    }
@@ -426,16 +438,16 @@ class Header extends React.Component{
             }).then(response => {
                 if(response.data.status == 'success'){
                     
-                    Swal.fire({
-                        title: 'success!',
-                        text: response.data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
+                    // Swal.fire({
+                    //     title: 'success!',
+                    //     text: response.data.message,
+                    //     icon: 'success',
+                    //     confirmButtonText: 'OK'
+                    // });
 
                     this.setState({
-
-                        forgotPasswordModal: false,
+                        otpFlag: true,
+                        // forgotPasswordModal: false,
                     });
                 
                 }
@@ -574,6 +586,40 @@ logout = (e) => {
         });
     }
 
+    forgotVerifyOtp = () => {
+
+        this.setState({
+            otpError: this.state.otp === '' ? 'OTP cannot be blank': '',
+        }, () => {
+
+            if(this.state.otp !== ''){
+
+                axios({
+                    url: `${BASE_URL}/vefify/opt`,
+                    method: 'POST',
+                    data: {
+                        email: this.state.email,
+                        otp: this.state.otp,
+                    }
+                }).then(response => {
+
+                    if(response.data.status === 'success' && response.data.token === '#4t5o9ke0n6_#'){
+                        
+                        this.setState({
+                            otp: '',
+                            otpFlag: false,
+                            changePasswordModal: true,
+                        });
+                    }
+
+                }).catch((error) => {
+
+                });
+            }
+        });
+
+    }
+
     countryModal = () => {
 
         this.setState({
@@ -609,6 +655,58 @@ logout = (e) => {
             }
         })
 
+    }
+
+    changePasswordSubmit = () => {
+
+        if(this.state.newPassword && this.state.confirmPassword){
+
+            if(this.state.newPassword === this.state.confirmPassword){
+
+                axios({
+                    url: `${BASE_URL}/forgotpassword/password/reset`,
+                    method: 'POST',
+                    data: {
+                        email: this.state.email,
+                        password: this.state.newPassword,
+                        password_confirmation: this.state.confirmPassword,
+                    }
+                }).then(response => {
+
+                    if(response.data.status === 'success'){
+
+                        this.setState({
+                            forgotPasswordModal: false,
+                        });
+                        
+                        Swal.fire({
+                            title: 'success',
+                            icon: 'success',
+                            text: response.data.message,
+                        });
+                    }
+
+                }).catch((error) => {});
+            }
+            else{
+                this.setState({
+                    confirmPasswordError: 'Password & Confirm password mismatch',
+                });
+            }
+        }
+        else{
+            if(this.state.newPassword === ''){
+                this.setState({
+                    newPasswordError: 'Password cannot be blank',
+                });
+            }
+            
+            if(this.state.confirmPassword === ''){
+                this.setState({
+                    confirmPasswordError: 'Confirm password cannot be blank',
+                });
+            }
+        }
     }
 
 
@@ -798,8 +896,10 @@ logout = (e) => {
                                     </button>
                                     <h5 className="modal-title text-center text-brand">Recover your account</h5>
                                     <div className="modal-form">
-                                        <div className="form-group">
                                         
+                                        {this.state.otpFlag === false ?
+                                        <>
+                                        <div className="form-group">
                                         <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address"/>
                                             {this.state.emailError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.emailError}</p>}
                                         </div>
@@ -808,6 +908,18 @@ logout = (e) => {
                                         
                                             <button onClick={ this.forgotSubmit } className="btn btn-primary d-block w-100">Recover</button>
                                         </div>
+                                        </> : 
+                                        <>
+                                            <div className="form-group">
+                                                <input type="number" value={this.state.otp} onChange={this.onChange}  name="otp" className="form-control" placeholder="OTP"/>
+                                                    {this.state.otpError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.emailError}</p>}
+                                                </div>
+                                            
+                                            <div className="form-group">
+                                                <button onClick={ this.forgotVerifyOtp } className="btn btn-primary d-block w-100">Verify</button>
+                                            </div>
+                                        </>}
+
                                         <div className="form-group-line text-center">
                                             <button className="btn btn-link p-0" onClick={ this.viewForgotpasswordModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
                                         </div>
@@ -874,6 +986,35 @@ logout = (e) => {
                                 </Modal.Body>
                                 
                             </Modal>
+
+                            <Modal className="modal fade log-sign-modal" show={this.state.changePasswordModal}  style={modalLogin} id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
+                                
+                            <Modal.Body>
+                                    
+                                <button  onClick={ this.changePasswordModal }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <h5 className="modal-title text-center text-brand">Change your password</h5>
+                                <div className="modal-form">
+                                    <div className="form-group">
+                                        <input type="password" value={this.state.newPassword}  onChange={this.onChange} name="newPassword" className="form-control" placeholder="New Password"/>
+                                        {this.state.newPasswordError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.newPasswordError}</p>}
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" value={this.state.confirmPassword}  onChange={this.onChange} name="confirmPassword" className="form-control" placeholder="Confirm Password"/>
+                                        {this.state.confirmPasswordError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.confirmPasswordError}</p>}
+                                    </div>
+                                                        
+                                    <div className="form-group">
+                                                        
+                                        <button onClick={ this.changePasswordSubmit } className="btn btn-primary d-block w-100">Change</button>
+                                    </div>
+                                </div>
+                                
+                                        
+                            </Modal.Body>
+                                        
+                        </Modal>
 
                         </div>
                 </>}
