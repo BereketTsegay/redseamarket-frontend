@@ -124,8 +124,8 @@ export default class categoryMotors extends Component {
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          {/* <input type="text" onChange={(e) => this.searchEvent(e)} value={searchKey} className="form-control" placeholder="Search for anything…" /> */}
-                                          <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category="1" />
+                                          <input type="text" onChange={(e) => this.searchEvent(e)} value={searchKey} className="form-control" placeholder="Search for anything…" />
+                                          <SearchAutoComplete searchKey={searchKey} city={this.state.city} category="1" />
                                        </div>
                                     </div>
                                     <div className="col-md-3">

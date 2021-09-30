@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
 import heroImage from '../../../src/web-assets/img/home-hero-bg.jpg';
 import SearchAutoComplete from './searchAutoComplete';
+import { Link } from 'react-router-dom';
 
 class homefilter extends Component {
 
@@ -18,6 +19,9 @@ class homefilter extends Component {
          country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
          cityArray: [],
          banner: null,
+         searchResult: [],
+         latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+         longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
       }
    }
 
@@ -26,6 +30,38 @@ class homefilter extends Component {
       this.setState({
          searchKey: e.target.value,
       });
+
+      let string = e.target.value;
+
+      if(string !== ''){
+         axios({
+            url: `${BASE_URL}/search/autocomplete`,
+            method: 'POST',
+            data: {
+               country: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
+               latitude: this.state.latitude,
+               longitude: this.state.longitude,
+               search_key: string,
+               category: this.state.category,
+               city: this.state.city,
+               subcategory: this.state.subcategory,
+            }
+         }).then(response => {
+
+            if(response.data.status === 'success'){
+               
+               this.setState({
+                  searchResult: response.data.ads,
+               });
+            }
+
+         }).catch((error) => {});
+      }
+      else{
+         this.setState({
+            searchResult: [],
+         });
+      }
       
    }
 
@@ -147,8 +183,8 @@ class homefilter extends Component {
 
       let bannerImage = banner ? IMAGE_URL + '/' + banner.image : heroImage;
       
+      let searchResult = this.state.searchResult;
       
-
         return (
            <div> 
         <section className="section-home-hero" style={{background: `#000 url('${bannerImage}') no-repeat center/cover`, }}>
@@ -187,9 +223,30 @@ class homefilter extends Component {
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          {/* <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" /> */}
-                                          <SearchAutoComplete searchKey={this.searchKeyEvent} />
+                                          <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" />
+                                          <SearchAutoComplete searchKey={searchKey} />
                                        </div>
+                                       {/* {searchResult.length != 0 ?
+                                       <div className="search-result-frame">
+                                          <div className="search-result-panel">
+                                             <ul className="search-result">
+                                                {searchResult && searchResult.map((searchResult, index) => {
+                                                   return (
+                                                      <li key={index}>
+                                                         <Link to={'adsdetails/'+ searchResult.id}>
+                                                            <div className="media"><img src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
+                                                            <div className="content">
+                                                               <h6 className="title">{searchResult.name}</h6>
+                                                               <div className="price">{searchResult.currency} {searchResult.price}</div>
+                                                            </div>
+                                                         </Link>
+                                                      </li>
+                                                   )
+                                                }) }
+                                             </ul>
+                                             <a href="#" className="search-reult-more">View More</a>
+                                          </div>
+                                       </div> : ''} */}
                                     </div>
                                     <div className="col-md-3">
                                        <button className="btn btn-primary has-icon w-100" onClick={this.handlSubmit}>
@@ -203,6 +260,7 @@ class homefilter extends Component {
                            {categoryList && categoryList.map((categoryList, index) => {
                               
                               if(index < 5){
+                                 
                                  return (
                                     <div className="tab-pane fade" id={`cat${index}`} role="tabpanel" aria-labelledby="motors-tab">
                                        <div className="hero-search hero-search-home">
@@ -233,8 +291,8 @@ class homefilter extends Component {
                                           <div className="row">
                                              <div className="col-md-9">
                                                 <div className="form-group">
-                                                   {/* <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" /> */}
-                                                   <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category={this.state.category} subcategory={this.state.subcategory} />
+                                                   <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" />
+                                                   {this.state.category == categoryList.id ? <SearchAutoComplete searchKey={searchKey} city={this.state.city} category={this.state.category} subcategory={this.state.subcategory} /> : '' }
                                                 </div>
                                              </div>
                                              <div className="col-md-3">

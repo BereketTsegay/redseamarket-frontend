@@ -161,8 +161,8 @@ class headFilter extends Component {
                                     
                                     <div className="col-xl-9 col-lg-4 col-md-6">
                                         <div className="form-group">
-                                            {/* <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" /> */}
-                                            <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category={this.state.category_id} 
+                                            <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" />
+                                            <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
                                             seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} />
                                         </div>
                                     </div>

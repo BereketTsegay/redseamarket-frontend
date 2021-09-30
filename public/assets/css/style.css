@@ -1994,3 +1994,93 @@ div.goog-te-gadget {
 .goog-te-combo{
 	border: 0 !important;
 }
+
+
+/* ============================
+# SEARCH RESULT
+============================*/
+.search-main-panel { position: relative; }
+.search-result-frame {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	margin-top: 10px;
+	box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	display: block;
+	z-index: 100;
+}
+.search-main-panel.search-active .search-result-frame { display: block; }
+.search-result-frame .search-result-panel {
+	padding: 15px 15px;
+	background: #FFFFFF;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+.search-result-frame .search-reult-more {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--brand-color);
+	border: 1px solid #dee2e6;
+	border-radius: 6px;
+	background: #f8f9fa;
+	text-transform: uppercase;
+	display: block;
+	width: 100%;
+	padding: 6px 6px;
+	text-align: center;
+}
+.search-result-frame .search-reult-more:hover {
+	color: #FFFFFF;
+	background: var(--brand-color);
+	border-color: var(--brand-color);
+}
+.search-result {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.search-result li {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dee2e6;
+}
+.search-result li:last-child { border-bottom: 0; }
+.search-result a {
+	color: #000000;
+	display: flex;
+	align-items: center;
+}
+.search-result a:hover { color: var(--brand-color); }
+.search-result .media {
+	width: 100px;
+	flex: 0 0 100px;
+}
+.search-result .media img { display: block; }
+.search-result .content {
+	flex-grow: 1;
+	padding-left: 15px;
+}
+.search-result .content .title {
+	font-size: 16px;
+	font-weight: 500;
+	margin-bottom: 2px;
+}
+.search-result .content .price {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--brand-color);
+}
+
+@media (max-width: 767px) {
+	.search-result-frame { margin-top: 0; }
+	.search-result .media {
+		width: 60px;
+		flex: 0 0 60px;
+	}
+	.search-result a { align-items: flex-start; }
+	.search-result .content .title { font-size: 14px; }
+	.search-result .content .price { font-size: 14px; }
+}
