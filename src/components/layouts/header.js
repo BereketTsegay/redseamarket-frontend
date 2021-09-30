@@ -271,9 +271,13 @@ class Header extends React.Component{
 
                   localStorage.setItem('userToken', response.data.token);
                   // localStorage.setItem('loginStatus', true);
+
+                  localStorage.removeItem('user');
+                  localStorage.setItem('user', response.data.user);
+
                   this.setState({
                      loginStatus:true,
-                     user: localStorage.getItem('user'),
+                     user: response.data.user,
                   });
                   localStorage.setItem('loginStatus',true);
                   Swal.fire({
