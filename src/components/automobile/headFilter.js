@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BASE_URL } from '../../projectString';
 import Loader from '../Loader';
 import { withRouter } from 'react-router';
+import SearchAutoComplete from '../home/searchAutoComplete';
 
 class headFilter extends Component {
 
@@ -88,6 +89,13 @@ class headFilter extends Component {
             this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}`);
     
         }
+    }
+
+    searchKeyEvent = (key) => {
+
+        this.setState({
+            keyword: key,
+        });
     }
 
     render() {
@@ -193,7 +201,11 @@ class headFilter extends Component {
                                     </div>
                                     <div className="col-xl-9 col-lg-4 col-md-6">
                                         <div className="form-group">
-                                            <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" />
+                                            {/* <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" /> */}
+                                            <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} 
+                                            category={this.state.category_id} subcategory={this.state.subcategory_id} seller={this.state.seller} 
+                                            price_from={this.state.priceFrom} price_to={this.state.priceTo} condition={this.state.condition} 
+                                            transmission={this.state.transimission} mileage_from={this.state.mileageFrom} mileage_to={this.state.mileageTo} />
                                         </div>
                                     </div>
                                     <div className="col-xl-3 col-lg-4 col-md-6">

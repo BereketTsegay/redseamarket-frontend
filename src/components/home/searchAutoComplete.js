@@ -11,12 +11,10 @@ class searchAutoComplete extends Component {
 
         this.state = {
             item: [],
-            // latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
-            // longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
-            latitude: 0,
-            longitude: 0,
+            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
+            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
             category: '',
-            city: '',
+            city: this.props.city,
             subcategory: '',
             seller: '',
             price_from: '',
@@ -35,7 +33,7 @@ class searchAutoComplete extends Component {
         item.forEach(item => {
             data += `<div class="row">
                             <div class="col-md-2">
-                                <img src="${IMAGE_URL}/${item.images}" />
+                                <img src="${IMAGE_URL}/${item.images}" class="img-fluid" />
                             </div>
                             <div class="col-md-10">
                                 ${item.name}
@@ -47,8 +45,9 @@ class searchAutoComplete extends Component {
     }
 
     handleOnSearch = (string, result) => {
+        
+        this.props.searchKey(string);
 
-       // let item = [];
         axios({
             url: `${BASE_URL}/search/autocomplete`,
             method: 'POST',
@@ -56,16 +55,16 @@ class searchAutoComplete extends Component {
                 latitude: this.state.latitude,
                 longitude: this.state.longitude,
                 search_key: string,
-                category: this.state.category,
-                city: this.state.city,
-                subcategory: this.state.subcategory,
-                seller: this.state.seller,
-                price_from: this.state.price_from,
-                price_to: this.state.price_to,
-                condition: this.state.condition,
-                transmission: this.state.transmission,
-                mileage_from: this.state.mileage_from,
-                mileage_to: this.state.mileage_to,
+                category: this.props.category,
+                city: this.props.city,
+                subcategory: this.props.subcategory,
+                seller: this.props.seller,
+                price_from: this.props.price_from,
+                price_to: this.props.price_to,
+                condition: this.props.condition,
+                transmission: this.props.transmission,
+                mileage_from: this.props.mileage_from,
+                mileage_to: this.props.mileage_to,
             }
         }).then(response => {
 

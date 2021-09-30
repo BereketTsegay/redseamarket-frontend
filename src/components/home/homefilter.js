@@ -128,6 +128,13 @@ class homefilter extends Component {
       });
    }
 
+   searchKeyEvent = (key) => {
+
+      this.setState({
+         searchKey: key,
+      });
+   }
+
     render() {
 
       let {searchKey} = this.state;
@@ -181,11 +188,7 @@ class homefilter extends Component {
                                     <div className="col-md-9">
                                        <div className="form-group">
                                           {/* <input type="text" value={searchKey} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Search for anything…" /> */}
-                                          {/* <div className="home-hero-search-dropdown">
-                                             <div className="search-dropdown-item">hi</div>
-                                             <div className="search-dropdown-item">hi</div>
-                                          </div> */}
-                                          <SearchAutoComplete />
+                                          <SearchAutoComplete searchKey={this.searchKeyEvent} />
                                        </div>
                                     </div>
                                     <div className="col-md-3">
@@ -230,8 +233,8 @@ class homefilter extends Component {
                                           <div className="row">
                                              <div className="col-md-9">
                                                 <div className="form-group">
-                                                   <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" />
-                                                   
+                                                   {/* <input type="text" className="form-control" value={searchKey} onChange={(e) => this.handleChange(e)} placeholder="Search for anything…" /> */}
+                                                   <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category={this.state.category} subcategory={this.state.subcategory} />
                                                 </div>
                                              </div>
                                              <div className="col-md-3">

@@ -9,6 +9,7 @@ import FeaturedDealers from './featuredDealers'
 import MotorsSubcategoryAndAds from './motorsSubcategoryAndAds'
 import Testimonial from './testimonial'
 import Loader from '../Loader';
+import SearchAutoComplete from '../home/searchAutoComplete'
 
 export default class categoryMotors extends Component {
 
@@ -24,6 +25,7 @@ export default class categoryMotors extends Component {
          dealer: [],
          latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
          longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
+         city: localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '',
       }
    }
 
@@ -92,6 +94,12 @@ export default class categoryMotors extends Component {
       this.props.history.push('/motor/list?key='+this.state.searchKey+'&city=');
    }
 
+   searchKeyEvent = (key) => {
+      this.setState({
+         searchKey: key,
+      });
+   }
+
    render() {
 
       let {subcategory, ads, testimonial, searchKey, loaderStatus} = this.state;
@@ -107,7 +115,7 @@ export default class categoryMotors extends Component {
                      <div className="container">
                         <div className="row">
                            <div className="col-xl-6 col-lg-8 col-md-11 mx-auto">
-                              <h2 className="section-title text-white text-center">The UAE’s leading marketplace to buy and sell cars</h2>
+                              <h2 className="section-title text-white text-center">The leading marketplace to buy and sell cars</h2>
                            </div>
                         </div>
                         <div className="row">
@@ -116,7 +124,8 @@ export default class categoryMotors extends Component {
                                  <div className="row">
                                     <div className="col-md-9">
                                        <div className="form-group">
-                                          <input type="text" onChange={(e) => this.searchEvent(e)} value={searchKey} className="form-control" placeholder="Search for anything…" />
+                                          {/* <input type="text" onChange={(e) => this.searchEvent(e)} value={searchKey} className="form-control" placeholder="Search for anything…" /> */}
+                                          <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category="1" />
                                        </div>
                                     </div>
                                     <div className="col-md-3">

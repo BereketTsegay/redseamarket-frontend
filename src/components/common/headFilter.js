@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BASE_URL } from '../../projectString';
 import Loader from '../Loader';
 import { withRouter } from 'react-router';
+import SearchAutoComplete from '../home/searchAutoComplete';
 
 class headFilter extends Component {
 
@@ -85,6 +86,13 @@ class headFilter extends Component {
         }
     }
 
+    searchKeyEvent = (key) => {
+
+        this.setState({
+            keyword: key,
+        });
+    }
+
     render() {
 
         let {subcategory, category_id, city, subcategory_id, condition, transimission, priceFrom, yearFrom, mileageFrom, priceTo,
@@ -142,7 +150,7 @@ class headFilter extends Component {
                                         </div>
                                     </div>
                                     <div className="col-xl-3 col-lg-4 col-md-6 col-min-inputs">
-                                        <label for="">Price ( AED )</label>
+                                        <label for="">Price</label>
                                         <div className="form-group">
                                             <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="priceFrom" placeholder="From" />
                                         </div>
@@ -153,7 +161,9 @@ class headFilter extends Component {
                                     
                                     <div className="col-xl-9 col-lg-4 col-md-6">
                                         <div className="form-group">
-                                            <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" />
+                                            {/* <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" /> */}
+                                            <SearchAutoComplete searchKey={this.searchKeyEvent} city={this.state.city} category={this.state.category_id} 
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} />
                                         </div>
                                     </div>
                                     <div className="col-xl-3 col-lg-4 col-md-6">

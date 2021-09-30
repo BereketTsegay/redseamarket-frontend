@@ -612,6 +612,12 @@ logout = (e) => {
                         });
                     }
 
+                    if(response.data.status === 'error'){
+                        this.setState({
+                            otpError: response.data.message,
+                        });
+                    }
+
                 }).catch((error) => {
 
                 });
@@ -676,13 +682,18 @@ logout = (e) => {
                     if(response.data.status === 'success'){
 
                         this.setState({
-                            forgotPasswordModal: false,
+                            forgotPasswordModal: !this.state.forgotPasswordModal,
                         });
                         
                         Swal.fire({
                             title: 'success',
                             icon: 'success',
                             text: response.data.message,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                window.location.reload();
+                            }
                         });
                     }
 
@@ -707,6 +718,13 @@ logout = (e) => {
                 });
             }
         }
+    }
+
+    changePasswordModal = () => {
+
+        this.setState({
+            changePasswordModal: !this.state.changePasswordModal,
+        });
     }
 
 
@@ -912,7 +930,7 @@ logout = (e) => {
                                         <>
                                             <div className="form-group">
                                                 <input type="number" value={this.state.otp} onChange={this.onChange}  name="otp" className="form-control" placeholder="OTP"/>
-                                                    {this.state.otpError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.emailError}</p>}
+                                                    {this.state.otpError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.otpError}</p>}
                                                 </div>
                                             
                                             <div className="form-group">
