@@ -25,6 +25,7 @@ class searchAutoComplete extends Component {
             transmission: '',
             mileage_from: '',
             mileage_to: '',
+            searchKey: '',
         }
 
         this.wrapperRef = React.createRef();
@@ -65,19 +66,26 @@ class searchAutoComplete extends Component {
 
 
     handleClickOutside(event) {
-        // if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+        
+        if (this.wrapperRef.current && !this.wrapperRef.current.contains(event.target)) {
         // alert('You clicked outside of me!');
-        // }
-        this.setState({
-            searchResult: [],
-        })
+            this.setState({
+                searchResult: [],
+            });
+        }
+        
+        
     }
 
     UNSAFE_componentWillReceiveProps = (nextProps) => {
         
         // this.props.searchKey(string);
+        this.setState({
+            searchKey: nextProps.searchKey,
+        });
 
         if(nextProps.searchKey !== ''){
+
             axios({
                 url: `${BASE_URL}/search/autocomplete`,
                 method: 'POST',
@@ -171,7 +179,7 @@ class searchAutoComplete extends Component {
                                     return (
                                         <li key={index}>
                                             <Link to={'adsdetails/'+ searchResult.id}>
-                                                <div className="media"><img src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
+                                                <div className="media"><img style={{maxWidth:'100px', maxHeight:'100px', minWidth:'100px', minHeight:'100px'}} src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
                                                 <div className="content">
                                                 <h6 className="title">{searchResult.name}</h6>
                                                 <div className="price">{searchResult.currency} {searchResult.price}</div>
@@ -182,7 +190,7 @@ class searchAutoComplete extends Component {
                                 }
                                 }) }
                             </ul>
-                            {searchResults.length >= 5 ? <Link to="#" className="search-reult-more">View More</Link> : '' }
+                            {searchResults.length >= 5 ? <Link to={`search?key=${this.state.searchKey}`} className="search-reult-more">View More</Link> : '' }
                         </div>
                     </div> : '' }
             </div>

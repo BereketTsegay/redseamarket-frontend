@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Header from './layouts/header';
 import React, { Component } from 'react';
 import { BASE_URL } from '../projectString';
 import Logo from '../web-assets/img/brand.svg';
@@ -39,7 +40,7 @@ export default class TermsConditions extends Component {
             <div className="site-frame">
 
                 {/* <!-- =====[HEADER]===== --> */}
-                <header id="header" className="site-header">
+                {/* <header id="header" className="site-header">
                     <div className="main-header">
                         <div className="container d-flex align-items-center flex-wrap">
                             <div className="brand">
@@ -47,8 +48,8 @@ export default class TermsConditions extends Component {
                             </div>
                         </div>
                     </div>
-                </header>
-
+                </header> */}
+                <Header />
                 {/* <!-- =====[PAGE]===== --> */}
                 <div id="page" className="site-page">
 

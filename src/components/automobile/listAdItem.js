@@ -136,7 +136,7 @@ export default class listAdItem extends Component {
             {loaderStatus == true ? <Loader /> :
             <li>
                 <div class="panel-media">
-                    <a href="#"><img src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></a>
+                    <Link to={`/adsdetails/${ads.id}`}><img src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></Link>
                 </div>
                 <div class="panel-content">
                     <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>{ads.title}</Link></h3>

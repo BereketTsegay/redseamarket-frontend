@@ -49,8 +49,7 @@ class Footer extends React.Component{
                            <div className="footer-panel">
                               <h4 className="footer-title">Company</h4>
                               <ul className="footer-menu">
-                                 <li><a href="#">About Us</a></li>
-                                 <li><a href="#">Contact Us</a></li>
+                                 <li><Link to="/about">About Us</Link></li>
                                  
                               </ul>
                            </div>
@@ -59,8 +58,7 @@ class Footer extends React.Component{
                            <div className="footer-panel">
                               <h4 className="footer-title" style={{color:'transparent'}}>UAE</h4>
                               <ul className="footer-menu">
-                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
-                                 <li><Link to="/privacy/policy">Privacy Policy</Link></li>
+                                 <li><Link to="/contact">Contact Us</Link></li>
                                  {/* <li><a href="#">Dubai</a></li>
                                  <li><a href="#">Abu Dhabi</a></li>
                                  <li><a href="#">Ras al Khaimah</a></li>
@@ -76,10 +74,11 @@ class Footer extends React.Component{
                            <div className="footer-panel">
                               <h4 className="footer-title" style={{color:'transparent'}}>Other Countries</h4>
                               <ul className="footer-menu">
-                                 <li>
+                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
+                                 {/* <li>
                                     {this.state.loginStatus === true || this.state.loginStatus === 'true' ? <Link to='/create-ads'>Advertising</Link> : <a href='#'>Advertising</a>}
                                  </li>
-                                 <li><a href="#">Careers</a></li>
+                                 <li><a href="#">Careers</a></li> */}
                                  {/* <li><a href="#">Egypt</a></li>
                                  <li><a href="#">Bahrain</a></li>
                                  <li><a href="#">Saudi Arabia</a></li>
@@ -93,10 +92,11 @@ class Footer extends React.Component{
                         </div>
                         <div className="col-footer col-md-3 col-6">
                            <div className="footer-panel">
-                              <h4 className="footer-title">Support</h4>
+                              <h4 className="footer-title" style={{color:'transparent'}}>Support</h4>
                               <ul className="footer-menu">
-                                 <li><a href="#">Help</a></li>
-                                 <li><a href="#">Contact Us</a></li>
+                              <li><Link to="/privacy/policy">Privacy Policy</Link></li>
+                                 {/* <li><a href="#">Help</a></li>
+                                 <li><a href="#">Contact Us</a></li> */}
                               </ul>
                            </div>
                         </div>
