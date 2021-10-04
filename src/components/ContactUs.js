@@ -21,6 +21,11 @@ export default class ContactUs extends Component {
             errorMessage: '',
             loaderStatus: false,
         }
+        
+    }
+
+    componentWillUnmount = () => {
+        window.scrollTo(0, 0);
     }
 
     handleChange = (e) => {

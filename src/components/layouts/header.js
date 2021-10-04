@@ -16,6 +16,7 @@ import {
 
 import Loader from '../Loader';
 import GoogleTranslate from '../common/googleTranslate';
+import MobileMenu from './MobileMenu';
 
 class Header extends React.Component{
 
@@ -59,11 +60,19 @@ class Header extends React.Component{
         confirmPassword: '',
         newPasswordError: '',
         confirmPasswordError: '',
+        mobileMenu: false,
+        mobileMenushow: false,
       }
 
    }
 
     componentWillMount = () => {
+
+        if(window.innerWidth <= 991){
+            this.setState({
+                mobileMenu: true,
+            });
+        }
         
         if(!localStorage.getItem('latitude') && !localStorage.getItem('longitude')){
             navigator.geolocation.getCurrentPosition((position) => {
@@ -731,6 +740,13 @@ logout = (e) => {
         });
     }
 
+    menuShow = () => {
+
+        this.setState({
+            mobileMenushow: !this.state.mobileMenushow,
+        })
+    }
+
 
     render() {
       
@@ -750,9 +766,9 @@ logout = (e) => {
        };
        let modalLogin ={
             position:  'fixed',
-            width: '600px',
+            width: '100%',
             top: '40px',
-            left: 'calc(50% - 300px)',
+            // left: 'calc(50% - 300px)',
             bottom: '40px',
           
         
@@ -821,13 +837,14 @@ logout = (e) => {
                                     }
                                 </div>
                                 <GoogleTranslate />
-                                <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto">
+                                <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto" onClick={this.menuShow}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                                 </button>
                             </div>
                         </div>
+                        <Menu category={dataArray}/>
                     </header>
-                    <Menu category={dataArray}/>
+                    <MobileMenu category={dataArray} action={this.state.mobileMenushow} menuRemove={this.menuShow} changeCountry={this.countryModal} loginClick={this.viewLoginModal} signUpClick={this.viewRegisterModal} />
 
 
                         <div className="container">

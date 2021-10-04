@@ -14,7 +14,7 @@ export default class PrivacyPolicy extends Component {
     }
 
     componentWillMount = () => {
-
+        window.scrollTo(0, 0);
         axios({
             url: `${BASE_URL}/privacy/policy`,
             method: 'POST',

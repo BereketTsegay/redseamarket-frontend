@@ -14,7 +14,7 @@ export default class TermsConditions extends Component {
     }
 
     componentWillMount = () => {
-
+        window.scrollTo(0, 0);
         axios({
             url: `${BASE_URL}/terms/conditions`,
             method: 'POST',

@@ -4,6 +4,15 @@ import Footer from './layouts/footer';
 import AppDownload from './home/app-download';
 
 export default class AboutUs extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
+    componentWillUnmount = () => {
+        window.scrollTo(0, 0);
+    }
+    
     render() {
         return (
             <div className="site-frame">

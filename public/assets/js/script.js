@@ -38,3 +38,23 @@ jQuery(document).ready(function(){
 	});
 
 }); //Script End
+
+// $(document).ready( function() {
+// 	const menuElement = document.getElementById('mobileMenu') ? document.getElementById('mobileMenu') : localStorage.getItem('navElement');
+	
+// 	const menuLeft = new SlideMenu(menuElement, {
+// 		position: 'right',
+// 		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
+// 		backLinkBefore: '<i class="fa fa-caret-left"></i>',
+// 	});
+// });
+
+window.addEventListener("load", function () {
+	const menuElement = document.getElementById('mobileMenu') ? document.getElementById('mobileMenu') : localStorage.getItem('navElement');
+	
+	const menuLeft = new SlideMenu(menuElement, {
+		position: 'right',
+		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
+		backLinkBefore: '<i class="fa fa-caret-left"></i>',
+	});
+});
