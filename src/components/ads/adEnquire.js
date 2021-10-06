@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { BASE_URL } from '../../projectString';
 import Loader from '../Loader';
 
@@ -122,6 +123,12 @@ export default class adEnquire extends Component {
                         name: '',
                         email: '',
                         phone: '',
+                    });
+
+                    Swal.fire({
+                        'icon': 'success',
+                        'title': 'Success!',
+                        'text': response.data.message,
                     });
                 }
 

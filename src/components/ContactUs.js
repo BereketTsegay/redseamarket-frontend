@@ -5,6 +5,7 @@ import AppDownload from './home/app-download';
 import axios from 'axios';
 import { BASE_URL } from '../projectString';
 import Loader from './Loader';
+import Swal from 'sweetalert2';
 
 export default class ContactUs extends Component {
 
@@ -124,6 +125,12 @@ export default class ContactUs extends Component {
                         name: '',
                         email: '',
                         phone: '',
+                    });
+
+                    Swal.fire({
+                        'icon': 'success',
+                        'title': 'Success!',
+                        'text': response.data.message,
                     });
                 }
 
