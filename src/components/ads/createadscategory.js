@@ -29,8 +29,8 @@ class CreateAdsCategory extends React.Component{
 
       axios.post(`${BASE_URL}/customer/get/category`,
       {
-         latitude:0,
-         longitude:0,
+         latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
+         longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
       }).then(result => {
           
         if(result.data.status=="success" && result.status){

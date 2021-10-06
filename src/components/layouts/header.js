@@ -77,14 +77,14 @@ class Header extends React.Component{
         if(!localStorage.getItem('latitude') && !localStorage.getItem('longitude')){
             navigator.geolocation.getCurrentPosition((position) => {
                 
-                localStorage.removeItem('latitude');
-                localStorage.removeItem('longitude');
+                sessionStorage.removeItem('latitude');
+                sessionStorage.removeItem('longitude');
 
-                localStorage.setItem('latitude', position.coords.latitude);
-                localStorage.setItem('longitude', position.coords.longitude);
+                sessionStorage.setItem('latitude', position.coords.latitude);
+                sessionStorage.setItem('longitude', position.coords.longitude);
 
                 axios({
-                    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${localStorage.getItem('latitude')},${localStorage.getItem('longitude')}&key=${GOOGLEMAPS_API}`,
+                    url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${sessionStorage.getItem('latitude')},${sessionStorage.getItem('longitude')}&key=${GOOGLEMAPS_API}`,
                     method: 'GET',
                 }).then(response => {
                     response.data.results.forEach(gmap => {
@@ -668,11 +668,15 @@ logout = (e) => {
                 
                 localStorage.removeItem('currency');
 
-                localStorage.setItem('currency', response.data ? response.data.currency.currency_code : '');
+                localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
-                window.location.reload();
             }
-        })
+
+            window.location.reload();
+            
+        }).catch((error) => {
+
+        });
 
     }
 

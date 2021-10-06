@@ -39,10 +39,40 @@ jQuery(document).ready(function(){
 
 }); //Script End
 
-// $(document).ready( function() {
-// 	const menuElement = document.getElementById('mobileMenu') ? document.getElementById('mobileMenu') : localStorage.getItem('navElement');
-	
-// 	const menuLeft = new SlideMenu(menuElement, {
+
+let currentUrl = location.href;
+
+const checkPageTransition = () => {
+    requestAnimationFrame(() => {
+        if (currentUrl !== location.href) {
+            
+			let menuElement = document.getElementById('mobileMenu') ;
+			
+			menuElement = $(menuElement);
+
+			
+			const menuLeft = new SlideMenu(menuElement[0], {
+				position: 'right',
+				submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
+				backLinkBefore: '<i class="fa fa-caret-left"></i>',
+			});
+
+        }
+        currentUrl = location.href;
+    }, true);
+};
+
+
+document.body.addEventListener("click", checkPageTransition);
+
+// if($('body').is('.page-load')){
+
+// 	let menuElement = document.getElementById('mobileMenu') ? document.getElementById('mobileMenu') : localStorage.getItem('navElement');
+// console.log(menuElement, '======   1');
+// 	menuElement = $(menuElement);
+
+// 	console.log(menuElement[0], '=====  2');
+// 	const menuLeft = new SlideMenu(menuElement[0], {
 // 		position: 'right',
 // 		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
 // 		backLinkBefore: '<i class="fa fa-caret-left"></i>',
@@ -50,8 +80,18 @@ jQuery(document).ready(function(){
 // });
 
 window.addEventListener("load", function () {
-	const menuElement = document.getElementById('mobileMenu') ? document.getElementById('mobileMenu') : localStorage.getItem('navElement');
-	
+	const menuElement = document.getElementById('mobileMenu')
+	// console.log(menuElement, '----- 1');
+
+	if (menuElement.outerHTML)
+        someElementToString = menuElement.outerHTML;
+    else if (XMLSerializer)
+        someElementToString = new XMLSerializer().serializeToString(menuElement);
+        
+    // console.log(someElementToString);
+    localStorage.removeItem('navElement');
+    localStorage.setItem('navElement', someElementToString);
+
 	const menuLeft = new SlideMenu(menuElement, {
 		position: 'right',
 		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',

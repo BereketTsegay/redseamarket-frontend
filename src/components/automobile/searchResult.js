@@ -22,8 +22,8 @@ export default class searchResult extends Component {
             last: '',
             adList: [],
             resultKey: '',
-            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
-            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
+            latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
+            longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
             loaderStatus: false,
         }
     }

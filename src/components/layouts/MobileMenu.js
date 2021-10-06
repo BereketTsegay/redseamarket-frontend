@@ -9,10 +9,18 @@ export default class MobileMenu extends Component {
     }
 
     componentDidMount = () => {
-        let navElement = document.getElementById('mobileMenu');
+
+        // let element = document.getElementById('mobileMenu');
+        // let someElementToString;
+
+        // if (element.outerHTML)
+        //     someElementToString = element.outerHTML;
+        // else if (XMLSerializer)
+        //     someElementToString = new XMLSerializer().serializeToString(element);
         
-        localStorage.removeItem('navElement');
-        localStorage.setItem('navElement', navElement);
+        // // console.log(someElementToString);
+        // localStorage.removeItem('navElement');
+        // localStorage.setItem('navElement', someElementToString);
     }
 
     menuClose = () => {

@@ -29,8 +29,8 @@ export default class propertyList extends Component {
             nextPage: '',
             total: '',
             subcategory: {},
-            latitude: localStorage.getItem('latitude') ? localStorage.getItem('latitude') : 0,
-            longitude: localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 0,
+            latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
+            longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
             loaderStatus: false,
         }
     }
