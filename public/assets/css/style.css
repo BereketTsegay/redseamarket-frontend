@@ -2001,7 +2001,7 @@ button:focus,
 	box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
-	display: none;
+	display: block;
 	z-index: 100;
 }
 .search-main-panel.search-active .search-result-frame { display: block; }

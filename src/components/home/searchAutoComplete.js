@@ -85,8 +85,11 @@ class searchAutoComplete extends Component {
         });
 
         if(nextProps.searchKey !== ''){
+            
+            // const cancelTokenSource = axios.CancelToken.source();
 
             axios({
+                // cancelToken: cancelTokenSource.token,
                 url: `${BASE_URL}/search/autocomplete`,
                 method: 'POST',
                 data: {
@@ -106,7 +109,7 @@ class searchAutoComplete extends Component {
                     mileage_to: nextProps.mileage_to,
                 }
             }).then(response => {
-
+                
                 if(response.data.status === 'success'){
                     
                     this.setState({
@@ -115,6 +118,9 @@ class searchAutoComplete extends Component {
                 }
 
             }).catch((error) => {});
+
+            // cancelTokenSource.cancel();
+
         }
         else{
             this.setState({
@@ -153,7 +159,7 @@ class searchAutoComplete extends Component {
         
         // let item = this.state.item;
         
-        let searchResults = this.state.searchResult
+        let searchResults = this.state.searchResult;
 
         return (
             <div ref={this.wrapperRef}>
@@ -170,7 +176,7 @@ class searchAutoComplete extends Component {
                      formatResult={() => this.formatResult(item)}
                 /> */}
 
-                {this.props.searchKey !== '' &&  searchResults.length != 0 ?
+                {this.props.searchKey !== '' &&  searchResults.length !== 0 ?
                     <div className="search-result-frame">
                         <div className="search-result-panel">
                             <ul className="search-result">
@@ -192,7 +198,8 @@ class searchAutoComplete extends Component {
                             </ul>
                             {searchResults.length >= 5 ? <Link to={`search?key=${this.state.searchKey}`} className="search-reult-more">View More</Link> : '' }
                         </div>
-                    </div> : '' }
+                    </div> 
+                    : '' }
             </div>
         )
     }

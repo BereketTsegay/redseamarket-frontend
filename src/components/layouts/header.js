@@ -74,7 +74,7 @@ class Header extends React.Component{
             });
         }
         
-        if(!localStorage.getItem('latitude') && !localStorage.getItem('longitude')){
+        if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('longitude')){
             navigator.geolocation.getCurrentPosition((position) => {
                 
                 sessionStorage.removeItem('latitude');
@@ -670,9 +670,10 @@ logout = (e) => {
 
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
+                window.location.reload();
             }
 
-            window.location.reload();
+            
             
         }).catch((error) => {
 
