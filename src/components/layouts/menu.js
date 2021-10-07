@@ -112,12 +112,12 @@ class Menu extends React.Component{
                               }
                            })}
 
-                           {/* <li className="menu-item menu-item-has-children">
-                              <Link to="#">About Us</Link>
+                           <li className="menu-item menu-item-has-children">
+                              <Link to="/about">About Us</Link>
                            </li>
                            <li className="menu-item menu-item-has-children">
-                              <Link to="#">Contact Us</Link>
-                           </li> */}
+                              <Link to="/contact">Contact Us</Link>
+                           </li>
                         </ul>
                      </div>
                   </div>

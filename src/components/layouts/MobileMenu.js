@@ -169,7 +169,12 @@ export default class MobileMenu extends Component {
                             );
                         }
                     })}
-                    
+                    <li>
+                        <Link to="/about">About Us</Link>
+                    </li>
+                    <li>
+                        <Link to="/contact">Contact Us</Link>
+                    </li>
                 </ul>
             </nav>
         )

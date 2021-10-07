@@ -26,6 +26,8 @@ class searchAutoComplete extends Component {
             mileage_from: '',
             mileage_to: '',
             searchKey: '',
+            year_from: '',
+            year_to: '',
         }
 
         this.wrapperRef = React.createRef();
@@ -82,6 +84,18 @@ class searchAutoComplete extends Component {
         // this.props.searchKey(string);
         this.setState({
             searchKey: nextProps.searchKey,
+            city: nextProps.city,
+            category: nextProps.category,
+            subcategory: nextProps.subcategory,
+            seller: nextProps.seller,
+            price_from: nextProps.price_from,
+            price_to: nextProps.price_to,
+            condition: nextProps.condition,
+            transmission: nextProps.transmission,
+            mileage_from: nextProps.mileage_from,
+            mileage_to: nextProps.mileage_to,
+            year_from: nextProps.year_from,
+            year_to: nextProps.year_to,
         });
 
         if(nextProps.searchKey !== ''){
@@ -107,6 +121,8 @@ class searchAutoComplete extends Component {
                     transmission: nextProps.transmission,
                     mileage_from: nextProps.mileage_from,
                     mileage_to: nextProps.mileage_to,
+                    year_from: nextProps.year_from,
+                    year_to: nextProps.year_to,
                 }
             }).then(response => {
                 
@@ -127,7 +143,6 @@ class searchAutoComplete extends Component {
                 searchKey: [],
             });
         }
-        
         
     }
 
@@ -196,7 +211,10 @@ class searchAutoComplete extends Component {
                                 }
                                 }) }
                             </ul>
-                            {searchResults.length >= 5 ? <Link to={`search?key=${this.state.searchKey}`} className="search-reult-more">View More</Link> : '' }
+                            {searchResults.length >= 5 ? 
+                            <Link 
+                                to={`search?key=${this.state.searchKey}&city=${this.state.city}&category=${this.state.category}&subcategory=${this.state.subcategory}&priceFrom=${this.state.price_from}&priceTo=${this.state.price_to}&seller=${this.state.seller}&condition=${this.state.condition}&transmission=${this.state.transmission}&yearFrom=${this.state.year_from}&yearTo=${this.state.year_to}&mileageFrom=${this.state.mileage_from}&mileageTo=${this.state.mileage_to}&`} 
+                                className="search-reult-more">View More</Link> : '' }
                         </div>
                     </div> 
                     : '' }
