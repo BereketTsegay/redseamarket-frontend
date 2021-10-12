@@ -84,18 +84,18 @@ class searchAutoComplete extends Component {
         // this.props.searchKey(string);
         this.setState({
             searchKey: nextProps.searchKey,
-            city: nextProps.city,
-            category: nextProps.category,
-            subcategory: nextProps.subcategory,
-            seller: nextProps.seller,
-            price_from: nextProps.price_from,
-            price_to: nextProps.price_to,
-            condition: nextProps.condition,
-            transmission: nextProps.transmission,
-            mileage_from: nextProps.mileage_from,
-            mileage_to: nextProps.mileage_to,
-            year_from: nextProps.year_from,
-            year_to: nextProps.year_to,
+            city: nextProps.city ? nextProps.city : '',
+            category: nextProps.category ? nextProps.category : '',
+            subcategory: nextProps.subcategory ? nextProps.subcategory : '',
+            seller: nextProps.seller ? nextProps.seller : '',
+            price_from: nextProps.price_from ? nextProps.price_from : '',
+            price_to: nextProps.price_to ? nextProps.price_to : '',
+            condition: nextProps.condition ? nextProps.condition : '',
+            transmission: nextProps.transmission ? nextProps.transmission : '',
+            mileage_from: nextProps.mileage_from ? nextProps.mileage_from : '',
+            mileage_to: nextProps.mileage_to ? nextProps.mileage_to : '',
+            year_from: nextProps.year_from ? nextProps.year_from : '',
+            year_to: nextProps.year_to ? nextProps.year_to : '',
         });
 
         if(nextProps.searchKey !== ''){

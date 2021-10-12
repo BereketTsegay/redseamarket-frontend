@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { BASE_URL, userToken } from '../../projectString'; 
 
 export default class MobileMenu extends Component {
 
     constructor(props){
         super(props);
 
+        this.state = {
+            loginStatus: (localStorage.getItem('loginStatus')) ? localStorage.getItem('loginStatus'):false,
+            countryName: localStorage.getItem('country_name') ? localStorage.getItem('country_name') : 'Change Country'
+        }
     }
 
     componentDidMount = () => {
@@ -38,6 +44,45 @@ export default class MobileMenu extends Component {
     signUpClick = () => {
         this.props.signUpClick();
     }
+
+
+    logout = (e) => {
+
+        this.setState({loaderStatus: true,});
+        localStorage.removeItem('loginStatus');
+        
+        localStorage.setItem('loginStatus',false);
+        
+        e.preventDefault();
+        
+        localStorage.removeItem('userToken');
+        
+        
+        // localStorage.setItem('loginStatus', false);
+        // this.setState({loginStatus:false});
+        axios({
+            url: `${BASE_URL}/customer/logout`,
+            method: 'POST',
+            headers:{ Authorization: "Bearer " + userToken },
+
+        }).then(response => {
+
+                if(response.data.status === 'success'){
+                    this.props.history.push('/');
+                }
+
+                this.setState({
+                    loaderStatus: false,
+                });
+
+        }).catch((error) => {
+                this.props.history.push('/');
+                this.setState({
+                    loaderStatus: false,
+                });
+        });
+
+    }
     
     render() {
 
@@ -53,6 +98,8 @@ export default class MobileMenu extends Component {
         let noStyle = {}
 
         let city = localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
+
+        let user = localStorage.getItem('user') != '' ? localStorage.getItem('user') : '';
 
         return (
             
@@ -71,9 +118,27 @@ export default class MobileMenu extends Component {
                 <ul className="un-style mobile-menu">
                     <li className="row">
                         <div className="container">
-                            <a onClick={this.changeCountry}>Change Country</a>
-                            <a onClick={this.loginClick}>Login</a>
-                            <a onClick={this.signUpClick}>Sign up</a>
+                            <a onClick={this.changeCountry}>{this.state.countryName}</a>
+                            {this.state.loginStatus === 'true' || this.state.loginStatus === true ?
+                                <>
+                                    <Link to="/myfavourite">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                        Favorites
+                                    </Link>
+                                    <Link to="/myprofile">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        {user}
+                                    </Link> 
+                                    <Link onClick={(e) => this.logout(e)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                        Logout
+                                    </Link>
+                                </>
+                            :
+                            <>
+                                <a onClick={this.loginClick}>Login</a>
+                                <a onClick={this.signUpClick}>Sign up</a>
+                            </>}
                         </div>
                     </li>
                     <li>

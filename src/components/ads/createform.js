@@ -927,7 +927,8 @@ class CreateForm extends React.Component{
          });
       }
       else{
-         if(this.state.image.length <= 5){
+         console.log(this.state.image.length);
+         if(this.state.image.length < 5){
             this.setState({
                image: [...this.state.image, file],
             });

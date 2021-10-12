@@ -42,19 +42,25 @@ class CreateAds extends React.Component{
         switch (pageValue) {
             case 'category':
 
-                  
-            this.setState({ categoryId:categoryId});   
-            this.setState({ pageSelectVal:1});
-            break;
+                this.setState({ categoryId:categoryId});   
+                this.setState({ pageSelectVal:1});
+                break;
             case 'selectsubcategory':
-            this.setState({ categoryId:categoryId});
-            this.setState({ 
-                pageSelectVal:2,
-                categoryName:name,
-            });
-            break;
+                this.setState({ categoryId:categoryId});
+                this.setState({ 
+                    pageSelectVal:2,
+                    categoryName:name,
+                });
+                break;
+            // case 'selectsubsubcategory':
+            //     this.setState({
+            //         categoryId:categoryId,
+            //         pageSelectVal:3,
+            //         categoryName:name,
+            //     });
+            //     break;
             default:
-            break;
+                break;
         }
     };
 
@@ -75,6 +81,7 @@ class CreateAds extends React.Component{
             formField = <SubCategorySelect parentCallback = {this.handleCallback} categoryId={this.state.categoryId} categoryName={this.state.categoryName} />;
             // formField = <CreateForm parentCallback = {this.handleCallback}/>;
         }
+
         return (
             <div>
                 <Header />

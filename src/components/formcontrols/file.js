@@ -24,7 +24,7 @@ class FileField extends React.Component{
                 return;
 
         this.setState({
-            fileCount: files.length,
+            fileCount: files.length > 5 ? 5 : files.length,
         });
 
         for(let i = 0; i < files.length; i++){

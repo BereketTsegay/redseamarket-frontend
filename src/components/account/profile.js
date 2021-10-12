@@ -38,11 +38,16 @@ export default class profile extends Component {
             confirmPasswordError: '',
 
             adView: 0,
+
+            nameError: '',
+            emailError: '',
+            phoneError: '',
+            nationalityError: '',
             
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
 
         if(localStorage.getItem('loginStatus') === 'false' || localStorage.getItem('loginStatus') === false){
 
@@ -66,11 +71,14 @@ export default class profile extends Component {
                     user: response.data.data.user,
                     adView: response.data.data.adsView,
                 }, () => {
+
+                    let user = this.state.user;
+
                     this.setState({
-                        name: this.state.user.name,
-                        email: this.state.user.email,
-                        phone: this.state.user.phone,
-                        nationality: this.state.user.nationality_id,
+                        name: user.name,
+                        email: user.email,
+                        phone: user.phone,
+                        nationality: user.nationality_id,
                     });
                 });
             }
@@ -149,6 +157,56 @@ export default class profile extends Component {
 
     valueChange = (e) => {
         
+        if(e.target.name === 'name' && e.target.value === ''){
+            this.setState({
+                nameError: 'Name cannot be blank',
+            });
+        }
+        else{
+            this.setState({
+                nameError: '',
+            });
+        }
+        if(e.target.name === 'email' && e.target.value === ''){
+
+            this.setState({
+                emailError: 'Email cannot be blank',
+            });
+        }
+        else{
+            if(!this.state.email.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+                this.setState({
+                    emailError: 'Must be an Email',
+                });
+            }
+            else{
+                this.setState({
+                    emailError: '',
+                });
+            }
+        }
+        if(e.target.name === 'phone' && e.target.value === ''){
+
+            this.setState({
+                phoneError: 'Phone cannot be blank',
+            });
+        }
+        else{
+            this.setState({
+                phoneError: '',
+            });
+        }
+        if(e.target.name === 'nationality' && e.target.value === ''){
+            this.setState({
+                nationalityError: 'Nationality cannot be blank',
+            });
+        }
+        else{
+            this.setState({
+                nationalityError: '',
+            });
+        }
+
         this.setState({
             [e.target.name]:e.target.value,
         });
@@ -156,41 +214,75 @@ export default class profile extends Component {
 
     handleSubmit = () => {
 
-        this.setState({
-            loaderState: true,
-        });
+        if(this.state.name !== '' && this.state.email !== '' && this.state.phone !== '' && this.state.nationality !== ''){
 
-        axios({
-            url: `${BASE_URL}/customer/update/profile`,
-            method: 'POST',
-            headers:{ Authorization: "Bearer " + this.state.token },
-            data: {
-                name: this.state.name,
-                email: this.state.email,
-                phone: this.state.phone,
-                nationality: this.state.nationality,
-            },
-        }).then(response => {
+            this.setState({
+                loaderState: true,
+            });
 
-            if(response.data.status === 'success'){
+            axios({
+                url: `${BASE_URL}/customer/update/profile`,
+                method: 'POST',
+                headers:{ Authorization: "Bearer " + this.state.token },
+                data: {
+                    name: this.state.name,
+                    email: this.state.email,
+                    phone: this.state.phone,
+                    nationality: this.state.nationality,
+                },
+            }).then(response => {
 
-                Swal.fire({
-                    title: 'success!',
-                    text: response.data.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
+                if(response.data.status === 'success'){
+
+                    Swal.fire({
+                        title: 'success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+
+                this.setState({
+                    loaderState: false,
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    loaderState: false,
+                });
+            });
+        }
+        else{
+
+            if(this.state.name === ''){
+
+                this.setState({
+                    nameError: 'Name cannot be blank',
                 });
             }
-
-            this.setState({
-                loaderState: false,
-            });
-
-        }).catch((error) => {
-            this.setState({
-                loaderState: false,
-            });
-        });
+            if(this.state.email === ''){
+                this.setState({
+                    emailError: 'Email cannot be blank',
+                });
+            }
+            else{
+                if(!this.state.email.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+                    this.setState({
+                        emailError: 'Must be an Email',
+                    });
+                }
+            }
+            if(this.state.phone === ''){
+                this.setState({
+                    phoneError: 'Phone cannot be blank',
+                });
+            }
+            if(this.state.nationality === ''){
+                this.setState({
+                    nationalityError: 'Nationality cannot be blank',
+                });
+            }
+        }
     }
 
     changePasswordModal = () => {
@@ -354,25 +446,28 @@ export default class profile extends Component {
                                         <label className="col-lg-4 col-form-label">Name :</label>
                                         <div className="col-lg-8">
                                             <input type="text" name="name" onChange={(e) => this.valueChange(e)} className="form-control" value={name} placeholder="Name" />
+                                            {this.state.nameError ? <span style={{color:'red'}}>{this.state.nameError}</span>: ''}
                                         </div>
                                     </div>
                                     <div className="row form-group align-items-center">
                                         <label className="col-lg-4 col-form-label">Email :</label>
                                         <div className="col-lg-8">
                                             <input type="email" name="email" onChange={(e) => this.valueChange(e)} className="form-control" value={email} placeholder="Email" />
+                                            {this.state.emailError ? <span style={{color:'red'}}>{this.state.emailError}</span>: ''}
                                         </div>
                                     </div>
                                     <div className="row form-group align-items-center">
                                         <label className="col-lg-4 col-form-label">Phone :</label>
                                         <div className="col-lg-8">
                                             <input type="number" name="phone" onChange={(e) => this.valueChange(e)} className="form-control" value={phone} placeholder="phone" />
+                                            {this.state.phoneError ? <span style={{color:'red'}}>{this.state.phoneError}</span>: ''}
                                         </div>
                                     </div>
                                     <div className="row form-group align-items-center">
                                         <label className="col-lg-4 col-form-label">Nationality :</label>
                                         <div className="col-lg-8">
                                             <select className="form-control" onChange={(e) => this.valueChange(e)} name="nationality">
-                                                
+                                                <option value=''>Select Nationality</option>
                                                 {country && country.map((country, index) => {
                                                     if(country.id == nationality){
                                                         return <option selected key={index} value={country.id}>{country.name}</option>
@@ -382,14 +477,15 @@ export default class profile extends Component {
                                                     }
                                                 })}
                                             </select>
+                                            {this.state.nationalityError ? <span style={{color:'red'}}>{this.state.nationalityError}</span>: ''}
                                         </div>
                                     </div>
-                                    <div className="row form-group align-items-center">
+                                    {/* <div className="row form-group align-items-center">
                                         <label className="col-lg-4 col-form-label">Username :</label>
                                         <div className="col-lg-8">
                                             <input type="email" className="form-control" value={user.email} placeholder="Username" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row form-group align-items-start">
                                         <div className="col-lg-8 ml-auto">
                                             <button type="button" onClick={this.handleSubmit} className="btn btn-primary w-100">Update</button>

@@ -11,6 +11,7 @@ class SubCategorySelect extends React.Component{
         this.state = {
            categories:[],
            loaderStatus: false,
+           collaps: 'hide',
   
         };
   
@@ -49,6 +50,15 @@ class SubCategorySelect extends React.Component{
         });
       }
 
+      onClickHandler = (id) => {
+
+         let collaps = 'collaps'+id;
+
+         this.setState({
+            [collaps]: this.state.collaps+id == 'show' ? 'hide' : 'show',
+         });
+     };
+
     render() {
 
          let categoryArray = (this.state.categories != undefined)?this.state.categories:[];
@@ -75,11 +85,35 @@ class SubCategorySelect extends React.Component{
                            {(categoryArray && categoryArray.map((categoryArr,indexi) => {
 
                                  if(categoryArr.name != ''){
-                                    return(
-                                       <Link to={`/create-form/${categoryId}/${categoryArr.id}/${categoryName}/${categoryArr.name}`} className="d-block mb-3 position-relative rounded-lg">
-                                          {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
-                                       </Link>
-                                    );
+                                    
+                                    if(categoryArr.subcategory_child.length != 0){
+                                       return(
+                                          <>
+                                             <a href="javascript:void(0);" key={indexi} className="d-block mb-3 position-relative rounded-lg accordion" id={'subChild'+indexi} onClick={() => this.onClickHandler(indexi)}>
+                                                <button className="btn w-100 text-left" type="button" data-toggle="collapse" data-target={'#collapseOne'+indexi} aria-expanded="true" aria-controls={'collapseOne'+indexi}>
+                                                   {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                                </button>
+        
+                                             </a>
+                                             {categoryArr.subcategory_child.map((child, index) => {
+                                                return (
+                                                   <div id={'collapseOne'+indexi} className={'collapse '+ this.state.collaps+indexi} aria-labelledby="headingOne" data-parent={'#subChild'+indexi}>
+                                                      <Link key={index} to={`/create-form/${categoryId}/${child.id}/${categoryName}/${child.name}`} className="d-block mb-3 position-relative rounded-lg">
+                                                         {child.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                                      </Link>
+                                                   </div>
+                                                )
+                                             })}
+                                          </>
+                                       )
+                                    }
+                                    else{
+                                       return(
+                                          <Link key={indexi} to={`/create-form/${categoryId}/${categoryArr.id}/${categoryName}/${categoryArr.name}`} className="d-block mb-3 position-relative rounded-lg">
+                                             {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                          </Link>
+                                       );
+                                    }
                                  }
                                  else{
                                     return '';

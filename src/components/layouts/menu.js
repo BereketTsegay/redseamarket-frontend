@@ -19,7 +19,7 @@ class Menu extends React.Component{
                      <div className="menubar">
                         <ul className="menu">
                         <li className="menu-item menu-item-has-children">
-                              <Link to="/">Home</Link>
+                              <Link to="/" className="text-capitalize">Home</Link>
                            </li>
                            {this.props.category && this.props.category.map((category, index) => {
                               if(category.id === 1){

@@ -25,7 +25,7 @@ class Index extends React.Component{
         };
   
     }   
-    componentWillMount() {
+    componentDidMount() {
         
         this.setState({
             loaderState: true,

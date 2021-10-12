@@ -2113,3 +2113,8 @@ div.goog-te-gadget {
 .goog-te-combo{
 	border: 0 !important;
 }
+
+.goog-text-highlight{
+	background-color: transparent !important;
+	box-shadow: none !important;
+}

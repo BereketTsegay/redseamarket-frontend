@@ -62,6 +62,7 @@ class Header extends React.Component{
         confirmPasswordError: '',
         mobileMenu: false,
         mobileMenushow: false,
+        countryName: '',
       }
 
    }
@@ -171,25 +172,25 @@ class Header extends React.Component{
             if(response.data.code === '200'){
                
 
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('loginStatus');
+            //     localStorage.removeItem('userToken');
+            //     localStorage.removeItem('loginStatus');
 
-                localStorage.setItem('userToken', response.data.token);
-                // localStorage.setItem('loginStatus', true);
-                this.setState({
-                   loginStatus:true,
-                   user: localStorage.getItem('user'),
-                });
+            //     localStorage.setItem('userToken', response.data.token);
+            //     // localStorage.setItem('loginStatus', true);
+            //     this.setState({
+            //        loginStatus:true,
+            //        user: localStorage.getItem('user'),
+            //     });
                 
-                localStorage.setItem('loginStatus',true);
+            //     localStorage.setItem('loginStatus',true);
 
-                this.setState({loginStatus:true});
-                Swal.fire({
-                   title: 'success!',
-                   text: response.data.message,
-                   icon: 'success',
-                   confirmButtonText: 'OK'
-               });
+            //     this.setState({loginStatus:true});
+            //     Swal.fire({
+            //        title: 'success!',
+            //        text: response.data.message,
+            //        icon: 'success',
+            //        confirmButtonText: 'OK'
+            //    });
                this.setState({
                    registerModal: false,
                    emailVerifydModal: !this.state.emailVerifydModal,
@@ -294,6 +295,10 @@ class Header extends React.Component{
                      text: response.data.message,
                      icon: 'success',
                      confirmButtonText: 'OK'
+                 }).then((result) => {
+                     if(result.isConfirmed){
+                         window.location.reload();
+                     }
                  });
                  this.setState({ showHistory: false});
                //   console.log(localStorage,"local storage")
@@ -561,7 +566,7 @@ logout = (e) => {
                     url: `${BASE_URL}/verify/email`,
                     method: 'POST',
                     data: {
-                        email: this.state.email,
+                        email: this.state.registeremail,
                         otp: this.state.otp,
                     }
                 }).then(response => {
@@ -582,7 +587,11 @@ logout = (e) => {
                         
                         localStorage.setItem('loginStatus',true);
 
-                        this.setState({loginStatus:true});
+                        this.setState({
+                            loginStatus:true,
+                            emailVerifydModal: !this.state.emailVerifydModal,
+                        });
+
                         Swal.fire({
                             title: 'success!',
                             text: response.data.message,
@@ -590,6 +599,13 @@ logout = (e) => {
                             confirmButtonText: 'OK'
                         });
 
+                    }
+
+                    if(response.data.status === 'error'){
+
+                        this.setState({
+                            otpError: response.data.message,
+                        });
                     }
 
                 }).catch((error) => {
@@ -648,9 +664,14 @@ logout = (e) => {
 
     onCountryChange = (e) => {
 
+        let countryIndex = e.nativeEvent.target.selectedIndex;
+        let countryName = e.nativeEvent.target[countryIndex].text
+
         localStorage.removeItem('country_id');
+        localStorage.removeItem('country_name');
 
         localStorage.setItem('country_id', e.target.value);
+        localStorage.setItem('country_name', countryName);
 
         this.setState({
             countryListModal: !this.state.countryListModal,
@@ -670,7 +691,7 @@ logout = (e) => {
 
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
-                window.location.reload();
+                // window.location.reload();
             }
 
             
@@ -786,6 +807,8 @@ logout = (e) => {
        let country_id = localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0;
 
        let loaderStatus = this.state.loaderStatus;
+
+       let countryName = localStorage.getItem('country_name') ? localStorage.getItem('country_name') : 'Change Country';
       
         return (
             <div>
@@ -800,7 +823,7 @@ logout = (e) => {
                                     <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
                                 </div>
                                 <div className="country-select-panel d-block d-md-inline-block" onClick={() => this.setState({countryListModal: !this.countryListModal})} style={{cursor: 'pointer'}}>
-                                    Change Country
+                                    {this.state.countryName ? this.state.countryName : countryName}
                                 </div>
                                     
                                 <CitySelect />
