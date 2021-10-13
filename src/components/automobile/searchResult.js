@@ -67,6 +67,7 @@ export default class searchResult extends Component {
                     mileageTo: mileageTo,
                     seller: seller,
                     city: city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -103,6 +104,7 @@ export default class searchResult extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -170,6 +172,7 @@ export default class searchResult extends Component {
                     mileageTo: mileageTo,
                     seller: seller,
                     city: city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -206,6 +209,7 @@ export default class searchResult extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -270,6 +274,7 @@ export default class searchResult extends Component {
                 mileageTo: mileageTo,
                 seller: seller,
                 city: city,
+                country: localStorage.getItem('country_id'),
             },
         }).then(response => {
 

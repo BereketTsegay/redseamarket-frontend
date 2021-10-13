@@ -66,6 +66,7 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -113,6 +114,7 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -166,6 +168,7 @@ export default class searchList extends Component {
                         priceFrom: this.state.priceFrom,
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -225,6 +228,7 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -272,6 +276,7 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -325,6 +330,7 @@ export default class searchList extends Component {
                         priceFrom: this.state.priceFrom,
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
+                        country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
 
@@ -375,6 +381,7 @@ export default class searchList extends Component {
                     seller: this.state.seller,
                     priceFrom: this.state.priceFrom,
                     priceTo: this.state.priceTo,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
                 
@@ -413,6 +420,7 @@ export default class searchList extends Component {
                     latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
                     longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                     city: this.state.city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
                 
@@ -451,6 +459,7 @@ export default class searchList extends Component {
                     search_key: this.state.searchKey,
                     category: this.state.category,
                     city: this.state.city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
                 
