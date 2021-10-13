@@ -50,6 +50,7 @@ export default class motorListing extends Component {
                     latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -86,6 +87,7 @@ export default class motorListing extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -135,6 +137,7 @@ export default class motorListing extends Component {
                     latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -171,6 +174,7 @@ export default class motorListing extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 
@@ -219,6 +223,7 @@ export default class motorListing extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
+                    country: localStorage.getItem('country_id'),
                 },
             }).then(response => {
 

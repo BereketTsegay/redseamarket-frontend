@@ -368,7 +368,7 @@ export default class searchList extends Component {
             loaderStatus: true,
         });
 
-        if(!this.state.search_key && this.state.category ){
+        if(!this.state.searchKey && this.state.category ){
             
             axios({
                 url: url,
@@ -410,7 +410,7 @@ export default class searchList extends Component {
                 })
             });
         }
-        else if(!this.state.search_key && this.state.subcategory ){
+        else if(!this.state.searchKey && this.state.subcategory ){
 
             axios({
                 url: url,

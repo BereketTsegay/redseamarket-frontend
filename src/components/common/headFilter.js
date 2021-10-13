@@ -35,6 +35,7 @@ class headFilter extends Component {
             data: {
                 latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
                 longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
+                // country: localStorage.getItem('country_id'),
             },
 
         }).then(response => {
