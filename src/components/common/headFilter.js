@@ -33,8 +33,8 @@ class headFilter extends Component {
             url: `${BASE_URL}/customer/get/category`,
             method: 'POST',
             data: {
-                latitude:this.state.latitude,
-                longitude: this.state.longitude,
+                latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
+                longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
             },
 
         }).then(response => {

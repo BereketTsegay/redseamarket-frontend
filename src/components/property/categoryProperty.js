@@ -39,9 +39,10 @@ export default class categoryProperty extends Component {
                 method: 'POST',
                 data: {
                     category_id: this.state.category_id,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
                     city: localStorage.getItem('city_id'),
+                    country: localStorage.getItem('country_id'),
                 }
 
             }).then(response => {
@@ -79,9 +80,10 @@ export default class categoryProperty extends Component {
                     method: 'POST',
                     data: {
                         category_id: this.state.category_id,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
                         city: localStorage.getItem('city_id'),
+                        country: localStorage.getItem('country_id'),
                     }
 
                 }).then(response => {

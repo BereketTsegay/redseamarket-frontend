@@ -669,6 +669,7 @@ logout = (e) => {
 
         localStorage.removeItem('country_id');
         localStorage.removeItem('country_name');
+        localStorage.removeItem('city_id');
 
         localStorage.setItem('country_id', e.target.value);
         localStorage.setItem('country_name', countryName);
@@ -691,7 +692,7 @@ logout = (e) => {
 
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
-                // window.location.reload();
+                window.location.reload();
             }
 
             

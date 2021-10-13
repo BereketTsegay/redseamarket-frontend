@@ -32,14 +32,16 @@ class Index extends React.Component{
         });
 
         if(this.state.token == null){
+            
             axios({
                 url : `${BASE_URL}/customer/dashboard`,
                 method: 'POST',
                 headers: { Authorization: "Bearer " + this.state.token },
                 data:{
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.latitude,
+                    longitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.longitude,
                     city: localStorage.getItem('city_id'),
+                    country: localStorage.getItem('country_id'),
                 }
 
             }).then(result => {
@@ -75,9 +77,10 @@ class Index extends React.Component{
                 method: 'POST',
                 headers: { Authorization: "Bearer " + this.state.token },
                 data:{
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.latitude,
+                    longitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.longitude,
                     city: localStorage.getItem('city_id'),
+                    country: localStorage.getItem('country_id'),
                 }
 
             }).then(result => {

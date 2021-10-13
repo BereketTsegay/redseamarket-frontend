@@ -40,8 +40,9 @@ export default class categoryMotors extends Component {
          method: 'POST',
          data: {
             city: localStorage.getItem('city_id'),
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
+            latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
+            longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
+            country: localStorage.getItem('country_id'),
          },
 
       }).then(response => {

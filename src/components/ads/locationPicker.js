@@ -10,8 +10,8 @@ export default class locationPicker extends Component {
 
         this.state = {
             zoom: 10,
-            latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 23.4241,
-            longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 53.8478,
+            latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 25.1988,
+            longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 55.2796,
         }
 
     }

@@ -39,8 +39,8 @@ class homefilter extends Component {
             method: 'POST',
             data: {
                country: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
-               latitude: this.state.latitude,
-               longitude: this.state.longitude,
+               latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+               longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                search_key: string,
                category: this.state.category,
                city: this.state.city,

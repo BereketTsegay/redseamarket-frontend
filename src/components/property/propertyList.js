@@ -55,8 +55,8 @@ export default class propertyList extends Component {
                 data: {
                     category_id: this.state.category_id,
                     subcategory_id: this.state.subcategory_id,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                     city: this.state.city,
                     property_type: this.state.property_type,
                     price: this.state.price,
@@ -109,8 +109,8 @@ export default class propertyList extends Component {
                 data: {
                     category_id: this.state.category_id,
                     subcategory_id: this.state.subcategory_id,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                    longitude:localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                     city: this.state.city,
                     property_type: this.state.property_type,
                     price: this.state.price,
@@ -158,8 +158,8 @@ export default class propertyList extends Component {
             data: {
                 category_id: category_id,
                 subcategory_id: this.state.subcategory_id,
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
+                latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                 city: this.state.city,
                 property_type: this.state.property_type,
                 price: this.state.price,
@@ -205,8 +205,8 @@ export default class propertyList extends Component {
             data: {
                 category_id: this.state.category_id,
                 subcategory_id: this.state.subcategory_id,
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
+                latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                 city: this.state.city,
                 property_type: this.state.property_type,
                 price: this.state.price,

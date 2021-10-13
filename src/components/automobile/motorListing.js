@@ -47,8 +47,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                 },
             }).then(response => {
@@ -82,8 +82,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
                 },
@@ -132,8 +132,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                 },
             }).then(response => {
@@ -167,8 +167,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
                 },
@@ -215,8 +215,8 @@ export default class motorListing extends Component {
                 data:{
                     search_key: key,
                     category: 1,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     subcategory: subcategory,
                 },

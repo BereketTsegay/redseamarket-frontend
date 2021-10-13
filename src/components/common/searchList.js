@@ -63,8 +63,8 @@ export default class searchList extends Component {
                     method: 'POST',
                     data: {
                         category_id: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
                     },
                 }).then(response => {
@@ -110,8 +110,8 @@ export default class searchList extends Component {
                     method: 'POST',
                     data: {
                         subcategory_id: this.state.subcategory,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
                     },
                 }).then(response => {
@@ -160,8 +160,8 @@ export default class searchList extends Component {
                     data: {
                         search_key: key,
                         category: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
                         priceFrom: this.state.priceFrom,
                         priceTo: this.state.priceTo,
@@ -222,8 +222,8 @@ export default class searchList extends Component {
                     method: 'POST',
                     data: {
                         canonical_name: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
                     },
                 }).then(response => {
@@ -269,8 +269,8 @@ export default class searchList extends Component {
                     method: 'POST',
                     data: {
                         subcategory_id: this.state.subcategory,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
                     },
                 }).then(response => {
@@ -319,8 +319,8 @@ export default class searchList extends Component {
                     data: {
                         search_key: key,
                         category: this.state.category,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
+                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
                         priceFrom: this.state.priceFrom,
                         priceTo: this.state.priceTo,
@@ -369,8 +369,8 @@ export default class searchList extends Component {
                 method: 'POST',
                 data: {
                     category_id: this.state.category,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                     city: this.state.city,
                     seller: this.state.seller,
                     priceFrom: this.state.priceFrom,
@@ -410,8 +410,8 @@ export default class searchList extends Component {
                 method: 'POST',
                 data: {
                     subcategory_id: this.state.subcategory,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
+                    latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                    longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                     city: this.state.city,
                 },
             }).then(response => {
