@@ -1369,6 +1369,7 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="titleinArabic" label="Title Arabic" value={this.state.titleinArabic} placeholder="Title Arabic" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
+                                 <span style={{color: 'red'}}><strong>Warning: </strong>Maximum of 5 images are allowed!</span>
                                  <div className="row">
                                  {image ? image && image.map((image, index) => {
                                     return (
