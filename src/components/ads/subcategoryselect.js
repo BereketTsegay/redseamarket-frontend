@@ -95,15 +95,18 @@ class SubCategorySelect extends React.Component{
                                                 </button>
         
                                              </a>
-                                             {categoryArr.subcategory_child.map((child, index) => {
-                                                return (
-                                                   <div id={'collapseOne'+indexi} className={'collapse '+ this.state.collaps+indexi} aria-labelledby="headingOne" data-parent={'#subChild'+indexi}>
+                                             <div id={'collapseOne'+indexi} className={'collapse '+ this.state.collaps+indexi} aria-labelledby="headingOne" data-parent={'#subChild'+indexi}>
+                                                <Link key={indexi} to={`/create-form/${categoryId}/${categoryArr.id}/${categoryName}/${categoryArr.name}`} className="d-block mb-3 position-relative rounded-lg">
+                                                   {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                                </Link>
+                                                {categoryArr.subcategory_child.map((child, index) => {
+                                                   return (
                                                       <Link key={index} to={`/create-form/${categoryId}/${child.id}/${categoryName}/${child.name}`} className="d-block mb-3 position-relative rounded-lg">
                                                          {child.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
                                                       </Link>
-                                                   </div>
-                                                )
-                                             })}
+                                                   )
+                                                })}
+                                             </div>
                                           </>
                                        )
                                     }

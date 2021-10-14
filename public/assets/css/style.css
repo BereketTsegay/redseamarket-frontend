@@ -2118,3 +2118,9 @@ div.goog-te-gadget {
 	background-color: transparent !important;
 	box-shadow: none !important;
 }
+
+.img-dlt{
+    position:absolute;
+    right: 10px;
+	top: 10px;
+}

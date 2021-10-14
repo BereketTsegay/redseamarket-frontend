@@ -47,7 +47,7 @@ export default class profile extends Component {
         }
     }
 
-    componentDidMount(){
+    componentWillMount(){
 
         if(localStorage.getItem('loginStatus') === 'false' || localStorage.getItem('loginStatus') === false){
 
@@ -70,17 +70,23 @@ export default class profile extends Component {
                     myFavourite: response.data.data.myfavourite,
                     user: response.data.data.user,
                     adView: response.data.data.adsView,
-                }, () => {
 
-                    let user = this.state.user;
-
-                    this.setState({
-                        name: user.name,
-                        email: user.email,
-                        phone: user.phone,
-                        nationality: user.nationality_id,
-                    });
+                    name: response.data.data.user.name,
+                    email: response.data.data.user.email,
+                    phone: response.data.data.user.phone,
+                    nationality: response.data.data.user.nationality_id,
                 });
+                // , () => {
+
+                //     let user = this.state.user;
+
+                //     this.setState({
+                //         name: user.name,
+                //         email: user.email,
+                //         phone: user.phone,
+                //         nationality: user.nationality_id,
+                //     });
+                // });
             }
 
             this.setState({
@@ -533,7 +539,7 @@ export default class profile extends Component {
                     </Modal.Body>
                                 
                 </Modal>
-
+            
             </div>
         )
     }

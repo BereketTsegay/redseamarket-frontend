@@ -86,6 +86,7 @@ class CreateForm extends React.Component{
 
          fieldValue: [],
          image: [],
+         imageArr: [],
          token: userToken,
 
          
@@ -661,7 +662,7 @@ class CreateForm extends React.Component{
          }
          else{
             
-            if((state.title === '' || state.title.trim() === '') || (state.titleinArabic === '' || state.titleinArabic.trim() === '')){
+            if((state.title === '' || state.title.trim() === '') && (state.titleinArabic === '' || state.titleinArabic.trim() === '')){
                
                this.setState({
                   errors_title: 'Enter title any one of the language',
@@ -706,7 +707,7 @@ class CreateForm extends React.Component{
                   });
                }
             }
-            if((state.description === '' || state.description.trim() === '') || (state.descriptioninArabic === '' || state.descriptioninArabic.trim() === '')){
+            if(((state.description === '' || state.description.trim() === '')) && ((state.descriptioninArabic === '' || state.descriptioninArabic.trim() === ''))){
 
                let description = 'Enter description in any one of the language';
                this.setState({
@@ -927,10 +928,16 @@ class CreateForm extends React.Component{
          });
       }
       else{
-         console.log(this.state.image.length);
+         
          if(this.state.image.length < 5){
+
+            const imagefile = {
+               id: Math.random(),
+               file: file,
+            };
+
             this.setState({
-               image: [...this.state.image, file],
+               image: [...this.state.image, imagefile],
             });
          }
       }
@@ -1293,6 +1300,17 @@ class CreateForm extends React.Component{
       });
    }
 
+   removeImage = key => {
+      
+      const images = [...this.state.image];
+
+      const updateImage = images.filter(item => item.id !== key );
+
+      this.setState({
+         image: updateImage,
+      });
+   }
+
     render() {
       
       let {category, subcategory, categoryField, master, master_id, option, country, state,
@@ -1351,9 +1369,16 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="titleinArabic" label="Title Arabic" value={this.state.titleinArabic} placeholder="Title Arabic" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
+                                 <div className="row">
                                  {image ? image && image.map((image, index) => {
-                                    return <img src={image} key={index} alt='image' style={{maxWidth:'150px', minWidth:'150px', maxHeight:'150px', minHeight:'150px', margin:'10px'}} />
+                                    return (
+                                       <div className="col-md-4" style={{position:'relative'}}>
+                                          <img src={image.file} key={index} alt='image' style={{maxWidth:'150px', minWidth:'150px', maxHeight:'150px', minHeight:'150px', margin:'10px'}} />
+                                          <span className="img-dlt"><button className="btn btn-danger" onClick={() => this.removeImage(image.id)}><i className="fa fa-trash"></i></button></span>
+                                       </div>
+                                    )
                                  }) : ''}
+                                 </div>
                                  <TextField handleChange={this.handleChange} name="price" label="Price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
                                  <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
@@ -1661,13 +1686,13 @@ class CreateForm extends React.Component{
                                             <div className="row flex-row-reverse">
                                                 <div className="col-md-10">
                                                     <div className="product-gallery-xl">
-                                                        <img src={this.state.mainImage ? this.state.mainImage : this.state.image[0]} alt="media" />
+                                                        <img src={this.state.mainImage ? this.state.mainImage : this.state.image.length !== 0 ? this.state.image[0].file: ''} alt="media" />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-2">
                                                     <ul className="product-gallery-sm">
                                                         {this.state.image ? this.state.image.map((image, index) => {
-                                                            return <li key={index} onClick={() => this.setState({mainImage: image})}><img src={image} alt="media" /></li>
+                                                            return <li key={index} onClick={() => this.setState({mainImage: image.file})}><img src={image.file} alt="media" /></li>
                                                         }) : <li><img src={this.state.defaultImage} alt="media" /></li>}
                                                         
                                                         
