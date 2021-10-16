@@ -186,7 +186,7 @@ export default class adsDetails extends Component {
         
             let modalLogin ={
                 position:  'fixed',
-                width: '80%',
+                width: '100%',
                 top: '40px',
                 bottom: '40px',
             }
