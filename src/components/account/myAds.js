@@ -35,7 +35,7 @@ export default class myAds extends Component {
         }
 
         this.setState({
-            loaderState: false,
+            loaderState: true,
         });
 
         axios({
@@ -113,7 +113,7 @@ export default class myAds extends Component {
         return (
 
             <div id="page" className="site-page">
-                { loaderState === true ? <Loader /> :
+                { loaderState === true ? <Loader /> : ''}
                 <>
                     <Header />
                     <Breadcrumb section="My Ads" />
@@ -153,7 +153,7 @@ export default class myAds extends Component {
                     </section>
                     <AppDownload />
                     <Footer />
-                </>}
+                </>
             </div>
         )
     }

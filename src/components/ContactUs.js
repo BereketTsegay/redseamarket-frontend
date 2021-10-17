@@ -182,7 +182,7 @@ export default class ContactUs extends Component {
                 {/* <!-- =====[PAGE]===== --> */}
                 <div id="page" className="site-page">
 
-                {loaderStatus == true ? <Loader /> : 
+                {loaderStatus == true ? <Loader /> : ''}
                 <section className="section-create-ad-1">
                         <div className="container">
                             <div className="row">
@@ -228,7 +228,7 @@ export default class ContactUs extends Component {
                                 </div>
                             </div>
                         </div>
-                    </section>}
+                    </section>
                 </div>
 
                 <AppDownload/>

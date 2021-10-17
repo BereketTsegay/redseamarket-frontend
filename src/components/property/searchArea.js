@@ -157,7 +157,7 @@ class searchArea extends Component {
         
         return (
             <>
-            {loaderStatus == true ? <Loader /> : 
+            {loaderStatus == true ? <Loader /> : ''}
                 <section className="section-hero-banner section-hero-motor-main">
                     <div className="container">
                         <div className="row">
@@ -317,7 +317,7 @@ class searchArea extends Component {
                             </div>
                         </div>
                     </div>
-                </section>}
+                </section>
             </>
         )
     }

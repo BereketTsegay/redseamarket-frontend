@@ -133,7 +133,7 @@ export default class listAdItem extends Component {
         
         return (
             <>
-            {loaderStatus == true ? <Loader /> :
+            {loaderStatus == true ? <Loader /> : ''}
             <li>
                 <div class="panel-media">
                     <Link to={`/adsdetails/${ads.id}`}><img style={{minHeight:'150px', maxHeight:'150px'}} src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></Link>
@@ -236,7 +236,7 @@ export default class listAdItem extends Component {
                     </div>
                 </div>
             </li>
-            }
+            
             </>
         )
     }

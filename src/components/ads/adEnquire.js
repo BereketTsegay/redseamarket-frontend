@@ -174,7 +174,7 @@ export default class adEnquire extends Component {
 
         return (
             <>
-                {loaderStatus == true ? <Loader /> : 
+                {loaderStatus == true ? <Loader /> : ''}
                 <section className="section-enquire" id="ad_enquire" ref={this.props.refprop}>
                     <div className="container">
                         <div className="row">
@@ -217,7 +217,7 @@ export default class adEnquire extends Component {
                             </div>
                         </div> */}
                     </div>
-                </section>}
+                </section>
             </>
         )
     }

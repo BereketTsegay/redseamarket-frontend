@@ -1337,7 +1337,7 @@ class CreateForm extends React.Component{
 
          return (
             <div className="site-frame">
-               {loaderStatus == true ? <Loader /> :
+               {loaderStatus == true ? <Loader /> : ''}
                <>
                   <Header />
             
@@ -1669,7 +1669,7 @@ class CreateForm extends React.Component{
 
                   <AppDownload/>
                   <Footer/>
-               </>}
+               </>
 
                <Modal className="modal fade log-sign-modal preview-modal" show={this.state.perviewModal}  style={modalLogin} id="perviewModal" tabindex="-1" aria-labelledby="perviewModalLabel" aria-hidden="true">
                                 

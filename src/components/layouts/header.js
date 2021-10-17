@@ -813,7 +813,7 @@ logout = (e) => {
       
         return (
             <div>
-                {loaderStatus == true ? <Loader /> :
+                {loaderStatus == true ? <Loader /> : ''}
                 
                 <>
                 <header id="header" className="site-header">
@@ -1085,7 +1085,7 @@ logout = (e) => {
                         </Modal>
 
                         </div>
-                </>}
+                </>
             </div>
 
              

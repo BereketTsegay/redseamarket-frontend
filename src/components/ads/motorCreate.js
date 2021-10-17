@@ -321,7 +321,7 @@ export default class motorCreate extends Component {
         return (
             
             <div>
-                {loaderStatus == true ? <Loader /> : 
+                {loaderStatus == true ? <Loader /> : ''}
                 <>
                     <SelectField placeholder="Make" label="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
                     <SelectField placeholder="Model" label="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
@@ -336,7 +336,7 @@ export default class motorCreate extends Component {
                     <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />
                     <Checkbox checkboxChange={this.checkboxChange} name="security" label="Security System" />
                     <Checkbox checkboxChange={this.checkboxChange} name="tire" label="Spare Tire" />
-                </>}
+                </>
             </div>
         );
     }

@@ -246,7 +246,7 @@ export default class propertyList extends Component {
 
         return (
             <div id="page" class="site-page">
-                {loaderStatus == true ? <Loader /> :
+                {loaderStatus == true ? <Loader /> : ''}
                 <>
                     <Header />
                     {/* <!-- =====[SECTION HERO] **===== --> */}
@@ -304,7 +304,7 @@ export default class propertyList extends Component {
 
                     <AppDownload />
                     <Footer />
-                </>}
+                </>
             </div>
         )
     }

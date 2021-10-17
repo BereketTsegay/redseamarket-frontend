@@ -116,7 +116,7 @@ class Index extends React.Component{
 
         return (
             <div className="site-frame">
-                { loaderState == true ? <Loader /> :
+                { loaderState == true ? <Loader /> : ''}
                 <>
                     <Header />
                     <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} />
@@ -124,7 +124,7 @@ class Index extends React.Component{
                     <AppDownload/>
                     <Footer/>
                 </>
-                }
+                
             </div>
             )
         }

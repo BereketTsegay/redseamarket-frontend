@@ -197,7 +197,7 @@ export default class adsDetails extends Component {
            
         return (
             <div id="page" className="site-page">
-                {loaderStatus == true ? <Loader /> :
+                {loaderStatus == true ? <Loader /> : ''}
                 <>
                 <Header />
                 <section className="section-breadcrumb">
@@ -567,7 +567,7 @@ export default class adsDetails extends Component {
                         
                     </Modal>
                   </div>
-                </>}
+                </>
             </div>
         )
     }

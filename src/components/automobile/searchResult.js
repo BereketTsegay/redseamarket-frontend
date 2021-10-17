@@ -306,7 +306,7 @@ export default class searchResult extends Component {
 
         return (
             <div id="page" class="site-page">
-                {loaderStatus == true ? <Loader /> :
+                {loaderStatus == true ? <Loader /> : ''}
                 <>
                 <Header />
                 {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
@@ -357,7 +357,7 @@ export default class searchResult extends Component {
                 
                 <AppDownload />
                 <Footer />
-                </>}
+                </>
             </div>
         )
     }

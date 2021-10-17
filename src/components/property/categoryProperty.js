@@ -158,7 +158,7 @@ export default class categoryProperty extends Component {
         
         return (
             <div id="page" className="site-page">
-            {loaderStatus == true ? <Loader /> : 
+            {loaderStatus == true ? <Loader /> : ''}
             <>
                 <Header />
                 <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
@@ -228,7 +228,7 @@ export default class categoryProperty extends Component {
 
                 <AppDownload />
                 <Footer />
-            </>}
+            </>
          </div>
         )
     }

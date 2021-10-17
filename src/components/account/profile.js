@@ -55,7 +55,7 @@ export default class profile extends Component {
         }
 
         this.setState({
-            loaderState: false,
+            loaderState: true,
         });
 
         axios({
@@ -100,7 +100,7 @@ export default class profile extends Component {
         })
 
         this.setState({
-            loaderState: false,
+            loaderState: true,
         });
 
         axios({
@@ -414,7 +414,7 @@ export default class profile extends Component {
         
         return (
             <div id="page" className="site-page">
-                {loaderState == true ? <Loader /> :
+                {loaderState == true ? <Loader /> : ''}
                 <>
                     <Header loginStatus={loginStatus} user={user.name}/>
                     <Breadcrumb section="My Profile" />
@@ -505,7 +505,7 @@ export default class profile extends Component {
                     
                     <AppDownload />
                     <Footer />
-                </>}
+                </>
 
                 <Modal className="modal fade log-sign-modal" show={this.state.changePasswordModal}  style={modalLogin} id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
                                 

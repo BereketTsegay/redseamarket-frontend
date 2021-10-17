@@ -68,7 +68,7 @@ class SubCategorySelect extends React.Component{
 
          return (
             <>
-            {loaderStatus == true ? <Loader /> :
+            {loaderStatus == true ? <Loader /> : ''}
             <>
                <section className="section-category-link">
                   <div className="container">
@@ -129,7 +129,7 @@ class SubCategorySelect extends React.Component{
                      </div>
                   </div>
                </section>
-            </>}
+            </>
             </>
         )
     }

@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import axios from 'axios';
 import { BASE_URL, userToken } from '../../projectString';
 import Swal from 'sweetalert2';
-import Loader from '../Loader';
+import LoaderSpinner from "react-loader-spinner";
 
 export class PaymentForm extends React.Component {
 
@@ -592,7 +592,16 @@ export class PaymentForm extends React.Component {
                     }}
                 />
 
-                {this.state.loaderStatus == true ? <Loader /> : ''}
+                {this.state.loaderStatus == true ?
+
+                <LoaderSpinner
+                    className="d-flex p-2 bd-highlight justify-content-center"
+                    type="Oval"
+                    color="#00BFFF"
+                    height={50}
+                    width={50}
+                    // timeout={3000} //3 secs
+                /> : ''}
             </form>
         );
     }

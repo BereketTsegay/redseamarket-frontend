@@ -57,7 +57,7 @@ class CreateAdsCategory extends React.Component{
 
          return (
             <div>
-               {loaderStatus == true ? <Loader /> :
+               {loaderStatus == true ? <Loader /> : ''}
                <>
                   <section className="section-category-blocks">
                      <div className="container">
@@ -99,7 +99,7 @@ class CreateAdsCategory extends React.Component{
                         </div>
                      </div>
                   </section>
-               </>}
+               </>
             </div>
         )
     }

@@ -257,7 +257,7 @@ export default class motorListing extends Component {
 
         return (
             <div id="page" class="site-page">
-                {loaderStatus == true ? <Loader /> :
+                {loaderStatus == true ? <Loader /> : ''}
                 <>
                 <Header />
                 {/* <!-- =====[SECTION MOTOR HERO] **===== --> */}
@@ -308,7 +308,7 @@ export default class motorListing extends Component {
                 
                 <AppDownload />
                 <Footer />
-                </>}
+                </>
             </div>
         )
     }

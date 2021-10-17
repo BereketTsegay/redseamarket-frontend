@@ -3,6 +3,7 @@ import Header from './layouts/header';
 import React, { Component } from 'react';
 import { BASE_URL } from '../projectString';
 import Logo from '../web-assets/img/brand.svg';
+import Loader from './Loader';
 
 export default class TermsConditions extends Component {
 
@@ -10,10 +11,16 @@ export default class TermsConditions extends Component {
         super(props);
         this.state = {
             termsConditions: [],
+            loaderStatus: false,
         }
     }
 
     componentWillMount = () => {
+
+        this.setState({
+            loaderStatus: true,
+        });
+
         window.scrollTo(0, 0);
         axios({
             url: `${BASE_URL}/terms/conditions`,
@@ -27,18 +34,24 @@ export default class TermsConditions extends Component {
                 });
             }
 
-        }).catch((error) => {
+            this.setState({
+                loaderStatus: false,
+            });
 
+        }).catch((error) => {
+            this.setState({
+                loaderStatus: false,
+            });
         });
     }
 
     render() {
 
-        let {termsConditions} = this.state;
+        let {termsConditions, loaderStatus} = this.state;
 
         return (
             <div className="site-frame">
-
+                {loaderStatus == true ? <Loader /> : ''}
                 {/* <!-- =====[HEADER]===== --> */}
                 {/* <header id="header" className="site-header">
                     <div className="main-header">

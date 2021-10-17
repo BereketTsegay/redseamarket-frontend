@@ -105,7 +105,7 @@ class headFilter extends Component {
             
         return (
             <>
-                {/* {loaderStatus == true ? <Loader /> :  */}
+                {loaderStatus == true ? <Loader /> : ''}
                 <section className="section-motor-filter">
                     <div className="container">
                         <div className="row">

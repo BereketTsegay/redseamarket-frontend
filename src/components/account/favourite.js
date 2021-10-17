@@ -38,7 +38,7 @@ export default class favourite extends Component {
         
 
         this.setState({
-            loaderState: false,
+            loaderState: true,
         });
 
         axios({
@@ -109,7 +109,7 @@ export default class favourite extends Component {
 
         return (
             <div id="page" className="site-page">
-                {loaderState === true ? <Loader /> :
+                {loaderState === true ? <Loader /> : ''}
                 <>
                     <Header />
                     <Breadcrumb section="My Favorites" />
@@ -155,7 +155,7 @@ export default class favourite extends Component {
 
                     <AppDownload/>
                     <Footer/>
-                </>}
+                </>
             </div>
         )
     }
