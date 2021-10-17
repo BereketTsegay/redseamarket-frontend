@@ -20,7 +20,7 @@ export default class subcategoryListing extends Component {
         return (
             <div className="col-category col-md-4 col-sm-6">
                 <h4 className="category-title">
-                    <img src={IMAGE_URL+'/'+image} style={{width:'25px'}} alt="icon" />
+                    <img src={IMAGE_URL+'/'+image} style={{maxWidth:'25px'}} alt="icon" />
                     {name}</h4>
                 <ul className="category-list">
                     {subcategory && subcategory.map((subcategory, index) => {
