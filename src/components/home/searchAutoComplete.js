@@ -199,7 +199,7 @@ class searchAutoComplete extends Component {
                                 if(index < 5){
                                     return (
                                         <li key={index}>
-                                            <Link to={'adsdetails/'+ searchResult.id}>
+                                            <Link to={'/adsdetails/'+ searchResult.id}>
                                                 <div className="media"><img style={{maxWidth:'100px', maxHeight:'100px', minWidth:'100px', minHeight:'100px'}} src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
                                                 <div className="content">
                                                 <h6 className="title">{searchResult.title}</h6>

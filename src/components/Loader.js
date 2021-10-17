@@ -27,7 +27,7 @@ import LoadingBar from 'react-top-loading-bar';
             <div>
                 <LoadingBar 
                     color='#007bff'
-                    progress="90"
+                    progress="100"
                     shadow='true'
                     height="5px"
                     // onLoaderFinished={() => setProgress(100)}

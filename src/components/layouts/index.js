@@ -58,7 +58,7 @@ class Index extends React.Component{
                     
                     localStorage.setItem('user', this.state.user);
                     localStorage.setItem('loginStatus', this.state.loginStatus);
-                    localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
+                    localStorage.setItem('dataArray', JSON.stringify(this.state.categoryDefault));
             
                 }
                 
@@ -97,7 +97,7 @@ class Index extends React.Component{
 
                     localStorage.setItem('user', this.state.user);
                     localStorage.setItem('loginStatus', this.state.loginStatus);
-                    localStorage.setItem('dataArray', JSON.stringify(this.state.dataArray));
+                    localStorage.setItem('dataArray', JSON.stringify(this.state.categoryDefault));
             
                 }
 

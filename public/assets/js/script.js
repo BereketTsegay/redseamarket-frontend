@@ -50,7 +50,7 @@ const checkPageTransition = () => {
 			
 			menuElement = $(menuElement);
 
-			
+		
 			const menuLeft = new SlideMenu(menuElement[0], {
 				position: 'right',
 				submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
