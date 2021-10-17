@@ -10,6 +10,7 @@ import MotorsSubcategoryAndAds from './motorsSubcategoryAndAds'
 import Testimonial from './testimonial'
 import Loader from '../Loader';
 import SearchAutoComplete from '../home/searchAutoComplete'
+import PaginationLink from '../account/paginationLink';
 
 export default class categoryMotors extends Component {
 
@@ -26,6 +27,11 @@ export default class categoryMotors extends Component {
          latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
          longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
          city: localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '',
+         paginataionArray: [],
+         currentPage: '',
+         previousPage: '',
+         nexPage: '',
+         last:'',
       }
    }
 
@@ -47,12 +53,17 @@ export default class categoryMotors extends Component {
 
       }).then(response => {
 
-         if(response.data.status == 'success'){
+         if(response.data.status === 'success'){
             
             this.setState({
                subcategory: response.data.data.motors.subcategory,
-               ads: response.data.data.ads,
+               ads: response.data.data.ads.data,
                testimonial: response.data.data.testimonial,
+               paginataionArray: response.data.data.ads.links,
+               currentPage: response.data.data.ads.current_page,
+               previousPage: response.data.data.ads.prev_page_url,
+               nexPage: response.data.data.ads.next_page_url,
+               last: response.data.data.ads.last_page,
             });
          }
 
@@ -64,7 +75,7 @@ export default class categoryMotors extends Component {
          this.setState({
             loaderStatus:false,
          });
-      })
+      });
 
       axios({
          url: `${BASE_URL}/customer/get/featured/dealer`,
@@ -101,11 +112,63 @@ export default class categoryMotors extends Component {
       });
    }
 
+   paginationCall = (url) => {
+
+      this.setState({
+         loaderStatus: true,
+      });
+
+      axios({
+         url: url,
+         method: 'POST',
+         data: {
+            city: localStorage.getItem('city_id'),
+            latitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.latitude,
+            longitude: localStorage.getItem('country_id') || localStorage.getItem('city_id') ? 0 : this.state.longitude,
+            country: localStorage.getItem('country_id'),
+         },
+
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            
+            this.setState({
+               ads: response.data.data.ads.data,
+
+               paginataionArray: response.data.data.ads.links,
+               currentPage: response.data.data.ads.current_page,
+               previousPage: response.data.data.ads.prev_page_url,
+               nexPage: response.data.data.ads.next_page_url,
+               last: response.data.data.ads.last_page,
+            });
+         }
+
+         this.setState({
+            loaderStatus:false,
+         });
+
+      }).catch((error) => {
+         this.setState({
+            loaderStatus:false,
+         });
+      })
+   }
+
    render() {
 
-      let {subcategory, ads, testimonial, searchKey, loaderStatus} = this.state;
+      let subcategory = this.state.subcategory;
+      let ads = this.state.ads;
+      let testimonial = this.state.testimonial;
+      let searchKey = this.state.searchKey;
+      let loaderStatus = this.state.loaderStatus;
       let dealer = this.state.dealer;
-         
+
+      let paginataionArray = this.state.paginataionArray;
+      let currentPage = this.state.currentPage;
+      let previousPage = this.state.previousPage;
+      let nexPage = this.state.nexPage;
+      let last = this.state.last;
+      
          return (
             <div id="page" className="site-page">
                {loaderStatus == true ? <Loader /> :
@@ -179,7 +242,8 @@ export default class categoryMotors extends Component {
                      <div className="container">
                         <div className="row">
                            <div className="col-12">
-                              <h2 className="section-title text-center">Featured Listings</h2>
+                              <h2 className="section-title text-center">Motor Listings</h2>
+                              {/* <h2 className="section-title text-center">Featured Listings</h2> */}
                            </div>
                         </div>
                         <div className="row row-product-panel">
@@ -187,8 +251,10 @@ export default class categoryMotors extends Component {
                            {ads && ads.map((ads, index) => {
                               return <FeaturedAds key={index} ads={ads} />
                            })}
-                           
                         </div>
+                        {last === 1 || last === '' ? '' :
+                           <PaginationLink paginataionArray={paginataionArray} last={last} previousPage={previousPage} nexPage={nexPage} paginationChange={this.paginationCall} />
+                        }
                      </div>
                   </section>
 
