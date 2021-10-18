@@ -48,7 +48,7 @@ export default class categoryProperty extends Component {
             }).then(response => {
 
                 if(response.data.status == 'success'){
-                    console.log(response.data);
+                    
                     this.setState({
                         popularCategory: response.data.data.property.subcategory,
                         subcategory: response.data.data.subcategory,
@@ -67,9 +67,11 @@ export default class categoryProperty extends Component {
         })
     }
 
-    componentDidUpdate(){
-
-        if(this.state.category_id != this.props.match.params.id){
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+        if(this.state.category_id != nextProps.match.params.id){
+            console.log(this.state.category_id, '=== cate1')
+        console.log(this.props.match.params.id, '=== cat 2');
             this.setState({
                 category_id: this.props.match.params.id,
                 loaderStatus: true,
@@ -128,7 +130,7 @@ export default class categoryProperty extends Component {
                     city: localStorage.getItem('city_id'),
                 }
             }).then(response => {
-    
+                
                 if(response.data.status == 'success'){
     
                     this.setState({
@@ -164,7 +166,7 @@ export default class categoryProperty extends Component {
                 <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
                 
                 {/* <!-- =====[SECTION CATEGORY CAROUSEL] **===== --> */}
-                <section className="section-category-carousel">
+                {/* <section className="section-category-carousel">
                     <div className="container">
                         <div className="row">
                             <div className="col-12">
@@ -184,7 +186,7 @@ export default class categoryProperty extends Component {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 {/* <!-- =====[SECTION PLACE PANEL] **===== --> */}
                 
