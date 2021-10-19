@@ -106,7 +106,7 @@ class homefilter extends Component {
 
    handlSubmit = () => {
       
-      if(this.state.searchKey != ''){
+      // if(this.state.searchKey != ''){
          
          if(this.state.category == '' && this.state.city == ''){
             
@@ -128,7 +128,7 @@ class homefilter extends Component {
             }
             else if(this.state.subcategory != '') {
                
-               this.props.history.push('/search?key='+this.state.searchKey+'&city=?category='+this.state.category+'&subcategory='+this.state.subcategory);
+               this.props.history.push('/search?key='+this.state.searchKey+'&city=&category='+this.state.category+'&subcategory='+this.state.subcategory);
             }
             else if(this.state.city != ''){
                
@@ -139,7 +139,7 @@ class homefilter extends Component {
                this.props.history.push('/search?key='+this.state.searchKey+'&city=&category='+this.state.category+'&subcategory=');
             }
          }
-      }
+      // }
 
    }
 

@@ -81,10 +81,10 @@ class headFilter extends Component {
         
         let state = this.state;
 
-        if(state.keyword !== ''){
+        // if(state.keyword !== ''){
            
             this.props.history.push(`/search?key=${state.keyword}&city=${state.city}&category=${state.category_id}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&seller=${state.seller}`);
-        }
+        // }
     }
 
     searchKeyEvent = (key) => {
@@ -144,9 +144,9 @@ class headFilter extends Component {
                                     <div className="col-xl-3 col-lg-4 col-md-6">
                                         <div className="form-group">
                                             <select onChange={(e) => this.handleChange(e)} className="form-control" name="seller">
-                                            <option selected="">Seller type</option>
-                                            <option value="0">Admin</option>
-                                            <option value="1">Users</option>
+                                            <option selected="">Type</option>
+                                            <option value="0">Not Featured</option>
+                                            <option value="1">Featured</option>
                                             </select>
                                         </div>
                                     </div>

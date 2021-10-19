@@ -24,17 +24,17 @@ class Header extends React.Component{
       super(props);
 
       this.state = {
-         user: localStorage.getItem('user') != '' ? localStorage.getItem('user') : '',
-         loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
-         // loginStatus: false,
-         dataArray:JSON.parse(localStorage.getItem('dataArray')),
-         showHistory: false,
-         registerModal:false,
-         email: '',
-         password: '',
-         errors: {
-            username: '',
-            password: '',
+        user: localStorage.getItem('user') != '' ? localStorage.getItem('user') : '',
+        loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
+        // loginStatus: false,
+        dataArray:JSON.parse(localStorage.getItem('dataArray')),
+        showHistory: false,
+        registerModal:false,
+        email: '',
+        password: '',
+        errors: {
+           username: '',
+           password: '',
         },
         errors2:{
            namererror:'',
@@ -150,8 +150,7 @@ class Header extends React.Component{
         globalRegError: '',
     });
     
-   if(this.state.registername && this.state.registeremail && this.state.registerpassword)
-      {
+    if(this.state.registername && this.state.registeremail && this.state.registerpassword){
 
         this.setState({
             loaderStatus: true,
@@ -198,17 +197,21 @@ class Header extends React.Component{
 
 
 
-            }else if(response.data.code === '400'){
+            }
+            else if(response.data.code === '400'){
                this.setState({
                    globalRegError: response.data.message ? response.data.message : response.data.errors.email[0] ? response.data.errors.email[0] : '',
                 });
-            }else{
+            }
+            else{
                this.setState({globalRegError:'Sorry something went wrong try again...'});
             }
 
             this.setState({
                 loaderStatus: false,
             });
+
+            window.location.reload();
 
         }).catch((error) => {
             this.setState({
@@ -222,29 +225,30 @@ class Header extends React.Component{
 
 
 
-      }else{
-         if(this.state.registername === '' || this.state.registername.trim() === '')
-         {
-             errors2.namererror ='Name cannot be blank'
-         }
+    }
+    else{
+         
+        if(this.state.registername === '' || this.state.registername.trim() === ''){
 
-         if(this.state.registeremail === ''  || this.state.registeremail.trim() === '')
-         {
-            
-             errors2.emailrerror = 'Email cannot be blank';
-         }
-         else if(!this.state.registeremail.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+            errors2.namererror ='Name cannot be blank'
+        }
 
-            errors2.emailrerror ='Must be an email';
+        if(this.state.registeremail === ''  || this.state.registeremail.trim() === '')
+        {
+           
+            errors2.emailrerror = 'Email cannot be blank';
+        }
+        else if(!this.state.registeremail.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
 
-         }
-         if(this.state.registerpassword === ''  || this.state.registerpassword.trim() === '')
-         {
-            
-             errors2.passwordrerror = 'Password cannot be blank';
-         }
-         this.setState({errors2, [name]: value});
-      }
+           errors2.emailrerror ='Must be an email';
+        }
+        if(this.state.registerpassword === ''  || this.state.registerpassword.trim() === ''){
+           
+            errors2.passwordrerror = 'Password cannot be blank';
+        }
+
+        this.setState({errors2, [name]: value});
+    }
 
       // console.log(errors2)
 
@@ -254,8 +258,8 @@ class Header extends React.Component{
 
 
    handleSubmit = (e) => {
-      e.preventDefault();
-      // console.log(e, 'targetvals')
+        e.preventDefault();
+        // console.log(e, 'targetvals')
         const { name, value } = e.target;
         let errors = this.state.errors;
         if(this.state.email && this.state.password)
@@ -265,61 +269,61 @@ class Header extends React.Component{
                 loaderStatus: true,
             });
       
-          axios({
-              url: `${BASE_URL}/user/login`,
-              method: 'POST',
-              data:{
-                  email:this.state.email,
-                  password:this.state.password,
-              }
-          }).then(response => {
-            
-              if(response.data.status == 'success'){
+            axios({
+                url: `${BASE_URL}/user/login`,
+                method: 'POST',
+                data:{
+                    email:this.state.email,
+                    password:this.state.password,
+                }
+            }).then(response => {
+                
+                if(response.data.status == 'success'){
 
-                  localStorage.removeItem('userToken');
-                  localStorage.removeItem('loginStatus');
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('loginStatus');
 
-                  localStorage.setItem('userToken', response.data.token);
-                  // localStorage.setItem('loginStatus', true);
+                    localStorage.setItem('userToken', response.data.token);
+                    // localStorage.setItem('loginStatus', true);
 
-                  localStorage.removeItem('user');
-                  localStorage.setItem('user', response.data.user);
+                    localStorage.removeItem('user');
+                    localStorage.setItem('user', response.data.user);
 
-                  this.setState({
-                     loginStatus:true,
-                     user: response.data.user,
-                  });
-                  localStorage.setItem('loginStatus',true);
-                  Swal.fire({
-                     title: 'success!',
-                     text: response.data.message,
-                     icon: 'success',
-                     confirmButtonText: 'OK'
-                 }).then((result) => {
-                     if(result.isConfirmed){
-                         window.location.reload();
-                     }
-                 });
-                 this.setState({ showHistory: false});
-               //   console.log(localStorage,"local storage")
-                  // this.props.handleSuccessfullAuth(response.data.message)
-              }
-              else{
-                console.log(response.data);
-                this.setState({globalLoginError:response.data.message, loaderStatus:false,});
-              }
+                    this.setState({
+                        loginStatus:true,
+                        user: response.data.user,
+                    });
+                    localStorage.setItem('loginStatus',true);
+                    Swal.fire({
+                        title: 'success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if(result.isConfirmed){
+                            window.location.reload();
+                        }
+                    });
+                    this.setState({ showHistory: false});
+                //   console.log(localStorage,"local storage")
+                    // this.props.handleSuccessfullAuth(response.data.message)
+                }
+                else{
+                    
+                    this.setState({globalLoginError:response.data.message, loaderStatus:false,});
+                }
 
-                this.setState({
-                    loaderStatus: false,
-                });
+                    this.setState({
+                        loaderStatus: false,
+                    });
 
-          }).catch((error) => {
-            // console.log(error,'error');
-            this.setState({globalLoginError:error.response.data.message, loaderStatus:false,});
-            //   console.log(error.response.data.message);
-          })
-         }
-          else{
+            }).catch((error) => {
+                // console.log(error,'error');
+                this.setState({globalLoginError:error.response.data.message, loaderStatus:false,});
+                //   console.log(error.response.data.message);
+            })
+        }
+        else{
             if(this.state.email === '' || this.state.email.trim() === '')
             {
                 errors.username ='Email cannot be blank'
@@ -331,98 +335,96 @@ class Header extends React.Component{
                 errors.password = 'Password cannot be blank';
             }
             this.setState({errors, [name]: value});
-          }   
+        }   
 
-
-      
   }
 
 
-  onChange2 =(e)=>{
-   this.setState({[e.target.name]: e.target.value});
-   this.setState({globalRegisterError:''});
-   e.preventDefault();
-   const { name, value } = e.target;
-   let errors2 = this.state.errors2;
-   switch (name) {
-       case 'registername': 
-           errors2.namererror = (value.length === 0 || (value.trim()).length === 0 )? 'Name cannot be blank': '';
-           if (value.length === 0 || (value.trim()).length === 0)
-           {
-               this.setState({isUsernameError:true});
-           }else{
-               this.setState({isUsernameError:false});
-           }
-       break;
-       case 'registeremail':
+    onChange2 =(e)=>{
+        this.setState({[e.target.name]: e.target.value});
+        this.setState({globalRegisterError:''});
+        e.preventDefault();
+        const { name, value } = e.target;
+        let errors2 = this.state.errors2;
+        switch (name) {
+            case 'registername': 
+                errors2.namererror = (value.length === 0 || (value.trim()).length === 0 )? 'Name cannot be blank': '';
+                if (value.length === 0 || (value.trim()).length === 0)
+                {
+                    this.setState({isUsernameError:true});
+                }else{
+                    this.setState({isUsernameError:false});
+                }
+            break;
+            case 'registeremail':
 
-          errors2.emailrerror = (value.length === 0 || (value.trim()).length === 0)? 'Email cannot be blank' : '';
-           if (value.length === 0 || (value.trim()).length === 0)
-           {
-               this.setState({isPasswordError:true});
-           }else{
-               this.setState({isPasswordError:false});
-           }
+                errors2.emailrerror = (value.length === 0 || (value.trim()).length === 0)? 'Email cannot be blank' : '';
+                if (value.length === 0 || (value.trim()).length === 0)
+                {
+                    this.setState({isPasswordError:true});
+                }else{
+                    this.setState({isPasswordError:false});
+                }
 
-            if(!value.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
-                errors2.emailrerror ='Must be an email';
-                this.setState({isPasswordError:true});
-            }
-       break;
-       case 'registerpassword': 
-       errors2.passwordrerror = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
-        if (value.length === 0 || (value.trim()).length === 0)
-        {
-            this.setState({isPasswordError:true});
-        }else{
-            this.setState({isPasswordError:false});
+                    if(!value.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+                        errors2.emailrerror ='Must be an email';
+                        this.setState({isPasswordError:true});
+                    }
+            break;
+            case 'registerpassword': 
+            errors2.passwordrerror = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
+                if (value.length === 0 || (value.trim()).length === 0)
+                {
+                    this.setState({isPasswordError:true});
+                }else{
+                    this.setState({isPasswordError:false});
+                }
+            break;
+            default:
+                break;
         }
-    break;
-       default:
-         break;
-   }
-   this.setState({errors2, [name]: value});
-}
+        this.setState({errors2, [name]: value});
+    }
 
-  onChange =(e)=>{
-    this.setState({[e.target.name]: e.target.value});
-    this.setState({globalLoginError:''});
-    e.preventDefault();
-    const { name, value } = e.target;
-    let errors = this.state.errors;
-    switch (name) {
-        case 'email': 
-            errors.username = (value.length === 0 || (value.trim()).length === 0 )? 'Email cannot be blank': '';
-            if (value.length === 0 || (value.trim()).length === 0)
-            {
-                this.setState({isUsernameError:true});
-            }else{
-                this.setState({isUsernameError:false});
-            }
-            break;
-        case 'password': 
-            errors.password = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
-            if (value.length === 0 || (value.trim()).length === 0)
-            {
-                this.setState({isPasswordError:true});
-            }else{
-                this.setState({isPasswordError:false});
-            }
-            break;
-        case 'otp':
-            this.state.otpError = (value.length === 0 || (value.trim()).length === 0 ) ? 'OTP cannot be blank': '';
-            break;
-        case 'newPassword':
-            this.state.newPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Password cannot be blank': '';
-            break;
-        case 'confirmPassword':
-            this.state.confirmPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Confirm Password cannot be blank': '';
-            break;
-        default:
-            break;
-   }
-   this.setState({errors, [name]: value});
-}
+    onChange =(e)=>{
+        this.setState({[e.target.name]: e.target.value});
+        this.setState({globalLoginError:''});
+        e.preventDefault();
+        const { name, value } = e.target;
+        let errors = this.state.errors;
+        switch (name) {
+            case 'email': 
+                errors.username = (value.length === 0 || (value.trim()).length === 0 )? 'Email cannot be blank': '';
+                if (value.length === 0 || (value.trim()).length === 0)
+                {
+                    this.setState({isUsernameError:true});
+                }else{
+                    this.setState({isUsernameError:false});
+                }
+                break;
+            case 'password': 
+                errors.password = (value.length === 0 || (value.trim()).length === 0)? 'Password cannot be blank' : '';
+                if (value.length === 0 || (value.trim()).length === 0)
+                {
+                    this.setState({isPasswordError:true});
+                }else{
+                    this.setState({isPasswordError:false});
+                }
+                break;
+            case 'otp':
+                this.state.otpError = (value.length === 0 || (value.trim()).length === 0 ) ? 'OTP cannot be blank': '';
+                break;
+            case 'newPassword':
+                this.state.newPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Password cannot be blank': '';
+                break;
+            case 'confirmPassword':
+                this.state.confirmPassword = (value.length === 0 || (value.trim()).length === 0 ) ? 'Confirm Password cannot be blank': '';
+                break;
+            default:
+                break;
+        }
+        this.setState({errors, [name]: value});
+    }
 
 
     viewForgotpasswordModal = () => {
@@ -507,42 +509,42 @@ class Header extends React.Component{
     }
 
 
-logout = (e) => {
-   this.setState({loginStatus:false, loaderStatus: true,});
-   localStorage.removeItem('loginStatus');
-   
-   localStorage.setItem('loginStatus',false);
-   
-   e.preventDefault();
-   
-   localStorage.removeItem('userToken');
-  
- 
-   // localStorage.setItem('loginStatus', false);
-   // this.setState({loginStatus:false});
-   axios({
-       url: `${BASE_URL}/customer/logout`,
-       method: 'POST',
-       headers:{ Authorization: "Bearer " + userToken },
+    logout = (e) => {
+        this.setState({loginStatus:false, loaderStatus: true,});
+        localStorage.removeItem('loginStatus');
+        
+        localStorage.setItem('loginStatus',false);
+        
+        e.preventDefault();
+        
+        localStorage.removeItem('userToken');
+        
+        
+        // localStorage.setItem('loginStatus', false);
+        // this.setState({loginStatus:false});
+        axios({
+            url: `${BASE_URL}/customer/logout`,
+            method: 'POST',
+            headers:{ Authorization: "Bearer " + userToken },
 
-   }).then(response => {
+        }).then(response => {
 
-        if(response.data.status === 'success'){
-            this.props.history.push('/');
-        }
+                if(response.data.status === 'success'){
+                    this.props.history.push('/');
+                }
 
-        this.setState({
-            loaderStatus: false,
+                this.setState({
+                    loaderStatus: false,
+                });
+
+        }).catch((error) => {
+                this.props.history.push('/');
+                this.setState({
+                    loaderStatus: false,
+                });
         });
 
-   }).catch((error) => {
-        this.props.history.push('/');
-        this.setState({
-            loaderStatus: false,
-        });
-   });
-
-}
+    }
 
 
     viewVerifyEmaildModal = () => {
@@ -692,14 +694,13 @@ logout = (e) => {
 
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
-                window.location.reload();
             }
-
-            
             
         }).catch((error) => {
 
         });
+
+        window.location.reload();
 
     }
 

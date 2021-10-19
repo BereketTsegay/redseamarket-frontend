@@ -16,8 +16,9 @@ export default class adsDetails extends Component {
 
     constructor(props){
         super(props);
-
+        
         this.myRef = React.createRef();
+        this.topRef = React.createRef();
 
         this.state = {
             id:this.props.match.params.id,
@@ -70,6 +71,10 @@ export default class adsDetails extends Component {
                 loaderStatus: false,
             });
         });
+    }
+
+    componentDidMount = () => {
+        window.scrollTo(0, 0);
     }
 
     handleChange = (e) => {
@@ -197,6 +202,7 @@ export default class adsDetails extends Component {
            
         return (
             <div id="page" className="site-page">
+                <div ref={this.topRef}></div>
                 {loaderStatus == true ? <Loader /> : ''}
                 <>
                 <Header />
@@ -215,7 +221,7 @@ export default class adsDetails extends Component {
                         </div>
                     </div>
                 </section>
-
+                {window.scrollTo(0, 0)}
                 {ads.map((ads, index) => {
 
                     return (
@@ -330,17 +336,6 @@ export default class adsDetails extends Component {
                                             <div className="tab-pane fade" id="pdttab2" role="tabpanel" aria-labelledby="pdttab2-tab" style={{minHeight: '200px'}}>
                                                 <div className="pdt-tab-list">
                                                     
-                                                    {ads.category_id == 1 ? ads.motor_features ? ads.motor_features.map((feature, index) => {
-                                                        return (
-                                                            <div className="row mb-3 mb-md-4" key={index}>
-                                                                <div className="col-4 text-capitalize"><strong> {feature.value}</strong></div>
-                                                                <div className="col-1 text-center">:</div>
-                                                                <div className="col-7">Yes</div>
-                                                            </div>
-                                                        )
-                                                    })
-
-                                                    : '' : ''}
                                                     <ul>
                                                     {ads.custom_value.length > 0 ? ads.custom_value && ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position != 'top'){
@@ -470,6 +465,18 @@ export default class adsDetails extends Component {
                                                                 <div className="col-1 text-center">:</div>
                                                                 <div className="col-7">{ads.motore_value ? ads.motore_value.milage : ''}</div>
                                                             </div>
+
+                                                            {ads.category_id == 1 ? ads.motor_features ? ads.motor_features.map((feature, index) => {
+                                                                return (
+                                                                    <div className="row mb-3 mb-md-4" key={index}>
+                                                                        <div className="col-4 text-capitalize"><strong> {feature.value}</strong></div>
+                                                                        <div className="col-1 text-center">:</div>
+                                                                        <div className="col-7">Yes</div>
+                                                                    </div>
+                                                                )
+                                                            })
+
+                                                            : '' : ''}
                                                         </>
                                                         
                                                         : '' }

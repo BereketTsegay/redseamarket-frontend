@@ -105,6 +105,15 @@ export default class searchResult extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    condition: condition,
+                    transmission: transmission,
+                    priceFrom: priceFrom,
+                    priceTo: priceTo,
+                    yearFrom: yearFrom,
+                    yearTo: yearTo,
+                    mileageFrom: mileageFrom,
+                    mileageTo: mileageTo,
+                    seller: seller,
                 },
             }).then(response => {
 

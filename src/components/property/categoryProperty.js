@@ -68,12 +68,11 @@ export default class categoryProperty extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(nextProps);
-        if(this.state.category_id != nextProps.match.params.id){
-            console.log(this.state.category_id, '=== cate1')
-        console.log(this.props.match.params.id, '=== cat 2');
+        
+        // if(this.state.category_id != nextProps.match.params.id){
+            
             this.setState({
-                category_id: this.props.match.params.id,
+                category_id: nextProps.match.params.id,
                 loaderStatus: true,
             }, () => {
 
@@ -110,7 +109,7 @@ export default class categoryProperty extends Component {
 
             });
             
-        }
+        // }
     }
 
     changeCategory = (category_id) => {

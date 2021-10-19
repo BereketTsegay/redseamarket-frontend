@@ -84,11 +84,11 @@ class headFilter extends Component {
         
         let state = this.state;
 
-        if(state.keyword !== ''){
+        // if(state.keyword !== ''){
            
             this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}`);
     
-        }
+        // }
     }
 
     searchKeyEvent = (key) => {
@@ -193,9 +193,9 @@ class headFilter extends Component {
                                     <div className="col-xl-3 col-lg-4 col-md-6">
                                         <div className="form-group">
                                             <select onChange={(e) => this.handleChange(e)} className="form-control" name="seller">
-                                            <option selected="">Seller type</option>
-                                            <option value="0">Admin</option>
-                                            <option value="1">Users</option>
+                                            <option selected="">Type</option>
+                                            <option value="0">Not Featured</option>
+                                            <option value="1">Featured</option>
                                             </select>
                                         </div>
                                     </div>

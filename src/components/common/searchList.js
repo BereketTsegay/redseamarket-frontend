@@ -48,7 +48,54 @@ export default class searchList extends Component {
         let priceFrom = ((new URLSearchParams(nextProps.location.search).get('priceFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceFrom')) : '';
         let priceTo = ((new URLSearchParams(nextProps.location.search).get('priceTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceTo')) : '';
 
-        if(!key && category ){
+        if(!key && subcategory ){
+
+            this.setState({
+                category: category,
+                city: city,
+                subcategory: subcategory,
+                searchKey: key,
+                loaderStatus:true,
+
+            }, () => {
+                axios({
+                    url: `${BASE_URL}/customer/get/subcategory/ads`,
+                    method: 'POST',
+                    data: {
+                        subcategory_id: this.state.subcategory,
+                        latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
+                        city: city,
+                        country: localStorage.getItem('country_id'),
+                    },
+                }).then(response => {
+
+                    if(response.data.status == 'success'){
+                        
+                        this.setState({
+
+                            resultKey: response.data.message,
+                            adList: response.data.ads.data,
+                            paginataionArray: response.data.ads.links,
+                            previousPage: response.data.ads.prev_page_url,
+                            nexPage: response.data.ads.next_page_url,
+                            last:response.data.ads.last_page,
+                            total:response.data.ads.total,
+                        });
+                    }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
+
+                }).catch((error) => {
+                    this.setState({
+                        loaderStatus: false,
+                    });
+                });
+            });
+        }
+        else if(!key && category){
 
             this.setState({
                 category: category,
@@ -95,53 +142,6 @@ export default class searchList extends Component {
                 });
             });
 
-        }
-        else if(!key && subcategory ){
-
-            this.setState({
-                category: category,
-                city: city,
-                subcategory: subcategory,
-                searchKey: key,
-                loaderStatus:true,
-
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/get/subcategory/ads`,
-                    method: 'POST',
-                    data: {
-                        subcategory_id: this.state.subcategory,
-                        latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
-                        longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
-                        city: city,
-                        country: localStorage.getItem('country_id'),
-                    },
-                }).then(response => {
-
-                    if(response.data.status == 'success'){
-                        
-                        this.setState({
-
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        });
-                    }
-
-                    this.setState({
-                        loaderStatus: false,
-                    });
-
-                }).catch((error) => {
-                    this.setState({
-                        loaderStatus: false,
-                    });
-                });
-            });
         }
         else{
 
@@ -210,55 +210,7 @@ export default class searchList extends Component {
         let priceTo = ((new URLSearchParams(this.props.location.search).get('priceTo')) != '') ? (new URLSearchParams(this.props.location.search).get('priceTo')) : '';
 
 
-        if(!key && category){
-            
-            this.setState({
-                category: category,
-                city: city,
-                subcategory: subcategory,
-                searchKey: key,
-                loaderStatus: true,
-
-            }, () => {
-                axios({
-                    url: `${BASE_URL}/customer/get/category/ads`,
-                    method: 'POST',
-                    data: {
-                        canonical_name: this.state.category,
-                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
-                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
-                        city: this.state.city,
-                        country: localStorage.getItem('country_id'),
-                    },
-                }).then(response => {
-
-                    if(response.data.status == 'success'){
-                        
-                        this.setState({
-
-                            resultKey: response.data.message,
-                            adList: response.data.ads.data,
-                            paginataionArray: response.data.ads.links,
-                            previousPage: response.data.ads.prev_page_url,
-                            nexPage: response.data.ads.next_page_url,
-                            last:response.data.ads.last_page,
-                            total:response.data.ads.total,
-                        });
-                    }
-
-                    this.setState({
-                        loaderStatus: false,
-                    });
-
-                }).catch((error) => {
-                    this.setState({
-                        loaderStatus: false,
-                    })
-                });
-            });
-
-        }
-        else if(!key && subcategory){
+        if(!key && subcategory){
 
             this.setState({
                 category: category,
@@ -304,6 +256,54 @@ export default class searchList extends Component {
                     })
                 });
             });
+        }
+        else if(!key && category){
+            
+            this.setState({
+                category: category,
+                city: city,
+                subcategory: subcategory,
+                searchKey: key,
+                loaderStatus: true,
+
+            }, () => {
+                axios({
+                    url: `${BASE_URL}/customer/get/category/ads`,
+                    method: 'POST',
+                    data: {
+                        category: this.state.category,
+                        latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
+                        longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
+                        city: this.state.city,
+                        country: localStorage.getItem('country_id'),
+                    },
+                }).then(response => {
+
+                    if(response.data.status == 'success'){
+                        
+                        this.setState({
+
+                            resultKey: response.data.message,
+                            adList: response.data.ads.data,
+                            paginataionArray: response.data.ads.links,
+                            previousPage: response.data.ads.prev_page_url,
+                            nexPage: response.data.ads.next_page_url,
+                            last:response.data.ads.last_page,
+                            total:response.data.ads.total,
+                        });
+                    }
+
+                    this.setState({
+                        loaderStatus: false,
+                    });
+
+                }).catch((error) => {
+                    this.setState({
+                        loaderStatus: false,
+                    })
+                });
+            });
+
         }
         else{
             
