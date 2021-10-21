@@ -27,7 +27,8 @@ class Header extends React.Component{
         user: localStorage.getItem('user') != '' ? localStorage.getItem('user') : '',
         loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
         // loginStatus: false,
-        dataArray:JSON.parse(localStorage.getItem('dataArray')),
+        // dataArray:JSON.parse(localStorage.getItem('dataArray')),
+        dataArray: [],
         showHistory: false,
         registerModal:false,
         email: '',
@@ -101,6 +102,27 @@ class Header extends React.Component{
 
             });
         }
+
+        axios({
+            url: `${BASE_URL}/menu/list`,
+            method: 'POST',
+            data:{
+                latitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : sessionStorage.getItem('latitude'),
+                longitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : sessionStorage.getItem('longitude'),
+                city: localStorage.getItem('city_id'),
+                country: localStorage.getItem('country_id'),
+            }
+        }).then(response => {
+
+            if(response.data.status === 'success'){
+                this.setState({
+                    dataArray: response.data.category,
+                });
+            }
+            
+        }).catch((error) => {
+
+        });
 
         axios({
             url: `${BASE_URL}/customer/get/country`,
