@@ -8,6 +8,8 @@ import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL, userToken, GOOGLEMAPS_API } from '../../projectString'; 
 import { withRouter } from 'react-router';
 import Swal from 'sweetalert2'
+import Select from 'react-select';  
+import makeAnimated from 'react-select/animated';  
 import {
    BrowserRouter as Router,
    Link,
@@ -17,6 +19,7 @@ import {
 import Loader from '../Loader';
 import GoogleTranslate from '../common/googleTranslate';
 import MobileMenu from './MobileMenu';
+const animatedComponents = makeAnimated(); 
 
 class Header extends React.Component{
 
@@ -146,6 +149,10 @@ class Header extends React.Component{
 
         });
 
+    }
+
+    Country = () => {  
+        return (this.state.countryList.map(data => ({ label: data.name, value: data.id })));
     }
    
    viewLoginModal = () => {
@@ -688,15 +695,18 @@ class Header extends React.Component{
 
     onCountryChange = (e) => {
 
-        let countryIndex = e.nativeEvent.target.selectedIndex;
-        let countryName = e.nativeEvent.target[countryIndex].text
+        // let countryIndex = e.nativeEvent.target.selectedIndex;
+        // let countryName = e.nativeEvent.target[countryIndex].text
 
         localStorage.removeItem('country_id');
         localStorage.removeItem('country_name');
         localStorage.removeItem('city_id');
 
-        localStorage.setItem('country_id', e.target.value);
-        localStorage.setItem('country_name', countryName);
+        // localStorage.setItem('country_id', e.target.value);
+        // localStorage.setItem('country_name', countryName);
+
+        localStorage.setItem('country_id', e.value);
+        localStorage.setItem('country_name', e.label);
 
         this.setState({
             countryListModal: !this.state.countryListModal,
@@ -706,7 +716,7 @@ class Header extends React.Component{
             url: `${BASE_URL}/get/currency`,
             method: 'POST',
             data: {
-                country: e.target.value,
+                country: e.value,
             }
         }).then(response => {
             // console.log(response.data.currency.currency_code);
@@ -888,7 +898,7 @@ class Header extends React.Component{
                                 <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
                                     }
                                 </div>
-                                {/* <GoogleTranslate /> */}
+                                <GoogleTranslate />
                                 <button className="btn btn-primary btn-toggle-menu d-inline-block d-lg-none ml-auto" onClick={this.menuShow}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                                 </button>
@@ -1061,7 +1071,8 @@ class Header extends React.Component{
                                     <h5 className="modal-title text-center text-brand">Select Your Country</h5>
                                     <div className="modal-form">
                                         <div className="form-group">
-                                            <select type="text" onChange={this.onCountryChange} name="country" className="form-control">
+                                            <Select  onChange={this.onCountryChange}  options={this.Country()} components={animatedComponents}   />
+                                            {/* <select type="text" onChange={this.onCountryChange} name="country" className="form-control">
                                                 <option value="">Select Country</option>
                                                 {countryList && countryList.map((country, index) => {
                                                     if(country_id == country.id){
@@ -1071,7 +1082,7 @@ class Header extends React.Component{
                                                         return <option value={country.id}>{country.name}</option>
                                                     }
                                                 })}
-                                            </select>
+                                            </select> */}
                                         </div>
                                     </div>
                                 </Modal.Body>

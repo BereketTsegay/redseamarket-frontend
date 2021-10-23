@@ -68,7 +68,7 @@ export default class profile extends Component {
                 this.setState({
                     myAds: response.data.data.myads,
                     myFavourite: response.data.data.myfavourite,
-                    user: response.data.data.user,
+                    // user: response.data.data.user,
                     adView: response.data.data.adsView,
 
                     name: response.data.data.user.name,

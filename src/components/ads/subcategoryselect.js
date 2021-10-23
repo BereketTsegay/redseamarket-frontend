@@ -59,6 +59,8 @@ class SubCategorySelect extends React.Component{
          });
      };
 
+     
+
     render() {
 
          let categoryArray = (this.state.categories != undefined)?this.state.categories:[];
@@ -89,7 +91,7 @@ class SubCategorySelect extends React.Component{
                                     if(categoryArr.subcategory_child.length != 0){
                                        return(
                                           <>
-                                             <a href="javascript:void(0);" key={indexi} className="d-block mb-3 position-relative rounded-lg accordion" id={'subChild'+indexi} onClick={() => this.onClickHandler(indexi)}>
+                                             {/* <a href="javascript:void(0);" key={indexi} className="d-block mb-3 position-relative rounded-lg accordion" id={'subChild'+indexi} onClick={() => this.onClickHandler(indexi)}>
                                                 <button className="btn w-100 text-left" type="button" data-toggle="collapse" data-target={'#collapseOne'+indexi} aria-expanded="true" aria-controls={'collapseOne'+indexi}>
                                                    {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
                                                 </button>
@@ -106,7 +108,12 @@ class SubCategorySelect extends React.Component{
                                                       </Link>
                                                    )
                                                 })}
-                                             </div>
+                                             </div> */}
+                                             
+                                             <Link to={`/subcategory/${categoryArr.id}/${categoryId}/${categoryName}`} key={indexi} className="d-block mb-3 position-relative rounded-lg">
+                                                {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
+                                             </Link>
+                                             
                                           </>
                                        )
                                     }

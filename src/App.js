@@ -30,6 +30,7 @@ import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsConditions from "./components/TermsConditions";
 import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
+import SubSubCategorySelect from "./components/ads/SubSubCategorySelect";
 // import PaymentIntents from "./components/common/paymentIntents";
 
 const stripePromise = loadStripe(public_key);
@@ -60,6 +61,7 @@ function App() {
               <Route path="/terms/conditions" component={TermsConditions} />
               <Route path="/about" component={AboutUs} />
               <Route path="/contact" component={ContactUs} />
+              <Route path="/subcategory/:id/:category_id/:category_name" component={SubSubCategorySelect} />
             </ScrollToTop>
           </Switch>
         </Router>
