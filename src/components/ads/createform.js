@@ -858,7 +858,7 @@ class CreateForm extends React.Component{
          } 
       }
       else if(state.formPage == 3){
-         console.log(this.state.formPage);
+         
          window.scrollTo(0, 0);
 
          this.setState({
@@ -946,6 +946,8 @@ class CreateForm extends React.Component{
    adSubmitHandler = () => {
       
       let state = this.state;
+
+      console.log(this.state.aircondition, this.state.gps, this.state.security, this.state.tire,)
       
       if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== '' && this.state.termsCondition == true){
          

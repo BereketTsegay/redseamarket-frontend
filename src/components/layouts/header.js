@@ -722,6 +722,21 @@ class Header extends React.Component{
 
                     if(response.data.status === 'success'){
 
+                        localStorage.removeItem('userToken');
+                        localStorage.removeItem('loginStatus');
+
+                        localStorage.setItem('userToken', response.data.token);
+                        // localStorage.setItem('loginStatus', true);
+
+                        localStorage.removeItem('user');
+                        localStorage.setItem('user', response.data.user);
+
+                        this.setState({
+                            loginStatus:true,
+                            user: response.data.user,
+                        });
+                        localStorage.setItem('loginStatus',true);
+                        
                         this.setState({
                             forgotPasswordModal: !this.state.forgotPasswordModal,
                         });

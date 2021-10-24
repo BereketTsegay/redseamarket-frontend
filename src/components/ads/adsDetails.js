@@ -467,13 +467,15 @@ export default class adsDetails extends Component {
                                                             </div>
 
                                                             {ads.category_id == 1 ? ads.motor_features ? ads.motor_features.map((feature, index) => {
-                                                                return (
-                                                                    <div className="row mb-3 mb-md-4" key={index}>
-                                                                        <div className="col-4 text-capitalize"><strong> {feature.value}</strong></div>
-                                                                        <div className="col-1 text-center">:</div>
-                                                                        <div className="col-7">Yes</div>
-                                                                    </div>
-                                                                )
+                                                                if(feature.value != 0){
+                                                                    return (
+                                                                        <div className="row mb-3 mb-md-4" key={index}>
+                                                                            <div className="col-4 text-capitalize"><strong> {feature.value}</strong></div>
+                                                                            <div className="col-1 text-center">:</div>
+                                                                            <div className="col-7">Yes</div>
+                                                                        </div>
+                                                                    )
+                                                                }
                                                             })
 
                                                             : '' : ''}
