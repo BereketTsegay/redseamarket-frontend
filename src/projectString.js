@@ -1,11 +1,11 @@
 // export const BASE_URL = "http://jama-al-backend.freshpureuae.com/api";
 // export const IMAGE_URL = "http://jama-al-backend.freshpureuae.com";
 
-export const BASE_URL = "http://localhost:8000/api";
-export const IMAGE_URL = "http://localhost:8000";
+// export const BASE_URL = "http://localhost:8000/api";
+// export const IMAGE_URL = "http://localhost:8000";
 
-// export const BASE_URL = "https://freshpureuae.com/jama-al-backend/api";
-// export const IMAGE_URL = "https://freshpureuae.com/jama-al-backend";
+export const BASE_URL = "https://freshpureuae.com/jama-al-backend/api";
+export const IMAGE_URL = "https://freshpureuae.com/jama-al-backend";
 
 export const GOOGLEMAPS_API = 'AIzaSyAEysollDCaGfbiPxh-VBvv31u2msCwa1c';
 
