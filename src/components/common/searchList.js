@@ -39,7 +39,7 @@ export default class searchList extends Component {
 
 
     UNSAFE_componentWillReceiveProps = (nextProps) => {
-        
+       
         let key = ((new URLSearchParams(nextProps.location.search).get('key')) != '') ? (new URLSearchParams(nextProps.location.search).get('key')) : '';
         let category = ((new URLSearchParams(nextProps.location.search).get('category'))!='')?(new URLSearchParams(nextProps.location.search).get('category')):'';
         let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
@@ -55,6 +55,9 @@ export default class searchList extends Component {
                 city: city,
                 subcategory: subcategory,
                 searchKey: key,
+                seller: seller,
+                priceFrom: priceFrom,
+                priceTo: priceTo,
                 loaderStatus:true,
 
             }, () => {
@@ -66,6 +69,9 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
+                        priceFrom: this.state.priceFrom,
+                        priceTo: this.state.priceTo,
+                        seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
@@ -96,12 +102,15 @@ export default class searchList extends Component {
             });
         }
         else if(!key && category){
-
+            
             this.setState({
                 category: category,
                 city: city,
                 subcategory: subcategory,
                 searchKey: key,
+                seller: seller,
+                priceFrom: priceFrom,
+                priceTo: priceTo,
                 loaderStatus: true,
 
             }, () => {
@@ -109,10 +118,13 @@ export default class searchList extends Component {
                     url: `${BASE_URL}/customer/get/category/ads`,
                     method: 'POST',
                     data: {
-                        category_id: this.state.category,
+                        category: this.state.category,
                         latitude: localStorage.getItem('country_id') || city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                         city: city,
+                        priceFrom: this.state.priceFrom,
+                        priceTo: this.state.priceTo,
+                        seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
@@ -209,7 +221,6 @@ export default class searchList extends Component {
         let priceFrom = ((new URLSearchParams(this.props.location.search).get('priceFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('priceFrom')) : '';
         let priceTo = ((new URLSearchParams(this.props.location.search).get('priceTo')) != '') ? (new URLSearchParams(this.props.location.search).get('priceTo')) : '';
 
-
         if(!key && subcategory){
 
             this.setState({
@@ -217,6 +228,9 @@ export default class searchList extends Component {
                 city: city,
                 subcategory: subcategory,
                 searchKey: key,
+                seller: seller,
+                priceFrom: priceFrom,
+                priceTo: priceTo,
                 loaderStatus: true,
 
             }, () => {
@@ -228,6 +242,9 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
+                        priceFrom: this.state.priceFrom,
+                        priceTo: this.state.priceTo,
+                        seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {
@@ -264,6 +281,9 @@ export default class searchList extends Component {
                 city: city,
                 subcategory: subcategory,
                 searchKey: key,
+                seller: seller,
+                priceFrom: priceFrom,
+                priceTo: priceTo,
                 loaderStatus: true,
 
             }, () => {
@@ -275,6 +295,9 @@ export default class searchList extends Component {
                         latitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.latitude,
                         longitude: localStorage.getItem('country_id') || this.state.city ? 0 : this.state.longitude,
                         city: this.state.city,
+                        priceFrom: this.state.priceFrom,
+                        priceTo: this.state.priceTo,
+                        seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
                     },
                 }).then(response => {

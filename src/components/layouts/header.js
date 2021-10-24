@@ -224,12 +224,10 @@ class Header extends React.Component{
                    emailVerifydModal: !this.state.emailVerifydModal,
                 });
 
-
-
             }
             else if(response.data.code === '400'){
                this.setState({
-                   globalRegError: response.data.message ? response.data.message : response.data.errors.email[0] ? response.data.errors.email[0] : '',
+                   globalRegError: response.data.errors.email[0] ? response.data.errors.email[0] : response.data.message ? response.data.message : '',
                 });
             }
             else{
@@ -240,7 +238,7 @@ class Header extends React.Component{
                 loaderStatus: false,
             });
 
-            window.location.reload();
+           
 
         }).catch((error) => {
             this.setState({
@@ -628,6 +626,10 @@ class Header extends React.Component{
                             text: response.data.message,
                             icon: 'success',
                             confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if(result.isConfirmed){
+                                window.location.reload();
+                            }
                         });
 
                     }

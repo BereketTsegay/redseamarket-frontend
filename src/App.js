@@ -39,9 +39,9 @@ function App() {
 
     return (
       <Elements stripe={stripePromise}>
-        <Router > 
-          <Switch>
-            <ScrollToTop>
+        <Router >
+          <ScrollToTop> 
+            <Switch>
               <Route exact path="/" component={Index} />
               <Route path="/create-ads" component={ CreateAds } />
               <Route path="/create-form/:category_id/:subcategory_id/:category/:subcategory" component={ CreateForm } />
@@ -62,8 +62,8 @@ function App() {
               <Route path="/about" component={AboutUs} />
               <Route path="/contact" component={ContactUs} />
               <Route path="/subcategory/:id/:category_id/:category_name" component={SubSubCategorySelect} />
-            </ScrollToTop>
-          </Switch>
+            </Switch>
+          </ScrollToTop>
         </Router>
       </Elements>
     );

@@ -271,7 +271,12 @@ class homefilter extends Component {
                                                       <option value="">All Cities</option>
 
                                                       {cityArray ? cityArray.map((city, index) => {
-                                                         return <option value={city.id}>{city.name}</option>
+                                                         if(this.state.city == city.id){
+                                                            return <option selected value={city.id}>{city.name}</option>
+                                                         }
+                                                         else{
+                                                            return <option value={city.id}>{city.name}</option>
+                                                         }
                                                       }) : ''}
                                                       
                                                    </select>

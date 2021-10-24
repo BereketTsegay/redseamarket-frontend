@@ -132,7 +132,7 @@ class headFilter extends Component {
                                     </div>
                                     <div className="col-xl-3 col-md-6">
                                         <div className="form-group">
-                                            <select onChange={(e) => this.handleChange(e)} name="subcategory_id" className="form-control">
+                                            <select onChange={(e) => this.handleChange(e)} name="category_id" className="form-control">
                                             <option value="">All Categories</option>
                                             {subcategory ? subcategory.map((subcategory, index) => {
                                                 return <option key={index} value={subcategory.id}>{subcategory.name}</option>

@@ -44,7 +44,7 @@ class searchArea extends Component {
                 
                 this.setState({
                     subcategory:response.data.subcategories,
-                    subcategory_id: response.data.subcategories[0] ? response.data.subcategories[0].id : '',
+                    subcategory_id: this.state.subcategory_id !== '' ? this.state.subcategory_id : response.data.subcategories[0] ? response.data.subcategories[0].id : '',
                     loaderStatus: false,
                 });
             }
@@ -93,7 +93,7 @@ class searchArea extends Component {
                 
                 this.setState({
                     subcategory:response.data.subcategories,
-                    subcategory_id: response.data.subcategories[0] ? response.data.subcategories[0].id : '',
+                    subcategory_id: this.state.subcategory_id ? this.state.subcategory_id : response.data.subcategories[0] ? response.data.subcategories[0].id : '',
                     loaderStatus: false,
                 });
             }
@@ -140,7 +140,7 @@ class searchArea extends Component {
         
         let {category, subcategory, category_id, subcategory_id, city, property_type, price, room} = this.state;
         
-        if(category_id != '' && subcategory_id != ''){
+        if(category_id !== '' && subcategory_id !== ''){
             
             this.props.history.push(`/property/list?category_id=${category_id}&subcategory_id=${subcategory_id}&city=${city}&property_type=${property_type}&price=${price}&room=${room}`);
         }
@@ -169,7 +169,7 @@ class searchArea extends Component {
                             <div className="col-xl-10 mx-auto">
                                 <div className="hero-filter-tab-frame pt-4">
                                     <div className="toggle-btn-panel mb-3">
-                                    {this.props.type != 'result' ? 
+                                    {this.props.type !== 'result' ? 
                                     <div className="switch mx-auto">
 
                                         <input type="radio" value="rent" checked={category == '' ? category1 == 2 : category == 2} name="type" id="rent" />

@@ -9,6 +9,7 @@ import PropertyAdsItem from './propertyAdsItem';
 import PropertyCityList from './propertyCityList';
 import SearchArea from './searchArea';
 import Loader from '../Loader';
+import Nodata from '../../web-assets/img/5406715.jpg';
 
 export default class propertyList extends Component {
 
@@ -91,7 +92,7 @@ export default class propertyList extends Component {
     }
 
     UNSAFE_componentWillReceiveProps = (nextProps) => {
-
+        
         this.setState({
             category_id: ((new URLSearchParams(nextProps.location.search).get('category_id')) != '') ? (new URLSearchParams(nextProps.location.search).get('category_id')) : '',
             subcategory_id: ((new URLSearchParams(nextProps.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory_id')) : '',
@@ -240,10 +241,10 @@ export default class propertyList extends Component {
     }
 
     render() {
-
+        
         let {category_id, subcategory_id, city, property_type, price, room, ads, paginataionArray,
             last, previousPage, nextPage, total, subcategory, latitude, longitude, loaderStatus} = this.state;
-
+            
         return (
             <div id="page" class="site-page">
                 {loaderStatus == true ? <Loader /> : ''}
@@ -258,7 +259,7 @@ export default class propertyList extends Component {
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-xl-8 col-lg-7">
-                                    <h2 class="section-title">{subcategory ? subcategory.name : ''} <small class="text-muted d-inline-block pl-2">{total} results</small> </h2>
+                                    <h2 class="section-title">{subcategory ? subcategory.name : ''} <small class="text-muted d-inline-block pl-2">{this.state.total} results</small> </h2>
                                 </div>
                                 {/* <div class="col-xl-4 col-lg-5">
                                     <div class="form-group mb-0">
@@ -286,10 +287,10 @@ export default class propertyList extends Component {
                             <div class="row">
                                 <div class="col-xl-10 mx-auto">
                                     <ul class="category-sort-list">
-                                        {ads ? ads.map((ads, index) => {
+                                        {ads.length !== 0 ? ads.map((ads, index) => {
                                             return <PropertyAdsItem key={index} ads={ads} />
                                         })
-                                        : <h3 className="text-center">No Data found!</h3>}
+                                        : <img style={{width: '50%', height: '50%', marginLeft: '25%'}} src={Nodata} />}
                                         
                                     </ul>
                                 </div>

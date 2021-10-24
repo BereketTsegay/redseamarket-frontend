@@ -36,6 +36,7 @@ export default class profile extends Component {
             passwordError: '',
             newPasswordError: '',
             confirmPasswordError: '',
+            mainError: '',
 
             adView: 0,
 
@@ -71,10 +72,10 @@ export default class profile extends Component {
                     // user: response.data.data.user,
                     adView: response.data.data.adsView,
 
-                    name: response.data.data.user.name,
-                    email: response.data.data.user.email,
-                    phone: response.data.data.user.phone,
-                    nationality: response.data.data.user.nationality_id,
+                    name: response.data.data.user.name ? response.data.data.user.name : '',
+                    email: response.data.data.user.email ? response.data.data.user.email : '',
+                    phone: response.data.data.user.phone ? response.data.data.user.phone : '',
+                    nationality: response.data.data.user.nationality_id ? response.data.data.user.nationality_id : '',
                 });
                 // , () => {
 
@@ -219,8 +220,8 @@ export default class profile extends Component {
     }
 
     handleSubmit = () => {
-
-        if(this.state.name !== '' && this.state.email !== '' && this.state.phone !== '' && this.state.nationality !== ''){
+        
+        if(this.state.name !== '' && this.state.email !== '' && this.state.phone !== ''  && this.state.nationality !== '' ){
 
             this.setState({
                 loaderState: true,
@@ -333,64 +334,94 @@ export default class profile extends Component {
 
         if(this.state.oldPassword && this.state.newPassword && this.state.confirmPassword){
 
-            axios({
-                url: `${BASE_URL}/customer/change/password`,
-                method: 'POST',
-                headers:{ Authorization: "Bearer " + this.state.token },
-                data: {
-                    old_password: this.state.oldPassword,
-                    password: this.state.newPassword,
-                    password_confirmation: this.state.confirmPassword,
-                },
+            if(this.state.newPassword === this.state.confirmPassword){
 
-            }).then(response => {
+                axios({
+                    url: `${BASE_URL}/customer/change/password`,
+                    method: 'POST',
+                    headers:{ Authorization: "Bearer " + this.state.token },
+                    data: {
+                        old_password: this.state.oldPassword,
+                        password: this.state.newPassword,
+                        password_confirmation: this.state.confirmPassword,
+                    },
 
-                if(response.data.status === 'success'){
+                }).then(response => {
+
+                    if(response.data.status === 'success'){
+                        
+                        Swal.fire({
+                            title: 'success!',
+                            text: response.data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+
+                        this.setState({
+                            changePasswordModal: !this.state.changePasswordModal,
+                            oldPassword: '',
+                            newPassword: '',
+                            confirmPassword: '',
+                            mainError: '',
+                        });
+                    }
+
+                    if(response.data.status === 'error'){
+                        // Swal.fire({
+                        //     title: 'Error!',
+                        //     text: response.data.message,
+                        //     icon: 'error',
+                        //     confirmButtonText: 'OK'
+                        // });
+
+                        this.setState({
+                            mainError: response.data.message,
+                        });
+
+                    }
+
+                }).catch((error) => {
                     
-                    Swal.fire({
-                        title: 'success!',
-                        text: response.data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                }
+                    if(error.response.data.status === 'error'){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error.response.data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
 
-                if(response.data.status === 'error'){
-                    Swal.fire({
-                        title: 'Error!',
-                        text: response.data.message,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
+                    this.setState({
+                        changePasswordModal: !this.state.changePasswordModal,
                     });
-                }
 
-                this.setState({
-                    changePasswordModal: !this.state.changePasswordModal,
                 });
-
-            }).catch((error) => {
-                
-                if(error.response.data.status === 'error'){
-                    Swal.fire({
-                        title: 'Error!',
-                        text: error.response.data.message,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-
+            }
+            else{
                 this.setState({
-                    changePasswordModal: !this.state.changePasswordModal,
+                    newPasswordError: 'Current password and Confirm password must be same!',
                 });
-
-            });
+            }
         }
         else{
-            this.setState({
-                passwordError: this.state.oldPassword ? '' : 'Current password cannot be blank!',
-                newPasswordError: this.state.newPassword ? '' : 'New password cannot be blank!',
-                confirmPasswordError: this.state.confirmPassword ? '' : 'Confirm password cannot be blank!',
-            });
+
+            if(this.state.oldPassword === ''){
+
+                this.setState({
+                    passwordError: this.state.oldPassword ? '' : 'Current password cannot be blank!',
+                });
+            }
+            if(this.state.newPassword === ''){
+                this.setState({
+                    newPasswordError: this.state.newPassword ? '' : 'New password cannot be blank!',
+                });
+            }
+            if(this.state.confirmPassword === ''){
+                this.setState({
+                    confirmPasswordError: this.state.confirmPassword ? '' : 'Confirm password cannot be blank!',
+                });
+            }
+            
         }
     }
 
@@ -427,7 +458,7 @@ export default class profile extends Component {
 
                             <div className="my-profile-title-panel">
                                 <div className="row">
-                                    <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{user.name} <small className="d-block d-sm-inline"> (not {user.name} ? <a style={{cursor: 'pointer'}} onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
+                                    <div className="col-lg-8 text-center"><h5 className="title py-1 mb-0">{name} <small className="d-block d-sm-inline"> (not {name} &nbsp; ? &nbsp; <a style={{cursor: 'pointer'}} onClick={(e) => this.logout(e)}>Logout</a>)</small></h5></div>
                                     <div className="col-lg-4 text-center"><a href="javascript:void(0);" onClick={this.changePasswordModal} className="btn btn-link px-0 py-1 font-weight-bold text-uppercase">Change Password</a></div>
                                 </div>
                                 <div className="row mt-4 mt-lg-5">
@@ -515,6 +546,7 @@ export default class profile extends Component {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                         <h5 className="modal-title text-center text-brand">Change your password</h5>
+                        {this.state.mainError && <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.mainError}</p>}
                         <div className="modal-form">
                             <div className="form-group">           
                                 <input type="password" value={this.state.oldPassword}  onChange={this.onChange} name="oldPassword" className="form-control" placeholder="Current Password"/>

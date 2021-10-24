@@ -22,11 +22,10 @@ export default class GoogleTranslate extends Component {
         addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');        
         document.body.appendChild(addScript);  
         window.googleTranslateElementInit = this.googleTranslateElementInit;
+
     }
 
     render() {
-
-        
 
         return (
             <div id="google_translate_element"></div>
