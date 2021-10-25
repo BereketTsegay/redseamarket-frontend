@@ -227,7 +227,7 @@ class Header extends React.Component{
             }
             else if(response.data.code === '400'){
                this.setState({
-                   globalRegError: response.data.errors.email[0] ? response.data.errors.email[0] : response.data.message ? response.data.message : '',
+                   globalRegError: response.data.errors ? response.data.errors.email[0] ? response.data.errors.email[0] : response.data.message ? response.data.message : '' :  response.data.message ? response.data.message : '',
                 });
             }
             else{

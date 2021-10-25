@@ -140,6 +140,7 @@ class CreateForm extends React.Component{
          makeText: '',
          modelText: '',
          variantText: '',
+         submitStatus: false,
       }
    }
 
@@ -953,6 +954,7 @@ class CreateForm extends React.Component{
          
          this.setState({
             loaderStatus: true,
+            submitStatus: true,
          });
 
          if(state.featured){
@@ -1023,19 +1025,21 @@ class CreateForm extends React.Component{
                               icon: 'success',
                               confirmButtonText: 'OK'
                            }).then((result) => {
-                              this.props.history.push('/');
+                              this.props.history.push(`/adsdetails/${response.data.ad_id}`);
                            });
             
                         }
             
                         this.setState({
                            loaderStatus: false,
+                           submitStatus: false,
                         });
             
                      }).catch((error) => {
             
                         this.setState({
                            loaderStatus: false,
+                           submitStatus: false,
                         });
             
                      });
@@ -1051,6 +1055,7 @@ class CreateForm extends React.Component{
 
                      this.setState({
                         loaderStatus: false,
+                        submitStatus: false,
                      });
                   }
                }
@@ -1116,19 +1121,21 @@ class CreateForm extends React.Component{
                            icon: 'success',
                            confirmButtonText: 'OK'
                         }).then((result) => {
-                           this.props.history.push('/');
+                           this.props.history.push(`/adsdetails/${response.data.ad_id}`);
                         });
          
                      }
          
                      this.setState({
                         loaderStatus: false,
+                        submitStatus: false,
                      });
          
                   }).catch((error) => {
          
                      this.setState({
                         loaderStatus: false,
+                        submitStatus: false,
                      });
          
                   });
@@ -1145,6 +1152,7 @@ class CreateForm extends React.Component{
 
                this.setState({
                   loaderStatus: false,
+                  submitStatus: false,
                });
             }
          }
@@ -1209,7 +1217,7 @@ class CreateForm extends React.Component{
                      icon: 'success',
                      confirmButtonText: 'OK'
                   }).then((result) => {
-                     this.props.history.push('/');
+                     this.props.history.push(`/adsdetails/${response.data.ad_id}`);
                   });
 
                }
@@ -1218,6 +1226,7 @@ class CreateForm extends React.Component{
 
                this.setState({
                   loaderStatus: false,
+                  submitStatus: false,
                });
 
             }).catch((error) => {
@@ -1226,6 +1235,7 @@ class CreateForm extends React.Component{
 
                this.setState({
                   loaderStatus: false,
+                  submitStatus: false,
                });
 
             });
@@ -1492,22 +1502,23 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+                                    {this.state.submitStatus == true ? '' :
+                                       this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
-                                       this.state.paymentId !== '' ?
+                                          this.state.paymentId !== '' ?
 
+                                          <div className="form-group col-md-6">
+                                             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          </div>
+
+                                       : '' :
+                                       <div className="form-group col-md-6">
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       </div> : 
                                        <div className="form-group col-md-6">
                                           <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                        </div>
-
-                                    : '' :
-                                    <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
-                                    </div> : 
-                                    <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
-                                    </div>
-                                    }
+                                       } 
                                  </div>
                               </>
                               : this.state.formPage == 3 && (category == 1 || category == 2 || category == 3 ) && categoryField.length != 0 ? 
@@ -1555,7 +1566,8 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button type="button" onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+                                    {this.state.submitStatus == true ? '' :
+                                    this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
                                        this.state.paymentId !== '' ?
 
@@ -1617,7 +1629,8 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.featured ? this.state.paymentMethod === 'stripe' ?
+                                    {this.state.submitStatus == true ? '' :
+                                    this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
                                        this.state.paymentId !== '' ?
 

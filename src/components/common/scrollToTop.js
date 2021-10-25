@@ -9,7 +9,8 @@ const ScrollToTop = ({ children }) => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  return children || null;
+  // return children || null;
+  return children;
 };
 
 export default ScrollToTop;

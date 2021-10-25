@@ -238,12 +238,16 @@ export default class adsDetails extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-2">
+                                                    {ads.image.length > 1 && window.width < 768 ?
                                                     <ul className="product-gallery-sm">
                                                         {ads.image ? ads.image.map((image, index) => {
                                                             return <li key={index} onClick={() => this.mainImageChange(image.image)}><img src={IMAGE_URL+'/'+image.image} alt="media" /></li>
                                                         }) : <li key={index} onClick={() => this.mainImageChange(defaultImage)}><img src={defaultImage} alt="media" /></li>}
                                                         
-                                                    </ul>
+                                                    </ul> : 
+                                                    <ul className="product-gallery-sm" style={{maxWidth: "150px"}}>
+                                                        <li key={index} onClick={() => this.mainImageChange(ads.image[0].image)}><img src={IMAGE_URL+'/'+ads.image[0].image} alt="media" /></li>
+                                                    </ul>}
                                                 </div>
                                             </div>
                                             </div>
@@ -414,13 +418,13 @@ export default class adsDetails extends Component {
                                                         {ads.category_id == 2 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong> Parking</strong></div>
                                                             <div className="col-1 text-center">:</div>
-                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.parking == 1 ? 'Yes' : 'NO' : ''}</div>
+                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.parking == 1 ? 'Yes' : 'No' : ''}</div>
                                                         </div> : '' }
 
                                                         {ads.category_id == 3 ? <div className="row mb-3 mb-md-4">
                                                             <div className="col-4"><strong> Parking</strong></div>
                                                             <div className="col-1 text-center">:</div>
-                                                            <div className="col-7">{ads.property_rend ? ads.property_rend.parking == 1 ? 'Yes' : 'NO' : ''}</div>
+                                                            <div className="col-7">{ads.property_sale ? ads.property_sale.parking == 1 ? 'Yes' : 'No' : ''}</div>
                                                         </div> : '' }
 
                                                         {ads.category_id == 1 ?
