@@ -1392,7 +1392,7 @@ class CreateForm extends React.Component{
                                     )
                                  }) : ''}
                                  </div>
-                                 <TextField handleChange={this.handleChange} name="price" label="Price" value={price} placeholder="Price" readonly={false} error={this.state.errors_price} />
+                                 <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
                                  <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />

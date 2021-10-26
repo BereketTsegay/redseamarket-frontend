@@ -728,13 +728,17 @@ class Header extends React.Component{
 
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
 
+                window.location.reload();
+            }
+            else{
+                window.location.reload();
             }
             
         }).catch((error) => {
 
         });
 
-        window.location.reload();
+        
 
     }
 

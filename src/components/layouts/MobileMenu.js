@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { BASE_URL, userToken } from '../../projectString'; 
 
-export default class MobileMenu extends Component {
+class MobileMenu extends Component {
 
     constructor(props){
         super(props);
@@ -73,6 +73,7 @@ export default class MobileMenu extends Component {
 
                 this.setState({
                     loaderStatus: false,
+                    loginStatus: false,
                 });
 
         }).catch((error) => {
@@ -245,3 +246,5 @@ export default class MobileMenu extends Component {
         )
     }
 }
+
+export default withRouter(MobileMenu);
