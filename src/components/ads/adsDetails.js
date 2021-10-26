@@ -238,16 +238,16 @@ export default class adsDetails extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-2">
-                                                    {ads.image.length > 1 && window.width < 768 ?
+                                                    {/* {ads.image.length > 1 && window.width < 768 ? */}
                                                     <ul className="product-gallery-sm">
                                                         {ads.image ? ads.image.map((image, index) => {
-                                                            return <li key={index} onClick={() => this.mainImageChange(image.image)}><img src={IMAGE_URL+'/'+image.image} alt="media" /></li>
-                                                        }) : <li key={index} onClick={() => this.mainImageChange(defaultImage)}><img src={defaultImage} alt="media" /></li>}
+                                                            return <li key={index} style={{maxWidth: "150px"}} onClick={() => this.mainImageChange(image.image)}><img src={IMAGE_URL+'/'+image.image} alt="media" /></li>
+                                                        }) : <li key={index} style={{maxWidth: "150px"}} onClick={() => this.mainImageChange(defaultImage)}><img src={defaultImage} alt="media" /></li>}
                                                         
-                                                    </ul> : 
-                                                    <ul className="product-gallery-sm" style={{maxWidth: "150px"}}>
+                                                    </ul> 
+                                                    {/* <ul className="product-gallery-sm" style={{maxWidth: "150px"}}>
                                                         <li key={index} onClick={() => this.mainImageChange(ads.image[0].image)}><img src={IMAGE_URL+'/'+ads.image[0].image} alt="media" /></li>
-                                                    </ul>}
+                                                    </ul>} */}
                                                 </div>
                                             </div>
                                             </div>
