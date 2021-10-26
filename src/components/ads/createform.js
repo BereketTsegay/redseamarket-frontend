@@ -1502,7 +1502,13 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.submitStatus == true ? '' :
+                                    {this.state.submitStatus == true ? 
+                                          <div className="form-group col-md-6">
+                                             <button className="btn btn-primary btn-block" disabled>
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                             </button>
+                                          </div> :
                                        this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
                                           this.state.paymentId !== '' ?
@@ -1511,7 +1517,14 @@ class CreateForm extends React.Component{
                                              <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                           </div>
 
-                                       : '' :
+                                       :
+                                          <div className="form-group col-md-6">
+                                             <button className="btn btn-primary btn-block" disabled>
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                             </button>
+                                          </div>
+                                       :
                                        <div className="form-group col-md-6">
                                           <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                        </div> : 
@@ -1566,7 +1579,13 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button type="button" onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.submitStatus == true ? '' :
+                                    {this.state.submitStatus == true ? 
+                                    <div className="form-group col-md-6">
+                                    <button className="btn btn-primary btn-block" disabled>
+                                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                       Loading...
+                                    </button>
+                                 </div>:
                                     this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
                                        this.state.paymentId !== '' ?
@@ -1575,7 +1594,14 @@ class CreateForm extends React.Component{
                                           <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                        </div>
 
-                                    : '' :
+                                    :
+                                    <div className="form-group col-md-6">
+                                       <button className="btn btn-primary btn-block" disabled>
+                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading...
+                                       </button>
+                                    </div>
+                                    :
                                     <div className="form-group col-md-6">
                                        <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div> : 
@@ -1629,7 +1655,14 @@ class CreateForm extends React.Component{
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                                     </div>
-                                    {this.state.submitStatus == true ? '' :
+                                    {this.state.submitStatus == true ?
+                                    <div className="form-group col-md-6">
+                                       <button className="btn btn-primary btn-block" disabled>
+                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading...
+                                       </button>
+                                    </div>
+                                    :
                                     this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
                                        this.state.paymentId !== '' ?
@@ -1638,7 +1671,14 @@ class CreateForm extends React.Component{
                                           <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                        </div>
 
-                                    : '' :
+                                    :
+                                    <div className="form-group col-md-6">
+                                       <button className="btn btn-primary btn-block" disabled>
+                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading...
+                                       </button>
+                                    </div>
+                                    :
                                     <div className="form-group col-md-6">
                                        <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
                                     </div> : 
