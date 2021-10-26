@@ -38,7 +38,7 @@ class Menu extends React.Component{
                                                          {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
                                                             
                                                             return (
-                                                               <li key={index}><Link to={`/search?key=&city=&category=&subcategory=${child.id}`}>{child.name}</Link></li>
+                                                               <li key={index}><Link to={`/search?key=&city=&category=${category.id}&subcategory=${child.id}`}>{child.name}</Link></li>
                                                             )
                                                          }) : '' }
                                                          
@@ -59,7 +59,7 @@ class Menu extends React.Component{
                                           {category.subcategory && category.subcategory.map((subcategory, index) => {
                                              return (
                                                 <li key={index} className="menu-item">
-                                                   <Link to={`/property/list?category_id=${subcategory.category_id}&subcategory_id=${subcategory.id}&city=&property_type=&price=&room=`}>{subcategory.name}</Link>
+                                                   <Link to={`/property/list?category_id=${category.id}&subcategory_id=${subcategory.id}&city=&property_type=&price=&room=`}>{subcategory.name}</Link>
                                                    <div className="sub-menu-child">
                                                       <h6>{subcategory.name}</h6>
                                                       <ul>
@@ -67,7 +67,7 @@ class Menu extends React.Component{
                                                          {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
                                                             
                                                             return (
-                                                               <li key={index}><Link to={`/property/list?category_id=${child.category_id}&subcategory_id=${child.id}&city=&property_type=&price=&room=`}>{child.name}</Link></li>
+                                                               <li key={index}><Link to={`/property/list?category_id=${category.id}&subcategory_id=${child.id}&city=&property_type=&price=&room=`}>{child.name}</Link></li>
                                                             )
                                                          }) : '' }
                                                          
@@ -89,7 +89,7 @@ class Menu extends React.Component{
                                           {category.subcategory && category.subcategory.map((subcategory, index) => {
                                              return (
                                                 <li key={index} className="menu-item">
-                                                   <Link to={`/search?key=&city=&category=&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
+                                                   <Link to={`/search?key=&city=&category=${category.id}&subcategory=${subcategory.id}`}>{subcategory.name}</Link>
                                                    <div className="sub-menu-child">
                                                       <h6>{subcategory.name}</h6>
                                                       <ul>
@@ -97,7 +97,7 @@ class Menu extends React.Component{
                                                          {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
                                                             
                                                             return (
-                                                               <li key={index}><Link to={`/search?key=&city=&category=&subcategory=${child.id}`}>{child.name}</Link></li>
+                                                               <li key={index}><Link to={`/search?key=&city=&category${category.id}=&subcategory=${child.id}`}>{child.name}</Link></li>
                                                             )
                                                          }) : '' }
                                                          

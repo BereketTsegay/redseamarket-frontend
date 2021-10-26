@@ -255,8 +255,8 @@ export default class adsDetails extends Component {
                                         <div className="col-xl-5 col-product-info">
                                             <div className="product-info d-flex align-items-center h-100">
                                             <div className="w-100">
-                                                <h3 className="product-title">{ads.title}</h3>
-                                                <p className="product-desc">{ads.description.substring(0, 250)}</p>
+                                                <h3 className="product-title">{ads.title ? ads.title : ads.title_arabic ? ads.title_arabic : ''}</h3>
+                                                <p className="product-desc">{ads.description ? ads.description.substring(0, 250) : ads.description_arabic ? ads.description_arabic.substring(0, 250) : ''}</p>
                                                 <div className="product-price font-weight-bold text-brand">{ads.currency} {ads.price}</div>
                                                 <ul className="product-meta">
 
@@ -334,7 +334,7 @@ export default class adsDetails extends Component {
                                             <div className="tab-content product-tab-content" id="pills-tabContent">
                                             <div className="tab-pane fade show active" id="pdttab1" role="tabpanel" aria-labelledby="pdttab1-tab" style={{minHeight: '200px'}}>
                                                 <div className="pdt-tab-desc">
-                                                    <p>{ads.description}</p>
+                                                    <p>{ads.description ? ads.description : ads.description_arabic ? ads.description_arabic : ''}</p>
                                                 </div>
                                             </div>
                                             <div className="tab-pane fade" id="pdttab2" role="tabpanel" aria-labelledby="pdttab2-tab" style={{minHeight: '200px'}}>
