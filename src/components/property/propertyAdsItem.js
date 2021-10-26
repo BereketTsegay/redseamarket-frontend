@@ -12,6 +12,7 @@ export default class propertyAdsItem extends Component {
 
         this.state = {
             favourite: '',
+            loginStatus: localStorage.getItem('loginStatus') ? localStorage.getItem('loginStatus') : false,
         }
     }
     
@@ -105,14 +106,15 @@ export default class propertyAdsItem extends Component {
     render() {
 
         let ads = this.props.ads;
-        let {favourite} = this.state;
+        let {favourite, loginStatus} = this.state;
         return (
             <li>
                 <div class="panel-media">
                     <Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }><img style={{minHeight:'150px', maxHeight:'150px'}} src={ads.image[0] ? IMAGE_URL+'/'+ ads.image[0].image : defaultImage} alt="media" /></Link>
+                    {loginStatus == true || loginStatus === 'true' ?
                     <button class="btn" onClick={() => this.favouriteChange(ads.id)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  fill={favourite != 0 ? '#007bff' : 'none'} stroke={favourite != 0 ? '#007bff' : 'currentColor'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    </button>
+                    </button> : ''}
                 </div>
                 <div class="panel-content">
                     <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }> {ads.title}</Link></h3>

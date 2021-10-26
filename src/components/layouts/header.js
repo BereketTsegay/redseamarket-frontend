@@ -564,11 +564,14 @@ class Header extends React.Component{
                     loaderStatus: false,
                 });
 
+                window.location.reload();
+
         }).catch((error) => {
                 this.props.history.push('/');
                 this.setState({
                     loaderStatus: false,
                 });
+                window.location.reload();
         });
 
     }

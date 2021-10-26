@@ -155,9 +155,11 @@ export default class profile extends Component {
             this.setState({
                 loaderState: false,
             });
+            window.location.reload();
 
         }).catch((error) => {
             this.props.history.push('/');
+            window.location.reload();
         });
 
     }
