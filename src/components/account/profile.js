@@ -467,7 +467,7 @@ export default class profile extends Component {
                                     <div className="col-12 d-flex justify-content-center">
                                     <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
                                         <small className="font-weight-bold text-muted d-inline-block w-100">My Ads</small>
-                                        <h4 className="m-0 pt-2 pb-1">{myAds}</h4>
+                                        <h4 className="m-0 pt-2 pb-1 notranslate">{myAds}</h4>
                                         <small className="font-weight-bold text-muted d-inline-block w-100">ads viewed {adView} times</small>
                                     </div>
                                     <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">

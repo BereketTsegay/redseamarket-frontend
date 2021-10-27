@@ -82,7 +82,7 @@ class CreateForm extends React.Component{
          building: '',
          parking: '',
 
-         formPage: 1,
+         formPage: 2,
 
          fieldValue: [],
          image: [],

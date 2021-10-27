@@ -259,7 +259,7 @@ export default class propertyList extends Component {
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-xl-8 col-lg-7">
-                                    <h2 class="section-title">{subcategory ? subcategory.name : ''} <small class="text-muted d-inline-block pl-2">{this.state.total} results</small> </h2>
+                                    <h2 class="section-title"><span>{subcategory ? subcategory.name : ''} </span><small class="text-muted d-inline-block pl-2"><span class="notranslate">{this.state.total}</span> results</small> </h2>
                                 </div>
                                 {/* <div class="col-xl-4 col-lg-5">
                                     <div class="form-group mb-0">
