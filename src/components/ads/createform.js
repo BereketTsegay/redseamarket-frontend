@@ -1030,10 +1030,10 @@ class CreateForm extends React.Component{
             
                         }
             
-                        this.setState({
-                           loaderStatus: false,
-                           submitStatus: false,
-                        });
+                        // this.setState({
+                        //    loaderStatus: false,
+                        //    submitStatus: false,
+                        // });
             
                      }).catch((error) => {
             
@@ -1126,10 +1126,10 @@ class CreateForm extends React.Component{
          
                      }
          
-                     this.setState({
-                        loaderStatus: false,
-                        submitStatus: false,
-                     });
+                     // this.setState({
+                     //    loaderStatus: false,
+                     //    submitStatus: false,
+                     // });
          
                   }).catch((error) => {
          
@@ -1224,10 +1224,10 @@ class CreateForm extends React.Component{
 
                localStorage.removeItem('new_payment_id');
 
-               this.setState({
-                  loaderStatus: false,
-                  submitStatus: false,
-               });
+               // this.setState({
+               //    loaderStatus: false,
+               //    submitStatus: false,
+               // });
 
             }).catch((error) => {
 
