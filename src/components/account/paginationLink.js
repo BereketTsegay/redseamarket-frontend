@@ -29,7 +29,7 @@ export default class paginationLink extends Component {
                         {paginataionArray.map((paginataionArray, index) => {
                             
                             if(index != 0 && index != last+1){
-                                return <li key={index} className={paginataionArray.active === true ? 'page-item active' : 'page-item'}><a className="page-link" href="#" onClick={(e) => this.paginationCall(e, paginataionArray.url)}>{paginataionArray.label}</a></li>;
+                                return <li key={index} className={paginataionArray.active === true ? 'page-item active' : 'page-item'}><a className="page-link notranslate" href="#" onClick={(e) => this.paginationCall(e, paginataionArray.url)}>{paginataionArray.label}</a></li>;
                             }
                         })} 
                         

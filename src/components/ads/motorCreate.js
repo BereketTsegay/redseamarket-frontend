@@ -317,13 +317,15 @@ export default class motorCreate extends Component {
             
         let errors = this.props.errors ? this.props.errors : '';
         let loaderStatus = this.state.loaderStatus;
+        let motor = this.props.motorList;
+        
 
         return (
             
             <div>
                 {loaderStatus == true ? <Loader /> : ''}
                 <>
-                    <SelectField placeholder="Make" label="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
+                    <SelectField placeholder="Make" selected={motor.make_id} label="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
                     <SelectField placeholder="Model" label="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
                     <SelectField placeholder="Variant" label="Variant" optionChange={this.variantChange} option={variantOption} type="common" error={errors.errors_variant_id} />
                     <Number placeholder="Registerd Year" label="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />

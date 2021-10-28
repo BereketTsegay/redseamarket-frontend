@@ -1347,6 +1347,8 @@ class CreateForm extends React.Component{
          background:'#FFF',
       }
 
+      let motor = this.state.motor;
+
          return (
             <div className="site-frame">
                {loaderStatus == true ? <Loader /> : ''}
@@ -1409,7 +1411,7 @@ class CreateForm extends React.Component{
                               this.state.formPage == 2 && category == 1 ?  
                               <>
                                  
-                                 <MotorCreate motorList={this.state.motor} motorEvents={this.motorChanges} errors={this.state} /> 
+                                 <MotorCreate motorList={motor} motorEvents={this.motorChanges} errors={this.state} /> 
                                  <div className="row">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>

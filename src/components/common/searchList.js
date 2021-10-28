@@ -547,7 +547,7 @@ export default class searchList extends Component {
                         <div class="row">
                             <div class="col-12">
                                 <div class="section-title-panel text-center">
-                                <h2 class="section-title mb-2">{resultKey} <small class="text-muted"> {total} ads</small></h2>
+                                <h2 class="section-title mb-2"><span className="notranslate">{resultKey}</span> <small class="text-muted"> <span className="notranslate">{total}</span> ads</small></h2>
                                 <p class="text-muted">Brand new &amp; used Products for sale in Dubai - Sell your 2nd hand Products on Jamal al bahr &amp; reach 1.6 million buyers today.</p>
                                 </div>
                             </div>
