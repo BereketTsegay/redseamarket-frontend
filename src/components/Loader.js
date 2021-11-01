@@ -1,17 +1,36 @@
 // import React, { Component } from 'react';
-import React, { useState, useEffeect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 // import Loader from "react-loader-spinner";
 import LoadingBar from 'react-top-loading-bar';
+import Swal from 'sweetalert2';
 
  const Loader = () => {
     
     const [progress, setProgress] = useState(10);
     
     
-    setTimeout(() => {
-        setProgress(100);
-    }, 4000);
+    // setTimeout(() => {
+    //     setProgress(100);
+    // }, 4000);
     
+
+    // useEffect(() => {    // Update the document title using the browser API    
+        
+    //     setTimeout(() => {
+            
+    //         Swal.fire({
+    //             title: 'Loading...',
+    //             // html: 'I will close in <b></b> milliseconds.',
+    //             // timer: 2000,
+    //             timerProgressBar: true,
+    //             didOpen: () => {
+    //                 Swal.showLoading()
+    //                 // const b = Swal.getHtmlContainer().querySelector('b');
+    //             }
+    //         });
+
+    //     }, 4000); 
+    // });
 
         return (
             

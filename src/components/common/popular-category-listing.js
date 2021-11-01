@@ -16,7 +16,7 @@ class PopularCategoryListing extends React.Component{
         let categoryDefault = this.props.categoryDefault;
         
         return (
-                <section className="section-home-categories-list">
+            <section className="section-home-categories-list">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -37,7 +37,7 @@ class PopularCategoryListing extends React.Component{
                         
                     </div>
                 </div>
-                </section>
+            </section>
 
 
 )

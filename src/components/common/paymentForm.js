@@ -37,6 +37,7 @@ export class PaymentForm extends React.Component {
             amount: localStorage.getItem('newAmount') ? localStorage.getItem('newAmount') : 0,
             loaderStatus: false,
             token: userToken,
+            showPayment: true,
         }
     }
 
@@ -152,6 +153,7 @@ export class PaymentForm extends React.Component {
                                 this.props.newPaymentIdGet(result.paymentIntent.id);
                                 this.setState({
                                     loaderStatus: false,
+                                    showPayment: false,
                                 });
 
                                 Swal.fire({
@@ -571,26 +573,34 @@ export class PaymentForm extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <CardElement
-                    style={{borderColor:'1px solid black'}}
-                    onChange={this.handleSubmit}
-                    options={{
-                        style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#424770',
-                            '::placeholder': {
-                            color: '#aab7c4',
+                
+                {this.state.showPayment == true ?
+                <>
+                    <CardElement
+                        style={{borderColor:'1px solid black'}}
+                        // onChange={this.handleSubmit}
+                        options={{
+                            style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                color: '#aab7c4',
+                                },
                             },
-                        },
-                        invalid: {
-                            color: '#9e2146',
-                        },
-                        },
-                        hidePostalCode: true,
-                    }}
-                />
+                            invalid: {
+                                color: '#9e2146',
+                            },
+                            },
+                            hidePostalCode: true,
+                        }}
+                    />
+                    
+                    <div className="form-group mt-3 text-center">
+                        <button type="button" onClick={this.handleSubmit} className="btn btn-success btn-block">Proceed to Pay</button>
+                    </div>
+                </>
+                : '' }
 
                 {this.state.loaderStatus == true ?
 

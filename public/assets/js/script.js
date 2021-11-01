@@ -37,6 +37,7 @@ jQuery(document).ready(function(){
 		}
 	});
 
+
 }); //Script End
 
 
@@ -60,6 +61,10 @@ const checkPageTransition = () => {
         }
         currentUrl = location.href;
     }, true);
+
+	let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
+	
+	$('.goog-te-combo').html(option)
 };
 
 
@@ -97,4 +102,8 @@ window.addEventListener("load", function () {
 		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
 		backLinkBefore: '<i class="fa fa-caret-left"></i>',
 	});
+	let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
+	
+	$('.goog-te-combo').html(option)
 });
+

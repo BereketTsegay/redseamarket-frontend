@@ -21,6 +21,7 @@ class Index extends React.Component{
             loaderState: false,
             latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
             longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
+            otherCategory: [],
   
         };
   
@@ -50,7 +51,10 @@ class Index extends React.Component{
                     this.setState({loginStatus:result.data.data.loged_user_status});
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
-                    this.setState({categoryDefault:result.data.data.category_default});
+                    this.setState({
+                        categoryDefault:result.data.data.category_default,
+                        otherCategory: result.data.data.otherCategory,
+                    });
 
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
@@ -89,7 +93,10 @@ class Index extends React.Component{
                     this.setState({loginStatus:result.data.data.loged_user_status});
                     this.setState({user:result.data.data.user_name});
                     this.setState({dataArray:result.data.data.categories});
-                    this.setState({categoryDefault:result.data.data.category_default});
+                    this.setState({
+                        categoryDefault:result.data.data.category_default,
+                        otherCategory: result.data.data.otherCategory,
+                    });
 
                     localStorage.removeItem('user');
                     localStorage.removeItem('loginStatus');
@@ -119,7 +126,7 @@ class Index extends React.Component{
                 { loaderState == true ? <Loader /> : ''}
                 <>
                     <Header />
-                    <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} />
+                    <Home dataArray={this.state.dataArray} categoryDefault={this.state.categoryDefault} otherCategory={this.state.otherCategory} />
 
                     <AppDownload/>
                     <Footer/>
