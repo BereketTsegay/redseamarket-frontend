@@ -12,30 +12,30 @@ jQuery(document).ready(function(){
 
 
 	//CATEGORY CAROUSEL
-	$('#categoryCarousel').owlCarousel({
-		loop:true,
-		margin: 14,
-		nav:true,
-		dots: true,
-		navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-		responsive:{
-			0:{
-				items:2,
-			},
-			768:{
-				items:2,
-				margin: 30,
-			},
-			992:{
-				items:3,
-				margin: 30,
-			},
-			1200:{
-				items:5,
-				margin: 30,
-			}
-		}
-	});
+	// $('#categoryCarousel').owlCarousel({
+	// 	loop:true,
+	// 	margin: 14,
+	// 	nav:true,
+	// 	dots: true,
+	// 	navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+	// 	responsive:{
+	// 		0:{
+	// 			items:2,
+	// 		},
+	// 		768:{
+	// 			items:2,
+	// 			margin: 30,
+	// 		},
+	// 		992:{
+	// 			items:3,
+	// 			margin: 30,
+	// 		},
+	// 		1200:{
+	// 			items:5,
+	// 			margin: 30,
+	// 		}
+	// 	}
+	// });
 
 
 }); //Script End
@@ -62,9 +62,9 @@ const checkPageTransition = () => {
         currentUrl = location.href;
     }, true);
 
-	let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
+	// let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
 	
-	$('.goog-te-combo').html(option)
+	// $('.goog-te-combo').html(option)
 };
 
 
@@ -102,8 +102,9 @@ window.addEventListener("load", function () {
 		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
 		backLinkBefore: '<i class="fa fa-caret-left"></i>',
 	});
-	let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
+
+	// let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
 	
-	$('.goog-te-combo').html(option)
+	// $('.goog-te-combo').html(option)
 });
 

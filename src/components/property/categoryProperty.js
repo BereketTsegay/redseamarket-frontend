@@ -11,6 +11,10 @@ import PopularResidentialForRend from './popularResidentialForRend'
 import SearchArea from './searchArea'
 import SubcategoryList from './subcategoryList';
 import Loader from '../Loader';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+
 
 export default class categoryProperty extends Component {
     
@@ -165,7 +169,7 @@ export default class categoryProperty extends Component {
                 <SearchArea category={category} changeCategoryToggle={this.changeCategory} type="list" />
                 
                 {/* <!-- =====[SECTION CATEGORY CAROUSEL] **===== --> */}
-                {/* <section className="section-category-carousel">
+                <section className="section-category-carousel">
                     <div className="container">
                         <div className="row">
                             <div className="col-12">
@@ -174,18 +178,44 @@ export default class categoryProperty extends Component {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <div id="categoryCarousel" className="owl-carousel category-carousel">
+                                {/* <div id="categoryCarousel" className="owl-carousel category-carousel"> */}
+                                <OwlCarousel
+                                className='owl-theme owl-carousel category-carousel'
+                                loop={true}
+                                margin={14}
+                                nav={true}
+                                dots={true}
+                                slideBy={3}
+                                autoplay={true}
+                                navText={['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']}
+                                responsive={{
+                                    0:{
+                                        items:2,
+                                    },
+                                    768:{
+                                        items:2,
+                                        margin: 30,
+                                    },
+                                    992:{
+                                        items:3,
+                                        margin: 30,
+                                    },
+                                    1200:{
+                                        items:5,
+                                        margin: 30,
+                                    }
+                                }}>
 
                                     {popularCategory && popularCategory.map((popularCategory, index) => {
                                         
                                         return <PopularCategory key={index} id={popularCategory.id} category_id={popularCategory.category_id} name={popularCategory.name} image={popularCategory.image} />
                                     })}
-                                    
-                                </div>
+                                </OwlCarousel>
+                                {/* </div> */}
                             </div>
                         </div>
                     </div>
-                </section> */}
+                </section>
 
                 {/* <!-- =====[SECTION PLACE PANEL] **===== --> */}
                 

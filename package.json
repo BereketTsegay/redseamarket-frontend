@@ -17,6 +17,7 @@
     "react-google-map-picker": "^1.2.3",
     "react-helmet": "^6.1.0",
     "react-loader-spinner": "^4.0.0",
+    "react-owl-carousel": "^2.3.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-search-autocomplete": "^5.4.2",
