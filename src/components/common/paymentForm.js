@@ -44,7 +44,7 @@ export class PaymentForm extends React.Component {
     handleSubmit = async (event) => {
 
         let state = this.state;
-
+        
         if(state.name !== '' && state.email !== '' && state.phone !== '' && state.address !== '' && state.zipcode !== '' && state.country !== '' && state.state !== '' && state.city !== ''){
             // console.log(state);
             // Block native form submission.
@@ -596,13 +596,21 @@ export class PaymentForm extends React.Component {
                         }}
                     />
                     
+                    {this.state.loaderStatus == true ?
+                    <div className="form-group mt-3 text-center">
+                        <button type="button" className="btn btn-success btn-block" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    </div>
+                    :
                     <div className="form-group mt-3 text-center">
                         <button type="button" onClick={this.handleSubmit} className="btn btn-success btn-block">Proceed to Pay</button>
-                    </div>
+                    </div>}
                 </>
                 : '' }
 
-                {this.state.loaderStatus == true ?
+                {/* {this.state.loaderStatus == true ?
 
                 <LoaderSpinner
                     className="d-flex p-2 bd-highlight justify-content-center"
@@ -611,7 +619,7 @@ export class PaymentForm extends React.Component {
                     height={50}
                     width={50}
                     // timeout={3000} //3 secs
-                /> : ''}
+                /> : ''} */}
             </form>
         );
     }
