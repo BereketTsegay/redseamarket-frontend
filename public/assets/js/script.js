@@ -88,7 +88,7 @@ window.addEventListener("load", function () {
 	const menuElement = document.getElementById('mobileMenu')
 	// console.log(menuElement, '----- 1');
 
-	if (menuElement.outerHTML)
+	if (!!menuElement && menuElement.outerHTML)
         someElementToString = menuElement.outerHTML;
     else if (XMLSerializer)
         someElementToString = new XMLSerializer().serializeToString(menuElement);
