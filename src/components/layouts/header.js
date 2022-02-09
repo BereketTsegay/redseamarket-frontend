@@ -970,11 +970,6 @@ class Header extends React.Component{
                                 </Modal.Body>
                                 
                             </Modal>
-
-                            
-
-        
-
                             <Modal className="modal fade log-sign-modal" show={this.state.registerModal}  id="signupModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
                                 
                                 <Modal.Body>

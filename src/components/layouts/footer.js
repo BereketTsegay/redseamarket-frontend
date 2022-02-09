@@ -119,7 +119,7 @@ class Footer extends React.Component{
                   <div className="container">
                      <div className="row">
                         <div className="col-12">
-                           <p className="text-center text-md-left mb-0"> &copy;  {year} <Link to="/">Jamal al bahr general trading</Link>, &nbsp; All Rights Reserved. Developed By &nbsp; <a href>PromptTech</a> </p>
+                           <p className="text-center text-md-left mb-0"> &copy;  {year} <Link to="/">Red Sea Market general trading</Link>, &nbsp; All Rights Reserved. Developed By &nbsp; <a href>PromptTech</a> </p>
                         </div>
                      </div>
                   </div>

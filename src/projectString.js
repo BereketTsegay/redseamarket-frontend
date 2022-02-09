@@ -1,8 +1,7 @@
-// export const BASE_URL = "http://jama-al-backend.freshpureuae.com/api";
-// export const IMAGE_URL = "http://jama-al-backend.freshpureuae.com";
+ 
 
-export const BASE_URL = "http://localhost:8000/api";
-export const IMAGE_URL = "http://localhost:8000";
+export const BASE_URL = "http://admin.redsea-market.com/api";
+export const IMAGE_URL = "http://admin.redsea-market.com";
 
 // export const BASE_URL = "https://freshpureuae.com/jama-al-backend/api";
 // export const IMAGE_URL = "https://freshpureuae.com/jama-al-backend";
@@ -14,9 +13,4 @@ export const secret_key = 'sk_test_51HqJ58APs1IO5yfE3dtoHFXSEfscNwttjD3MFe4Qcu3i
 
 export const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null ;
 
-// URL = jama-al-backend.freshpureuae.com
-
-// Prompttech demo
-
-// export const BASE_URL = "http://prompttechdemowork-backend.prompttechdemohosting.com/api";
-// export const IMAGE_URL = "http://prompttechdemowork-backend.prompttechdemohosting.com";
+ 

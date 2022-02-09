@@ -162,7 +162,7 @@ class searchArea extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-xl-6 col-lg-8 col-md-11 mx-auto">
-                                <h2 className="section-title text-white text-center">Buy properties with Jamal al bahr</h2>
+                                <h2 className="section-title text-white text-center">Buy properties with Red Sea Market</h2>
                             </div>
                         </div>
                         <div className="row">
