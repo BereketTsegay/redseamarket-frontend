@@ -90,18 +90,18 @@ window.addEventListener("load", function () {
 
 	if (!!menuElement && menuElement.outerHTML)
         someElementToString = menuElement.outerHTML;
-    else if (XMLSerializer)
+    else if (menuElement && XMLSerializer)
         someElementToString = new XMLSerializer().serializeToString(menuElement);
         
     // console.log(someElementToString);
     localStorage.removeItem('navElement');
     localStorage.setItem('navElement', someElementToString);
 
-	const menuLeft = new SlideMenu(menuElement, {
-		position: 'right',
-		submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
-		backLinkBefore: '<i class="fa fa-caret-left"></i>',
-	});
+	// const menuLeft = new SlideMenu(menuElement, {
+	// 	position: 'right',
+	// 	submenuLinkAfter: '<i class="fa fa-caret-right"></i>',
+	// 	backLinkBefore: '<i class="fa fa-caret-left"></i>',
+	// });
 
 	// let option = `<option value="en">English</option><option value="ar">Arabic</option>`;
 	
