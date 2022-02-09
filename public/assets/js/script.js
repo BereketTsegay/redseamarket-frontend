@@ -85,7 +85,8 @@ document.body.addEventListener("click", checkPageTransition);
 // });
 
 window.addEventListener("load", function () {
-	const menuElement = document.getElementById('mobileMenu')
+	const menuElement = document.getElementById('mobileMenu');
+	let someElementToString = null;
 	// console.log(menuElement, '----- 1');
 
 	if (!!menuElement && menuElement.outerHTML)
