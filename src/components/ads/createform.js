@@ -143,7 +143,24 @@ class CreateForm extends React.Component{
          submitStatus: false,
       }
    }
+   checkEmpty(input){
+      if(input)
+      {
+         if((input==='')||(input===null))
+         {
+            return true;
+         }
+         else if(String(input).trim()==='')
+         {
+            return true;
+         }else{
+            return false;
+         }
 
+      }else{
+         return true;
+      }
+   }
    componentWillMount(){
       
       this.setState({
@@ -722,7 +739,7 @@ class CreateForm extends React.Component{
                   errors_description: '',
                });
             }
-            if(state.country_id === '' || state.country_id.trim() === ''){
+            if(this.checkEmpty(state.country_id)){
 
                let country_id = 'Country cannot be blank';
                this.setState({
@@ -734,7 +751,7 @@ class CreateForm extends React.Component{
                   errors_country_id: '',
                });
             }
-            if(state.state_id === '' || state.state_id.trim() === ''){
+            if(this.checkEmpty(state.state_id)){
 
                let state_id = 'State cannot be blank';
                this.setState({
@@ -762,49 +779,49 @@ class CreateForm extends React.Component{
                });
             }
             else{
-               if(state.make_id === '' || state.make_id.trim() === ''){
+               if(this.checkEmpty(state.make_id)){
                   let make_id = 'Make cannot be blank';
                   this.setState({
                      errors_make_id: make_id,
                   });
                }
-               if(state.model_id === '' || state.model_id.trim() === ''){
+               if(this.checkEmpty(state.model_id)){
                   let model_id = 'Model cannot be blank';
                   this.setState({
                      errors_model_id: model_id,
                   });
                }
-               if(state.variant_id === '' || state.variant_id.trim() === ''){
-                  let variant_id = 'Variant cannot be blank';
-                  this.setState({
-                     errors_variant_id: variant_id,
-                  });
-               }
-               if(state.registration_year === '' || state.registration_year.trim() === ''){
+               // if(this.checkEmpty(state.variant_id)){
+               //    let variant_id = 'Variant cannot be blank';
+               //    this.setState({
+               //       errors_variant_id: variant_id,
+               //    });
+               // }
+               if(this.checkEmpty(state.registration_year)){
                   let registation = 'Registered year cannot be blank';
                   this.setState({
                      errors_registration_year: registation,
                   });
                }
-               if(state.fuel === '' || state.fuel.trim === ''){
+               if(this.checkEmpty(state.fuel)){
                   let fuel = 'Fuel type cannot be blank';
                   this.setState({
                      errors_fuel: fuel,
                   });
                }
-               if(state.transmission === '' || state.transmission.trim === ''){
+               if(this.checkEmpty(state.transmission)){
                   let transmission = 'Transmission cannot be blank';
                   this.setState({
                      errors_transmission: transmission,
                   });
                }
-               if(state.condition === '' || state.condition.trim() === ''){
+               if(this.checkEmpty(state.condition)){
                   let condition = 'Condition cannot be blank';
                   this.setState({
                      errors_condition: condition,
                   });
                }
-               if(state.mileage === '' || state.mileage.trim() === ''){
+               if(this.checkEmpty(state.mileage)){
                   let mileage = 'Mileage cannot be blank';
                   this.setState({
                      errors_mileage: mileage,
@@ -822,25 +839,25 @@ class CreateForm extends React.Component{
                });
             }
             else{
-               if(state.size === '' || state.size.trim() ==  ''){
+               if(this.checkEmpty(state.size)){
                   let size = 'Size cannot be blank';
                   this.setState({
                      errors_size: size,
                   });
                }
-               if(state.room === '' || state.room.trim() === ''){
+               if(this.checkEmpty(state.room)){
                   let room = 'Room cannot be blank';
                   this.setState({
                      errors_room: room,
                   });
                }
-               if(state.furnished == '' || state.furnished.trim() === ''){
+               if(this.checkEmpty(state.furnished)){
                   let furnished = 'Furnished cannot be blank';
                   this.setState({
                      errors_furnished: furnished,
                   });
                }
-               if(state.building === '' || state.building.trim() === ''){
+               if(this.checkEmpty(state.building)){
                   let building = 'Building type cannot be blank';
                   this.setState({
                      errors_building: building,
@@ -1032,13 +1049,12 @@ class CreateForm extends React.Component{
             
                         }
             
-                        // this.setState({
-                        //    loaderStatus: false,
-                        //    submitStatus: false,
-                        // });
+                        this.setState({
+                           loaderStatus: false,
+                           submitStatus: false,
+                        });
             
                      }).catch((error) => {
-            
                         this.setState({
                            loaderStatus: false,
                            submitStatus: false,
@@ -1245,13 +1261,13 @@ class CreateForm extends React.Component{
       }
       else{
          
-         if(state.userName === '' || state.userName.trim() === ''){
+         if(this.checkEmpty(state.userName)){
             let userName = 'Name cannot be blank';
             this.setState({
                errors_userName: userName,
             });
          }
-         if(state.email === '' || state.email.trim() === ''){
+         if(this.checkEmpty(state.email)){
             let email = 'Email cannot be blank';
             this.setState({
                errors_email: email,
@@ -1265,19 +1281,19 @@ class CreateForm extends React.Component{
                });
             }
          }
-         if(state.latitude === '' || state.longitude === ''){
+         if(this.checkEmpty(state.latitude)|| this.checkEmpty(state.longitude)){
             let latitude = 'Please mark a point in maps';
             this.setState({
                errors_latitude: latitude,
             });
          }
-         if(state.phone === '' || state.phone.trim() === ''){
+         if(this.checkEmpty(state.phone)){
             let phone = 'Phone cannot be blank';
             this.setState({
                errors_phone: phone,
             });
          }
-         if(state.address === '' || state.address.trim() === ''){
+         if(this.checkEmpty(state.address)){
             let address = 'Address cannot be blank';
             this.setState({
                errors_address: address,
