@@ -20,7 +20,7 @@ export default class checkbox extends Component {
         return (
 
             <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" name={name} onChange={(e) => this.eventChange(e)} className="custom-control-input" id={this.props.label} />
+                <input type="checkbox" name={name} onChange={(e) => this.eventChange(e)} className="custom-control-input" checked={checkStatus} id={this.props.label} />
                 <label class="custom-control-label font-weight-normal" for={this.props.label} >{this.props.label} </label>
             </div>
             

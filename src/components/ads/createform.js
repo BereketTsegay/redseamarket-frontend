@@ -126,7 +126,7 @@ class CreateForm extends React.Component{
 
          amountType: '',
          amountPercentage: '',
-         motor: [],
+         motor: {},
          paymentDocument: '',
          termsCondition: false,
          errors_terms: '',
@@ -162,7 +162,6 @@ class CreateForm extends React.Component{
       }
    }
    componentWillMount(){
-      
       this.setState({
 
          category: this.props.match.params.category_id,
@@ -294,7 +293,6 @@ class CreateForm extends React.Component{
    }
 
    perviewModal = () => {
-
       axios({
          url: `${BASE_URL}/customer/get/country`,
          method: 'POST',
@@ -443,6 +441,25 @@ class CreateForm extends React.Component{
 
    countryChange = (id) => {
       
+      axios({
+          method:'POST',
+          url:`${BASE_URL}/get/currency`,
+          data:{
+              country: id,
+          }
+      }).then(response => {
+
+         if(response.data.status == 'success'){
+            this.setState({
+               currency: response.data.currency.currency_code,
+            });
+         }
+
+      }).catch((error) => {
+         this.setState({
+            loaderStatus: false,
+         });
+      });
       axios({
          method: 'POST',
          url: `${BASE_URL}/customer/get/state`,
@@ -608,7 +625,6 @@ class CreateForm extends React.Component{
    }
 
    checkboxChange = (name, value) => {
-      
       this.setState({
          [name]: value,
       });
@@ -1412,10 +1428,11 @@ class CreateForm extends React.Component{
                                     )
                                  }) : ''}
                                  </div>
-                                 <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
-                                 <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
-                                 <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
+                                 <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
+                                 <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe y()our ${subcategoryName}`} error={this.state.errors_description} />
+                                 <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
+                                
                                  <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
@@ -1501,7 +1518,7 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
                                  <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
                                  <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
-                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.phoneHide} name="phoneHide" label="Phone Hide" />
 
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
@@ -1578,7 +1595,7 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
                                  <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
                                  <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
-                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.phoneHide} name="phoneHide" label="Phone Hide" />
                                  
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
@@ -1654,7 +1671,7 @@ class CreateForm extends React.Component{
                                  <TextField handleChange={this.handleChange} name="email" label="Email" value={email} placeholder="Email" readonly={false} error={this.state.errors_email} />
                                  <Number handleChange={this.handleChange} name="phone" label="Phone" value={phone} placeholder="Phone" error={this.state.errors_phone} />
                                  <TextArea handleChange={this.handleChange} name="address" label="Address" value={address} placeholder="Address" error={this.state.errors_address} />
-                                 <Checkbox checkboxChange={this.checkboxChange} name="phoneHide" label="Phone Hide" />
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.phoneHide} name="phoneHide" label="Phone Hide" />
                                  
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />

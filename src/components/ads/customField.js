@@ -63,7 +63,19 @@ export default class customField extends Component {
       this.props.fieldValues(customValue);
 
    }
-
+   getValue=(field_id)=>{
+      let value='';
+      console.log(field_id);
+      console.log(customValue);
+      customValue.forEach(function(item,index){
+         if(item.field_id==field_id)
+         {
+            value=item.value;
+            return false;
+         }
+      });
+      return value;
+   }
     render() {
 
          let categoryField = this.props.categoryField;
@@ -73,17 +85,17 @@ export default class customField extends Component {
             categoryField.map((categoryField, index) => {
                 if(categoryField.field.type === 'text'){
                    return(
-                      <TextField handleChange={this.handleChange} name={categoryField.field.id} key={index} label={categoryField.field.name} placeholder={categoryField.field.name} readonly={false} />
+                      <TextField handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} name={categoryField.field.id} key={index} label={categoryField.field.name} placeholder={categoryField.field.name} readonly={false} />
                    );
                 }
                 else if(categoryField.field.type === 'textarea'){
                    return(
-                      <TextArea handleChange={this.handleChange} name={categoryField.field.id} label={categoryField.field.name} key={index} placeholder={categoryField.field.name}/>
+                      <TextArea handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} name={categoryField.field.id} label={categoryField.field.name} key={index} placeholder={categoryField.field.name}/>
                    );
                 }
                 else if(categoryField.field.type === 'checkbox'){
                    return(
-                      <Checkbox key={index} checkboxChange={this.handleChange} name={categoryField.field.id} label={categoryField.field.name} />
+                      <Checkbox key={index} checkboxChange={this.handleChange} checkStatus={this.getValue(categoryField.field.id)}  name={categoryField.field.id} label={categoryField.field.name} />
                    );
                 }
                 else if(categoryField.field.type === 'select'){
@@ -91,7 +103,7 @@ export default class customField extends Component {
                      //  <SelectField key={index} placeholder={categoryField.field.id} optionChange={this.optionChange} option={categoryField.field.field_option} type="customField" />
                      <div className="form-group" key={index}>
                         <label>{categoryField.field.name}</label>
-                        <select onChange={(e) => this.optionChange(e)} name={categoryField.field.id} className="form-control">
+                        <select onChange={(e) => this.optionChange(e)} name={categoryField.field.id} className="form-control" value={this.getValue(categoryField.field.id)}>
                               <option value="">Select {categoryField.field.name}</option>
                               {categoryField.field.field_option.map((option, index) => {
                                  
@@ -106,7 +118,7 @@ export default class customField extends Component {
                 }
                 else if(categoryField.field.type === 'radio'){
                    return (
-                      <Radio key={index} radioChange={this.handleChange} label={categoryField.field.name} name={categoryField.field.id} option={categoryField.field.field_option} />
+                      <Radio key={index} radioChange={this.handleChange} checkStatus={this.getValue(categoryField.field.id)} label={categoryField.field.name} name={categoryField.field.id} option={categoryField.field.field_option} />
                    );
                 }
                 else if(categoryField.field.type === 'file'){
@@ -116,17 +128,17 @@ export default class customField extends Component {
                 }
                 else if(categoryField.field.type === 'url'){
                    return(
-                      <TextField handleChange={this.handleChange} label={categoryField.field.name} name={categoryField.field.id} key={index} placeholder={categoryField.field.name} readonly={false} />
+                      <TextField handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} label={categoryField.field.name} name={categoryField.field.id} key={index} placeholder={categoryField.field.name} readonly={false} />
                    );
                 }
                 else if(categoryField.field.type === 'number'){
                    return(
-                      <Number key={index} handleChange={this.handleChange} label={categoryField.field.name} name={categoryField.field.id} placeholder={categoryField.field.name}/>
+                      <Number key={index} handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} label={categoryField.field.name} name={categoryField.field.id} placeholder={categoryField.field.name}/>
                    );
                 }
                 else if(categoryField.field.type === 'date'){
                    return(
-                      <Date handleChange={this.handleChange} name={categoryField.field.id} label={categoryField.field.name} key={index} placeholder={categoryField.field.id} readonly={false} />
+                      <Date handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} name={categoryField.field.id} label={categoryField.field.name} key={index} placeholder={categoryField.field.id} readonly={false} />
                    );
                 }
                 else if(categoryField.field.type === 'dependency'){

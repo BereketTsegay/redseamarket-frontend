@@ -85,10 +85,27 @@ export default class motorCreate extends Component {
         }).catch((error) => {
 
         });
+        axios({
+            url: `${BASE_URL}/customer/get/model`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+                make_id: this.props.motorList.make_id,
+            }
+        }).then(response => {
+
+            if(response.data.status == 'success'){
+                this.setState({
+                    modelOption: response.data.model,
+                });
+            }
+
+        }).catch((error) => {
+            
+        });
     }
 
     makeChange = (id) => {
-
         axios({
             url: `${BASE_URL}/customer/get/model`,
             method: 'POST',
@@ -326,18 +343,18 @@ export default class motorCreate extends Component {
                 {loaderStatus == true ? <Loader /> : ''}
                 <>
                     <SelectField placeholder="Make" selected={motor.make_id} label="Make" optionChange={this.makeChange} option={makeOption} type="common" error={errors.errors_make_id} />
-                    <SelectField placeholder="Model" label="Model" optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
-                    <SelectField placeholder="Variant" label="Variant" optionChange={this.variantChange} option={variantOption} type="common" error={errors.errors_variant_id} />
-                    <Number placeholder="Registerd Year" label="Registerd Year" handleChange={this.handleChange} name="registration_year" value={registration_year} error={errors.errors_registration_year} />
-                    <SelectField placeholder="Fuel Type" label="Fuel Type" optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
-                    <Radio label="Transmission" name="transmission" radioChange={this.radioChange} option={transmissionOption} error={errors.errors_transmission} />
-                    <Radio label="Condition" name="condition" radioChange={this.radioChange} option={conditionOption} error={errors.errors_condition} />
-                    <Number placeholder="Mileage" label="Mileage" handleChange={this.handleChange} name="mileage" value={mileage} error={errors.errors_mileage} />
+                    <SelectField placeholder="Model" label="Model" selected={motor.model_id} optionChange={this.modelChange} option={modelOption} type="common" error={errors.errors_model_id} />
+                    <SelectField placeholder="Variant" label="Variant" selected={motor.variant_id} optionChange={this.variantChange} option={variantOption} type="common" error={errors.errors_variant_id} />
+                    <Number placeholder="Registerd Year" label="Registerd Year" handleChange={this.handleChange} name="registration_year" value={motor.registration_year} error={errors.errors_registration_year} />
+                    <SelectField placeholder="Fuel Type" label="Fuel Type" selected={motor.fuel} optionChange={this.fuelChange} option={fuelOption} type="common" error={errors.errors_fuel}  />
+                    <Radio label="Transmission" name="transmission" radioChange={this.radioChange} selected={motor.transmission} option={transmissionOption} error={errors.errors_transmission} />
+                    <Radio label="Condition" name="condition" radioChange={this.radioChange} selected={motor.condition} option={conditionOption} error={errors.errors_condition} />
+                    <Number placeholder="Mileage" label="Mileage" handleChange={this.handleChange} name="mileage" value={motor.mileage} error={errors.errors_mileage} />
                     <label>Features</label>
-                    <Checkbox checkboxChange={this.checkboxChange} name="aircondition" label="Air Conditioner" />
-                    <Checkbox checkboxChange={this.checkboxChange} name="gps" label="GPS" />
-                    <Checkbox checkboxChange={this.checkboxChange} name="security" label="Security System" />
-                    <Checkbox checkboxChange={this.checkboxChange} name="tire" label="Spare Tire" />
+                    <Checkbox checkboxChange={this.checkboxChange} checkStatus={motor.aircondition} name="aircondition" label="Air Conditioner" />
+                    <Checkbox checkboxChange={this.checkboxChange} checkStatus={motor.gps} name="gps" label="GPS" />
+                    <Checkbox checkboxChange={this.checkboxChange} checkStatus={motor.security} name="security" label="Security System" />
+                    <Checkbox checkboxChange={this.checkboxChange} checkStatus={motor.tire} name="tire" label="Spare Tire" />
                 </>
             </div>
         );
