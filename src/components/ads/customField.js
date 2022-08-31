@@ -83,6 +83,10 @@ export default class customField extends Component {
          return (
             
             categoryField.map((categoryField, index) => {
+               if(!(categoryField.field))
+                 {
+                  return false;
+                 }
                 if(categoryField.field.type === 'text'){
                    return(
                       <TextField handleChange={this.handleChange} value={this.getValue(categoryField.field.id)} name={categoryField.field.id} key={index} label={categoryField.field.name} placeholder={categoryField.field.name} readonly={false} />
