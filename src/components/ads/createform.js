@@ -516,7 +516,7 @@ class CreateForm extends React.Component{
 
    handleChange = (name, value) => {
 
-      if(name === 'title' || name === 'titleinArabic'){
+      if(name === 'title' ){
 
          let canonical = value.toLowerCase().replace(/ +/g, '-').replace(/[^-\w]/g, '');
 
@@ -1413,7 +1413,7 @@ class CreateForm extends React.Component{
                            <div className="create-ad-form">
                            {this.state.formPage == 1 ?
                               <>
-                                 <TextField handleChange={this.handleChange} name="title" label="Title" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
+                                 <TextField handleChange={this.handleChange} name="title" label="Title In English" value={title} placeholder="Title" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="titleinArabic" label="Title Arabic" value={this.state.titleinArabic} placeholder="Title Arabic" readonly={false} error={this.state.errors_title} />
                                  <TextField handleChange={this.handleChange} name="canonicalName" label="Canonical Name" value={canonicalName} placeholder="Canonical Name" readonly={true} />
                                  <FileField fileUpload={this.fileUpload} placeholder="Add Pictures" multiple={true} error={this.state.errors_image} />
