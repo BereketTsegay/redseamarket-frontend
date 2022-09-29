@@ -59,6 +59,7 @@ class CreateForm extends React.Component{
          country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
          state_id: '',
          city_id: '',
+         area: '',
          negotiable: false,
          featured: false,
          phoneHide: false,
@@ -97,6 +98,7 @@ class CreateForm extends React.Component{
          errors_country_id: '',
          errors_state_id: '',
          errors_city_id: '',
+         errors_area: '',
 
          errors_make_id: '',
          errors_model_id: '',
@@ -1020,6 +1022,7 @@ class CreateForm extends React.Component{
                            country: this.state.country_id,
                            state: this.state.state_id,
                            city: this.state.city_id,
+                           area: this.state.area,
                            latitude: this.state.latitude,
                            longitude: this.state.longitude,
                            name: this.state.userName,
@@ -1115,6 +1118,7 @@ class CreateForm extends React.Component{
                         country: this.state.country_id,
                         state: this.state.state_id,
                         city: this.state.city_id,
+                        area: this.state.area,
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
                         name: this.state.userName,
@@ -1211,6 +1215,7 @@ class CreateForm extends React.Component{
                   country: this.state.country_id,
                   state: this.state.state_id,
                   city: this.state.city_id,
+                  area: this.state.area,
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
                   name: this.state.userName,
@@ -1361,7 +1366,7 @@ class CreateForm extends React.Component{
       
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
-         description, phone, address} = this.state;
+         description, phone, address,area} = this.state;
       
       let loaderStatus = this.state.loaderStatus;
          
@@ -1435,6 +1440,8 @@ class CreateForm extends React.Component{
                                 
                                  <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
+                                 
+                                 <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
                                  
