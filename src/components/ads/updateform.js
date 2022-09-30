@@ -13,7 +13,7 @@ import Date from '../formcontrols/date';
 import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 import axios from 'axios';
-import {BASE_URL, userToken, GOOGLEMAPS_API} from '../../projectString';
+import {BASE_URL,IMAGE_URL, userToken, GOOGLEMAPS_API} from '../../projectString';
 import MotorCreate from './motorCreate.js';
 import PropertyCreate from './propertyCreate.js';
 import LocationPicker from './locationPicker.js';
@@ -88,6 +88,7 @@ class Updateform extends React.Component{
 
          fieldValue: [],
          image: [],
+         oldImage: [],
          imageArr: [],
          token: userToken,
 
@@ -198,6 +199,7 @@ class Updateform extends React.Component{
                   area:ad_data.area,
                   state_id:ad_data.state_id,
                   city_id:ad_data.city_id,
+                  oldImage:ad_data.image,
                   loaderStatus: true,
 
                }, () => {
@@ -1529,11 +1531,59 @@ class Updateform extends React.Component{
          image: updateImage,
       });
    }
+   removeOldImage=id=>{
+      axios({
+         url: `${BASE_URL}/customer/ads/remove_image`,
+         method: 'POST',
+         headers: {
+            Authorization: "Bearer " + this.state.token,
+         },
+         data: {
+            id:id
+         }
+
+      }).then(response => {
+         
+         if(response.data.status == 'success'){
+            let old=this.state.oldImage;
+            let oldUpdated=[];
+            old.forEach(function(image){
+               if(image.id!=id)
+               {
+                  oldUpdated.push(image);
+               }
+            });
+            this.setState({
+               oldImage:oldUpdated
+            }); 
+            Swal.fire({
+               title: 'success!',
+               text: response.data.message,
+               icon: 'success',
+               confirmButtonText: 'OK'
+            });
+
+         }
+
+         this.setState({
+            loaderStatus: false,
+            submitStatus: false,
+         });
+
+      }).catch((error) => {
+
+         this.setState({
+            loaderStatus: false,
+            submitStatus: false,
+         });
+
+      });
+   }
 
     render() {
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
-         description, phone, address,area,fieldValue} = this.state;
+         description, phone, address,area,fieldValue,oldImage} = this.state;
       
       let loaderStatus = this.state.loaderStatus;
          
@@ -1599,6 +1649,16 @@ class Updateform extends React.Component{
                                        </div>
                                     )
                                  }) : ''}
+                                 {
+                                    oldImage.map((item,index)=>{
+                                       return (
+                                       <div className="col-md-4" style={{position:'relative'}}>
+                                       <img src={IMAGE_URL+'/'+item.image} key={index} alt='image' style={{maxWidth:'150px', minWidth:'150px', maxHeight:'150px', minHeight:'150px', margin:'10px'}} />
+                                       <span className="img-dlt"><button className="btn btn-danger" onClick={() => this.removeOldImage(item.id)}><i className="fa fa-trash"></i></button></span>
+                                    </div>
+                                       );
+                                    })
+                                 }
                                  </div>
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
                                  <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
