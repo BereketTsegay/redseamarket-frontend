@@ -265,7 +265,7 @@ export default class motorListing extends Component {
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="section-title text-white text-center">The UAE’s leading marketplace to buy and sell cars</h2>
+                            <h2 class="section-title text-white text-center">The {localStorage.getItem('country_name')?localStorage.getItem('country_name'):'UAE'}’s leading marketplace to buy and sell cars</h2>
                         </div>
                     </div>
                 </div>
