@@ -137,9 +137,9 @@ export default class myAds extends Component {
                                 <div className="row">
                                     <div className="col-xl-11 mx-auto">
                                         <div className="row row-product-panel">
-                                        {myAds.map((myAds, index) => {
+                                        {myAds.map((myAd, index) => {
                                                 return(
-                                                    <Ads key={index} ads={myAds} />
+                                                    <Ads key={index} ads={myAd} />
                                                 );
                                             })}
                                         </div>

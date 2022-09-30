@@ -27,12 +27,13 @@ import { Modal } from 'react-bootstrap';
 import MotorProperty from './motorProperty';
 import PropertyForRendProperty from './propertyForRendProperty';
 
-class CreateForm extends React.Component{
+class Updateform extends React.Component{
 
    constructor(props) {
       super(props)
 
       this.state = {
+         id:0,
          category: '',
          subcategory:'',
          categoryField: [],
@@ -130,7 +131,7 @@ class CreateForm extends React.Component{
          amountPercentage: '',
          motor: {},
          paymentDocument: '',
-         termsCondition: false,
+         termsCondition: true,
          errors_terms: '',
          perviewModal: false,
          mainImage: '',
@@ -165,132 +166,299 @@ class CreateForm extends React.Component{
    }
    componentWillMount(){
       this.setState({
-
-         category: this.props.match.params.category_id,
-         subcategory: this.props.match.params.subcategory_id === '&nvlp' ? '' : this.props.match.params.subcategory_id,
-         categoryName: this.props.match.params.category,
-         subcategoryName: this.props.match.params.subcategory === '&!$*' ? '' : this.props.match.params.subcategory,
-         loaderStatus: true,
-
-      }, () => {
+         id:this.props.match.params.id
+      },()=>{
          axios({
-            method: 'POST',
-            url: `${BASE_URL}/customer/ads/custom_field_and_dependency`,
-            data:{
-               category:this.state.category,
-               subcategory:this.state.subcategory,
-            }
+            method:'POST',
+            url:`${BASE_URL}/customer/ads/get_details`,
+            data:{ads_id:this.state.id}
          }).then(response => {
             
-            if(response.data.status == 'success'){
-               
+            if(response.data.status == 'success')
+            {
+               let ad_data=response.data.data;
                this.setState({
-                  categoryField:response.data.data.category_field,
+                  category: ad_data.category_id,
+                  subcategory: ad_data.subcategory_id,
+                  categoryName: ad_data.category.name,
+                  subcategoryName: ad_data.subcategory.name,
+                  country_id: ad_data.country_id,
+                  title: ad_data.title,
+                  canonicalName: ad_data.canonical_name,
+                  price: ad_data.price,
+                  description:ad_data.description,
+                  descriptioninArabic:ad_data.description_arabic,
+                  titleinArabic:ad_data.title_arabic,
+                  latitude:ad_data.latitude,
+                  longitude:ad_data.longitude,
+                  negotiable:(ad_data.negotiable_flag=='1'),
+                  featured:(ad_data.featured_flag=='1'),
+                  phoneHide:(ad_data.seller_information.phone_hide_flag=='1'),
+                  address:ad_data.seller_information.address,
+                  area:ad_data.area,
+                  state_id:ad_data.state_id,
+                  city_id:ad_data.city_id,
+                  loaderStatus: true,
+
+               }, () => {
+                  axios({
+                     method: 'POST',
+                     url: `${BASE_URL}/customer/ads/custom_field_and_dependency`,
+                     data:{
+                        category:this.state.category,
+                        subcategory:this.state.subcategory,
+                     }
+                  }).then(response => {
+                     
+                     if(response.data.status == 'success'){
+                        
+                        this.setState({
+                           categoryField:response.data.data.category_field,
+                        });
+                        
+                     }
+
+                     this.setState({
+                        loaderStatus: false,
+                  })
+
+                  }).catch((error) => {
+                     this.setState({
+                        loaderStatus: false,
+                     });
+                  });
+               });
+               this.setState({
+                  loaderStatus: true,
+               });
+               axios({
+                  method: 'POST',
+                  url: `${BASE_URL}/customer/get/country`,
+               }).then(response => {
+         
+                  if(response.data.status == 'success'){
+                     this.setState({
+                        country: response.data.country
+                     });
+                  }
+         
+               }).catch((error) => {
+                  this.setState({
+                     loaderStatus: false,
+                  });
                });
                
-            }
-
-            this.setState({
-               loaderStatus: false,
-           })
-
-         }).catch((error) => {
-            this.setState({
-               loaderStatus: false,
-            });
-         });
-      });
-
-      this.setState({
-         loaderStatus: true,
-      });
-
-      axios({
-         method: 'POST',
-         url: `${BASE_URL}/customer/get/country`,
-      }).then(response => {
-
-         if(response.data.status == 'success'){
-            this.setState({
-               country: response.data.country,
-            });
-         }
-
-      }).catch((error) => {
-         this.setState({
-            loaderStatus: false,
-         });
-      });
-
-      axios({
-         url: `${BASE_URL}/subcategory/featured/amount`,
-         method: 'POST',
-         data: {
-            subcategory: this.props.match.params.subcategory_id,
-         }
-      }).then(response => {
-
-         if(response.data.status === 'success'){
-
-            if(response.data.subcategory.type == 0){
-
-               this.setState({
-                  amountType: 'flat',
-                  amountPercentage: response.data.subcategory.percentage
+               axios({
+                  url: `${BASE_URL}/subcategory/featured/amount`,
+                  method: 'POST',
+                  data: {
+                     subcategory: this.state.subcategory,
+                  }
+               }).then(response => {
+         
+                  if(response.data.status === 'success'){
+         
+                     if(response.data.subcategory.type == 0){
+         
+                        this.setState({
+                           amountType: 'flat',
+                           amountPercentage: response.data.subcategory.percentage
+                        });
+                     }
+                     else{
+         
+                        this.setState({
+                           amountType: 'percentage',
+                           amountPercentage: response.data.subcategory.percentage
+                        });
+                     }
+                  }
+         
+               }).catch((error) => {
+         
                });
-            }
-            else{
 
-               this.setState({
-                  amountType: 'percentage',
-                  amountPercentage: response.data.subcategory.percentage
+               axios({
+                  url: `${BASE_URL}/customer/view/profile`,
+                  method: 'POST',
+                  headers: {
+                     Authorization: "Bearer " + this.state.token,
+                  },
+               }).then(response => {
+                  if(response.data.status === 'success'){
+                    
+                     this.setState({
+                        userName: response.data.data.user.name,
+                        email: response.data.data.user.email,
+                        phone: response.data.data.user.phone,
+                     });
+                  }
+               }).catch((error) => {
+         
                });
+
+               axios({
+                  method: 'POST',
+                  url: `${BASE_URL}/customer/get/state`,
+                  data:{
+                     country: ad_data.country_id,
+                  }
+               }).then(response => {
+         
+                  if(response.data.status == 'success'){
+                     this.setState({
+                        state: response.data.state,
+                     });
+                  }
+         
+               }).catch((error) => {
+                  this.setState({
+                     loaderStatus: false,
+                  });
+               });
+               axios({
+                  url: `${BASE_URL}/customer/get/city`,
+                  method: 'POST',
+                  data: {
+                     state: ad_data.state_id,
+                  }
+               }).then(response => {
+                  if( response.data.status === 'success'){
+                     if( response.data.city ){
+                        this.setState({
+                           city: response.data.city
+                        });
+                        response.data.city.forEach(city => {
+                           
+                           if(city.id == this.state.city_id){
+                              this.setState({
+                                 cityText: city.name,
+                              });
+                           }
+         
+                        });
+                     }
+                  }
+               });
+               if(this.state.category == 1){
+
+                  axios({
+                     url: `${BASE_URL}/customer/get/make`,
+                     method: 'POST',
+                     headers:{ Authorization: "Bearer " + this.state.token },
+         
+                 }).then(response => {
+         
+                     if(response.data.status == 'success'){
+                        response.data.make.forEach(make => {
+                           if(make.id == this.state.make_id){
+                              this.setState({
+                                 makeText: make.name,
+                             });
+                           }
+                        });
+                         
+                     }
+         
+                 }).catch((error) => {
+         
+                 });
+         
+                  axios({
+                     url: `${BASE_URL}/customer/get/model`,
+                     method: 'POST',
+                     headers: { Authorization: 'Bearer ' + this.state.token },
+                     data: {
+                        make_id: this.state.make_id,
+                     }
+                  }).then(response => {
+         
+                        if(response.data.status === 'success'){
+                           response.data.model.forEach(model => {
+                              if(model.id == this.state.model_id){
+                                 this.setState({
+                                    modelText: model.name,
+                                 });
+                              }
+                           });
+                        }
+         
+                  }).catch((error) => {
+                        
+                  });
+         
+                  axios({
+                     url: `${BASE_URL}/customer/get/variant`,
+                     method: 'POST',
+                     headers: { Authorization: 'Bearer ' + this.state.token },
+                     data: {
+                         model_id: this.state.model_id,
+                     }
+                  }).then(response => {
+                     if(response.data.status === 'success'){
+         
+                        response.data.variant.forEach(variant => {
+                           if(variant.id == this.state.variant_id){
+                              this.setState({
+                                 variantText: variant.name,
+                              });
+                           }
+                        });
+                        
+                      }
+         
+                  }).catch((error) => {
+         
+                  });
+         
+               }
+               if(this.state.category==1)
+               {
+                  let motor={
+                     make_id: ad_data.motore_value.make_id,
+                     model_id:ad_data.motore_value.model_id,
+                     variant_id:ad_data.motore_value.varient_id,
+                     registration_year:ad_data.motore_value.registration_year,
+                     fuel: ad_data.motore_value.fuel_type,
+                     transmission:  ad_data.motore_value.transmission,
+                     condition: ad_data.motore_value.condition,
+                     mileage:  ad_data.motore_value.milage,
+                     aircondition: ad_data.motor_features.some(data => data.value == 'aircondition'),
+                     gps: ad_data.motor_features.some(data => data.value == 'gps'),
+                     security: ad_data.motor_features.some(data => data.value == 'security'),
+                     tire: ad_data.motor_features.some(data => data.value == 'tire'),
+                  };
+                  this.setState(motor);
+                  this.setState({motor:motor});
+               }else if(this.state.category==2)
+               {
+                 this.setState({
+                  size: ad_data.property_rend.size,
+                  room: ad_data.property_rend.room,
+                  furnished: ad_data.property_rend.furnished,
+                  building: ad_data.property_rend.building_type,
+                  parking: (ad_data.property_rend.parking==1),
+                 })
+               }
+               var fieldValue=[];
+               ad_data.custom_value.forEach((custom_value)=>{
+                  fieldValue.push({'field_id': custom_value.field_id,'value': custom_value.value});
+               });
+               this.setState({fieldValue:fieldValue});
             }
-         }
+         })
+      })
 
-      }).catch((error) => {
 
-      });
+  
 
-      axios({
-         url: `${BASE_URL}/customer/view/profile`,
-         method: 'POST',
-         headers: {
-            Authorization: "Bearer " + this.state.token,
-         },
-      }).then(response => {
-         if(response.data.status === 'success'){
-           
-            this.setState({
-               userName: response.data.data.user.name,
-               email: response.data.data.user.email,
-               phone: response.data.data.user.phone,
-            });
-         }
-      }).catch((error) => {
+     
 
-      });
+      
 
-      axios({
-         method: 'POST',
-         url: `${BASE_URL}/customer/get/state`,
-         data:{
-            country: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
-         }
-      }).then(response => {
 
-         if(response.data.status == 'success'){
-            this.setState({
-               country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
-               state: response.data.state,
-            });
-         }
 
-      }).catch((error) => {
-         this.setState({
-            loaderStatus: false,
-         });
-      });
+
 
    }
 
@@ -985,8 +1153,7 @@ class CreateForm extends React.Component{
       
       let state = this.state;
 
-      console.log(this.state.aircondition, this.state.gps, this.state.security, this.state.tire,)
-      
+
       if(this.state.userName !== '' && this.state.email !== '' && this.state.latitude !== '' && this.state.longitude !== '' && this.state.phone !== '' && this.state.address !== '' && this.state.termsCondition == true){
          
          this.setState({
@@ -994,214 +1161,215 @@ class CreateForm extends React.Component{
             submitStatus: true,
          });
 
-         if(state.featured){
+         // if(state.featured){
 
-            if(state.paymentMethod !== ''){
+         //    if(state.paymentMethod !== ''){
 
-               if(state.paymentMethod === 'stripe'){
+         //       if(state.paymentMethod === 'stripe'){
 
-                  if(localStorage.getItem('new_payment_id') !== ''){
+         //          if(localStorage.getItem('new_payment_id') !== ''){
 
-                     axios({
-                        url: `${BASE_URL}/customer/ads/store`,
-                        method: 'POST',
-                        headers: {
-                           Authorization: "Bearer " + this.state.token,
-                        },
-                        data: {
-                           category: this.state.category,
-                           subcategory: this.state.subcategory,
-                           title: this.state.title,
-                           titleinArabic: this.state.titleinArabic,
-                           canonical_name: this.state.canonicalName,
-                           description: this.state.description,
-                           descriptioninArabic: this.state.descriptioninArabic,
-                           price: this.state.price,
-                           featured: this.state.featured,
-                           negotiable: this.state.negotiable,
-                           country: this.state.country_id,
-                           state: this.state.state_id,
-                           city: this.state.city_id,
-                           area: this.state.area,
-                           latitude: this.state.latitude,
-                           longitude: this.state.longitude,
-                           name: this.state.userName,
-                           email: this.state.email,
-                           phone: this.state.phone,
-                           phone_hide: this.state.phoneHide,
-                           address: this.state.address,
-                           image: this.state.image,
-                           make_id: this.state.make_id,
-                           model_id: this.state.model_id,
-                           variant_id: this.state.variant_id,
-                           registration_year: this.state.registration_year,
-                           fuel: this.state.fuel,
-                           transmission: this.state.transmission,
-                           condition: this.state.condition,
-                           mileage: this.state.mileage,
-                           aircondition: this.state.aircondition,
-                           gps: this.state.gps,
-                           security: this.state.security,
-                           tire: this.state.tire,
-                           size: this.state.size,
-                           room: this.state.room,
-                           furnished: this.state.furnished,
-                           building: this.state.building,
-                           parking: this.state.parking,
-                           fieldValue: this.state.fieldValue,
-                           paymentMethod: this.state.paymentMethod,
-                           paymentId: this.state.paymentId,
-                        }
+         //             axios({
+         //                url: `${BASE_URL}/customer/ads/store`,
+         //                method: 'POST',
+         //                headers: {
+         //                   Authorization: "Bearer " + this.state.token,
+         //                },
+         //                data: {
+         //                   category: this.state.category,
+         //                   subcategory: this.state.subcategory,
+         //                   title: this.state.title,
+         //                   titleinArabic: this.state.titleinArabic,
+         //                   canonical_name: this.state.canonicalName,
+         //                   description: this.state.description,
+         //                   descriptioninArabic: this.state.descriptioninArabic,
+         //                   price: this.state.price,
+         //                   featured: this.state.featured,
+         //                   negotiable: this.state.negotiable,
+         //                   country: this.state.country_id,
+         //                   state: this.state.state_id,
+         //                   city: this.state.city_id,
+         //                   area: this.state.area,
+         //                   latitude: this.state.latitude,
+         //                   longitude: this.state.longitude,
+         //                   name: this.state.userName,
+         //                   email: this.state.email,
+         //                   phone: this.state.phone,
+         //                   phone_hide: this.state.phoneHide,
+         //                   address: this.state.address,
+         //                   image: this.state.image,
+         //                   make_id: this.state.make_id,
+         //                   model_id: this.state.model_id,
+         //                   variant_id: this.state.variant_id,
+         //                   registration_year: this.state.registration_year,
+         //                   fuel: this.state.fuel,
+         //                   transmission: this.state.transmission,
+         //                   condition: this.state.condition,
+         //                   mileage: this.state.mileage,
+         //                   aircondition: this.state.aircondition,
+         //                   gps: this.state.gps,
+         //                   security: this.state.security,
+         //                   tire: this.state.tire,
+         //                   size: this.state.size,
+         //                   room: this.state.room,
+         //                   furnished: this.state.furnished,
+         //                   building: this.state.building,
+         //                   parking: this.state.parking,
+         //                   fieldValue: this.state.fieldValue,
+         //                   paymentMethod: this.state.paymentMethod,
+         //                   paymentId: this.state.paymentId,
+         //                }
             
-                     }).then(response => {
+         //             }).then(response => {
                         
-                        if(response.data.status == 'success'){
+         //                if(response.data.status == 'success'){
                            
-                           Swal.fire({
-                              title: 'success!',
-                              text: response.data.message,
-                              icon: 'success',
-                              confirmButtonText: 'OK'
-                           }).then((result) => {
-                              this.props.history.push(`/adsdetails/${response.data.ad_id}`);
-                           });
+         //                   Swal.fire({
+         //                      title: 'success!',
+         //                      text: response.data.message,
+         //                      icon: 'success',
+         //                      confirmButtonText: 'OK'
+         //                   }).then((result) => {
+         //                      this.props.history.push(`/adsdetails/${response.data.ad_id}`);
+         //                   });
             
-                        }
+         //                }
             
-                        this.setState({
-                           loaderStatus: false,
-                           submitStatus: false,
-                        });
+         //                this.setState({
+         //                   loaderStatus: false,
+         //                   submitStatus: false,
+         //                });
             
-                     }).catch((error) => {
-                        this.setState({
-                           loaderStatus: false,
-                           submitStatus: false,
-                        });
+         //             }).catch((error) => {
+         //                this.setState({
+         //                   loaderStatus: false,
+         //                   submitStatus: false,
+         //                });
             
-                     });
-                  }
-                  else{
+         //             });
+         //          }
+         //          else{
 
-                     Swal.fire({
-                        title: 'Warning!',
-                        icon: 'warning',
-                        text: 'Please ensure yor payment is done',
-                        confirmButtonText: 'OK'
-                     });
+         //             Swal.fire({
+         //                title: 'Warning!',
+         //                icon: 'warning',
+         //                text: 'Please ensure yor payment is done',
+         //                confirmButtonText: 'OK'
+         //             });
 
-                     this.setState({
-                        loaderStatus: false,
-                        submitStatus: false,
-                     });
-                  }
-               }
-               else{
+         //             this.setState({
+         //                loaderStatus: false,
+         //                submitStatus: false,
+         //             });
+         //          }
+         //       }
+         //       else{
 
-                  axios({
-                     url: `${BASE_URL}/customer/ads/store`,
-                     method: 'POST',
-                     headers: {
-                        Authorization: "Bearer " + this.state.token,
-                     },
-                     data: {
-                        category: this.state.category,
-                        subcategory: this.state.subcategory,
-                        title: this.state.title,
-                        titleinArabic: this.state.titleinArabic,
-                        canonical_name: this.state.canonicalName,
-                        description: this.state.description,
-                        descriptioninArabic: this.state.descriptioninArabic,
-                        price: this.state.price,
-                        featured: this.state.featured,
-                        negotiable: this.state.negotiable,
-                        country: this.state.country_id,
-                        state: this.state.state_id,
-                        city: this.state.city_id,
-                        area: this.state.area,
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                        name: this.state.userName,
-                        email: this.state.email,
-                        phone: this.state.phone,
-                        phone_hide: this.state.phoneHide,
-                        address: this.state.address,
-                        image: this.state.image,
-                        make_id: this.state.make_id,
-                        model_id: this.state.model_id,
-                        variant_id: this.state.variant_id,
-                        registration_year: this.state.registration_year,
-                        fuel: this.state.fuel,
-                        transmission: this.state.transmission,
-                        condition: this.state.condition,
-                        mileage: this.state.mileage,
-                        aircondition: this.state.aircondition,
-                        gps: this.state.gps,
-                        security: this.state.security,
-                        tire: this.state.tire,
-                        size: this.state.size,
-                        room: this.state.room,
-                        furnished: this.state.furnished,
-                        building: this.state.building,
-                        parking: this.state.parking,
-                        fieldValue: this.state.fieldValue,
-                        paymentMethod: this.state.paymentMethod,
-                        paymentId: this.state.paymentId,
-                     }
+         //          axios({
+         //             url: `${BASE_URL}/customer/ads/store`,
+         //             method: 'POST',
+         //             headers: {
+         //                Authorization: "Bearer " + this.state.token,
+         //             },
+         //             data: {
+         //                category: this.state.category,
+         //                subcategory: this.state.subcategory,
+         //                title: this.state.title,
+         //                titleinArabic: this.state.titleinArabic,
+         //                canonical_name: this.state.canonicalName,
+         //                description: this.state.description,
+         //                descriptioninArabic: this.state.descriptioninArabic,
+         //                price: this.state.price,
+         //                featured: this.state.featured,
+         //                negotiable: this.state.negotiable,
+         //                country: this.state.country_id,
+         //                state: this.state.state_id,
+         //                city: this.state.city_id,
+         //                area: this.state.area,
+         //                latitude: this.state.latitude,
+         //                longitude: this.state.longitude,
+         //                name: this.state.userName,
+         //                email: this.state.email,
+         //                phone: this.state.phone,
+         //                phone_hide: this.state.phoneHide,
+         //                address: this.state.address,
+         //                image: this.state.image,
+         //                make_id: this.state.make_id,
+         //                model_id: this.state.model_id,
+         //                variant_id: this.state.variant_id,
+         //                registration_year: this.state.registration_year,
+         //                fuel: this.state.fuel,
+         //                transmission: this.state.transmission,
+         //                condition: this.state.condition,
+         //                mileage: this.state.mileage,
+         //                aircondition: this.state.aircondition,
+         //                gps: this.state.gps,
+         //                security: this.state.security,
+         //                tire: this.state.tire,
+         //                size: this.state.size,
+         //                room: this.state.room,
+         //                furnished: this.state.furnished,
+         //                building: this.state.building,
+         //                parking: this.state.parking,
+         //                fieldValue: this.state.fieldValue,
+         //                paymentMethod: this.state.paymentMethod,
+         //                paymentId: this.state.paymentId,
+         //             }
          
-                  }).then(response => {
+         //          }).then(response => {
                      
-                     if(response.data.status == 'success'){
+         //             if(response.data.status == 'success'){
                         
-                        Swal.fire({
-                           title: 'success!',
-                           text: response.data.message,
-                           icon: 'success',
-                           confirmButtonText: 'OK'
-                        }).then((result) => {
-                           this.props.history.push(`/adsdetails/${response.data.ad_id}`);
-                        });
+         //                Swal.fire({
+         //                   title: 'success!',
+         //                   text: response.data.message,
+         //                   icon: 'success',
+         //                   confirmButtonText: 'OK'
+         //                }).then((result) => {
+         //                   this.props.history.push(`/adsdetails/${response.data.ad_id}`);
+         //                });
          
-                     }
+         //             }
          
-                     this.setState({
-                        loaderStatus: false,
-                        submitStatus: false,
-                     });
+         //             this.setState({
+         //                loaderStatus: false,
+         //                submitStatus: false,
+         //             });
          
-                  }).catch((error) => {
+         //          }).catch((error) => {
          
-                     this.setState({
-                        loaderStatus: false,
-                        submitStatus: false,
-                     });
+         //             this.setState({
+         //                loaderStatus: false,
+         //                submitStatus: false,
+         //             });
          
-                  });
-               }
-            }
-            else{
+         //          });
+         //       }
+         //    }
+         //    else{
 
-               Swal.fire({
-                  title: 'Warning!',
-                  icon: 'warning',
-                  text: 'Please select a payment method',
-                  confirmButtonText: 'OK'
-               });
+         //       Swal.fire({
+         //          title: 'Warning!',
+         //          icon: 'warning',
+         //          text: 'Please select a payment method',
+         //          confirmButtonText: 'OK'
+         //       });
 
-               this.setState({
-                  loaderStatus: false,
-                  submitStatus: false,
-               });
-            }
-         }
-         else{
+         //       this.setState({
+         //          loaderStatus: false,
+         //          submitStatus: false,
+         //       });
+         //    }
+         // }
+         // else{
             axios({
-               url: `${BASE_URL}/customer/ads/store`,
+               url: `${BASE_URL}/customer/ads/update`,
                method: 'POST',
                headers: {
                   Authorization: "Bearer " + this.state.token,
                },
                data: {
+                  id:this.state.id,
                   category: this.state.category,
                   subcategory: this.state.subcategory,
                   title: this.state.title,
@@ -1278,7 +1446,7 @@ class CreateForm extends React.Component{
                });
 
             });
-         }
+         // }
       }
       else{
          
@@ -1363,7 +1531,6 @@ class CreateForm extends React.Component{
    }
 
     render() {
-      
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
          description, phone, address,area,fieldValue} = this.state;
@@ -1443,7 +1610,7 @@ class CreateForm extends React.Component{
                                  
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
-                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
+                                 {/* <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" /> */}
                                  
                                  <div className="form-group">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
@@ -1466,7 +1633,7 @@ class CreateForm extends React.Component{
                               : this.state.formPage == 2 && category == 2 ? 
                               <>
                                  
-                                 <PropertyCreate  parentState={this.state} propertyEvent={this.propertyChange} errors={this.state} />
+                                 <PropertyCreate parentState={this.state} propertyEvent={this.propertyChange} errors={this.state} />
                                  <div className="row">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
@@ -1505,7 +1672,7 @@ class CreateForm extends React.Component{
                               : this.state.formPage == 2 && (category == 1 || category == 2 || category == 3 ) &&  categoryField.length != 0 ? 
                                  <>
                                     
-                                    <CustomField customValue={fieldValue} fieldValues={this.fieldValues} categoryField={categoryField} />
+                                    <CustomField customValue={fieldValue} fieldValues={this.fieldValues}  categoryField={categoryField} />
                                     <div className="row">
                                     <div className="form-group col-md-6">
                                        <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
@@ -1530,17 +1697,17 @@ class CreateForm extends React.Component{
                                  <hr />
                                  <LocationPicker changeLatLng={this.latLngChange} subcategoryName={subcategoryName} error={this.state.errors_latitude} />
 
-                                 <div class="custom-control custom-checkbox mb-3">
+                                 {/* <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
                                     <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" target="_blank">Terms &amp; Condition</Link> </label>
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
-                                 </div>
+                                 </div> */}
 
                                  {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
-                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
+                                 {/* <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5> */}
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
@@ -1558,7 +1725,7 @@ class CreateForm extends React.Component{
                                           this.state.paymentId !== '' ?
 
                                           <div className="form-group col-md-6">
-                                             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                           </div>
 
                                        :
@@ -1570,10 +1737,10 @@ class CreateForm extends React.Component{
                                           </div>
                                        :
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                        </div> : 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                        </div>
                                        } 
                                  </div>
@@ -1609,7 +1776,7 @@ class CreateForm extends React.Component{
                                  
                                  <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" target="_blank">Terms &amp; Condition</Link> </label>
+                                    {/* <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" target="_blank">Terms &amp; Condition</Link> </label> */}
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
@@ -1617,7 +1784,7 @@ class CreateForm extends React.Component{
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
-                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
+                                 {/* <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5> */}
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
@@ -1635,7 +1802,7 @@ class CreateForm extends React.Component{
                                        this.state.paymentId !== '' ?
 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                        </div>
 
                                     :
@@ -1647,10 +1814,10 @@ class CreateForm extends React.Component{
                                     </div>
                                     :
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                     </div> : 
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                     </div>
                                     }
                                  </div>
@@ -1658,7 +1825,7 @@ class CreateForm extends React.Component{
                               // : this.state.formPage == 3 && categoryField.length != 0 ?
                               //    <>
                                     
-                              //       <CustomField customValue={fieldValue} fieldValues={this.fieldValues} categoryField={categoryField} />
+                              //       <CustomField fieldValues={this.fieldValues} categoryField={categoryField} />
                               //       <div className="row">
                               //          <div className="form-group col-md-6">
                               //             <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
@@ -1685,7 +1852,7 @@ class CreateForm extends React.Component{
 
                                  <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" name="termsCondition" onChange={(e) => this.eventChange(e)} className="custom-control-input" id="termsCondition" />
-                                    <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" target="_blank">Terms &amp; Condition</Link> </label>
+                                    {/* <label class="custom-control-label font-weight-normal" for="termsCondition" >Accept <Link to="/terms/conditions" target="_blank">Terms &amp; Condition</Link> </label> */}
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
@@ -1693,7 +1860,7 @@ class CreateForm extends React.Component{
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
-                                 <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
+                                 {/* <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5> */}
 
                                  <div className="row mt-4">
                                     <div className="form-group col-md-6">
@@ -1712,7 +1879,7 @@ class CreateForm extends React.Component{
                                        this.state.paymentId !== '' ?
 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                        </div>
 
                                     :
@@ -1724,10 +1891,10 @@ class CreateForm extends React.Component{
                                     </div>
                                     :
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                     </div> : 
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                                     </div>
                                     }
                                  </div>
@@ -1754,7 +1921,7 @@ class CreateForm extends React.Component{
                               //             <button onClick={this.pageUpdateDown} className="btn btn-primary btn-block">Back</button>
                               //          </div>
                               //          <div className="form-group col-md-6">
-                              //             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                              //             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Update</button>
                               //          </div>
                               //       </div>
                               //    </>
@@ -2081,4 +2248,4 @@ class CreateForm extends React.Component{
             )
         }
     }
-    export default CreateForm
+    export default Updateform

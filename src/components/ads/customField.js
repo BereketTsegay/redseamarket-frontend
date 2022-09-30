@@ -9,7 +9,7 @@ import Date from '../formcontrols/date';
 import Radio from '../formcontrols/radio';
 import DependencySelect from '../formcontrols/dependencySelect';
 
-let customValue = [];
+// let customValue = [];
 
 export default class customField extends Component {
 
@@ -17,7 +17,7 @@ export default class customField extends Component {
       super(props);
 
       this.state = {
-           customValue: [],
+           customValue: props.customValue,
       }
       
    }
@@ -31,15 +31,15 @@ export default class customField extends Component {
          'value': value
          };
 
-         if(customValue.some(data => data.field_id === name)){
-            const elementsIndex = customValue.findIndex(element => element.field_id == name )
-            customValue[elementsIndex].value = value
+         if(this.state.customValue.some(data => data.field_id === name)){
+            const elementsIndex = this.state.customValue.findIndex(element => element.field_id == name )
+            this.state.customValue[elementsIndex].value = value
          }
          else{
-            customValue.push({'field_id': name,'value': value});
+            this.state.customValue.push({'field_id': name,'value': value});
          }
 
-      this.props.fieldValues(customValue);
+      this.props.fieldValues(this.state.customValue);
    }
 
    optionChange = (e) => {
@@ -52,22 +52,20 @@ export default class customField extends Component {
          'value': value
          };
       
-      if(customValue.some(data => data.field_id === name)){
-         const elementsIndex = customValue.findIndex(element => element.field_id == name )
-         customValue[elementsIndex].value = value
+      if(this.state.customValue.some(data => data.field_id === name)){
+         const elementsIndex = this.state.customValue.findIndex(element => element.field_id == name )
+         this.state.customValue[elementsIndex].value = value
       }
       else{
-         customValue.push({'field_id': name,'value': value});
+         this.state.customValue.push({'field_id': name,'value': value});
       }
 
-      this.props.fieldValues(customValue);
+      this.props.fieldValues(this.state.customValue);
 
    }
    getValue=(field_id)=>{
       let value='';
-      console.log(field_id);
-      console.log(customValue);
-      customValue.forEach(function(item,index){
+      this.state.customValue.forEach(function(item,index){
          if(item.field_id==field_id)
          {
             value=item.value;
@@ -77,7 +75,6 @@ export default class customField extends Component {
       return value;
    }
     render() {
-
          let categoryField = this.props.categoryField;
          
          return (

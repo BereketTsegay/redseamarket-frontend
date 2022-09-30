@@ -38,11 +38,11 @@ export default class propertyCreate extends Component {
                     'name': 'Plot of land',
                 },
             ],
-            size: '',
-            room: '',
-            furnished: '',
-            buildingType: '',
-            parking: '',
+            size: this.props.parentState.size,
+            room: this.props.parentState.room,
+            furnished: this.props.parentState.furnished,
+            buildingType: this.props.parentState.building,
+            parking: this.props.parentState.parking
         }
     }
 
@@ -123,7 +123,7 @@ export default class propertyCreate extends Component {
 
     render() {
 
-        let {furnishedOption, building, size, room} = this.state;
+        let {furnishedOption, building, size, room,furnished,buildingType,parking} = this.state;
 
         let errors = this.props.errors ? this.props.errors : '';
 
@@ -131,9 +131,9 @@ export default class propertyCreate extends Component {
             <div>
                 <Number placeholder="Size" label="Size" handleChange={this.handleChange} name="size" value={size} error={errors.errors_size} />
                 <Number placeholder="Room" label="Room" handleChange={this.handleChange} name="room" value={room} error={errors.errors_room} />
-                <Radio label="Furnished" name="furnished" radioChange={this.radioChange} option={furnishedOption} error={errors.errors_furnished} />
-                <SelectField label="Building Type" placeholder="Building Type" optionChange={this.typeChange} option={building} type="common" error={errors.errors_building} />
-                <Checkbox checkboxChange={this.checkboxChange} name="parking" label="Parking" />
+                <Radio label="Furnished" name="furnished" radioChange={this.radioChange} selected={furnished} option={furnishedOption} error={errors.errors_furnished} />
+                <SelectField label="Building Type" placeholder="Building Type" optionChange={this.typeChange} option={building} selected={buildingType} type="common" error={errors.errors_building} />
+                <Checkbox checked={parking} checkboxChange={this.checkboxChange} name="parking" label="Parking" />
             </div>
         )
     }

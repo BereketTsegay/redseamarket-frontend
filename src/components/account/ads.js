@@ -47,6 +47,7 @@ export default class ads extends Component {
                                 <p className="panel-description">{ads.country_name}, {ads.state_name}, {ads.city_name}</p>
                             </div>
                         </Link>
+                        <Link to={`/update-form/${ads.id}`}>edit</Link>
                         {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> : '' }
                         
                     </div>

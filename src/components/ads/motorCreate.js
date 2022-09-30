@@ -103,6 +103,25 @@ export default class motorCreate extends Component {
         }).catch((error) => {
             
         });
+        axios({
+            url: `${BASE_URL}/customer/get/variant`,
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + this.state.token },
+            data: {
+                model_id: this.props.motorList.model_id,
+            }
+        }).then(response => {
+            if(response.data.status === 'success'){
+
+                this.setState({
+                    variantOption: response.data.variant,
+
+                });
+            }
+
+        }).catch((error) => {
+            
+        });
     }
 
     makeChange = (id) => {
