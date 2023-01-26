@@ -5,6 +5,8 @@ import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Loader from '../Loader';
+let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
+let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
 
 export default class listAdItem extends Component {
 
@@ -140,7 +142,7 @@ export default class listAdItem extends Component {
                 </div>
                 <div class="panel-content">
                     <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }>{ads.title}</Link></h3>
-                    <div class="panel-price text-brand">{ads.currency} <span className="notranslate">{ads.price}</span></div>
+                    <div class="panel-price text-brand">{currency} <span className="notranslate">{(ads.price * currency_value).toFixed(2)}</span></div>
                     <div class="panel-meta d-flex align-items-center">
                         <span class="label">{ads.created_on}</span> 
                         {ads.featured_flag == 1 ? <span class="badge-featured ml-3"><span>Featured</span></span> : ''}

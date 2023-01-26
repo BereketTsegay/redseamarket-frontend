@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import MotorProperty from './motorProperty';
 import PropertyForRendProperty from './propertyForRendProperty';
+import Multiselect from 'multiselect-react-dropdown';
 
 class Updateform extends React.Component{
 
@@ -145,6 +146,9 @@ class Updateform extends React.Component{
          modelText: '',
          variantText: '',
          submitStatus: false,
+         countryOptions: [],
+         multiSelectVal: [],
+
       }
    }
    checkEmpty(input){
@@ -240,7 +244,8 @@ class Updateform extends React.Component{
          
                   if(response.data.status == 'success'){
                      this.setState({
-                        country: response.data.country
+                        country: response.data.country,
+                        countryOptions: response.data.country,
                      });
                   }
          
@@ -452,14 +457,21 @@ class Updateform extends React.Component{
       })
 
 
-  
+      axios({
+         method:'POST',
+         headers: { Authorization: 'Bearer ' + this.state.token },
+         url:`${BASE_URL}/customer/get/ad-selCountry`,
+         data:{ads_id:this.props.match.params.id}
+     }).then(response => {
 
-     
+        if(response.data.status == 'success'){
+       // console.log(response.data.data);
+           this.setState({
+            multiSelectVal: response.data.data,
+           });
+        }
 
-      
-
-
-
+     });
 
 
    }
@@ -796,6 +808,23 @@ class Updateform extends React.Component{
       }
    }
 
+   onSelectItem=(selectedList, selectedItem)=> {
+      // console.log(this.state.multiSelectVal,this.selectedList);
+      this.setState({
+         multiSelectVal: selectedList
+      });
+      // console.log(selectedList);
+
+  }
+
+  onRemove=(selectedList, removedItem) => {
+   this.setState({
+      multiSelectVal: selectedList
+   });
+//   console.log(selectedList);
+
+}
+
    checkboxChange = (name, value) => {
       this.setState({
          [name]: value,
@@ -858,10 +887,10 @@ class Updateform extends React.Component{
 
                if(state.amountType === 'flat'){
                   localStorage.removeItem('newAmount');
-                  localStorage.setItem('newAmount', state.amountPercentage);
+                  localStorage.setItem('newAmount', (state.multiSelectVal.length *state.amountPercentage));
                }
                else{
-                  let amount = state.price * (state.amountPercentage / 100);
+                  let amount = state.multiSelectVal.length * state.price * (state.amountPercentage / 100);
 
                   localStorage.removeItem('newAmount');
                   localStorage.setItem('newAmount', amount);
@@ -1414,6 +1443,7 @@ class Updateform extends React.Component{
                   fieldValue: this.state.fieldValue,
                   paymentMethod: this.state.paymentMethod,
                   paymentId: this.state.paymentId,
+                  adsCountry: this.state.multiSelectVal,
                }
 
             }).then(response => {
@@ -1661,13 +1691,25 @@ class Updateform extends React.Component{
                                  }
                                  </div>
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
-                                 <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
+                                 <TextField handleChange={this.handleChange} name="price" label={`Price (USD)`} value={price} placeholder={`Price (USD)`} readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
                                  <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
                                 
                                  <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
-                                 
+                                
+                                 <label>Add View Coundries</label>
+
+                                 <Multiselect
+                                    options={this.state.countryOptions} // Options to display in the dropdown
+                                    selectedValues={this.state.multiSelectVal} // Preselected value to persist in dropdown
+                                    onSelect={this.onSelectItem} // Function will trigger on select event
+                                    onRemove={this.onRemove } // Function will trigger on remove event
+                                    displayValue="name" // Property name to display in the dropdown options
+                                    placeholder="Select Counries"
+                                    name="show_countries"
+                                    />
+
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
                                  {/* <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" /> */}

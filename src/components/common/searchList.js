@@ -10,6 +10,8 @@ import Header from '../layouts/header';
 import Loader from '../Loader';
 import queryString from 'querystring';
 import Nodata from '../../web-assets/img/5406715.jpg';
+let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
+let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
 
 export default class searchList extends Component {
 

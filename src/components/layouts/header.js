@@ -118,6 +118,7 @@ class Header extends React.Component{
         }).then(response => {
 
             if(response.data.status === 'success'){
+               // console.log(response)
                 this.setState({
                     dataArray: response.data.category,
                 });
@@ -728,9 +729,9 @@ class Header extends React.Component{
             if(response.data.status === 'success'){
                 
                 localStorage.removeItem('currency');
-
+                localStorage.removeItem('currency_value');
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
-
+                localStorage.setItem('currency_value', response.data ? response.data.currency ? response.data.currency.value : '' : ''); 
                 window.location.reload();
             }
             else{

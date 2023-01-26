@@ -37,7 +37,6 @@ class Index extends React.Component{
             axios({
                 url : `${BASE_URL}/customer/dashboard`,
                 method: 'POST',
-                headers: { Authorization: "Bearer " + this.state.token },
                 data:{
                     latitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.latitude,
                     longitude: localStorage.getItem('city_id') || localStorage.getItem('country_id') ?  0 : this.state.longitude,
@@ -46,6 +45,8 @@ class Index extends React.Component{
                 }
 
             }).then(result => {
+                
+                // console.log('mbg');
                 if(result.data.status=="success" && result.status){
                     
                     this.setState({loginStatus:result.data.data.loged_user_status});
@@ -88,6 +89,7 @@ class Index extends React.Component{
                 }
 
             }).then(result => {
+                // console.log('mbg');
                 if(result.data.status=="success" && result.status){
                     
                     this.setState({loginStatus:result.data.data.loged_user_status});

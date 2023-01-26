@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
+let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
+let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+
 class CategoryListingImage extends React.Component{
 
    viewUpdate = (id) => {
@@ -54,7 +57,7 @@ class CategoryListingImage extends React.Component{
                            <div className="panel-content">
 
                            
-                              <h3 className="panel-price">{subcatArray['currency']} {subcatArray && (subcatArray['price'])?subcatArray['price']:''}</h3>
+                              <h3 className="panel-price">{currency} {subcatArray && (((subcatArray['price'])?subcatArray['price']:0)*currency_value).toFixed(2)}</h3>
                               
                               <h4 className="panel-title">
                               {

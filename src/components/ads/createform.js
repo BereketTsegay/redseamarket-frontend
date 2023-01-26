@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import MotorProperty from './motorProperty';
 import PropertyForRendProperty from './propertyForRendProperty';
+import Multiselect from 'multiselect-react-dropdown';
 
 class CreateForm extends React.Component{
 
@@ -143,6 +144,8 @@ class CreateForm extends React.Component{
          modelText: '',
          variantText: '',
          submitStatus: false,
+         countryOptions: [],
+         multiSelectVal: [],
       }
    }
    checkEmpty(input){
@@ -171,7 +174,7 @@ class CreateForm extends React.Component{
          categoryName: this.props.match.params.category,
          subcategoryName: this.props.match.params.subcategory === '&!$*' ? '' : this.props.match.params.subcategory,
          loaderStatus: true,
-
+         multiSelectVal:[]
       }, () => {
          axios({
             method: 'POST',
@@ -211,8 +214,10 @@ class CreateForm extends React.Component{
       }).then(response => {
 
          if(response.data.status == 'success'){
+           // console.log(response.data.country)
             this.setState({
                country: response.data.country,
+               countryOptions: response.data.country,
             });
          }
 
@@ -626,6 +631,23 @@ class CreateForm extends React.Component{
       }
    }
 
+   onSelectItem=(selectedList, selectedItem)=> {
+      // console.log(this.state.multiSelectVal,this.selectedList);
+      this.setState({
+         multiSelectVal: selectedList
+      });
+      // console.log(selectedList);
+
+  }
+
+  onRemove=(selectedList, removedItem) => {
+   this.setState({
+      multiSelectVal: selectedList
+   });
+//   console.log(selectedList);
+
+}
+
    checkboxChange = (name, value) => {
       this.setState({
          [name]: value,
@@ -688,10 +710,10 @@ class CreateForm extends React.Component{
 
                if(state.amountType === 'flat'){
                   localStorage.removeItem('newAmount');
-                  localStorage.setItem('newAmount', state.amountPercentage);
+                  localStorage.setItem('newAmount', (state.multiSelectVal.length *state.amountPercentage));
                }
                else{
-                  let amount = state.price * (state.amountPercentage / 100);
+                  let amount = state.multiSelectVal.length * state.price * (state.amountPercentage / 100);
 
                   localStorage.removeItem('newAmount');
                   localStorage.setItem('newAmount', amount);
@@ -1051,6 +1073,7 @@ class CreateForm extends React.Component{
                            fieldValue: this.state.fieldValue,
                            paymentMethod: this.state.paymentMethod,
                            paymentId: this.state.paymentId,
+                           adsCountry: this.state.multiSelectVal,
                         }
             
                      }).then(response => {
@@ -1147,6 +1170,7 @@ class CreateForm extends React.Component{
                         fieldValue: this.state.fieldValue,
                         paymentMethod: this.state.paymentMethod,
                         paymentId: this.state.paymentId,
+                        adsCountry: this.state.multiSelectVal,
                      }
          
                   }).then(response => {
@@ -1244,6 +1268,8 @@ class CreateForm extends React.Component{
                   fieldValue: this.state.fieldValue,
                   paymentMethod: this.state.paymentMethod,
                   paymentId: this.state.paymentId,
+                  adsCountry: this.state.multiSelectVal,
+
                }
 
             }).then(response => {
@@ -1434,7 +1460,7 @@ class CreateForm extends React.Component{
                                  }) : ''}
                                  </div>
                                  <SelectField placeholder="Country" option={country} selected={this.state.country_id} label="Country" optionChange={this.countryChange} type="common" error={this.state.errors_country_id} />
-                                 <TextField handleChange={this.handleChange} name="price" label={`Price (${this.state.currency})`} value={price} placeholder={`Price (${this.state.currency})`} readonly={false} error={this.state.errors_price} />
+                                 <TextField handleChange={this.handleChange} name="price" label={`Price (USD)`} value={price} placeholder={`Price (USD))`} readonly={false} error={this.state.errors_price} />
                                  <TextArea handleChange={this.handleChange} name="description" label="Description" value={description} placeholder={`Describe your ${subcategoryName}`} error={this.state.errors_description} />
                                  <TextArea handleChange={this.handleChange} name="descriptioninArabic" label="Description Arabic" value={this.state.descriptioninArabic} placeholder={`Describe your ${subcategoryName} in Arabic`} error={this.state.errors_description} />
                                 
@@ -1442,6 +1468,17 @@ class CreateForm extends React.Component{
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
                                  
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
+                                 <label>Add View Coundries</label>
+                                 <Multiselect
+                                    options={this.state.countryOptions} // Options to display in the dropdown
+                                    selectedValues={this.state.multiSelectVal} // Preselected value to persist in dropdown
+                                    onSelect={this.onSelectItem} // Function will trigger on select event
+                                    onRemove={this.onRemove } // Function will trigger on remove event
+                                    displayValue="name" // Property name to display in the dropdown options
+                                    placeholder="Select Counries"
+                                    name="show_countries"
+                                    />
+                                    
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
                                  
@@ -1774,7 +1811,7 @@ class CreateForm extends React.Component{
                                 
                   <Modal.Body>
                       <button  onClick={ this.perviewModal } style={{}} type="button" className="close" data-dismiss="modal" aria-label="Close">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                       </button>
 
                       <div>
@@ -1822,18 +1859,18 @@ class CreateForm extends React.Component{
                                                 <div className="product-btn-group d-flex justify-content-between">
                                                     {this.state.phoneHide == false ? 
                                                     <a href="javascript:void(0);" onClick={this.showPhone} className="btn btn-primary has-icon d-block">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                                         Show Phone Number
                                                     </a>
                                                     :
                                                     <a href="javascript:void(0);" className="btn btn-primary has-icon d-block">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                                         Show Phone Number
                                                     </a>
                                                      }
                                                     
                                                     <a href="javascript:void(0);" className="btn btn-dark has-icon d-block">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                                         Enquire Now
                                                     </a>
                                                 </div>
@@ -2063,7 +2100,7 @@ class CreateForm extends React.Component{
                         <Modal.Body>
                        
                                 <button  onClick={() => this.showPhone('') }  type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                 </button>
                                 <h5 className="modal-title text-center text-brand">Phone Number</h5>
                                 <div className="modal-form text-center">
