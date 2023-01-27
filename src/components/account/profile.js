@@ -10,6 +10,7 @@ import Loader from '../Loader';
 import NavLinks from './NavLinks'
 import SweetAlert from 'sweetalert2-react';
 import Swal from 'sweetalert2'
+// let wallet = localStorage.getItem('wallet') ? localStorage.getItem('wallet') : '0';
 
 export default class profile extends Component {
 
@@ -44,7 +45,7 @@ export default class profile extends Component {
             emailError: '',
             phoneError: '',
             nationalityError: '',
-            
+            wallet:'',
         }
     }
 
@@ -76,6 +77,7 @@ export default class profile extends Component {
                     email: response.data.data.user.email ? response.data.data.user.email : '',
                     phone: response.data.data.user.phone ? response.data.data.user.phone : '',
                     nationality: response.data.data.user.nationality_id ? response.data.data.user.nationality_id : '',
+                    wallet: response.data.data.user.wallet ? response.data.data.user.wallet : 0,
                 });
                 // , () => {
 
@@ -474,6 +476,10 @@ export default class profile extends Component {
                                         <small className="font-weight-bold text-muted d-inline-block w-100">My Favorites</small>
                                         <h4 className="m-0 pt-2 pb-1">{myFavourite}</h4>
                                         <small className="font-weight-bold text-muted d-inline-block w-100">ads saved</small>
+                                    </div>
+                                    <div className="my-profile-count-box w-100 shadow py-3 px-3 rounded-lg text-center">
+                                        <small className="font-weight-bold text-muted d-inline-block w-100">Wallet</small>
+                                        <h4 className="m-0 pt-2 pb-1">{this.state.wallet} USD</h4>
                                     </div>
                                     </div>
                                 </div>

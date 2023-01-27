@@ -33,12 +33,14 @@ export default class login extends Component {
                     password:this.state.password,
                 }
             }).then(response => {
-
+                //  console.log(response.data.wallet);
                 if(response.data.status == 'success'){
 
                     localStorage.removeItem('userToken');
-                    
+                    localStorage.removeItem('wallet');
+
                     localStorage.setItem('userToken', response.data.token);
+                    localStorage.setItem('wallet', response.data.wallet);
 
                     this.props.history.push('/');
                 }

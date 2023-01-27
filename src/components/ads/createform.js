@@ -1269,6 +1269,7 @@ class CreateForm extends React.Component{
                   paymentMethod: this.state.paymentMethod,
                   paymentId: this.state.paymentId,
                   adsCountry: this.state.multiSelectVal,
+                  amount:localStorage.getItem('newAmount'),
 
                }
 

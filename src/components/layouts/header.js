@@ -310,12 +310,13 @@ class Header extends React.Component{
 
                     localStorage.removeItem('userToken');
                     localStorage.removeItem('loginStatus');
-
-                    localStorage.setItem('userToken', response.data.token);
+                    localStorage.removeItem('wallet');
                     // localStorage.setItem('loginStatus', true);
 
                     localStorage.removeItem('user');
                     localStorage.setItem('user', response.data.user);
+                    localStorage.setItem('wallet', response.data.wallet);
+                    localStorage.setItem('userToken', response.data.token);
 
                     this.setState({
                         loginStatus:true,
