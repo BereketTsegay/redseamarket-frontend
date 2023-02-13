@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL, userToken } from '../../projectString';
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 
 export default class propertyAdsItem extends Component {
 

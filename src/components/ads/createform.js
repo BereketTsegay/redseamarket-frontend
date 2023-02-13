@@ -1317,6 +1317,7 @@ class CreateForm extends React.Component{
          }
          if(this.checkEmpty(state.email)){
             let email = 'Email cannot be blank';
+            window.scrollTo(0, 500);
             this.setState({
                errors_email: email,
             });
@@ -1324,6 +1325,7 @@ class CreateForm extends React.Component{
          else{
             if(!state.email.match( /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
                let email = 'Must be an email';
+               window.scrollTo(0, 500);
                this.setState({
                   errors_email: email,
                });
@@ -1337,12 +1339,14 @@ class CreateForm extends React.Component{
          }
          if(this.checkEmpty(state.phone)){
             let phone = 'Phone cannot be blank';
+            window.scrollTo(0, 500);
             this.setState({
                errors_phone: phone,
             });
          }
          if(this.checkEmpty(state.address)){
             let address = 'Address cannot be blank';
+            window.scrollTo(0, 500);
             this.setState({
                errors_address: address,
             });
@@ -1469,14 +1473,14 @@ class CreateForm extends React.Component{
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
                                  
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
-                                 <label>Add View Coundries</label>
+                                 <label>Add View Countries</label>
                                  <Multiselect
                                     options={this.state.countryOptions} // Options to display in the dropdown
                                     selectedValues={this.state.multiSelectVal} // Preselected value to persist in dropdown
                                     onSelect={this.onSelectItem} // Function will trigger on select event
                                     onRemove={this.onRemove } // Function will trigger on remove event
                                     displayValue="name" // Property name to display in the dropdown options
-                                    placeholder="Select Counries"
+                                    placeholder="Select Countries"
                                     name="show_countries"
                                     />
                                     

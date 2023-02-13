@@ -11,7 +11,8 @@ import Loader from '../Loader';
 import NavLinks from './NavLinks'
 import PaginationLink from './paginationLink';
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 export default class myAds extends Component {
 
     constructor(){

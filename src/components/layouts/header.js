@@ -882,7 +882,7 @@ class Header extends React.Component{
                             
                                     <Link to="/" className="d-block"><img src={Logo} className="d-block" alt="brand"/></Link>
                                 </div>
-                                <div className="country-select-panel d-block d-md-inline-block" onClick={() => this.setState({countryListModal: !this.countryListModal})} style={{cursor: 'pointer'}}>
+                                <div title='Select Country' className="country-select-panel d-block d-md-inline-block" onClick={() => this.setState({countryListModal: !this.countryListModal})} style={{cursor: 'pointer'}}>
                                     {this.state.countryName ? this.state.countryName : countryName}
                                 </div>
                                     

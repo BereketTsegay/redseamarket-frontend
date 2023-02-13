@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 
 class CategoryListingImage extends React.Component{
 
@@ -23,7 +24,10 @@ class CategoryListingImage extends React.Component{
       });
    }
 
+  
     render() {
+     
+  
       let dataArray = (this.props.dataArray != undefined)?this.props.dataArray:[];
       let subcategoryArray = (this.props.dataArray.ads != undefined)?this.props.dataArray.ads:[];
       // console.log(subcategoryArray,"Don bosco peter");

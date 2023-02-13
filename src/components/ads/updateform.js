@@ -1698,7 +1698,7 @@ class Updateform extends React.Component{
                                  <SelectField placeholder="State" option={state} selected={this.state.state_id} label="State" optionChange={this.statesChange} type="common" error={this.state.errors_state_id} />
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
                                 
-                                 <label>Add View Coundries</label>
+                                 <label>Add View Countries</label>
 
                                  <Multiselect
                                     options={this.state.countryOptions} // Options to display in the dropdown
@@ -1706,7 +1706,7 @@ class Updateform extends React.Component{
                                     onSelect={this.onSelectItem} // Function will trigger on select event
                                     onRemove={this.onRemove } // Function will trigger on remove event
                                     displayValue="name" // Property name to display in the dropdown options
-                                    placeholder="Select Counries"
+                                    placeholder="Select Countries"
                                     name="show_countries"
                                     />
 

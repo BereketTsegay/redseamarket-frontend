@@ -5,6 +5,9 @@ import House from '../../../src/web-assets/img/icon-house.svg'
 import Machine from '../../../src/web-assets/img/icon-washing-machine.svg';
 import Mobile from '../../../src/web-assets/img/icon-tab-mobile.svg';
 import SubcategoryListing from './subcategoryListing';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+
 
 class PopularCategoryListing extends React.Component{
 
@@ -34,6 +37,11 @@ class PopularCategoryListing extends React.Component{
                                 return '';
                             }
                         })}
+
+
+                        <div className="col-md-12 text-center">
+                        <Link to="/allCategory" className="d-block">  <Button>View All Category</Button> </Link>
+                            </div>
                         
                     </div>
                 </div>

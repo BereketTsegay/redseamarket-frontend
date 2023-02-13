@@ -40,6 +40,8 @@ export default class categoryMotors extends Component {
       this.setState({
          loaderStatus: true,
       });
+       // alert('hai');
+      //  console.log("hi1");
 
       axios({
          url: `${BASE_URL}/customer/get/motors`,
@@ -52,9 +54,9 @@ export default class categoryMotors extends Component {
          },
 
       }).then(response => {
-
+              // console.log("hi2");
          if(response.data.status === 'success'){
-            
+            // console.log(response.data.data.ads.data);
             this.setState({
                subcategory: response.data.data.motors.subcategory,
                ads: response.data.data.ads.data,

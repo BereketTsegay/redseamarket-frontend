@@ -1,10 +1,15 @@
  
-
+   ///live
 // export const BASE_URL = "http://admin.redsea-market.com/api";
 // export const IMAGE_URL = "http://admin.redsea-market.com";
 
-export const BASE_URL = "http://127.0.0.1:8000/api";
-export const IMAGE_URL = "http://127.0.0.1:8000";
+///demo
+export const BASE_URL = "https://admin-jamal.prompttechdemohosting.com/api";
+export const IMAGE_URL = "https://admin-jamal.prompttechdemohosting.com/";
+
+///local
+// export const BASE_URL = "http://127.0.0.1:8000/api";
+// export const IMAGE_URL = "http://127.0.0.1:8000";
 
 export const GOOGLEMAPS_API = 'AIzaSyAEysollDCaGfbiPxh-VBvv31u2msCwa1c';
 

@@ -12,7 +12,8 @@ import PropertyForRendProperty from './propertyForRendProperty';
 import Loader from '../Loader';
 import Swal from 'sweetalert2';
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 export default class adsDetails extends Component {
 
     constructor(props){
@@ -53,6 +54,7 @@ export default class adsDetails extends Component {
             method: 'POST',
             data:{
                 ads_id: this.state.id,
+                country_id: localStorage.getItem('country_id'),
             }
         }).then(response => {
 
@@ -61,6 +63,15 @@ export default class adsDetails extends Component {
                     ads: response.data.ads,
                     phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
                 })
+            }
+            else{
+
+                Swal.fire({
+                    title: 'Error!',
+                    icon: 'danger',
+                    text: response.data.message,
+                    confirmButtonText: 'OK',
+                });
             }
 
             this.setState({

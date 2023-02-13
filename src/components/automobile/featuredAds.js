@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 
 export default class featuredAds extends Component {
 
@@ -41,8 +42,9 @@ export default class featuredAds extends Component {
                         </div>
                         <div className="panel-content">
                             <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(2)}</h3>
-                            <h4 className="panel-title">{ads.make} • {ads.model}</h4>
-                            <p className="panel-description">{ads.year} Year • {ads.milage} km</p>
+                            <h4 className="panel-title">{ads.title}</h4>
+                            <p className="panel-description">{ads.make} • {ads.model}</p>
+                            <p className="panel-description">{ads.year} Year</p>
                             <p className="panel-description mt-1">{ads.state_name}, {ads.city_name}</p>
                         </div>
                     </Link>

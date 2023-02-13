@@ -2,13 +2,19 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
-import { BASE_URL, IMAGE_URL } from '../../projectString';
+import { BASE_URL, IMAGE_URL,userToken } from '../../projectString';
+import Swal from 'sweetalert2';
+
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
-let currency_value = localStorage.getItem('currency_value') ? localStorage.getItem('currency_value') : '1';
-export default class ads extends Component {
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
+ export default class ads extends Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            token: userToken,
+        }
     }
 
     viewUpdate = (id) => {
@@ -20,6 +26,37 @@ export default class ads extends Component {
                 ads_id: id,
             },
         }).then(response => {
+
+        }).catch((error) => {
+
+        });
+    }
+
+    adDelete = (id) => {
+
+        axios({
+            url: `${BASE_URL}/customer/ad/delete`,
+            method: 'POST',
+            headers: { Authorization: "Bearer " + this.state.token },
+
+            data: {
+                ads_id: id,
+            },
+        }).then(response => {
+
+            if(response.data.status === 'success'){
+                Swal.fire({
+                    'icon': 'success',
+                    'title': 'Success!',
+                    'text': response.data.message,
+                    timer: 1000
+                }).then(() => {
+                    window.location.reload();
+                });
+            }
+
+           // window.location.reload();
+
 
         }).catch((error) => {
 
@@ -49,6 +86,8 @@ export default class ads extends Component {
                             </div>
                         </Link>
                         <Link to={`/update-form/${ads.id}`}>edit</Link>
+                        <Link onClick={ () => this.adDelete(ads.id) }>delete</Link>
+
                         {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> : '' }
                         
                     </div>

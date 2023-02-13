@@ -21,6 +21,7 @@ import CategoryProperty from "./components/property/categoryProperty";
 import MotorListing from "./components/automobile/motorListing";
 import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
+import AllCategory from "./components/common/all-category-list";
 import PropertyList from "./components/property/propertyList";
 import SearchResult from "./components/automobile/searchResult";
 import { public_key } from './projectString';
@@ -52,6 +53,7 @@ function App() {
               <Route path="/myfavourite" component={Favourite} />
               <Route path="/myads" component={MyAds} />
               <Route path="/myprofile" component={Profile} />
+              <Route path="/allCategory" component={AllCategory} />
               <Route path="/adsdetails/:id" component={AdsDetails} />
               <Route path="/categoryMotors" component={CategoryMotors} />
               <Route path="/categoryProperty/:id" component={CategoryProperty} />
