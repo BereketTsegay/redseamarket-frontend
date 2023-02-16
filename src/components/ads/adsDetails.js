@@ -32,13 +32,16 @@ export default class adsDetails extends Component {
             loaderStatus: false,
             paymentId: '',
             documentModal: false,
+            uploadModal:false,
             transactionId: '',
             paymentSlip: '',
             fileName: '',
+            cvDocument: '',
+         
 
             errors_transaction_id: '',
             errors_payment_slip: '',
-
+            errors_cv_doc: '',
             token: userToken,
         }
     }
@@ -59,6 +62,7 @@ export default class adsDetails extends Component {
         }).then(response => {
 
             if(response.data.status == 'success'){
+              //  console.log(response.data.ads);
                 this.setState({
                     ads: response.data.ads,
                     phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
@@ -127,6 +131,41 @@ export default class adsDetails extends Component {
         reader.readAsDataURL(file);
     }
 
+    cvChange = (e) => {
+
+        e.preventDefault();
+
+        let doc = e.target.files || e.dataTransfer.files;
+
+        if (!doc.length)
+                return;
+
+        
+        for(let i = 0; i < doc.length; i++){
+            
+            this.createDoc(doc[i]);
+        }
+
+    }
+
+    createDoc = (file) => {
+
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+            this.setState({
+                cvDocument: e.target.result,
+                fileName: file.name,
+            });
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+
+
+
+
     mainImageChange = (image) => {
         this.setState({
             mainImage:image,
@@ -144,6 +183,12 @@ export default class adsDetails extends Component {
     uploadDocument = () => {
         this.setState({
             documentModal: !this.state.documentModal,
+        });
+    }
+
+    uploadCvDocument = () => {
+        this.setState({
+            uploadModal: !this.state.uploadModal,
         });
     }
 
@@ -203,6 +248,57 @@ export default class adsDetails extends Component {
             if(this.state.paymentSlip === ''){
                 this.setState({
                     errors_payment_slip: 'Payment Slip cannot be blank',
+                });
+            }
+        }
+    }
+    cvSubmit = () => {
+
+        if(this.state.cvDocument !== ''){
+
+            axios({
+                url: `${BASE_URL}/uploade/cv_document`,
+                method: 'POST',
+                data: {
+                    id: this.state.id,
+                    cv_doc: this.state.cvDocument,
+                }
+            }).then(response => {
+                if( response.data.status === 'success'){
+                    Swal.fire({
+                        title: 'Success!',
+                        icon: 'success',
+                        text: response.data.message,
+                        confirmButtonText: 'OK',
+                    });
+
+                    this.setState({
+                        uploadModal: !this.state.uploadModal,
+                    });
+                }else{
+                    //console.log(response);
+                    Swal.fire({
+                        title: 'Error!',
+                        icon: 'danger',
+                        text: 'error',
+                        confirmButtonText: 'OK',
+                    });
+
+                    this.setState({
+                        uploadModal: !this.state.uploadModal,
+                    });
+                }
+                
+
+            }).catch((error) => {
+
+            });
+        }
+        else{
+           
+            if(this.state.cvDocument === ''){
+                this.setState({
+                    errors_cv_doc: 'Document cannot be blank',
                 });
             }
         }
@@ -291,7 +387,7 @@ export default class adsDetails extends Component {
                                                     : ads.category_id == 3 ? ads.property_sale ? <PropertyForRendProperty room={ads.property_sale.room} property_type={ads.property_sale.building_type} size={ads.property_sale.size} furnished={ads.property_sale.furnished} /> : <PropertyForRendProperty room="" property_type="" size="" furnished="" />
                                                     : ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position === 'top'){
-                                                            return <li key={index}>{customValue.value} : {customValue.name} </li>
+                                                            return <li key={index}>{customValue.name} : {customValue.value} </li>
                                                         }
                                                     })}
                                                     
@@ -318,19 +414,30 @@ export default class adsDetails extends Component {
                                                         Show Phone Number
                                                     </a>
                                                     }
+
+                                                    
                                                     
                                                     <a href="javascript:void(0);" onClick={this.scrollToRef} className="btn btn-dark has-icon d-block">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                                        Enquire Now
+                                                        {ads.category.name != 'Jobs' ? "Enquire Now" : "Candidate Detail and CV"} 
                                                     </a>
                                                 </div>
+
                                                 : ads.featured_flag == 1 && ads.payment && ads.payment.payment_type == 1 ? 
                                                 <a href="javascript:void(0);" onClick={() => this.uploadDocument()} className="btn btn-primary has-icon d-block">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                                     Upload Payment Document
                                                 </a>
                                                 : ''
-                                                }
+
+                                                 }
+                                                { ads.status == 1 ?(<>{
+                                                 ads.category.name == "Jobs" ?   <a style={{backgroundColor: "red",marginTop:"10px"}} href="javascript:void(0);" onClick={() => this.uploadCvDocument()} className="btn btn-primary has-icon d-block">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                 If You Are Interested Upload CV
+                                             </a> :''}</>):''
+                                                   }
+                                                   
                                             </div>
                                             </div>
                                         </div>
@@ -369,7 +476,7 @@ export default class adsDetails extends Component {
                                                     <ul>
                                                     {ads.custom_value.length > 0 ? ads.custom_value && ads.custom_value.map((customValue, index) => {
                                                         if(customValue.position != 'top'){
-                                                            return <li key={index}>{customValue.value}</li>
+                                                            return <li key={index}><b>{customValue.name}</b> : {customValue.value}</li>
                                                         }
                                                     }) : ads.category_id == 1 ? '' : 'No data found!'}
                                                         
@@ -600,6 +707,30 @@ export default class adsDetails extends Component {
                                     </div>
                                     <div className="form-group">
                                         <button class="btn btn-primary" onClick={this.paymentSubmit} type="button">Upload</button>
+                                    </div>
+                                </div>
+                        </Modal.Body>
+                        
+                    </Modal>
+
+                    
+                    <Modal className="modal fade log-sign-modal" show={this.state.uploadModal}  style={modalLogin} id="mobileModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        
+                        <Modal.Body>
+                       
+                                <button  onClick={() => this.uploadCvDocument() }  type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <h5 className="modal-title text-center text-brand">Upload CV</h5>
+                                <div className="modal-form">
+                                   
+                                    <div className="form-group">
+                                        <label>Document</label>
+                                        <input type="file" className="form-control" onChange={this.cvChange} name="cv_file" accept=".pdf, .doc, .webp" />
+                                        {this.state.errors_cv_doc ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_cv_doc}</p> : '' }
+                                    </div>
+                                    <div className="form-group">
+                                        <button class="btn btn-primary" onClick={this.cvSubmit} type="button">Upload</button>
                                     </div>
                                 </div>
                         </Modal.Body>

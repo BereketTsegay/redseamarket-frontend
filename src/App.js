@@ -19,6 +19,7 @@ import Profile from "./components/account/profile";
 import CategoryMotors from "./components/automobile/categoryMotors";
 import CategoryProperty from "./components/property/categoryProperty";
 import MotorListing from "./components/automobile/motorListing";
+import JobListing from "./components/jobs/jobList";
 import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
 import AllCategory from "./components/common/all-category-list";
@@ -58,6 +59,7 @@ function App() {
               <Route path="/categoryMotors" component={CategoryMotors} />
               <Route path="/categoryProperty/:id" component={CategoryProperty} />
               <Route path="/motor/list" component={MotorListing} />
+              <Route path="/job/list" component={JobListing} />
               <Route path="/search" component={SearchList} />
               <Route path="/property/list" component={PropertyList} />
               <Route path="/motor/result" component={SearchResult} />

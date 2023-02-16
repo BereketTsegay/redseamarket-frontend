@@ -54,7 +54,7 @@ class Menu extends React.Component{
                               else if(category.id === 2 || category.id === 3){
                                  return (
                                     <li key={index} className="menu-item menu-item-has-children">
-                                       <Link to={`/categoryProperty/${category.id}`}>{category.name}</Link>
+                                       <Link to={`/motor/result?key=&city=`}>{category.name}</Link>
                                        <ul className="sub-menu">
                                           {category.subcategory && category.subcategory.map((subcategory, index) => {
                                              return (
@@ -68,6 +68,35 @@ class Menu extends React.Component{
                                                             
                                                             return (
                                                                <li key={index}><Link to={`/property/list?category_id=${category.id}&subcategory_id=${child.id}&city=&property_type=&price=&room=`}>{child.name}</Link></li>
+                                                            )
+                                                         }) : '' }
+                                                         
+                                                      </ul>
+                                                   </div>
+                                                </li>
+                                             );
+                                          })}
+                                       </ul>
+                                    </li>
+                                 );
+                              }
+                              else if(category.name === 'Jobs'){
+                                 return (
+                                    <li key={index} className="menu-item menu-item-has-children">
+                                       <Link to={`/job/list?key=&city=&category_id=${category.id}`}>{category.name}</Link>
+                                       <ul className="sub-menu">
+                                          {category.subcategory && category.subcategory.map((subcategory, index) => {
+                                             return (
+                                                <li key={index} className="menu-item">
+                                                   <Link to={`/job/list?category_id=${category.id}&subcategory_id=${subcategory.id}`}>{subcategory.name}</Link>
+                                                   <div className="sub-menu-child">
+                                                      <h6>{subcategory.name}</h6>
+                                                      <ul>
+                                                   
+                                                         {subcategory.subcategory_child ?  subcategory.subcategory_child.map((child, index) => {
+                                                            
+                                                            return (
+                                                               <li key={index}><Link to={`/job/list?category_id=${category.id}&subcategory_id=${child.id}`}>{child.name}</Link></li>
                                                             )
                                                          }) : '' }
                                                          
