@@ -77,9 +77,9 @@ let currency_value=localStorage.getItem('currency_value') ;
                             </div>
                             <div className="panel-content">
                                 <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(2)}</h3>
-                                <h4 className="panel-title">{ads.custom_value ? ads.custom_value.map((customValue, index) => {
+                                <h4 className="panel-title">{ads.title} {ads.custom_value ? ads.custom_value.map((customValue, index) => {
                                     if(index < 2){
-                                        return customValue.value+' '+ customValue.name+' • '
+                                        return ' • '+customValue.name+':'+ customValue.value
                                     }
                                 }) : ''}</h4>
                                 <p className="panel-description">{ads.country_name}, {ads.state_name}, {ads.city_name}</p>
@@ -88,7 +88,8 @@ let currency_value=localStorage.getItem('currency_value') ;
                         <Link to={`/update-form/${ads.id}`}>edit</Link>
                         <Link onClick={ () => this.adDelete(ads.id) }>delete</Link>
 
-                        {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> : '' }
+                        {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> :
+                        ads.category.name=="Jobs" ?  <Link to={`/job/document/list/${ads.id}`}>View Request Documets</Link> : '' }
                         
                     </div>
                 </div>

@@ -35,7 +35,7 @@ class headFilter extends Component {
     componentWillMount = () => {
 
         axios({
-            url: `${BASE_URL}/customer/get/subsubcategory`,
+            url: `${BASE_URL}/customer/get/job/subsubcategory`,
             method: 'POST',
             data: {
                 category: this.state.category_id,

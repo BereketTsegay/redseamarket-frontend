@@ -14,6 +14,7 @@ import Register from './components/login/signup';
 import Login from "./components/login/login";
 import Favourite from "./components/account/favourite";
 import MyAds from "./components/account/myAds";
+import DocumentList from "./components/account/documentList";
 import AdsDetails from "./components/ads/adsDetails";
 import Profile from "./components/account/profile";
 import CategoryMotors from "./components/automobile/categoryMotors";
@@ -52,7 +53,8 @@ function App() {
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
               <Route path="/myfavourite" component={Favourite} />
-              <Route path="/myads" component={MyAds} />
+              <Route path="/myads" component={ MyAds } />
+              <Route path="/job/document/list/:id" component={ DocumentList } />
               <Route path="/myprofile" component={Profile} />
               <Route path="/allCategory" component={AllCategory} />
               <Route path="/adsdetails/:id" component={AdsDetails} />

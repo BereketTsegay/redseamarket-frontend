@@ -48,7 +48,7 @@ export default class myAds extends Component {
         }).then(response => {
             
             if(response.data.status === 'success'  && response.data.ads){
-
+                //  console.log(response.data.ads.data);
                 this.setState({
                     myAds: response.data.ads.data,
                     paginataionArray: response.data.ads.links,
