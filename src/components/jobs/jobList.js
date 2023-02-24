@@ -39,7 +39,9 @@ export default class jobListing extends Component {
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory_id')) : '';
         let category = ((new URLSearchParams(this.props.location.search).get('category_id'))!='')?(new URLSearchParams(this.props.location.search).get('category_id')):'';
-       
+        let salaryFrom = ((new URLSearchParams(this.props.location.search).get('salaryFrom'))!='')?(new URLSearchParams(this.props.location.search).get('salaryFrom')):'';
+        let salaryTo = ((new URLSearchParams(this.props.location.search).get('salaryTo'))!='')?(new URLSearchParams(this.props.location.search).get('salaryTo')):'';
+
          //  console.log(key);
 
             axios({
@@ -91,7 +93,9 @@ export default class jobListing extends Component {
         let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory_id')) : '';
         let category = ((new URLSearchParams(this.props.location.search).get('category_id'))!='')?(new URLSearchParams(this.props.location.search).get('category_id')):'';
-       
+        let salaryFrom = ((new URLSearchParams(this.props.location.search).get('salaryFrom'))!='')?(new URLSearchParams(this.props.location.search).get('salaryFrom')):'';
+        let salaryTo = ((new URLSearchParams(this.props.location.search).get('salaryTo'))!='')?(new URLSearchParams(this.props.location.search).get('salaryTo')):'';
+
        
 
             axios({
@@ -105,6 +109,9 @@ export default class jobListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    priceFrom:salaryFrom,
+                    priceTo:salaryTo,
+
                 },
             }).then(response => {
 
@@ -139,7 +146,9 @@ export default class jobListing extends Component {
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory_id')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory_id')) : '';
         let category = ((new URLSearchParams(this.props.location.search).get('category_id'))!='')?(new URLSearchParams(this.props.location.search).get('category_id')):'';
-       
+        let salaryFrom = ((new URLSearchParams(this.props.location.search).get('salaryFrom'))!='')?(new URLSearchParams(this.props.location.search).get('salaryFrom')):'';
+        let salaryTo = ((new URLSearchParams(this.props.location.search).get('salaryTo'))!='')?(new URLSearchParams(this.props.location.search).get('salaryTo')):'';
+
         this.setState({
             loaderStatus: true,
         });
@@ -155,6 +164,8 @@ export default class jobListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    priceFrom:salaryFrom,
+                    priceTo:salaryTo,
                 },
             }).then(response => {
 

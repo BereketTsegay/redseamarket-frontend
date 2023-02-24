@@ -29,6 +29,7 @@ class SubCategorySelect extends React.Component{
          //   longitude:0,
          category: this.props.categoryId,
         }).then(result => {
+        // console.log(result);
           if(result.data.status=="success" && result.status){
             //    this.setState({loginStatus:result.data.data.loged_user_status}); 
             // console.log(result.data.categories,"list of all categories");
@@ -67,7 +68,7 @@ class SubCategorySelect extends React.Component{
          let categoryId = this.props.categoryId;
          let categoryName = this.props.categoryName;
          let loaderStatus = this.state.loaderStatus;
-
+         let catcount = categoryArray.length;
          return (
             <>
             {loaderStatus == true ? <Loader /> : ''}
@@ -77,13 +78,23 @@ class SubCategorySelect extends React.Component{
                      <div className="row">
                         <div className="col-12">
                            <div className="section-title-panel text-center">
-                              <h2 className="section-title">Now choose the right category for your ad:</h2>
+                              <h2 className="section-title">Now choose the right category for your ad: </h2>
                            </div>
                         </div>
                      </div>
                      <div className="row">
                         <div className="col-xl-5 col-lg-7 col-md-9 mx-auto">
+                        {catcount==0?
+                        
+                        <div className="category-ad-links">
+                           <Link  to={`/create-form/${categoryId}/0/${categoryName}/${categoryName}`} className="d-block mb-3 position-relative rounded-lg">
+                                      Post Ad    <i className="fa fa-angle-right" aria-hidden="true"></i>
+                            </Link> 
+                        </div>
+                        
+                        :
                            <div className="category-ad-links">
+                            
                            {(categoryArray && categoryArray.map((categoryArr,indexi) => {
 
                                  if(categoryArr.name != ''){
@@ -113,6 +124,10 @@ class SubCategorySelect extends React.Component{
                                              <Link to={`/subcategory/${categoryArr.id}/${categoryId}/${categoryName}`} key={indexi} className="d-block mb-3 position-relative rounded-lg">
                                                 {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
                                              </Link>
+
+                                             {/* <Link  to={`/create-form/${categoryId}/0/${categoryName}/${categoryName}`} className="d-block mb-3 position-relative rounded-lg">
+                                          <i className="fa fa-angle-right" aria-hidden="true"></i>
+                                          </Link> */}
                                              
                                           </>
                                        )
@@ -122,6 +137,7 @@ class SubCategorySelect extends React.Component{
                                           <Link key={indexi} to={`/create-form/${categoryId}/${categoryArr.id}/${categoryName}/${categoryArr.name}`} className="d-block mb-3 position-relative rounded-lg">
                                              {categoryArr.name}<i className="fa fa-angle-right" aria-hidden="true"></i>
                                           </Link>
+                                         
                                        );
                                     }
                                  }
@@ -130,7 +146,9 @@ class SubCategorySelect extends React.Component{
                                  }
                               }
                            ))}
+                       
                            </div>
+                            }
                            {/* <Link to={`/create-form/${categoryId}/&nvlp/${categoryName}/&!$*`} className="float-right">Skip this<i className="fa fa-angle-right ml-1" aria-hidden="true"></i></Link> */}
                         </div>
                      </div>

@@ -733,6 +733,8 @@ class Header extends React.Component{
                 localStorage.removeItem('currency_value');
                 localStorage.setItem('currency', response.data ? response.data.currency ? response.data.currency.currency_code : '' : '');
                 localStorage.setItem('currency_value', response.data ? response.data.currency ? response.data.currency.value : '' : ''); 
+                localStorage.setItem('usd_value', response.data ? response.data.usdval ? response.data.usdval : 0 : ''); 
+
                 window.location.reload();
             }
             else{

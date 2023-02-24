@@ -29,7 +29,7 @@ export default class SubSubCategorySelect extends Component {
         }).then(response => {
 
             if(response.data.status === 'success'){
-                console.log(response.data)
+              //  console.log(response.data)
                 this.setState({
                     subcategory: response.data.subcategory,
                 });

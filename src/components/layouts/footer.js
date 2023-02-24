@@ -74,7 +74,7 @@ class Footer extends React.Component{
                            <div className="footer-panel">
                               <h4 className="footer-title" style={{color:'transparent'}}>Other Countries</h4>
                               <ul className="footer-menu">
-                                 <li><Link to="/terms/conditions">Terms of Use</Link></li>
+                                 <li><Link to="/terms/conditions">Terms & Conditions</Link></li>
                                  {/* <li>
                                     {this.state.loginStatus === true || this.state.loginStatus === 'true' ? <Link to='/create-ads'>Advertising</Link> : <a href='#'>Advertising</a>}
                                  </li>
