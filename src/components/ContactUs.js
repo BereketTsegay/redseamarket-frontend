@@ -205,22 +205,22 @@ export default class ContactUs extends Component {
                                     <div className="create-ad-form">
                                         <div className="form-group">
                                             <label>Name</label>
-                                            <input type="text" name='name' value={this.state.name} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Enter Name" />
+                                            <input type="text" name='name' value={this.state.name} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="" />
                                             {this.state.errorName ? <p className="help-block help-block-error"  style={{color:'red'}}>{this.state.errorName}</p>: ''}
                                         </div>
                                         <div className="form-group">
                                             <label>Email</label>
-                                            <input type="text" name='email' value={this.state.email} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Enter Name" />
+                                            <input type="text" name='email' value={this.state.email} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="" />
                                             {this.state.errorEmail ? <p className="help-block help-block-error"  style={{color:'red'}}>{this.state.errorEmail}</p>: ''}
                                         </div>
                                         <div className="form-group">
                                             <label>Phone</label>
-                                            <input type="text" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Enter Name" />
+                                            <input type="text" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} className="form-control" placeholder="" />
                                             {this.state.errorPhone ? <p className="help-block help-block-error"  style={{color:'red'}}>{this.state.errorPhone}</p>: ''}
                                         </div>
                                         <div className="form-group">
                                             <label>Message</label>
-                                            <textarea name='message' onChange={(e) => this.handleChange(e)} className="form-control" placeholder="Enter Name">{this.state.message}</textarea>
+                                            <textarea name='message' onChange={(e) => this.handleChange(e)} className="form-control" placeholder="">{this.state.message}</textarea>
                                             {this.state.errorMessage ? <p className="help-block help-block-error"  style={{color:'red'}}>{this.state.errorMessage}</p>: ''}
                                         </div>
                                         <button onClick={this.handleSubmit} className="btn btn-primary btn-block">Send</button>

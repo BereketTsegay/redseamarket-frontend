@@ -232,11 +232,14 @@ class CreateForm extends React.Component{
          url: `${BASE_URL}/subcategory/featured/amount`,
          method: 'POST',
          data: {
+            category: this.props.match.params.category,
             subcategory: this.props.match.params.subcategory_id,
          }
       }).then(response => {
 
          if(response.data.status === 'success'){
+
+          // console.log(response);
 
             if(response.data.subcategory.type == 0){
 
@@ -458,7 +461,7 @@ class CreateForm extends React.Component{
       }).then(response => {
 
          if(response.data.status == 'success'){
-           // console.log(response.data);
+          //  console.log(response.data);
             this.setState({
                currency: response.data.currency.currency_code,
                usdVal:  response.data.usdval,
@@ -1610,8 +1613,9 @@ class CreateForm extends React.Component{
                                        :
                                           <div className="form-group col-md-6">
                                              <button className="btn btn-primary btn-block" disabled>
-                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                Loading...
+                                                {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Loading... */}
+                                                Create
                                              </button>
                                           </div>
                                        :
@@ -1672,8 +1676,9 @@ class CreateForm extends React.Component{
                                     {this.state.submitStatus == true ? 
                                     <div className="form-group col-md-6">
                                     <button className="btn btn-primary btn-block" disabled>
-                                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                       Loading...
+                                       {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                       Loading... */}
+                                       Create
                                     </button>
                                  </div>:
                                     this.state.featured ? this.state.paymentMethod === 'stripe' ?
@@ -1687,8 +1692,9 @@ class CreateForm extends React.Component{
                                     :
                                     <div className="form-group col-md-6">
                                        <button className="btn btn-primary btn-block" disabled>
-                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                          Loading...
+                                          {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading... */}
+                                          Create
                                        </button>
                                     </div>
                                     :
@@ -1748,8 +1754,9 @@ class CreateForm extends React.Component{
                                     {this.state.submitStatus == true ?
                                     <div className="form-group col-md-6">
                                        <button className="btn btn-primary btn-block" disabled>
-                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                          Loading...
+                                          {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading... */}
+                                          Create
                                        </button>
                                     </div>
                                     :
@@ -1764,8 +1771,9 @@ class CreateForm extends React.Component{
                                     :
                                     <div className="form-group col-md-6">
                                        <button className="btn btn-primary btn-block" disabled>
-                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                          Loading...
+                                          {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                          Loading... */}
+                                          Create
                                        </button>
                                     </div>
                                     :

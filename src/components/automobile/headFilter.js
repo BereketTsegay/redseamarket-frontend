@@ -164,7 +164,7 @@ class headFilter extends Component {
                                         </div>
                                     </div>
                                     <div className="col-xl-3 col-lg-4 col-md-6 col-min-inputs">
-                                        <label for="">Price ( AED )</label>
+                                        <label for="">Price</label>
                                         <div className="form-group">
                                             <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="priceFrom" placeholder="From" />
                                         </div>
