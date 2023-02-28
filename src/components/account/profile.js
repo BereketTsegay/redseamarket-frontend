@@ -504,7 +504,7 @@ export default class profile extends Component {
                                     <div className="row form-group align-items-center">
                                         <label className="col-lg-4 col-form-label">Phone :</label>
                                         <div className="col-lg-8">
-                                            <input type="number" name="phone" onChange={(e) => this.valueChange(e)} className="form-control" value={phone} placeholder="phone" />
+                                            <input type="number" name="phone" onChange={(e) => this.valueChange(e)} className="form-control" value={phone} placeholder="phone" min="0" />
                                             {this.state.phoneError ? <span style={{color:'red'}}>{this.state.phoneError}</span>: ''}
                                         </div>
                                     </div>

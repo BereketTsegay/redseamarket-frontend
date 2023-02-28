@@ -5,7 +5,9 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
+let currency_value=localStorage.getItem('currency_value') ;
+ currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
 class searchAutoComplete extends Component {
 
     constructor(props){
@@ -203,7 +205,7 @@ class searchAutoComplete extends Component {
                                                 <div className="media"><img style={{maxWidth:'100px', maxHeight:'100px', minWidth:'100px', minHeight:'100px'}} src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
                                                 <div className="content">
                                                 <h6 className="title">{searchResult.title}</h6>
-                                                <div className="price">{searchResult.currency} {searchResult.price}</div>
+                                                <div className="price">{currency} {searchResult.price * currency_value}</div>
                                                 </div>
                                             </Link>
                                         </li>

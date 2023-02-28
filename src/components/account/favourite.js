@@ -6,6 +6,7 @@ import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
 import Ads from './ads'
+import FavoritesList from './favouritesList'
 import Breadcrumb from './breadcrumb'
 import NavLinks from './NavLinks'
 import PaginationLink from './paginationLink';
@@ -112,7 +113,7 @@ export default class favourite extends Component {
                 {loaderState === true ? <Loader /> : ''}
                 <>
                     <Header />
-                    <Breadcrumb section="My Favorites" />
+                    <Breadcrumb section="My Favourites" />
                     
                     <section className="section-my-favorite pt-4 pb-5">
                         <div className="container">
@@ -123,7 +124,7 @@ export default class favourite extends Component {
                                 <div className="row">
                                     <div className="col-xl-11 mx-auto">
                                     <div className="row align-items-center">
-                                        <div className="col-12"><h2 className="title mb-0">My Favorites</h2></div>
+                                        <div className="col-12"><h2 className="title mb-0">My Favourites</h2></div>
                                     </div>
                                     </div>
                                 </div>
@@ -135,7 +136,7 @@ export default class favourite extends Component {
                                             
                                             {favourite.map((favourite, index) => {
                                                 return(
-                                                    <Ads key={index} ads={favourite.ads} />
+                                                    <FavoritesList key={index} ads={favourite.ads} />
                                                 );
                                             })}
                                             

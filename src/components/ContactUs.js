@@ -133,6 +133,13 @@ export default class ContactUs extends Component {
                         'text': response.data.message,
                     });
                 }
+                else{
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Error!',
+                        'text': response.data.message,
+                    });
+                }
 
                 this.setState({
                     loaderStatus: false,

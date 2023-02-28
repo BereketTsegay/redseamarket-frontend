@@ -39,7 +39,7 @@ export default class featuredPayment extends Component {
                     </div>
                     <div class="custom-control custom-radio mb-3">
                         <input type="radio" onChange={(e) => this.eventChange(e)} name="payment" value="stripe" class="custom-control-input" id="Stripe"/>
-                        <label class="custom-control-label font-weight-normal" for="Stripe">Payment To Account <sapn style={{color:'#5c5e5f'}}>(Payment using Payment gatway)</sapn></label>
+                        <label class="custom-control-label font-weight-normal" for="Stripe">Payment To Account <sapn style={{color:'#5c5e5f'}}>(Payment using Payment Gateway)</sapn></label>
                     </div>
                 </div>
                
