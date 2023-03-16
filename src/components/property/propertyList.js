@@ -62,6 +62,8 @@ export default class propertyList extends Component {
                     property_type: this.state.property_type,
                     price: this.state.price,
                     room: this.state.room,
+                    country: localStorage.getItem('country_id'),
+
                 },
 
             }).then(response => {
@@ -116,6 +118,8 @@ export default class propertyList extends Component {
                     property_type: this.state.property_type,
                     price: this.state.price,
                     room: this.state.room,
+                    country: localStorage.getItem('country_id'),
+
                 },
 
             }).then(response => {
@@ -165,6 +169,8 @@ export default class propertyList extends Component {
                 property_type: this.state.property_type,
                 price: this.state.price,
                 room: this.state.room,
+                country: localStorage.getItem('country_id'),
+
             },
 
         }).then(response => {
@@ -212,6 +218,8 @@ export default class propertyList extends Component {
                 property_type: this.state.property_type,
                 price: this.state.price,
                 room: this.state.room,
+                country: localStorage.getItem('country_id'),
+
             },
 
         }).then(response => {

@@ -42,7 +42,7 @@ export default class popularResidentialForRend extends Component {
                             {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : '' }
                         </div>
                         <div className="panel-content">
-                            <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(2)}</h3>
+                            <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(0)}</h3>
                             <h4 className="panel-title">{ads.room} Room • {ads.size} SqFt</h4>
                             <p className="panel-description">{ads.state_name}, {ads.city_name}</p>
                         </div>

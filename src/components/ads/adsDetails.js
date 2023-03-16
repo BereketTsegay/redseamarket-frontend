@@ -379,7 +379,7 @@ export default class adsDetails extends Component {
                                             <div className="w-100">
                                                 <h3 className="product-title">{ads.title ? ads.title : ads.title_arabic ? ads.title_arabic : ''}</h3>
                                                 <p className="product-desc">{ads.description ? ads.description.substring(0, 250) : ads.description_arabic ? ads.description_arabic.substring(0, 250) : ''}</p>
-                                                <div className="product-price font-weight-bold text-brand">{currency} {(ads.price * currency_value).toFixed(2)}</div>
+                                                <div className="product-price font-weight-bold text-brand">{currency} {(ads.price * currency_value).toFixed(0)}</div>
                                                 <ul className="product-meta">
 
                                                     {ads.category_id == 1 ? <MotorProperty make={ads.make} year={ads.motore_value ? ads.motore_value.registration_year : ''} fuel={ads.motore_value ? ads.motore_value.fuel_type : ''} />

@@ -61,7 +61,7 @@ class CategoryListingImage extends React.Component{
                            <div className="panel-content">
 
                            
-                              <h3 className="panel-price">{currency} {subcatArray && (((subcatArray['price'])?subcatArray['price']:0)*currency_value).toFixed(2)}</h3>
+                              <h3 className="panel-price">{currency} {subcatArray && (((subcatArray['price'])?subcatArray['price']:0)*currency_value).toFixed(0)}</h3>
                               
                               <h4 className="panel-title">
                               {

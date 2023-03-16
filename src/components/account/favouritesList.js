@@ -126,7 +126,7 @@ let currency_value=localStorage.getItem('currency_value') ;
                                 {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : ''}
                             </div>
                             <div className="panel-content">
-                                <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(2)}</h3>
+                                <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(0)}</h3>
                                 <h4 className="panel-title">{ads.title} {ads.custom_value ? ads.custom_value.map((customValue, index) => {
                                     if(index < 2){
                                         return ' • '+customValue.name+':'+ customValue.value

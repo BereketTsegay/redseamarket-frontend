@@ -55,6 +55,9 @@ export default class jobListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    priceFrom:salaryFrom,
+                    priceTo:salaryTo,
+
                 },
             }).then(response => {
                  // console.log(response);
@@ -117,6 +120,7 @@ export default class jobListing extends Component {
 
                 if(response.data.status == 'success'){
                     this.setState({
+                     
                         resultKey: response.data.message,
                         adList: response.data.ads.data,
                         paginataionArray: response.data.ads.links,
@@ -129,6 +133,7 @@ export default class jobListing extends Component {
                 this.setState({
                     loaderStatus: false,
                 });
+                window.location.reload(false);
 
             }).catch((error) => {
                 this.setState({

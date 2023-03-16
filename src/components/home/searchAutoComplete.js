@@ -205,7 +205,7 @@ class searchAutoComplete extends Component {
                                                 <div className="media"><img style={{maxWidth:'100px', maxHeight:'100px', minWidth:'100px', minHeight:'100px'}} src={IMAGE_URL + '/' + searchResult.images} alt="media" /></div>
                                                 <div className="content">
                                                 <h6 className="title">{searchResult.title}</h6>
-                                                <div className="price">{currency} {searchResult.price * currency_value}</div>
+                                                <div className="price">{currency} {(searchResult.price * currency_value).toFixed(0)}</div>
                                                 </div>
                                             </Link>
                                         </li>

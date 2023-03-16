@@ -719,7 +719,7 @@ class CreateForm extends React.Component{
                   localStorage.setItem('newAmount', (state.multiSelectVal.length *state.amountPercentage));
                }
                else{
-                  let amount = state.multiSelectVal.length * ((state.price * this.state.usdVal).toFixed(2)) * (state.amountPercentage / 100);
+                  let amount = state.multiSelectVal.length * ((state.price * this.state.usdVal).toFixed(0)) * (state.amountPercentage / 100);
 
                   localStorage.removeItem('newAmount');
                   localStorage.setItem('newAmount', amount);

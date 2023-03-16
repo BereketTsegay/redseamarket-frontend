@@ -7,7 +7,7 @@
 // export const BASE_URL = "https://admin-jamal.prompttechdemohosting.com/api";
 // export const IMAGE_URL = "https://admin-jamal.prompttechdemohosting.com/";
 
-///local
+///localn
 export const BASE_URL = "http://127.0.0.1:8000/api";
 export const IMAGE_URL = "http://127.0.0.1:8000";
 

@@ -121,7 +121,7 @@ export default class propertyAdsItem extends Component {
                 </div>
                 <div class="panel-content">
                     <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }> {ads.title}</Link></h3>
-                    <div class="panel-price text-brand">{currency} <span className="notranslate">{(ads.price * currency_value).toFixed(2)}</span></div>
+                    <div class="panel-price text-brand">{currency} <span className="notranslate">{(ads.price * currency_value).toFixed(0)}</span></div>
                     <div class="panel-date d-flex align-items-center">
                         <small>{ads.created_on}</small> 
                         {ads.featured_flag == 1 ? <span class="badge-featured"><span>Featured</span></span> : '' }
