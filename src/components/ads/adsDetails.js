@@ -394,7 +394,7 @@ export default class adsDetails extends Component {
                                                 </ul>
                                                 <div className="product-location">
                                                     <img src="assets/img/pdt-location.svg" alt="media" />
-                                                    {ads.country_name}, {ads.state_name}, {ads.city_name}
+                                                    {ads.country_name}, {ads.state_name}, {ads.city_name},{ads.area},{ads.sub_area},{ads.sub_area2}
                                                 </div>
                                                 {ads.status == 1 ?
                                                 <div className="product-btn-group d-flex justify-content-between">

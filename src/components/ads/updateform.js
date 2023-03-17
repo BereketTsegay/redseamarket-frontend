@@ -62,6 +62,8 @@ class Updateform extends React.Component{
          state_id: '',
          city_id: '',
          area: '',
+         sub_area: '',
+         sub_area2: '',
          negotiable: false,
          featured: false,
          phoneHide: false,
@@ -182,11 +184,12 @@ class Updateform extends React.Component{
             if(response.data.status == 'success')
             {
                let ad_data=response.data.data;
+               console.log(ad_data);
                this.setState({
                   category: ad_data.category_id,
                   subcategory: ad_data.subcategory_id,
                   categoryName: ad_data.category.name,
-                  subcategoryName: ad_data.subcategory.name,
+                  subcategoryName: ad_data.subcategory!=null ? ad_data.subcategory.name :'' ,
                   country_id: ad_data.country_id,
                   title: ad_data.title,
                   canonicalName: ad_data.canonical_name,
@@ -201,6 +204,8 @@ class Updateform extends React.Component{
                   phoneHide:(ad_data.seller_information.phone_hide_flag=='1'),
                   address:ad_data.seller_information.address,
                   area:ad_data.area,
+                  sub_area: ad_data.sub_area,
+                  sub_area2: ad_data.sub_area2,
                   state_id:ad_data.state_id,
                   city_id:ad_data.city_id,
                   oldImage:ad_data.image,
@@ -1415,6 +1420,8 @@ class Updateform extends React.Component{
                   state: this.state.state_id,
                   city: this.state.city_id,
                   area: this.state.area,
+                  sub_area: this.state.sub_area,
+                  sub_area2: this.state.sub_area2,
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
                   name: this.state.userName,
@@ -1613,7 +1620,7 @@ class Updateform extends React.Component{
     render() {
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
-         description, phone, address,area,fieldValue,oldImage} = this.state;
+         description, phone, address,area,fieldValue,oldImage,sub_area,sub_area2} = this.state;
       
       let loaderStatus = this.state.loaderStatus;
          
@@ -1711,6 +1718,8 @@ class Updateform extends React.Component{
                                     />
 
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
+                                 <TextField  handleChange={this.handleChange} name="sub_area" label="Sub area" value={this.state.sub_area} placeholder="sub area" readonly={false} />
+                                 <TextField  handleChange={this.handleChange} name="sub_area2" label="Sub area2" value={this.state.sub_area2} placeholder="sub area2" readonly={false} />
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
                                  {/* <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" /> */}
                                  

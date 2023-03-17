@@ -61,10 +61,12 @@ class CreateForm extends React.Component{
          state_id: '',
          city_id: '',
          area: '',
+         sub_area: '',
+         sub_area2: '',
          negotiable: false,
          featured: false,
          phoneHide: false,
-
+         featutred_set:'',
          make_id: '',
          model_id: '',
          variant_id: '',
@@ -207,6 +209,47 @@ class CreateForm extends React.Component{
 
       this.setState({
          loaderStatus: true,
+      });
+
+      axios({
+         method: 'GET',
+         url: `${BASE_URL}/featured`
+        
+      }).then(response => {
+         
+         if(response.data.status == 'success'){
+            // console.log(response.data);
+            this.setState({
+               featutred_set:response.data.data
+            });
+
+            if(response.data.data==0){
+               this.setState({
+                  featured: false
+               });
+            }
+            else if(response.data.data==1){
+               this.setState({
+                  featured: true
+               });
+            }
+            else{
+               this.setState({
+                  featured: false
+               });
+            }
+
+            
+         }
+
+         this.setState({
+            loaderStatus: false,
+        })
+
+      }).catch((error) => {
+         this.setState({
+            loaderStatus: false,
+         });
       });
 
       axios({
@@ -1051,6 +1094,8 @@ class CreateForm extends React.Component{
                            state: this.state.state_id,
                            city: this.state.city_id,
                            area: this.state.area,
+                           sub_area: this.state.sub_area,
+                           sub_area2: this.state.sub_area2,
                            latitude: this.state.latitude,
                            longitude: this.state.longitude,
                            name: this.state.userName,
@@ -1148,6 +1193,8 @@ class CreateForm extends React.Component{
                         state: this.state.state_id,
                         city: this.state.city_id,
                         area: this.state.area,
+                        sub_area: this.state.sub_area,
+                        sub_area2: this.state.sub_area2,
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
                         name: this.state.userName,
@@ -1246,6 +1293,8 @@ class CreateForm extends React.Component{
                   state: this.state.state_id,
                   city: this.state.city_id,
                   area: this.state.area,
+                  sub_area: this.state.sub_area,
+                  sub_area2: this.state.sub_area2,
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
                   name: this.state.userName,
@@ -1403,7 +1452,7 @@ class CreateForm extends React.Component{
       
       let {category, subcategory, categoryField, master, master_id, option, country, state,
          city, categoryName, subcategoryName, title, canonicalName, price, userName, email,
-         description, phone, address,area,fieldValue} = this.state;
+         description, phone, address,area,fieldValue,subArea,subArea2} = this.state;
       
       let loaderStatus = this.state.loaderStatus;
          
@@ -1480,6 +1529,9 @@ class CreateForm extends React.Component{
                                  <SelectField placeholder="City" option={city} selected={this.state.city_id} label="City" optionChange={this.cityChange} type="common" />
                                  
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
+                                 <TextField  handleChange={this.handleChange} name="sub_area" label="Sub area" value={subArea} placeholder="sub area" readonly={false} />
+                                 <TextField  handleChange={this.handleChange} name="sub_area2" label="Sub area2" value={subArea2} placeholder="sub area2" readonly={false} />
+
                                  <label>Add View Countries</label>
                                  <Multiselect
                                     options={this.state.countryOptions} // Options to display in the dropdown
@@ -1492,7 +1544,9 @@ class CreateForm extends React.Component{
                                     />
                                     
                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
-                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
+                                 {this.state.featutred_set==2 ? 
+                                  <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
+                                 :''}
                                  
                                  <div className="form-group">
                                     <button onClick={this.pageUpdate} className="btn btn-primary btn-block">Next</button>
