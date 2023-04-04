@@ -701,7 +701,7 @@ export default class adsDetails extends Component {
                                         {this.state.errors_transaction_id ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_transaction_id}</p> : '' }
                                     </div>
                                     <div className="form-group">
-                                        <label>Document</label>
+                                        <label>Document( image,pdf )</label>
                                         <input type="file" className="form-control" onChange={this.fileChange} name="payment_slip" accept=".png, .jpg, .jpeg, .pdf, .doc, .webp" />
                                         {this.state.errors_payment_slip ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_payment_slip}</p> : '' }
                                     </div>

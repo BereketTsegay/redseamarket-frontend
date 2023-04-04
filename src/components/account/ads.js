@@ -88,8 +88,10 @@ let currency_value=localStorage.getItem('currency_value') ;
                         <Link to={`/update-form/${ads.id}`}>edit</Link>
                         <Link onClick={ () => this.adDelete(ads.id) }>delete</Link>
 
-                        {ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> :
-                        ads.category.name=="Jobs" ?  <Link to={`/job/document/list/${ads.id}`}>View Request Documets</Link> : '' }
+                        {ads.status == 2 ? <span className="badge-pending" style={{'color':'red'}}><span>Rejected</span></span> :
+                        ads.status == 0 ? <span className="badge-pending"><span>Pending</span></span> :
+                        ads.category.name=="Jobs" ?  <Link to={`/job/document/list/${ads.id}`}>View Request Documets</Link> : '' 
+                       }
                         
                     </div>
                 </div>
