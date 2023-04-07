@@ -227,7 +227,7 @@ export default class ContactUs extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label>Message</label>
-                                            <textarea name='message' onChange={(e) => this.handleChange(e)} className="form-control" placeholder="">{this.state.message}</textarea>
+                                            <textarea name='message' onChange={(e) => this.handleChange(e)} className="form-control" placeholder="" value={this.state.message}/>
                                             {this.state.errorMessage ? <p className="help-block help-block-error"  style={{color:'red'}}>{this.state.errorMessage}</p>: ''}
                                         </div>
                                         <button onClick={this.handleSubmit} className="btn btn-primary btn-block">Send</button>

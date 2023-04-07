@@ -99,7 +99,7 @@ export class PaymentForm extends React.Component {
                     url: `${BASE_URL}/stripe/payment`,
                     method: 'POST',
                     data: {
-                        amount: Math.round(this.state.amount),
+                        amount: this.state.amount,
                         currency: this.state.currency,
                         name: this.state.name,
                         email: this.state.email,

@@ -149,6 +149,8 @@ class CreateForm extends React.Component{
          countryOptions: [],
          multiSelectVal: [],
          usdVal:localStorage.getItem('usd_value') ? localStorage.getItem('usd_value') : 0,
+         currency_value:localStorage.getItem('currency_value') ,
+
       }
    }
    checkEmpty(input){
@@ -759,13 +761,13 @@ class CreateForm extends React.Component{
 
                if(state.amountType === 'flat'){
                   localStorage.removeItem('newAmount');
-                  localStorage.setItem('newAmount', (state.multiSelectVal.length *state.amountPercentage));
+                  localStorage.setItem('newAmount', (state.multiSelectVal.length *(state.currency_value * state.amountPercentage)));
                }
                else{
-                  let amount = state.multiSelectVal.length * ((state.price * this.state.usdVal).toFixed(0)) * (state.amountPercentage / 100);
+                  let amount = state.multiSelectVal.length * ((state.price * this.state.currency_value).toFixed(0)) * (state.amountPercentage / 100);
 
                   localStorage.removeItem('newAmount');
-                  localStorage.setItem('newAmount', amount);
+                  localStorage.setItem('newAmount', amount.toFixed(2));
                }
             }
          }

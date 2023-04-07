@@ -78,6 +78,12 @@ class Header extends React.Component{
                 mobileMenu: true,
             });
         }
+
+        if(!localStorage.getItem('country_name')){
+            this.setState({
+                countryListModal: !this.state.countryListModal,
+            })
+        }
         
         if(!sessionStorage.getItem('latitude') && !sessionStorage.getItem('longitude')){
             navigator.geolocation.getCurrentPosition((position) => {
@@ -95,7 +101,7 @@ class Header extends React.Component{
                     response.data.results.forEach(gmap => {
                         
                         if(gmap.address_components.length == 1){
-                            localStorage.setItem('country_name', gmap.formatted_address);
+                            // localStorage.setItem('country_name', gmap.formatted_address);
                         }
                     });
         

@@ -36,9 +36,9 @@ export default class adsDetails extends Component {
             transactionId: '',
             paymentSlip: '',
             fileName: '',
+            fileUploads:[],
             cvDocument: '',
-         
-
+            lasypay:'',
             errors_transaction_id: '',
             errors_payment_slip: '',
             errors_cv_doc: '',
@@ -62,8 +62,9 @@ export default class adsDetails extends Component {
         }).then(response => {
 
             if(response.data.status == 'success'){
-              //  console.log(response.data.ads);
+                console.log(response.data);
                 this.setState({
+                    lasypay:response.data.lastpay,
                     ads: response.data.ads,
                     phone: response.data.ads[0] ? response.data.ads[0].SellerInformation ? response.data.ads[0].SellerInformation.phone : '' : '',
                 })
@@ -124,7 +125,10 @@ export default class adsDetails extends Component {
         reader.onload = (e) => {
             this.setState({
                 paymentSlip: e.target.result,
-                fileName: file.name,
+                fileUploads:[...this.state.fileUploads,{
+                    paymentSlip: e.target.result,
+                    fileName: file.name,
+                }],
             });
         };
 
@@ -205,7 +209,7 @@ export default class adsDetails extends Component {
                 data: {
                     id: this.state.id,
                     transaction_id: this.state.transactionId,
-                    payment_slip: this.state.paymentSlip,
+                    payment_slip: this.state.fileUploads,
                 }
             }).then(response => {
                 if( response.data.status === 'success'){
@@ -218,6 +222,7 @@ export default class adsDetails extends Component {
 
                     this.setState({
                         documentModal: !this.state.documentModal,
+                        lasypay:1
                     });
                 }else{
                     //console.log(response);
@@ -423,10 +428,10 @@ export default class adsDetails extends Component {
                                                     </a>
                                                 </div>
 
-                                                : ads.featured_flag == 1 && ads.payment && ads.payment.payment_type == 1 ? 
+                                                : ads.featured_flag == 1 && ads.payment && ads.payment.payment_type == 1 && this.state.lasypay == 0 ?  
                                                 <a href="javascript:void(0);" onClick={() => this.uploadDocument()} className="btn btn-primary has-icon d-block">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                                    Upload Payment Document
+                                                    Upload Payment Document ({ads.currency} {ads.payment.amount})
                                                 </a>
                                                 : ''
 
@@ -702,7 +707,7 @@ export default class adsDetails extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Document( image,pdf )</label>
-                                        <input type="file" className="form-control" onChange={this.fileChange} name="payment_slip" accept=".png, .jpg, .jpeg, .pdf, .doc, .webp" />
+                                        <input type="file" className="form-control" onChange={this.fileChange} name="payment_slip" accept=".png, .jpg, .jpeg, .pdf, .doc, .webp" multiple />
                                         {this.state.errors_payment_slip ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_payment_slip}</p> : '' }
                                     </div>
                                     <div className="form-group">
