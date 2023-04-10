@@ -33,6 +33,8 @@ export default class searchList extends Component {
             seller: '',
             priceFrom: '',
             priceTo: '',
+            area:'',
+            subArea:'',
             total: 0,
             latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
             longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
@@ -50,6 +52,8 @@ export default class searchList extends Component {
         let seller = ((new URLSearchParams(nextProps.location.search).get('seller')) != '') ? (new URLSearchParams(nextProps.location.search).get('seller')) : '';
         let priceFrom = ((new URLSearchParams(nextProps.location.search).get('priceFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceFrom')) : '';
         let priceTo = ((new URLSearchParams(nextProps.location.search).get('priceTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('priceTo')) : '';
+        let area = ((new URLSearchParams(nextProps.location.search).get('area')) != '') ? (new URLSearchParams(nextProps.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(nextProps.location.search).get('subArea')) != '') ? (new URLSearchParams(nextProps.location.search).get('subArea')) : '';
 
         if(!key && subcategory ){
 
@@ -62,6 +66,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus:true,
+                area: area,
+                subArea:subArea,
 
             }, () => {
                 axios({
@@ -115,7 +121,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
-
+                area: area,
+                subArea:subArea,
             }, () => {
                 axios({
                     url: `${BASE_URL}/customer/get/category/ads`,
@@ -129,6 +136,8 @@ export default class searchList extends Component {
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
+                        area: this.state.area,
+                        subArea: this.state.subArea,
                     },
                 }).then(response => {
 
@@ -223,6 +232,8 @@ export default class searchList extends Component {
         let seller = ((new URLSearchParams(this.props.location.search).get('seller')) != '') ? (new URLSearchParams(this.props.location.search).get('seller')) : '';
         let priceFrom = ((new URLSearchParams(this.props.location.search).get('priceFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('priceFrom')) : '';
         let priceTo = ((new URLSearchParams(this.props.location.search).get('priceTo')) != '') ? (new URLSearchParams(this.props.location.search).get('priceTo')) : '';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
         if(!key && subcategory){
 
@@ -235,7 +246,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
-
+                area: this.state.area,
+                subArea: this.state.subArea,
             }, () => {
                 axios({
                     url: `${BASE_URL}/customer/get/subcategory/ads`,
@@ -288,7 +300,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
-
+                area: this.state.area,
+                subArea: this.state.subArea,
             }, () => {
                 axios({
                     url: `${BASE_URL}/customer/get/category/ads`,
@@ -302,6 +315,8 @@ export default class searchList extends Component {
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
+                        area: this.state.area,
+                        subArea: this.state.subArea,
                     },
                 }).then(response => {
 

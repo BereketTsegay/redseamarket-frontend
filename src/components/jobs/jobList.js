@@ -41,6 +41,8 @@ export default class jobListing extends Component {
         let category = ((new URLSearchParams(this.props.location.search).get('category_id'))!='')?(new URLSearchParams(this.props.location.search).get('category_id')):'';
         let salaryFrom = ((new URLSearchParams(this.props.location.search).get('salaryFrom'))!='')?(new URLSearchParams(this.props.location.search).get('salaryFrom')):'';
         let salaryTo = ((new URLSearchParams(this.props.location.search).get('salaryTo'))!='')?(new URLSearchParams(this.props.location.search).get('salaryTo')):'';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
          //  console.log(key);
 
@@ -57,6 +59,8 @@ export default class jobListing extends Component {
                     country: localStorage.getItem('country_id'),
                     priceFrom:salaryFrom,
                     priceTo:salaryTo,
+                    area:area,
+                    subArea:subArea,
 
                 },
             }).then(response => {
@@ -98,6 +102,8 @@ export default class jobListing extends Component {
         let category = ((new URLSearchParams(this.props.location.search).get('category_id'))!='')?(new URLSearchParams(this.props.location.search).get('category_id')):'';
         let salaryFrom = ((new URLSearchParams(this.props.location.search).get('salaryFrom'))!='')?(new URLSearchParams(this.props.location.search).get('salaryFrom')):'';
         let salaryTo = ((new URLSearchParams(this.props.location.search).get('salaryTo'))!='')?(new URLSearchParams(this.props.location.search).get('salaryTo')):'';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
        
 
@@ -114,6 +120,8 @@ export default class jobListing extends Component {
                     country: localStorage.getItem('country_id'),
                     priceFrom:salaryFrom,
                     priceTo:salaryTo,
+                    area:area,
+                    subArea:subArea,
 
                 },
             }).then(response => {

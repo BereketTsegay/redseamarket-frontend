@@ -23,6 +23,8 @@ class headFilter extends Component {
             loaderStatus: false,
             country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
             cityArray: [],
+            area:'',
+            subArea: '',
 
         }
     }
@@ -83,7 +85,7 @@ class headFilter extends Component {
 
         // if(state.keyword !== ''){
            
-            this.props.history.push(`/search?key=${state.keyword}&city=${state.city}&category=${state.category_id}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&seller=${state.seller}`);
+            this.props.history.push(`/search?key=${state.keyword}&city=${state.city}&category=${state.category_id}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&seller=${state.seller}&area=${state.area}&subArea=${state.subArea}`);
         // }
     }
 
@@ -159,14 +161,28 @@ class headFilter extends Component {
                                             <input type="number" onChange={(e) => this.handleChange(e)} className="form-control" name="priceTo" placeholder="To" min="0"/>
                                         </div>
                                     </div>
-                                    
+                                    <div className="col-xl-6 col-lg-6 col-md-6">
+                                        <div className="form-group">
+                                            <input type="text" onChange={(e) => this.handleChange(e)} name="area" className="form-control" placeholder="Area" />
+                                            {/* <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} /> */}
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-6">
+                                        <div className="form-group">
+                                            <input type="text" onChange={(e) => this.handleChange(e)} name="subArea" className="form-control" placeholder="SubArea" />
+                                            {/* <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} /> */}
+                                        </div>
+                                    </div>
                                     <div className="col-xl-9 col-lg-4 col-md-6">
                                         <div className="form-group">
                                             <input type="text" onChange={(e) => this.handleChange(e)} name="keyword" className="form-control" placeholder="Keywords" />
                                             <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
-                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} />
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} area={this.state.area} subAarea={this.state.subArea}/>
                                         </div>
                                     </div>
+                                  
                                     <div className="col-xl-3 col-lg-4 col-md-6">
                                         <div className="form-group">
                                             <button onClick={this.handleSubmit} className="btn btn-primary has-icon w-100">
