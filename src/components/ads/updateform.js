@@ -1720,7 +1720,8 @@ class Updateform extends React.Component{
                                  <TextField  handleChange={this.handleChange} name="area" label="Area" value={area} placeholder="Area" readonly={false} error={this.state.errors_area} />
                                  <TextField  handleChange={this.handleChange} name="sub_area" label="Sub area" value={this.state.sub_area} placeholder="sub area" readonly={false} />
                                  <TextField  handleChange={this.handleChange} name="sub_area2" label="Sub area2" value={this.state.sub_area2} placeholder="sub area2" readonly={false} />
-                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
+                                 { categoryName == 'Jobs'? '' : 
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />}
                                  {/* <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" /> */}
                                  
                                  <div className="form-group">

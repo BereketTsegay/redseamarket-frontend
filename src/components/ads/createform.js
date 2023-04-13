@@ -1545,7 +1545,8 @@ class CreateForm extends React.Component{
                                     name="show_countries"
                                     />
                                     
-                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />
+                                    { categoryName == 'Jobs'? '' : 
+                                 <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.negotiable} name="negotiable" label="Price Negotiable" />}
                                  {this.state.featutred_set==2 ? 
                                   <Checkbox checkboxChange={this.checkboxChange} checkStatus={this.state.featured} name="featured" label="Featured" />
                                  :''}

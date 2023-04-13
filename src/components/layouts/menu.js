@@ -88,7 +88,7 @@ class Menu extends React.Component{
                                           {category.subcategory && category.subcategory.map((subcategory, index) => {
                                              return (
                                                 <li key={index} className="menu-item">
-                                                   <Link to={`/job/list?category_id=${category.id}&subcategory_id=${subcategory.id}`} >{subcategory.name}</Link>
+                                                   <Link to={`/job/list?category_id=${category.id}&subcategory_id=`} >{subcategory.name}</Link>
                                                    <div className="sub-menu-child">
                                                       <h6>{subcategory.name}</h6>
                                                       <ul>
