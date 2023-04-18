@@ -46,6 +46,8 @@ export default class searchResult extends Component {
         let mileageFrom = ((new URLSearchParams(this.props.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageFrom')) : '';
         let mileageTo = ((new URLSearchParams(this.props.location.search).get('mileageTo')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageTo')) : '';
         let seller = ((new URLSearchParams(this.props.location.search).get('seller')) != '') ? (new URLSearchParams(this.props.location.search).get('seller')) : '';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
         if(key != ''){
             axios({
@@ -68,6 +70,8 @@ export default class searchResult extends Component {
                     seller: seller,
                     city: city,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -114,6 +118,8 @@ export default class searchResult extends Component {
                     mileageFrom: mileageFrom,
                     mileageTo: mileageTo,
                     seller: seller,
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -155,7 +161,9 @@ export default class searchResult extends Component {
         let mileageFrom = ((new URLSearchParams(nextProps.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(nextProps.location.search).get('mileageFrom')) : '';
         let mileageTo = ((new URLSearchParams(nextProps.location.search).get('mileageTo')) != '') ? (new URLSearchParams(nextProps.location.search).get('mileageTo')) : '';
         let seller = ((new URLSearchParams(nextProps.location.search).get('seller')) != '') ? (new URLSearchParams(nextProps.location.search).get('seller')) : '';
- 
+        let area = ((new URLSearchParams(nextProps.location.search).get('area')) != '') ? (new URLSearchParams(nextProps.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(nextProps.location.search).get('subArea')) != '') ? (new URLSearchParams(nextProps.location.search).get('subArea')) : '';
+
         if(key != ''){
 
             // this.setState({
@@ -182,6 +190,8 @@ export default class searchResult extends Component {
                     seller: seller,
                     city: city,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -228,6 +238,8 @@ export default class searchResult extends Component {
                     mileageTo: mileageTo,
                     seller: seller,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -272,6 +284,8 @@ export default class searchResult extends Component {
         let mileageFrom = ((new URLSearchParams(this.props.location.search).get('mileageFrom')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageFrom')) : '';
         let mileageTo = ((new URLSearchParams(this.props.location.search).get('mileageTo')) != '') ? (new URLSearchParams(this.props.location.search).get('mileageTo')) : '';
         let seller = ((new URLSearchParams(this.props.location.search).get('seller')) != '') ? (new URLSearchParams(this.props.location.search).get('seller')) : '';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
         axios({
             url: url,
@@ -293,6 +307,8 @@ export default class searchResult extends Component {
                 seller: seller,
                 city: city,
                 country: localStorage.getItem('country_id'),
+                area:area,
+                    subArea:subArea,
             },
         }).then(response => {
 

@@ -32,7 +32,7 @@ class CreateForm extends React.Component{
 
    constructor(props) {
       super(props)
-
+      const contryId=localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0;
       this.state = {
          category: '',
          subcategory:'',
@@ -57,7 +57,7 @@ class CreateForm extends React.Component{
          longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 53.8478,
          phone: '',
          address: '',
-         country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 0,
+         country_id: contryId,
          state_id: '',
          city_id: '',
          area: '',
@@ -178,8 +178,7 @@ class CreateForm extends React.Component{
          subcategory: this.props.match.params.subcategory_id === '&nvlp' ? '' : this.props.match.params.subcategory_id,
          categoryName: this.props.match.params.category,
          subcategoryName: this.props.match.params.subcategory === '&!$*' ? '' : this.props.match.params.subcategory,
-         loaderStatus: true,
-         multiSelectVal:[]
+         loaderStatus: true
       }, () => {
          axios({
             method: 'POST',
@@ -265,6 +264,13 @@ class CreateForm extends React.Component{
                country: response.data.country,
                countryOptions: response.data.country,
             });
+          const country= response.data.country.find((country)=>country.id==this.state.country_id);
+          if(country)
+          {
+            this.setState({
+               multiSelectVal: [country],
+             });
+          }
          }
 
       }).catch((error) => {

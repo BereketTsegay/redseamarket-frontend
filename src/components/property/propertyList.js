@@ -30,6 +30,8 @@ export default class propertyList extends Component {
             nextPage: '',
             total: '',
             subcategory: {},
+            area:'',
+            subArea:'',
             latitude: sessionStorage.getItem('latitude') ? parseFloat(sessionStorage.getItem('latitude')) : 0,
             longitude: sessionStorage.getItem('longitude') ? parseFloat(sessionStorage.getItem('longitude')) : 0,
             loaderStatus: false,
@@ -46,7 +48,9 @@ export default class propertyList extends Component {
             price: ((new URLSearchParams(this.props.location.search).get('price')) != '') ? (new URLSearchParams(this.props.location.search).get('price')) : '',
             room: ((new URLSearchParams(this.props.location.search).get('room')) != '') ? (new URLSearchParams(this.props.location.search).get('room')) : '',
             loaderStatus: true,
-
+             area : ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '',
+             subArea : ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '',
+    
         }, () => {
             
             axios({
@@ -63,7 +67,8 @@ export default class propertyList extends Component {
                     price: this.state.price,
                     room: this.state.room,
                     country: localStorage.getItem('country_id'),
-
+                    area:this.state.area,
+                    subArea:this.state.subArea,
                 },
 
             }).then(response => {
@@ -103,6 +108,9 @@ export default class propertyList extends Component {
             price: ((new URLSearchParams(nextProps.location.search).get('price')) != '') ? (new URLSearchParams(nextProps.location.search).get('price')) : '',
             room: ((new URLSearchParams(nextProps.location.search).get('room')) != '') ? (new URLSearchParams(nextProps.location.search).get('room')) : '',
             loaderStatus: true,
+            area: ((new URLSearchParams(nextProps.location.search).get('area')) != '') ? (new URLSearchParams(nextProps.location.search).get('area')) : '',
+            subArea: ((new URLSearchParams(nextProps.location.search).get('subArea')) != '') ? (new URLSearchParams(nextProps.location.search).get('subArea')) : '',
+    
         }, () => {
             
             axios({
@@ -119,7 +127,8 @@ export default class propertyList extends Component {
                     price: this.state.price,
                     room: this.state.room,
                     country: localStorage.getItem('country_id'),
-
+                    area:this.state.area,
+                    subArea:this.state.subArea,
                 },
 
             }).then(response => {
@@ -170,7 +179,8 @@ export default class propertyList extends Component {
                 price: this.state.price,
                 room: this.state.room,
                 country: localStorage.getItem('country_id'),
-
+                area:this.state.area,
+                subArea:this.state.subArea,
             },
 
         }).then(response => {
@@ -219,7 +229,8 @@ export default class propertyList extends Component {
                 price: this.state.price,
                 room: this.state.room,
                 country: localStorage.getItem('country_id'),
-
+                area:this.state.area,
+                subArea:this.state.subArea,
             },
 
         }).then(response => {

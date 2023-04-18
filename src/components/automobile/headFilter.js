@@ -28,6 +28,8 @@ class headFilter extends Component {
             loaderStatus: false,
             country_id: localStorage.getItem('country_id') ? localStorage.getItem('country_id') : 229,
             cityArray: [],
+            area:'',
+            subArea:'',
 
         }
     }
@@ -86,7 +88,7 @@ class headFilter extends Component {
 
         // if(state.keyword !== ''){
            
-            this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}`);
+            this.props.history.push(`/motor/result?keyword=${state.keyword}&city=${state.city}&subcategory=${state.subcategory_id}&condition=${state.condition}&transmission=${state.transimission}&priceFrom=${state.priceFrom}&priceTo=${state.priceTo}&yearFrom=${state.yearFrom}&yearTo=${state.yearTo}&mileageFrom=${state.mileageFrom}&mileageTo=${state.mileageTo}&seller=${state.seller}&area=${state.area}&subArea=${state.subArea}`);
     
         // }
     }
@@ -197,6 +199,20 @@ class headFilter extends Component {
                                             <option value="0">Not Featured</option>
                                             <option value="1">Featured</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-4 ">
+                                        <div className="form-group">
+                                            <input type="text" onChange={(e) => this.handleChange(e)} name="area" className="form-control" placeholder="Area" />
+                                            {/* <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} /> */}
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-4 ">
+                                        <div className="form-group">
+                                            <input type="text" onChange={(e) => this.handleChange(e)} name="subArea" className="form-control" placeholder="SubArea" />
+                                            {/* <SearchAutoComplete searchKey={keyword} city={this.state.city} category={this.state.category_id} 
+                                            seller={this.state.seller} price_from={this.state.priceFrom} price_to={this.state.priceTo} /> */}
                                         </div>
                                     </div>
                                     <div className="col-xl-9 col-lg-4 col-md-6">

@@ -38,6 +38,8 @@ export default class motorListing extends Component {
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
         if(key){
 
@@ -51,6 +53,8 @@ export default class motorListing extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -76,7 +80,7 @@ export default class motorListing extends Component {
             });
         }
         else{
-
+            //    console.log(1);
             axios({
                 url: `${BASE_URL}/customer/get/motor/list`,
                 method: 'POST',
@@ -88,6 +92,8 @@ export default class motorListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -125,6 +131,8 @@ export default class motorListing extends Component {
         let key = ((new URLSearchParams(nextProps.location.search).get('key')) != '') ? (new URLSearchParams(nextProps.location.search).get('key')) : '';
         let city = ((new URLSearchParams(nextProps.location.search).get('city')) != '') ? (new URLSearchParams(nextProps.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(nextProps.location.search).get('subcategory')) != '') ? (new URLSearchParams(nextProps.location.search).get('subcategory')) : '';
+        let area = ((new URLSearchParams(nextProps.location.search).get('area')) != '') ? (new URLSearchParams(nextProps.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(nextProps.location.search).get('subArea')) != '') ? (new URLSearchParams(nextProps.location.search).get('subArea')) : '';
 
         if(key){
 
@@ -138,6 +146,8 @@ export default class motorListing extends Component {
                     longitude: localStorage.getItem('country_id') || city ? 0 : this.state.longitude,
                     city: city,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -163,7 +173,7 @@ export default class motorListing extends Component {
             });
         }
         else{
-
+            // console.log(2);
             axios({
                 url: `${BASE_URL}/customer/get/motor/list`,
                 method: 'POST',
@@ -175,6 +185,8 @@ export default class motorListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
@@ -208,6 +220,8 @@ export default class motorListing extends Component {
         let key = ((new URLSearchParams(this.props.location.search).get('key')) != '') ? (new URLSearchParams(this.props.location.search).get('key')) : '';
         let city = ((new URLSearchParams(this.props.location.search).get('city')) != '') ? (new URLSearchParams(this.props.location.search).get('city')) : localStorage.getItem('city_id') ? localStorage.getItem('city_id') : '';
         let subcategory = ((new URLSearchParams(this.props.location.search).get('subcategory')) != '') ? (new URLSearchParams(this.props.location.search).get('subcategory')) : '';
+        let area = ((new URLSearchParams(this.props.location.search).get('area')) != '') ? (new URLSearchParams(this.props.location.search).get('area')) : '';
+        let subArea = ((new URLSearchParams(this.props.location.search).get('subArea')) != '') ? (new URLSearchParams(this.props.location.search).get('subArea')) : '';
 
         this.setState({
             loaderStatus: true,
@@ -224,6 +238,8 @@ export default class motorListing extends Component {
                     city: city,
                     subcategory: subcategory,
                     country: localStorage.getItem('country_id'),
+                    area:area,
+                    subArea:subArea,
                 },
             }).then(response => {
 
