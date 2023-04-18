@@ -168,6 +168,7 @@ export default class searchList extends Component {
 
         }
         else{
+           // console.log(0);
 
             this.setState({
                 category: category,
@@ -178,7 +179,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
-
+                area: area,
+                subArea:subArea,
             }, () => {
                 axios({
                     url: `${BASE_URL}/customer/search/ads`,
@@ -193,6 +195,8 @@ export default class searchList extends Component {
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
+                        area: this.state.area,
+                        subArea: this.state.subArea,
                     },
                 }).then(response => {
 
@@ -300,8 +304,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
-                area: this.state.area,
-                subArea: this.state.subArea,
+                area: area,
+                subArea:subArea,
             }, () => {
                 axios({
                     url: `${BASE_URL}/customer/get/category/ads`,
@@ -347,7 +351,7 @@ export default class searchList extends Component {
 
         }
         else{
-            
+          //  console.log(1);
             this.setState({
                 category: category,
                 city: city,
@@ -357,6 +361,8 @@ export default class searchList extends Component {
                 priceFrom: priceFrom,
                 priceTo: priceTo,
                 loaderStatus: true,
+                area: area,
+                subArea:subArea,
 
             }, () => {
                 axios({
@@ -372,6 +378,8 @@ export default class searchList extends Component {
                         priceTo: this.state.priceTo,
                         seller: this.state.seller,
                         country: localStorage.getItem('country_id'),
+                        area: this.state.area,
+                        subArea: this.state.subArea,
                     },
                 }).then(response => {
 

@@ -1815,9 +1815,9 @@ class Updateform extends React.Component{
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div> */}
 
-                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                                 {/* {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''} */}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+                                 {/* {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' } */}
 
                                  {/* <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5> */}
 
@@ -1968,9 +1968,9 @@ class Updateform extends React.Component{
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
-                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                                 {/* {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''} */}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+                                 {/* {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' } */}
 
                                  {/* <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5> */}
 

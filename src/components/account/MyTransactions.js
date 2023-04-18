@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { BASE_URL, userToken } from '../../projectString'
+import { BASE_URL, userToken ,IMAGE_URL } from '../../projectString'
 import AppDownload from '../home/app-download'
 import Footer from '../layouts/footer'
 import Header from '../layouts/header'
@@ -49,7 +49,7 @@ export default class MyTransactions extends Component {
         }).then(response => {
             
             if(response.data.status === 'success'  && response.data.data){
-                  console.log(response.data.data);
+                //   console.log(Array.isArray(response.data.data.document));
                 this.setState({
                     myTransactions: response.data.data
                    
@@ -106,14 +106,21 @@ export default class MyTransactions extends Component {
                                         {myTransactions.map((myTransaction, index) => {
                                                 return(
                                                     <>
-                                                    <Link  className="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div  className="list-group-item list-group-item-action flex-column align-items-start">
                                                     <div className="d-flex w-100 justify-content-between">
                                                     <h5 className="mb-1">{myTransaction.payment_id}</h5>
                                                     <small className="text-muted">{myTransaction.amount} USD</small>
                                                     </div>
                                                     <p className="mb-1">{myTransaction.ad.title}</p>
                                                     <small className="text-muted">{Moment(myTransaction.created_at).format('DD-MM-Y')}</small>
-                                                    </Link>
+
+                                                    <p>{myTransaction.document.map((image)=>{
+                                                         return  <a href={IMAGE_URL+'/'+image} target="_blank">                                                        
+                                                         <img style={{'height':'100px','width':'100px'}} src={IMAGE_URL+'/'+image} alt="image"/>  </a>
+                                                       // return <a href={IMAGE_URL+'/'+image}>view</a>
+                                                    })} &nbsp;&nbsp;&nbsp;</p>
+
+                                                    </div>
 
                                                 <br></br>
                                                 </>
