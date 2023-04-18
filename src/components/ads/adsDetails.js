@@ -431,9 +431,9 @@ export default class adsDetails extends Component {
                                                 : ads.featured_flag == 1 && ads.payment && ads.payment.payment_type == 1 && this.state.lasypay == 0 ?  
                                                 <a href="javascript:void(0);" onClick={() => this.uploadDocument()} className="btn btn-primary has-icon d-block">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                                    Upload Payment Document ({ads.currency} {ads.payment.amount})
+                                                    Upload Payment Document (USD {ads.payment.amount})
                                                 </a>
-                                                : <p style={{'color':'red'}}>Payment document pending for varification</p>
+                                                : <p style={{'color':'red'}}>Ad pending for varification</p>
 
                                                  }
                                                 { ads.status == 1 ?(<>{

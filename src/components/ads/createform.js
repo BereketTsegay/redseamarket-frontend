@@ -767,10 +767,10 @@ class CreateForm extends React.Component{
 
                if(state.amountType === 'flat'){
                   localStorage.removeItem('newAmount');
-                  localStorage.setItem('newAmount', (state.multiSelectVal.length *(state.currency_value * state.amountPercentage)));
+                  localStorage.setItem('newAmount', (state.multiSelectVal.length *state.amountPercentage));
                }
                else{
-                  let amount = state.multiSelectVal.length * ((state.price * this.state.currency_value).toFixed(0)) * (state.amountPercentage / 100);
+                  let amount = state.multiSelectVal.length * (state.price.toFixed(0)) * (state.amountPercentage / 100);
 
                   localStorage.removeItem('newAmount');
                   localStorage.setItem('newAmount', amount.toFixed(2));

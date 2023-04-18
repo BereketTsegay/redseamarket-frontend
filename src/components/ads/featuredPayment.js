@@ -31,7 +31,7 @@ export default class featuredPayment extends Component {
             <>
                 <div className="form-group">
                     <h6>Payment Type</h6>
-                    <label>Pay <span style={{color:'green', fontWeight:'bold', fontSize:'20px'}}>{currency} {amount}</span> for your featured Ad</label>
+                    <label>Pay <span style={{color:'green', fontWeight:'bold', fontSize:'20px'}}>USD {amount}</span> for your featured Ad</label>
                     <div class="custom-control custom-radio mb-3">
                         <input type="radio" onChange={(e) => this.eventChange(e)} name="payment" value="account" class="custom-control-input" id="Account"/>
                         <label class="custom-control-label font-weight-normal" for="Account">Direct Payment <sapn style={{color:'#5c5e5f'}}>(Payment directly from your account)</sapn></label>

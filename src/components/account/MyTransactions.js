@@ -116,7 +116,7 @@ export default class MyTransactions extends Component {
 
                                                     <p>{myTransaction.document.map((image)=>{
                                                          return  <a href={IMAGE_URL+'/'+image} target="_blank">                                                        
-                                                         <img style={{'height':'100px','width':'100px'}} src={IMAGE_URL+'/'+image} alt="image"/>  </a>
+                                                         <img className='p-2' style={{'height':'100px','width':'100px'}} src={IMAGE_URL+'/'+image} alt="image"/>  </a>
                                                        // return <a href={IMAGE_URL+'/'+image}>view</a>
                                                     })} &nbsp;&nbsp;&nbsp;</p>
 
