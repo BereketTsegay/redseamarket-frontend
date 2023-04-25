@@ -115,8 +115,11 @@ export default class MyTransactions extends Component {
                                                     <small className="text-muted">{Moment(myTransaction.created_at).format('DD-MM-Y')}</small>
 
                                                     <p>{myTransaction.document.map((image)=>{
-                                                         return  <a href={IMAGE_URL+'/'+image} target="_blank">                                                        
-                                                         <img className='p-2' style={{'height':'100px','width':'100px'}} src={IMAGE_URL+'/'+image} alt="image"/>  </a>
+                                                         return  <a className='p-2' href={IMAGE_URL+'/'+image} target="_blank">                                                        
+                                                         {/* <img className='p-2' style={{'height':'100px','width':'100px'}} src={IMAGE_URL+'/'+image} alt="image"/>  */}
+                                                         <button type="button" className="btn btn-primary btn-sm">View document</button>
+
+                                                          </a>
                                                        // return <a href={IMAGE_URL+'/'+image}>view</a>
                                                     })} &nbsp;&nbsp;&nbsp;</p>
 
