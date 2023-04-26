@@ -1652,7 +1652,7 @@ class CreateForm extends React.Component{
 
                                  {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+                                 {this.state.termsCondition != false ? this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' :''}
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
@@ -1730,7 +1730,7 @@ class CreateForm extends React.Component{
 
                                  {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+                                 {this.state.termsCondition != false ?this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '':'' }
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 
@@ -1808,7 +1808,7 @@ class CreateForm extends React.Component{
 
                                  {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
-                                 {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
+                                 {this.state.termsCondition != false ? this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '':'' }
 
                                  <h5 style={{cursor:'pointer'}} onClick={() => this.perviewModal()}><span class="badge badge-secondary">View Preview</span></h5>
 

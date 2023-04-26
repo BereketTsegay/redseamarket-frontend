@@ -26,6 +26,9 @@ export default class myAds extends Component {
             last: '',
             token: userToken,
             loaderState: false,
+            emailVerify:localStorage.getItem('emailverify') != '' ? localStorage.getItem('emailverify'):'',
+            loginStatus: (localStorage.getItem('loginStatus'))?localStorage.getItem('loginStatus'):false,
+
         }
     }
 
@@ -130,7 +133,8 @@ export default class myAds extends Component {
                                     <div className="col-xl-11 mx-auto">
                                     <div className="row align-items-center">
                                         <div className="col-md-7 col-6"><h2 className="title mb-0">My Ads</h2></div>
-                                        <div className="col-md-5 col-6 text-right"><Link to='/create-ads' className="btn btn-primary">Post Ad Now</Link></div>
+                                        {this.state.loginStatus === true || this.state.loginStatus === 'true' && this.state.emailVerify == 1 ?
+                                        <div className="col-md-5 col-6 text-right"><Link to='/create-ads' className="btn btn-primary">Post Ad Now</Link></div>:''}
                                     </div>
                                     </div>
                                 </div>
