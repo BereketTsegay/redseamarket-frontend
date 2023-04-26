@@ -49,7 +49,7 @@ class Header extends React.Component{
         globalLoginError:'',
         globalRegError:'',
         registername:'',
-        registeremail:'',
+        registeremail:localStorage.getItem('email') != '' ? localStorage.getItem('email') : '',
         registerpassword:'',
         loaderStatus: false,
         forgotPasswordModal: false,
@@ -67,6 +67,8 @@ class Header extends React.Component{
         mobileMenu: false,
         mobileMenushow: false,
         countryName: '',
+        emailVerify:localStorage.getItem('emailverify') != '' ? localStorage.getItem('emailverify'):'',
+        resentOtpStatus:'',
       }
 
    }
@@ -166,13 +168,21 @@ class Header extends React.Component{
       this.setState({ showHistory: !this.state.showHistory });
       this.setState({ registerModal: false });
 
-
   }
 
 
   viewRegisterModal = () => {
    this.setState({ registerModal: !this.state.registerModal });
    this.setState({ showHistory: false });
+  }
+
+  viewOtpModal=()=>{
+   // this.setState({ emailVerifydModal:!this.state.emailVerifydModal });
+        this.setState({
+            emailVerifydModal: !this.state.emailVerifydModal,
+            showHistory: !this.state.showHistory,
+            error: '',
+        });
   }
 
 
@@ -317,16 +327,22 @@ class Header extends React.Component{
                     localStorage.removeItem('userToken');
                     localStorage.removeItem('loginStatus');
                     localStorage.removeItem('wallet');
+                    localStorage.removeItem('emailverify');
+                    localStorage.removeItem('email');
+
                     // localStorage.setItem('loginStatus', true);
 
                     localStorage.removeItem('user');
                     localStorage.setItem('user', response.data.user);
                     localStorage.setItem('wallet', response.data.wallet);
                     localStorage.setItem('userToken', response.data.token);
+                    localStorage.setItem('emailverify', response.data.email_verify);
+                    localStorage.setItem('email', response.data.email);
 
                     this.setState({
                         loginStatus:true,
                         user: response.data.user,
+                        registeremail:response.data.email,
                     });
                     localStorage.setItem('loginStatus',true);
                     Swal.fire({
@@ -594,6 +610,41 @@ class Header extends React.Component{
         });
     }
 
+    resentOtp = () => {
+        
+                axios({
+                    url: `${BASE_URL}/verify/resent/otp`,
+                    method: 'POST',
+                    data: {
+                        email: this.state.registeremail,
+                        name: this.state.user,
+                    }
+                }).then(response => {
+
+                    if(response.data.status === 'success'){
+
+                       
+                        this.setState({
+                            resentOtpStatus: response.data.message,
+                        });
+                        
+                       
+
+                        // Swal.fire({
+                        //     title: 'success!',
+                        //     text: response.data.message,
+                        //     icon: 'success',
+                        //     confirmButtonText: 'OK'
+                        // });
+
+                    }
+
+                }).catch((error) => {
+
+                });
+            
+    }
+
     otpSubmit = () => {
         
         this.setState({
@@ -616,6 +667,7 @@ class Header extends React.Component{
                         localStorage.removeItem('userToken');
                         localStorage.removeItem('loginStatus');
                         localStorage.removeItem('user');
+                        localStorage.removeItem('emailverify');
 
                         localStorage.setItem('userToken', response.data.token);
                         localStorage.setItem('user', response.data.user);
@@ -626,6 +678,7 @@ class Header extends React.Component{
                         });
                         
                         localStorage.setItem('loginStatus',true);
+                        localStorage.setItem('emailverify', 1);
 
                         this.setState({
                             loginStatus:true,
@@ -925,11 +978,15 @@ class Header extends React.Component{
 
 
 
-                                {this.state.loginStatus === true || this.state.loginStatus === 'true' ? 
+                                {this.state.loginStatus === true || this.state.loginStatus === 'true' && this.state.emailVerify == 1 ? 
 
                                 <Link to='/create-ads' className="btn btn-primary" replace>Place Your Ad</Link>
                                 :
+                                this.state.loginStatus === true || this.state.loginStatus === 'true' && this.state.emailVerify == 0 ?
+                                <a href='javascript:void(0)'  onClick={() => { this.viewOtpModal() }}  className="btn btn-primary">Place Your Ad</a>
+                                :
                                 <a href='javascript:void(0)'  onClick={() => { this.viewLoginModal() }}  className="btn btn-primary">Place Your Ad</a>
+
                                     }
                                 </div>
                                 <GoogleTranslate />
@@ -1083,9 +1140,20 @@ class Header extends React.Component{
                                         <div className="form-group-line text-center">
                                             <button className="btn btn-link p-0" onClick={ this.viewVerifyEmaildModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
                                         </div>
+                                       
                                     </div>
                                     <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
-                                
+                                    {this.state.loginStatus === 'true' || this.state.loginStatus === true ? 
+
+                                     <div className="form-group-line text-center">
+                                       <button className="btn btn-link p-0" onClick={ this.resentOtp } >Resent Otp</button>
+                                       <p className="text-center">{this.state.resentOtpStatus}</p>
+                                     </div>
+                                    //  <button onClick={ this.resentOtp } className="btn btn-primary d-block w-100">Resent otp</button>
+                                    
+                                    :  ''                                  
+                                }
+
                                 </Modal.Body>
                                 
                             </Modal>

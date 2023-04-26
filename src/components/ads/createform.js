@@ -1439,10 +1439,12 @@ class CreateForm extends React.Component{
    }
 
    paymentMethod = (method) => {
-
-      this.setState({
-         paymentMethod: method,
-      });
+     
+         this.setState({
+            paymentMethod: method,
+         });
+     
+     
    }
 
    removeImage = key => {
@@ -1648,7 +1650,7 @@ class CreateForm extends React.Component{
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
-                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                                 {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
@@ -1667,26 +1669,26 @@ class CreateForm extends React.Component{
                                           </div> :
                                        this.state.featured ? this.state.paymentMethod === 'stripe' ?
 
-                                          this.state.paymentId !== '' ?
+                                          this.state.paymentId !== '' ?(
 
                                           <div className="form-group col-md-6">
-                                             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                             <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                           </div>
-
+                                         )
                                        :
-                                          <div className="form-group col-md-6">
+                                          (<div className="form-group col-md-6">
                                              <button className="btn btn-primary btn-block" disabled>
                                                 {/* <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                                 Loading... */}
                                                 Create
                                              </button>
-                                          </div>
+                                          </div>)
                                        :
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                        </div> : 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                        </div>
                                        } 
                                  </div>
@@ -1726,7 +1728,7 @@ class CreateForm extends React.Component{
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
-                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                                 {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
@@ -1749,7 +1751,7 @@ class CreateForm extends React.Component{
                                        this.state.paymentId !== '' ?
 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                        </div>
 
                                     :
@@ -1762,10 +1764,10 @@ class CreateForm extends React.Component{
                                     </div>
                                     :
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                     </div> : 
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                     </div>
                                     }
                                  </div>
@@ -1804,7 +1806,7 @@ class CreateForm extends React.Component{
                                     {this.state.errors_terms !== '' ? <p className="help-block help-block-error"  style={ErrorStyle}>{this.state.errors_terms}</p> : '' }
                                  </div>
 
-                                 {this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : ''}
+                                 {this.state.termsCondition != false ? this.state.featured ? <FeaturedPayment paymentMethod={this.paymentMethod} /> : '':''}
 
                                  {this.state.paymentMethod === 'stripe' ? <InjectedCheckoutForm paymentIdGet={this.paymentIdGet} /> : '' }
 
@@ -1828,7 +1830,7 @@ class CreateForm extends React.Component{
                                        this.state.paymentId !== '' ?
 
                                        <div className="form-group col-md-6">
-                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                          <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                        </div>
 
                                     :
@@ -1841,10 +1843,10 @@ class CreateForm extends React.Component{
                                     </div>
                                     :
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                     </div> : 
                                     <div className="form-group col-md-6">
-                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block">Create</button>
+                                       <button onClick={this.adSubmitHandler} className="btn btn-primary btn-block" disabled={ this.state.termsCondition==false}>Create</button>
                                     </div>
                                     }
                                  </div>
