@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL,userToken } from '../../projectString';
 import Swal from 'sweetalert2';
+import CurrencyFormat from 'react-currency-format';
 
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
 let currency_value=localStorage.getItem('currency_value') ;
@@ -126,7 +127,7 @@ let currency_value=localStorage.getItem('currency_value') ;
                                 {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : ''}
                             </div>
                             <div className="panel-content">
-                                <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(0)}</h3>
+                                <h3 className="panel-price">{currency} <CurrencyFormat value={(ads.price*currency_value).toFixed(0)} displayType={'text'} thousandSeparator={true}  /></h3>
                                 <h4 className="panel-title">{ads.title} {ads.custom_value ? ads.custom_value.map((customValue, index) => {
                                     if(index < 2){
                                         return ' • '+customValue.name+':'+ customValue.value

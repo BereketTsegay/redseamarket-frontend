@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL } from '../../projectString';
+import CurrencyFormat from 'react-currency-format';
+
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
 let currency_value=localStorage.getItem('currency_value') ;
  currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
@@ -42,7 +44,7 @@ export default class popularResidentialForRend extends Component {
                             {ads.featured_flag == 1 ? <span className="badge-featured"><span>Featured</span></span> : '' }
                         </div>
                         <div className="panel-content">
-                            <h3 className="panel-price">{currency} {(ads.price * currency_value).toFixed(0)}</h3>
+                            <h3 className="panel-price">{currency} <CurrencyFormat value={(ads.price*currency_value).toFixed(0)} displayType={'text'} thousandSeparator={true}  /> </h3>
                             <h4 className="panel-title">{ads.room} Room • {ads.size} SqFt</h4>
                             <p className="panel-description">{ads.state_name}, {ads.city_name}</p>
                         </div>

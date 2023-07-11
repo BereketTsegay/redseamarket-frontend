@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import defaultImage from '../../../src/web-assets/img/icon-256x256.png';
 import { BASE_URL, IMAGE_URL, userToken } from '../../projectString';
+import CurrencyFormat from 'react-currency-format';
+
 let currency = localStorage.getItem('currency') ? localStorage.getItem('currency') : 'USD';
 let currency_value=localStorage.getItem('currency_value') ;
  currency_value = currency_value&&(currency_value!='null')? localStorage.getItem('currency_value') : 0;
@@ -121,7 +123,7 @@ export default class propertyAdsItem extends Component {
                 </div>
                 <div class="panel-content">
                     <h3 class="panel-title"><Link to={`/adsdetails/${ads.id}`} onClick={ () => this.viewUpdate(ads.id) }> {ads.title}</Link></h3>
-                    <div class="panel-price text-brand">{currency} <span className="notranslate">{(ads.price * currency_value).toFixed(0)}</span></div>
+                    <div class="panel-price text-brand">{currency} <span className="notranslate"><CurrencyFormat value={(ads.price*currency_value).toFixed(0)} displayType={'text'} thousandSeparator={true}  /></span></div>
                     <div class="panel-date d-flex align-items-center">
                         <small>{ads.created_on}</small> 
                         {ads.featured_flag == 1 ? <span class="badge-featured"><span>Featured</span></span> : '' }

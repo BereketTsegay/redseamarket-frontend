@@ -15,6 +15,7 @@ import Login from "./components/login/login";
 import Favourite from "./components/account/favourite";
 import MyAds from "./components/account/myAds";
 import MyTransactions from "./components/account/MyTransactions";
+import AdsEnquiry from "./components/account/AdsEnquiry";
 import DocumentList from "./components/account/documentList";
 import AdsDetails from "./components/ads/adsDetails";
 import Profile from "./components/account/profile";
@@ -56,6 +57,7 @@ function App() {
               <Route path="/myfavourite" component={Favourite} />
               <Route path="/myads" component={ MyAds } />
               <Route path="/mytransactions" component={ MyTransactions } />
+              <Route path="/ad/enquiries/:id" component={ AdsEnquiry } />
               <Route path="/job/document/list/:id" component={ DocumentList } />
               <Route path="/myprofile" component={Profile} />
               <Route path="/allCategory" component={AllCategory} />
