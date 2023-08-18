@@ -85,10 +85,9 @@ export default class PrivacyPolicy extends Component {
                                     {privacyPolicy && privacyPolicy.map((privacyPolicy, index) => {
                                         return (
                                             <li key={index} style={{borderBottom: 'none'}}>
-                                                <div className="panel-content">
-                                                    <h3 className="panel-title">{privacyPolicy.title}</h3>
-                                                    <hr />
-                                                    <p style={{ textAlign: 'justify', textJustify: 'inter-word'}}>{privacyPolicy.policy}</p>
+                                                <div className="panel-content" dangerouslySetInnerHTML={{ __html:privacyPolicy.policy}}>
+                                                   
+                                                    {/* <p style={{ textAlign: 'justify', textJustify: 'inter-word'}} dangerouslySetInnerHTML={{ __html:privacyPolicy.policy}}> </p> */}
                                                 </div>
                                             </li>
                                         );
