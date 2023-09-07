@@ -1029,11 +1029,11 @@ class Header extends React.Component{
                                         
                                         <p className="help-block help-block-error" style={globalError}>{(this.state.globalLoginError!="")? "Sorry... "+this.state.globalLoginError:''}</p>
                                         {/* globalLoginError */}
-                                        <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address"/>
+                                        <input type="email" value={this.state.email}  onChange={this.onChange} name="email" className="form-control" placeholder="Email address" autocomplete="off"/>
                                         {errors.username.length > 0 && <p className="help-block help-block-error"  style={ErrorStyle}>{errors.username}</p>}
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" value={this.state.password} name="password" onChange={this.onChange} className="form-control"  placeholder="Password"/>
+                                            <input type="password" value={this.state.password} name="password" onChange={this.onChange} className="form-control"  placeholder="Password" autocomplete="off"/>
                                         {errors.password.length > 0 && <p className="help-block help-block-error" style={ErrorStyle}>{errors.password}</p>}
                                         </div>
                                         <div className="form-group text-right">
