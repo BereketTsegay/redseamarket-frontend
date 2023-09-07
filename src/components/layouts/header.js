@@ -34,7 +34,7 @@ class Header extends React.Component{
         dataArray: [],
         showHistory: false,
         registerModal:false,
-        email: '',
+        email: localStorage.getItem('email') != '' ? localStorage.getItem('email') : '' ,
         password: '',
         errors: {
            username: '',
@@ -69,6 +69,8 @@ class Header extends React.Component{
         countryName: '',
         emailVerify:localStorage.getItem('emailverify') != '' ? localStorage.getItem('emailverify'):'',
         resentOtpStatus:'',
+        otpUser:'',
+        otpMail:'',
       }
 
    }
@@ -611,13 +613,26 @@ class Header extends React.Component{
     }
 
     resentOtp = () => {
+
+        if(this.state.loginStatus === 'true' || this.state.loginStatus === true ){
+            this.setState({
+                otpMail: this.state.email,
+                otpUser:this.state.user
+            });
+        }
+        else{
+            this.setState({
+                otpMail: this.state.registeremail,
+                otpUser:this.state.registername
+            }); 
+        }
         
                 axios({
                     url: `${BASE_URL}/verify/resent/otp`,
                     method: 'POST',
                     data: {
-                        email: this.state.registeremail,
-                        name: this.state.user,
+                        email: this.state.otpMail,
+                        name: this.state.otpUser,
                     }
                 }).then(response => {
 
@@ -1106,10 +1121,16 @@ class Header extends React.Component{
                                                 <button onClick={ this.forgotVerifyOtp } className="btn btn-primary d-block w-100">Verify</button>
                                             </div>
                                         </>}
-
                                         <div className="form-group-line text-center">
-                                            <button className="btn btn-link p-0" onClick={ this.viewForgotpasswordModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
+                                            <p>check mail {this.state.registeremail} </p>
                                         </div>
+                                        {/* <div className="form-group-line text-center">
+                                            <button className="btn btn-link p-0" onClick={ this.viewForgotpasswordModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
+                                        </div> */}
+                                        <div className="form-group-line text-center">
+                                       <button className="btn btn-link p-0" onClick={ this.resentOtp } >Resent Otp</button>
+                                       <p className="text-center">{this.state.resentOtpStatus}</p>
+                                     </div>
                                     </div>
                                     <div className="modal-note text-center">By signing up I agree to the  <Link to="/terms/conditions"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
                                 
@@ -1138,21 +1159,23 @@ class Header extends React.Component{
                                             <button onClick={ this.otpSubmit } className="btn btn-primary d-block w-100">Verify</button>
                                         </div>
                                         <div className="form-group-line text-center">
-                                            <button className="btn btn-link p-0" onClick={ this.viewVerifyEmaildModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button>
+                                            {/* <button className="btn btn-link p-0" onClick={ this.viewVerifyEmaildModal } data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Back to Login</button> */}
+                                            <p>check mail {this.state.registeremail} </p>
                                         </div>
                                        
                                     </div>
                                     <div className="modal-note text-center">By signing up I agree to the  <Link to="#"> Terms and Conditions</Link> and <Link to="/privacy/policy"> Privacy Policy</Link></div>
-                                    {this.state.loginStatus === 'true' || this.state.loginStatus === true ? 
-
-                                     <div className="form-group-line text-center">
+                                    <div className="form-group-line text-center">
                                        <button className="btn btn-link p-0" onClick={ this.resentOtp } >Resent Otp</button>
                                        <p className="text-center">{this.state.resentOtpStatus}</p>
                                      </div>
-                                    //  <button onClick={ this.resentOtp } className="btn btn-primary d-block w-100">Resent otp</button>
+{/*                                     
+                                    {this.state.loginStatus === 'true' || this.state.loginStatus === true ? 
+
+                                     
                                     
                                     :  ''                                  
-                                }
+                                } */}
 
                                 </Modal.Body>
                                 
