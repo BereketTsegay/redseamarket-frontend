@@ -57,8 +57,11 @@ export default class adsDetails extends Component {
         });
 
         axios({
-            url: `${BASE_URL}/customer/ad/view`,
+            url: `${BASE_URL}/customer/myad/view`,
             method: 'POST',
+            headers: {
+                Authorization: "Bearer " + userToken,
+            },
             data:{
                 ads_id: this.state.id,
                 country_id: localStorage.getItem('country_id'),
