@@ -19,10 +19,13 @@ import AdsEnquiry from "./components/account/AdsEnquiry";
 import DocumentList from "./components/account/documentList";
 import AdsDetails from "./components/ads/adsDetails";
 import Profile from "./components/account/profile";
+import JobProfile from "./components/account/jobProfile";
 import CategoryMotors from "./components/automobile/categoryMotors";
 import CategoryProperty from "./components/property/categoryProperty";
 import MotorListing from "./components/automobile/motorListing";
 import JobListing from "./components/jobs/jobList";
+import HireListing from "./components/jobs/jobProfile";
+import ProfileDetails from "./components/jobs/profileDetail";
 import SearchList from "./components/common/searchList";
 import ScrollToTop from "./components/common/scrollToTop";
 import AllCategory from "./components/common/all-category-list";
@@ -60,12 +63,15 @@ function App() {
               <Route path="/ad/enquiries/:id" component={ AdsEnquiry } />
               <Route path="/job/document/list/:id" component={ DocumentList } />
               <Route path="/myprofile" component={Profile} />
+              <Route path="/jobprofile" component={JobProfile} />
               <Route path="/allCategory" component={AllCategory} />
               <Route path="/adsdetails/:id" component={AdsDetails} />
+              <Route path="/profileDetails/:id" component={ProfileDetails} />
               <Route path="/categoryMotors" component={CategoryMotors} />
               <Route path="/categoryProperty/:id" component={CategoryProperty} />
               <Route path="/motor/list" component={MotorListing} />
               <Route path="/job/list" component={JobListing} />
+              <Route path="/hire/list" component={HireListing} />
               <Route path="/search" component={SearchList} />
               <Route path="/property/list" component={PropertyList} />
               <Route path="/motor/result" component={SearchResult} />

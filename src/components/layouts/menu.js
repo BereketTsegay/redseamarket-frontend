@@ -83,8 +83,8 @@ class Menu extends React.Component{
                               else if(category.name === 'Jobs'){
                                  return (
                                     <li key={index} className="menu-item menu-item-has-children">
-                                       <Link to={`/job/list?key=&city=&category_id=${category.id}`}>{category.name}</Link>
-                                       <ul className="sub-menu">
+                                           <Link to={`/job/list?key=&city=&category_id=${category.id}`}>{category.name}</Link>  
+                                       {/* <ul className="sub-menu">
                                           {category.subcategory && category.subcategory.map((subcategory, index) => {
                                              return (
                                                 <li key={index} className="menu-item">
@@ -105,7 +105,16 @@ class Menu extends React.Component{
                                                 </li>
                                              );
                                           })}
-                                       </ul>
+                                       </ul> */}
+
+                             <ul className="sub-menu">
+                             <li className="menu-item">
+                             <Link to={`/job/list?key=&city=&category_id=${category.id}`}>Find Your Job</Link>
+                              </li>
+                              <li className="menu-item">
+                             <Link to={`/hire/list`}>Hire People</Link>
+                              </li>
+                              </ul>
                                     </li>
                                  );
                               }

@@ -1948,6 +1948,12 @@ button:focus,
 	border: 0;
 	border-radius: 8px;
 }
+
+.cv-show .modal-content {
+	border: 0;
+	width: 800px !important;
+	border-radius: 8px;
+}
 .log-sign-modal .modal-body { padding: 60px 40px; }
 .log-sign-modal .modal-title {
 	font-size: 28px;
